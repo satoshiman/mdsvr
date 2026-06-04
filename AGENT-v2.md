@@ -123,7 +123,7 @@ Tất cả fields đều **optional** — server vẫn chạy hoàn hảo nếu 
     "allowThemeToggle": true,
     "accentColor": "#0969da",
     "codeTheme": {
-      "light": "github-light",
+      "light": "lightfair",
       "dark": "github-dark"
     },
     "fontFamily": {
@@ -251,7 +251,7 @@ export const AppearanceSchema = z.object({
   accentColor: z.string().default("#0969da"),
   codeTheme: z
     .object({
-      light: z.string().default("github-light"),
+      light: z.string().default("github"),
       dark: z.string().default("github-dark"),
     })
     .default({}),

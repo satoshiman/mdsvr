@@ -13,6 +13,7 @@ export interface TocItem {
   level: number;
   text: string;
   slug: string;
+  children?: TocItem[];
 }
 
 export interface MdxRenderResult {

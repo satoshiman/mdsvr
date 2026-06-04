@@ -70,6 +70,10 @@ export function generateDefaultSettings(): object {
       defaultTheme: "system",
       allowThemeToggle: true,
       accentColor: "#0969da",
+      codeTheme: {
+        light: "lightfair",
+        dark: "github-dark",
+      },
     },
     navigation: {
       sidebar: {

@@ -44,75 +44,98 @@ export async function createServer(
   const port = options.port ?? 1900;
   const host = options.host ?? "localhost";
   const watchSettingsEnabled = options.watchSettings ?? true;
+  const maxRetries = 10;
 
   return new Promise((resolve, reject) => {
-    const server = http.createServer((req, res) => {
-      route(req, res, absoluteRoot, currentSettings, searchIndexCache).catch(
-        (err) => {
-          console.error("Routing error:", err);
-          res.writeHead(500, { "Content-Type": "text/plain" });
-          res.end("Internal Server Error");
-        },
-      );
-    });
+    let currentPort = port;
+    let retryCount = 0;
 
-    server.listen(port, host, () => {
-      const actualPort = (server.address() as { port: number }).port;
-      const url = `http://${host}:${actualPort}`;
+    const tryListen = () => {
+      const server = http.createServer((req, res) => {
+        route(req, res, absoluteRoot, currentSettings, searchIndexCache).catch(
+          (err) => {
+            console.error("Routing error:", err);
+            res.writeHead(500, { "Content-Type": "text/plain" });
+            res.end("Internal Server Error");
+          },
+        );
+      });
 
-      // Watch settings file for changes
-      if (watchSettingsEnabled) {
-        (async () => {
-          try {
-            const settingsPath = path.join(absoluteRoot, "settings.json");
-            await fs.access(settingsPath);
-            watchSettings(absoluteRoot, async (newSettings) => {
-              currentSettings = newSettings;
-              if (currentSettings.search.enabled) {
-                searchIndexCache = await buildSearchIndex(
-                  absoluteRoot,
-                  currentSettings,
-                );
-              }
-              if (!options.silent) {
-                console.log("[mdsvr] Settings reloaded");
-              }
-            });
-          } catch {
-            // No settings.json to watch, that's fine
-          }
-        })();
-      }
+      server.listen(currentPort, host, () => {
+        const actualPort = (server.address() as { port: number }).port;
+        const url = `http://${host}:${actualPort}`;
 
-      const instance: ServerInstance = {
-        port: actualPort,
-        host,
-        url,
-        settings: currentSettings,
-        close: () =>
-          new Promise((res, rej) => {
-            server.close((err) => {
-              if (err) rej(err);
-              else res();
-            });
-          }),
-        reloadSettings: async () => {
-          currentSettings = await loadSettings(absoluteRoot);
-          if (currentSettings.search.enabled) {
-            searchIndexCache = await buildSearchIndex(
-              absoluteRoot,
-              currentSettings,
+        // Watch settings file for changes
+        if (watchSettingsEnabled) {
+          (async () => {
+            try {
+              const settingsPath = path.join(absoluteRoot, "settings.json");
+              await fs.access(settingsPath);
+              watchSettings(absoluteRoot, async (newSettings) => {
+                currentSettings = newSettings;
+                if (currentSettings.search.enabled) {
+                  searchIndexCache = await buildSearchIndex(
+                    absoluteRoot,
+                    currentSettings,
+                  );
+                }
+                if (!options.silent) {
+                  console.log("[mdsvr] Settings reloaded");
+                }
+              });
+            } catch {
+              // No settings.json to watch, that's fine
+            }
+          })();
+        }
+
+        const instance: ServerInstance = {
+          port: actualPort,
+          host,
+          url,
+          settings: currentSettings,
+          close: () =>
+            new Promise((res, rej) => {
+              server.close((err) => {
+                if (err) rej(err);
+                else res();
+              });
+            }),
+          reloadSettings: async () => {
+            currentSettings = await loadSettings(absoluteRoot);
+            if (currentSettings.search.enabled) {
+              searchIndexCache = await buildSearchIndex(
+                absoluteRoot,
+                currentSettings,
+              );
+            }
+          },
+        };
+
+        resolve(instance);
+      });
+
+      server.on("error", (err) => {
+        if ((err as NodeJS.ErrnoException).code === "EADDRINUSE") {
+          retryCount++;
+          if (retryCount <= maxRetries) {
+            currentPort++;
+            server.close();
+            tryListen();
+          } else {
+            reject(
+              new Error(
+                `Port ${port} and next ${maxRetries} ports are all in use`,
+              ),
             );
           }
-        },
-      };
+        } else {
+          reject(err);
+        }
+      });
+    };
 
-      resolve(instance);
-    });
-
-    server.on("error", (err) => {
-      reject(err);
-    });
+    tryListen();
   });
 }
 

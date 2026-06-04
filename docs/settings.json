@@ -1,8 +1,8 @@
 {
   "$schema": "https://raw.githubusercontent.com/satoshiman/mdsvr/main/schema/v2.json",
   "site": {
-    "title": "MDSVR | Markdown Server",
-    "description": "Full-featured documentation website server with MDX support",
+    "title": "My Docs",
+    "description": "Project documentation",
     "language": "en"
   },
   "appearance": {
@@ -10,52 +10,21 @@
     "allowThemeToggle": true,
     "accentColor": "#0969da",
     "codeTheme": {
-      "light": "github-light",
+      "light": "lightfair",
       "dark": "github-dark"
     }
   },
   "navigation": {
     "sidebar": {
       "enabled": true,
-      "autoGenerate": true,
-      "collapsible": true,
-      "defaultOpen": true
+      "autoGenerate": true
     },
-    "breadcrumbs": true,
-    "prevNextLinks": true,
-    "tocEnabled": true,
-    "tocMaxDepth": 3
+    "tocEnabled": true
   },
   "search": {
-    "enabled": true,
-    "placeholder": "Search documentation...",
-    "maxResults": 10
-  },
-  "seo": {
-    "titleTemplate": "%s | mdsvr",
-    "generateSitemap": true,
-    "generateRssFeed": false,
-    "twitterCard": "summary_large_image"
+    "enabled": true
   },
   "mdx": {
-    "enabled": true,
-    "components": {
-      "Callout": true,
-      "CodeGroup": true,
-      "Steps": true,
-      "Card": true,
-      "CardGroup": true,
-      "Tabs": true,
-      "Accordion": true,
-      "Badge": true,
-      "Mermaid": true
-    }
-  },
-  "footer": {
-    "text": "© 2026 mdsvr. Built with mdsvr.",
-    "links": [
-      { "label": "GitHub", "href": "https://github.com/satoshiman/mdsvr" },
-      { "label": "npm", "href": "https://www.npmjs.com/package/mdsvr" }
-    ]
+    "enabled": true
   }
 }

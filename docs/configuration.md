@@ -57,7 +57,7 @@ Control the look and feel of your documentation:
     "allowThemeToggle": true,
     "accentColor": "#0969da",
     "codeTheme": {
-      "light": "github-light",
+      "light": "lightfair",
       "dark": "github-dark"
     }
   }
@@ -130,6 +130,7 @@ Configure search engine optimization features:
 ```
 
 When enabled, these endpoints are automatically generated:
+
 - `/sitemap.xml` — XML sitemap for search engines
 - `/feed.xml` — RSS feed for blog posts (files with `date` in frontmatter)
 
@@ -262,7 +263,18 @@ Here's a complete `settings.json` with all available options:
   },
   "files": {
     "extensions": {
-      "serve": [".md", ".mdx", ".txt", ".pdf", ".png", ".jpg", ".svg", ".css", ".js", ".json"],
+      "serve": [
+        ".md",
+        ".mdx",
+        ".txt",
+        ".pdf",
+        ".png",
+        ".jpg",
+        ".svg",
+        ".css",
+        ".js",
+        ".json"
+      ],
       "block": [".env", ".key", ".pem", ".p12"],
       "hidden": ["settings.json", ".git", "node_modules", ".DS_Store"]
     },
@@ -284,9 +296,7 @@ Here's a complete `settings.json` with all available options:
   },
   "footer": {
     "text": "Built with mdsvr",
-    "links": [
-      { "label": "GitHub", "href": "https://github.com/..." }
-    ]
+    "links": [{ "label": "GitHub", "href": "https://github.com/..." }]
   }
 }
 ```

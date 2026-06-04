@@ -8,6 +8,7 @@ export interface TocItem {
   level: number;
   text: string;
   slug: string;
+  children?: TocItem[];
 }
 
 export interface MarkdownResult {
@@ -37,12 +38,7 @@ function createMarkdownIt(settings: Settings): MarkdownIt {
   md.use(markdownItAnchor, {
     permalink: false,
     slugify: (s: string) =>
-      encodeURIComponent(
-        String(s)
-          .trim()
-          .toLowerCase()
-          .replace(/\s+/g, "-"),
-      ),
+      encodeURIComponent(String(s).trim().toLowerCase().replace(/\s+/g, "-")),
   });
 
   return md;
@@ -101,12 +97,7 @@ export function renderMarkdownSimple(content: string): string {
   md.use(markdownItAnchor, {
     permalink: false,
     slugify: (s: string) =>
-      encodeURIComponent(
-        String(s)
-          .trim()
-          .toLowerCase()
-          .replace(/\s+/g, "-"),
-      ),
+      encodeURIComponent(String(s).trim().toLowerCase().replace(/\s+/g, "-")),
   });
 
   return md.render(content);

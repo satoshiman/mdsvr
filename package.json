@@ -15,7 +15,7 @@
     }
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && cp -r src/assets dist/assets",
     "build:test": "tsc -p tsconfig.test.json",
     "dev": "tsc --watch",
     "test": "npm run build && npm run build:test && node --test dist-test/*.test.js",

@@ -22,11 +22,11 @@ Configure the default theme in `settings.json`:
 
 ### Options
 
-| Mode | Behavior |
-|------|----------|
+| Mode     | Behavior                         |
+| -------- | -------------------------------- |
 | `system` | Follows the user's OS preference |
-| `light` | Always uses light theme |
-| `dark` | Always uses dark theme |
+| `light`  | Always uses light theme          |
+| `dark`   | Always uses dark theme           |
 
 ## Theme Toggle
 
@@ -49,6 +49,7 @@ Customize the primary color used for links, buttons, and accents:
 ```
 
 This affects:
+
 - Links in content
 - Sidebar active state
 - Button hover states
@@ -57,13 +58,13 @@ This affects:
 
 ### Recommended Colors
 
-| Color | Hex Value |
-|-------|-----------|
+| Color       | Hex Value |
+| ----------- | --------- |
 | GitHub Blue | `#0969da` |
-| Purple | `#8250df` |
-| Green | `#1a7f37` |
-| Red | `#cf222e` |
-| Orange | `#9a6700` |
+| Purple      | `#8250df` |
+| Green       | `#1a7f37` |
+| Red         | `#cf222e` |
+| Orange      | `#9a6700` |
 
 ## Code Themes
 
@@ -73,7 +74,7 @@ Configure syntax highlighting themes for light and dark modes:
 {
   "appearance": {
     "codeTheme": {
-      "light": "github-light",
+      "light": "lightfair",
       "dark": "github-dark"
     }
   }
@@ -81,7 +82,8 @@ Configure syntax highlighting themes for light and dark modes:
 ```
 
 Currently supported:
-- `github-light`
+
+- `github`
 - `github-dark`
 
 ## CSS Variables
@@ -118,7 +120,8 @@ When using `defaultTheme: "system"`, mdsvr automatically detects the user's OS p
 
 ```javascript
 // Runs before paint to prevent flash
-const theme = localStorage.getItem("theme") ||
+const theme =
+  localStorage.getItem("theme") ||
   (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
 document.documentElement.setAttribute("data-theme", theme);
 ```
@@ -144,7 +147,7 @@ This ensures the correct theme is applied immediately without any visible flash.
     "allowThemeToggle": true,
     "accentColor": "#8250df",
     "codeTheme": {
-      "light": "github-light",
+      "light": "lightfair",
       "dark": "github-dark"
     }
   }

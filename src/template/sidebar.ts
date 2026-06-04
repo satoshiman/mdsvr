@@ -10,6 +10,7 @@ export interface NavItem {
   active?: boolean;
   type: "file" | "dir";
   order?: number;
+  sortBy: string;
 }
 
 // Extract title from content (first h1 or frontmatter)
@@ -97,6 +98,7 @@ async function readDirRecursive(
           href: relativePath + "/",
           children,
           type: "dir",
+          sortBy: entry.name.toLowerCase(),
         });
       }
     } else if (
@@ -113,15 +115,16 @@ async function readDirRecursive(
         title,
         href,
         type: "file",
+        sortBy: baseName.toLowerCase(),
       });
     }
   }
 
-  // Sort: folders first, then alphabetically
+  // Sort: folders first, then alphabetically by filename/folder name
   return items.sort((a, b) => {
     if (a.type === "dir" && b.type !== "dir") return -1;
     if (a.type !== "dir" && b.type === "dir") return 1;
-    return a.title.localeCompare(b.title);
+    return a.sortBy.localeCompare(b.sortBy);
   });
 }
 
@@ -146,6 +149,7 @@ export async function buildSidebar(
       title: title || "Home",
       href: "/",
       type: "file",
+      sortBy: "",
     });
   } catch {
     // No README.md at root
@@ -228,16 +232,67 @@ export function renderToc(toc: TocItem[], settings: Settings): string {
   const lines: string[] = [];
   lines.push('<nav class="toc">');
   lines.push("  <h3>On this page</h3>");
-  lines.push('  <ul class="toc-list">');
 
-  for (const item of filtered) {
-    const indent = "  ".repeat(item.level - 1);
-    lines.push(
-      `    <li class="toc-item toc-level-${item.level}"><a href="#${item.slug}">${indent}${escapeHtml(item.text)}</a></li>`,
-    );
+  // Build nested tree structure from flat TOC array
+  function buildTree(items: TocItem[], startLevel: number = 1): TocItem[] {
+    const result: TocItem[] = [];
+    let i = 0;
+
+    while (i < items.length) {
+      const item = items[i];
+
+      if (item.level < startLevel) {
+        // Stop when we hit a higher-level heading
+        break;
+      }
+
+      if (item.level === startLevel) {
+        // This is a sibling at current level
+        const newItem = { ...item, children: [] as TocItem[] };
+        // Find its children (higher levels until next sibling or parent)
+        const childStart = i + 1;
+        let childEnd = childStart;
+        while (childEnd < items.length && items[childEnd].level > startLevel) {
+          childEnd++;
+        }
+        newItem.children = buildTree(
+          items.slice(childStart, childEnd),
+          startLevel + 1,
+        );
+        result.push(newItem);
+        i = childEnd;
+      } else {
+        // Skip items that are deeper than current level (they'll be handled as children)
+        i++;
+      }
+    }
+
+    return result;
   }
 
-  lines.push("  </ul>");
+  function renderTocTree(items: TocItem[], level: number): string {
+    if (items.length === 0) return "";
+
+    const subLines: string[] = [];
+    subLines.push(`<ul class="toc-list toc-level-${level}">`);
+
+    for (const item of items) {
+      const hasChildren = item.children && item.children.length > 0;
+      subLines.push(
+        `<li class="toc-item"><a href="#${item.slug}">${escapeHtml(item.text)}</a></li>`,
+      );
+
+      if (hasChildren) {
+        subLines.push(renderTocTree(item.children!, level + 1));
+      }
+    }
+
+    subLines.push("</ul>");
+    return subLines.join("\n");
+  }
+
+  const tree = buildTree(filtered, 1);
+  lines.push(renderTocTree(tree, 1));
   lines.push("</nav>");
 
   return lines.join("\n");

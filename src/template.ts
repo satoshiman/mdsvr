@@ -148,19 +148,6 @@ export function wrapHtml(params: {
     @media (max-width: 480px) {
       .container { margin: 8px; padding: 16px; }
     }
-    /* Syntax highlighting colors for dark code blocks */
-    .hljs-keyword { color: #ff7b72; }
-    .hljs-string { color: #a5d6ff; }
-    .hljs-number { color: #79c0ff; }
-    .hljs-comment { color: #8b949e; font-style: italic; }
-    .hljs-function { color: #d2a8ff; }
-    .hljs-class { color: #ffa657; }
-    .hljs-variable { color: #ffa657; }
-    .hljs-operator { color: #ff7b72; }
-    .hljs-punctuation { color: #c9d1d9; }
-    .hljs-property { color: #79c0ff; }
-    .hljs-tag { color: #7ee787; }
-    .hljs-attr { color: #79c0ff; }
   </style>
 </head>
 <body>

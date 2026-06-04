@@ -4,9 +4,9 @@
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "outDir": "./dist-test",
-    "rootDir": "./test",
     "strict": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "jsx": "react-jsx"
   },
-  "include": ["test/**/*"]
+  "include": ["test/**/*", "src/**/*"]
 }

@@ -7,6 +7,49 @@ import {
   renderSearchTrigger,
   getSearchInlineScript,
 } from "./search.js";
+import { readFileSync } from "fs";
+import { fileURLToPath } from "url";
+import { dirname, join } from "path";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+function getHighlightJsStyles(settings: Settings): string {
+  const lightTheme = settings.appearance.codeTheme.light || "lightfair";
+  const darkTheme = settings.appearance.codeTheme.dark || "github-dark";
+
+  try {
+    // Read from local assets folder
+    const hljsStylesPath = join(__dirname, "../assets/highlight.js-styles");
+
+    const lightCss = readFileSync(
+      join(hljsStylesPath, `${lightTheme}.css`),
+      "utf-8",
+    );
+    const darkCss = readFileSync(
+      join(hljsStylesPath, `${darkTheme}.css`),
+      "utf-8",
+    );
+
+    return `
+/* Highlight.js - Light theme */
+:root[data-theme="light"] .hljs {
+  background: var(--code-bg);
+}
+${lightCss}
+
+/* Highlight.js - Dark theme */
+:root[data-theme="dark"] .hljs {
+  background: var(--code-bg);
+}
+${darkCss}
+`;
+  } catch (error) {
+    console.error("Error loading highlight.js styles:", error);
+    // Fallback if CSS files not found
+    return "";
+  }
+}
 
 export interface TemplateParams {
   title: string;
@@ -124,6 +167,7 @@ export function renderPage(params: TemplateParams): string {
   ${settings.site.favicon ? `<link rel="icon" href="${settings.site.favicon}">` : ""}
   <style>
 ${getBaseStyles(settings)}
+${getHighlightJsStyles(settings)}
   </style>
 </head>
 <body>
@@ -414,8 +458,46 @@ body {
   padding: 0;
 }
 
+.toc-level-1 {
+  padding-left: 0;
+}
+
+.toc-level-2 {
+  padding-left: 8px;
+}
+
+.toc-level-3 {
+  padding-left: 16px;
+}
+
+.toc-level-4 {
+  padding-left: 24px;
+}
+
+.toc-level-5 {
+  padding-left: 32px;
+}
+
+.toc-level-6 {
+  padding-left: 40px;
+}
+
 .toc-item {
   margin: 4px 0;
+  position: relative;
+}
+
+.toc-level-2 > .toc-item::before,
+.toc-level-3 > .toc-item::before,
+.toc-level-4 > .toc-item::before,
+.toc-level-5 > .toc-item::before,
+.toc-level-6 > .toc-item::before {
+  content: "▸";
+  position: absolute;
+  left: -12px;
+  color: var(--text-muted);
+  font-size: 10px;
+  top: 5px;
 }
 
 .toc-item a {
@@ -457,6 +539,7 @@ body {
   font-weight: 600;
   line-height: 1.25;
   color: var(--text);
+  scroll-margin-top: 80px;
 }
 
 .markdown-body h1 { font-size: 2em; border-bottom: 1px solid var(--border); padding-bottom: 0.3em; }
