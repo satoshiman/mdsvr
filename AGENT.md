@@ -1,0 +1,409 @@
+# AGENT.md — mdsvr
+
+> Static file server với auto-render Markdown → HTML. Tương tự `serve` của Vercel nhưng hiểu `.md`.
+
+---
+
+## 1. Project Overview
+
+**Package name**: `mdsvr`  
+**Type**: npm CLI package + programmatic API  
+**Target user**: Developer cá nhân muốn xem docs/notes Markdown tại local  
+**Core value**: `npx mdsvr ./docs` → mở browser thấy ngay Markdown đẹp như GitHub
+
+---
+
+## 2. Architecture
+
+```
+mdsvr/
+├── src/
+│   ├── index.ts          # Programmatic API entry point
+│   ├── cli.ts            # CLI entry point (bin)
+│   ├── server.ts         # Core HTTP server logic
+│   ├── router.ts         # Request routing: .md vs static
+│   ├── renderer.ts       # markdown-it render pipeline
+│   ├── template.ts       # HTML shell template (GitHub style)
+│   ├── directory.ts      # Directory listing HTML
+│   └── types.ts          # Shared TypeScript types
+├── bin/
+│   └── mdsvr.js          # CLI shim (calls src/cli.ts compiled)
+├── dist/                 # Compiled output (tsc)
+├── test/
+│   └── *.test.ts
+├── package.json
+├── tsconfig.json
+└── README.md
+```
+
+### Request Flow
+
+```
+Browser Request
+      │
+      ▼
+  router.ts
+      │
+      ├── path is directory?
+      │       └── directory.ts → HTML directory listing
+      │
+      ├── path ends with .md?
+      │       └── renderer.ts → markdown-it → template.ts → HTML response
+      │
+      └── other file (jpg, css, js, png...)?
+              └── fs.createReadStream → pipe response (with correct MIME type)
+```
+
+---
+
+## 3. Core Types (`src/types.ts`)
+
+```typescript
+export interface ServeOptions {
+  port?: number; // default: 1900
+  host?: string; // default: 'localhost'
+  open?: boolean; // default: false — auto open browser
+  silent?: boolean; // default: false — suppress logs
+}
+
+export interface ServerInstance {
+  close(): Promise<void>;
+  port: number;
+  host: string;
+  url: string;
+}
+```
+
+---
+
+## 4. Module Specs
+
+### `src/server.ts`
+
+```typescript
+import http from "node:http";
+import { ServeOptions, ServerInstance } from "./types";
+import { route } from "./router";
+
+export function createServer(
+  rootDir: string,
+  options: ServeOptions = {},
+): Promise<ServerInstance>;
+```
+
+- Resolve `rootDir` to absolute path (throw if not exist)
+- Create `http.Server`, call `route(req, res, rootDir)` on each request
+- Listen on `options.port ?? 3000`, `options.host ?? 'localhost'`
+- Return `ServerInstance` with `.close()` method
+
+### `src/router.ts`
+
+```typescript
+export async function route(
+  req: http.IncomingMessage,
+  res: http.ServerResponse,
+  rootDir: string,
+): Promise<void>;
+```
+
+Logic:
+
+1. Parse `req.url`, decode URI, strip query string
+2. Resolve to absolute path = `path.join(rootDir, urlPath)`
+3. **Security**: Ensure resolved path starts with `rootDir` (path traversal guard)
+4. `stat` the path:
+   - **Directory**: call `serveDirectory()`
+   - **`.md` file**: call `serveMarkdown()`
+   - **Other file**: call `serveStatic()`
+   - **Not found**: 404 response
+
+### `src/renderer.ts`
+
+```typescript
+import MarkdownIt from "markdown-it";
+
+const md = new MarkdownIt({
+  html: true, // allow HTML in markdown
+  linkify: true, // auto-link URLs
+  typographer: true, // smart quotes, dashes
+});
+
+export function renderMarkdown(content: string): string;
+// Returns: raw HTML string (not full page, just body content)
+```
+
+**markdown-it plugins to include:**
+
+- `markdown-it-anchor` — header anchors (#)
+- `markdown-it-highlight` or Prism.js via plugin — code syntax highlight
+
+### `src/template.ts`
+
+```typescript
+export function wrapHtml(params: {
+  title: string;
+  body: string; // rendered markdown HTML
+  filePath: string; // for breadcrumb display
+}): string;
+// Returns: full HTML page string
+```
+
+**GitHub-style template requirements:**
+
+- Dark header bar (`#0d1117`) with filename as title
+- Body max-width: 860px, centered
+- Font: `-apple-system, 'Segoe UI', sans-serif` for body; `'SFMono-Regular', Consolas, monospace` for code
+- Inline CSS only (no external dependencies — works offline)
+- Code blocks: dark background (`#161b22`), syntax classes styled via CSS
+- Responsive (mobile-friendly)
+- Include anchor links on `h1`–`h6`
+
+### `src/directory.ts`
+
+```typescript
+export function renderDirectory(params: {
+  urlPath: string;
+  entries: fs.Dirent[];
+}): string;
+// Returns: full HTML page with file listing
+```
+
+- Show folders first, then files
+- `.md` files shown with 📄 icon, folders with 📁
+- Each entry is a clickable link
+- Show file size for non-directory entries
+- Breadcrumb navigation at top
+
+### `src/cli.ts`
+
+```typescript
+// Parse process.argv manually (no external arg parser)
+// Usage: mdsvr [dir] [--port N] [--host H] [--open] [--silent]
+```
+
+CLI flags:
+| Flag | Default | Description |
+|---|---|---|
+| `[dir]` | `.` | Root directory to serve |
+| `--port, -p` | `1900` | Port number |
+| `--host` | `localhost` | Bind address (`0.0.0.0` for LAN) |
+| `--open, -o` | `false` | Auto-open browser |
+| `--silent, -s` | `false` | No console output |
+| `--version, -v` | — | Print version |
+| `--help, -h` | — | Print usage |
+
+Startup log format:
+
+```
+  mdsvr v1.0.0
+
+  Local:    http://localhost:1900
+  Network:  http://192.168.1.x:1900   ← only shown when host != localhost
+
+  Serving /absolute/path/to/dir
+  Hit Ctrl+C to stop.
+```
+
+---
+
+## 5. Programmatic API
+
+```typescript
+// src/index.ts — public API
+export { createServer } from "./server";
+export type { ServeOptions, ServerInstance } from "./types";
+```
+
+Usage example:
+
+```typescript
+import { createServer } from "mdsvr";
+
+const server = await createServer("./docs", { port: 4000, open: true });
+console.log(`Running at ${server.url}`);
+
+// Graceful shutdown
+process.on("SIGINT", () => server.close());
+```
+
+---
+
+## 6. package.json
+
+```json
+{
+  "name": "mdsvr",
+  "version": "1.0.0",
+  "description": "Static file server with auto Markdown → HTML rendering",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "mdsvr": "./bin/mdsvr.js"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "node --test",
+    "prepublishOnly": "npm run build && npm test"
+  },
+  "dependencies": {
+    "markdown-it": "^14.x",
+    "markdown-it-anchor": "^9.x"
+  },
+  "devDependencies": {
+    "@types/markdown-it": "^14.x",
+    "@types/node": "^22.x",
+    "typescript": "^5.x"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": ["markdown", "serve", "static", "server", "docs", "cli"]
+}
+```
+
+---
+
+## 7. tsconfig.json
+
+```json
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "strict": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "esModuleInterop": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist", "test"]
+}
+```
+
+---
+
+## 8. MIME Type Map
+
+```typescript
+// src/router.ts — inline map, no external lib
+const MIME: Record<string, string> = {
+  ".html": "text/html",
+  ".css": "text/css",
+  ".js": "text/javascript",
+  ".json": "application/json",
+  ".png": "image/png",
+  ".jpg": "image/jpeg",
+  ".jpeg": "image/jpeg",
+  ".gif": "image/gif",
+  ".svg": "image/svg+xml",
+  ".ico": "image/x-icon",
+  ".pdf": "application/pdf",
+  ".txt": "text/plain",
+  ".webp": "image/webp",
+};
+// Unknown extension → 'application/octet-stream'
+```
+
+---
+
+## 9. Security Rules
+
+- **Path traversal**: `resolvedPath.startsWith(rootDir)` check — throw 403 if violated
+- **Symlinks**: Follow symlinks but re-check resolved path is within rootDir
+- **No directory write**: Server is read-only, no POST/PUT/DELETE handling
+- **No eval / dynamic code**: Template strings only, no `Function()` or `eval()`
+
+---
+
+## 10. Error Responses
+
+| Situation           | HTTP Status | Response                            |
+| ------------------- | ----------- | ----------------------------------- |
+| File not found      | 404         | Simple HTML: "404 — Not Found"      |
+| Outside rootDir     | 403         | Simple HTML: "403 — Forbidden"      |
+| Read error          | 500         | Simple HTML: "500 — Internal Error" |
+| Method not GET/HEAD | 405         | "405 — Method Not Allowed"          |
+
+---
+
+## 11. Testing Strategy
+
+Use Node.js built-in `node:test` (no external test runner):
+
+```
+test/
+├── renderer.test.ts    — unit test: markdown → html output
+├── router.test.ts      — unit test: path resolution, MIME types, security
+├── server.test.ts      — integration: actual HTTP requests with fetch()
+└── fixtures/
+    ├── sample.md
+    ├── nested/
+    │   └── deep.md
+    └── assets/
+        └── image.png
+```
+
+Key test cases:
+
+- `GET /README.md` → 200, Content-Type: text/html, body contains rendered HTML
+- `GET /assets/image.png` → 200, Content-Type: image/png
+- `GET /` (directory) → 200, directory listing HTML
+- `GET /../secret` → 403 (path traversal)
+- `GET /missing.md` → 404
+
+---
+
+## 12. MVP Implementation Order
+
+1. `types.ts` — interfaces
+2. `renderer.ts` — markdown-it setup + render function
+3. `template.ts` — GitHub-style HTML shell
+4. `directory.ts` — directory listing page
+5. `router.ts` — routing logic + MIME + security
+6. `server.ts` — http.Server wrapper
+7. `cli.ts` — argument parsing + startup log
+8. `index.ts` — public API export
+9. Tests
+10. `README.md` — usage docs
+
+---
+
+## 13. README Quick-Start (for reference)
+
+```bash
+# One-shot, no install
+npx mdsvr ./docs
+
+# With options
+npx mdsvr ./notes --port 4000 --open
+
+# Expose to LAN
+npx mdsvr . --host 0.0.0.0 --port 8080
+
+# Programmatic
+import { createServer } from 'mdsvr';
+const s = await createServer('./docs', { port: 1900 });
+```
+
+---
+
+## 14. Out of Scope (MVP)
+
+- Live reload / WebSocket (defer to v1.1)
+- Authentication / password protection
+- Search across files
+- Sidebar navigation
+- Custom theme / CSS injection via config file
+- Windows `.bat` shim (ESM + Node 18+ handles it)

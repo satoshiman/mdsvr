@@ -1,0 +1,56 @@
+{
+  "name": "mdsvr",
+  "version": "1.0.0",
+  "description": "Static file server with auto Markdown → HTML rendering",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "mdsvr": "./bin/mdsvr.js"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "build:test": "tsc -p tsconfig.test.json",
+    "dev": "tsc --watch",
+    "test": "npm run build && npm run build:test && node --test dist-test/*.test.js",
+    "prepublishOnly": "npm run build && npm test"
+  },
+  "dependencies": {
+    "markdown-it": "^14.1.0",
+    "markdown-it-anchor": "^9.2.0",
+    "highlight.js": "^11.10.0"
+  },
+  "devDependencies": {
+    "@types/markdown-it": "^14.1.0",
+    "@types/node": "^22.0.0",
+    "typescript": "^5.5.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "markdown",
+    "serve",
+    "static",
+    "server",
+    "docs",
+    "cli"
+  ],
+  "files": [
+    "dist/**/*",
+    "bin/**/*",
+    "README.md"
+  ],
+  "author": "Truong Ngoc Vuong <vuongtr56@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/satoshiman/mdsvr.git"
+  }
+}
