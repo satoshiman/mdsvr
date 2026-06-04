@@ -1,0 +1,958 @@
+# AGENT-V2.md — mdsvr
+
+> Nâng cấp từ "static Markdown viewer" lên **full-featured documentation website** với MDX support, site-wide settings, SEO, và layout navigation.
+
+---
+
+## 0. What Changed from V1
+
+| Feature                | V1       | V2                            |
+| ---------------------- | -------- | ----------------------------- |
+| Markdown render        | ✅ Basic | ✅ Enhanced                   |
+| MDX support            | ❌       | ✅ Full MDX pipeline          |
+| Site settings          | ❌       | ✅ `settings.json`            |
+| Dark/Light mode        | ❌       | ✅ Toggle + auto              |
+| SEO meta tags          | ❌       | ✅ OG, Twitter, sitemap       |
+| Sidebar navigation     | ❌       | ✅ Auto-generated             |
+| Logo / Branding        | ❌       | ✅ Configurable               |
+| File extension control | ❌       | ✅ Allowlist + blocklist      |
+| Search                 | ❌       | ✅ In-page full-text          |
+| `<components>` in MDX  | ❌       | ✅ Built-in component library |
+| Sitemap generation     | ❌       | ✅ `/sitemap.xml`             |
+| RSS Feed               | ❌       | ✅ `/feed.xml`                |
+
+---
+
+## 1. Project Overview
+
+**Package name**: `mdsvr`  
+**Version**: `2.0.0`  
+**Goal**: `npx mdsvr ./docs` → instantly get a **production-quality documentation website** — with sidebar, dark mode, SEO meta, and MDX component support — zero config required, fully configurable via `settings.json`.
+
+---
+
+## 2. New Architecture
+
+```
+mdsvr/
+├── src/
+│   ├── index.ts              # Programmatic API entry point
+│   ├── cli.ts                # CLI entry point
+│   ├── server.ts             # Core HTTP server
+│   ├── router.ts             # Extended routing (MDX, sitemap, feed, search)
+│   ├── renderer/
+│   │   ├── index.ts          # Renderer dispatcher: .md vs .mdx
+│   │   ├── markdown.ts       # markdown-it pipeline (V1 enhanced)
+│   │   ├── mdx.ts            # MDX parser + JSX-to-HTML transpiler
+│   │   └── components.ts     # Built-in MDX component library (server-side)
+│   ├── template/
+│   │   ├── index.ts          # Master HTML shell
+│   │   ├── sidebar.ts        # Auto-generated sidebar from file tree
+│   │   ├── seo.ts            # <head> SEO tag builder
+│   │   └── search.ts         # Client-side search index injector
+│   ├── settings/
+│   │   ├── index.ts          # Load + validate settings.json
+│   │   ├── defaults.ts       # Default settings object
+│   │   └── schema.ts         # Zod schema for validation
+│   ├── generators/
+│   │   ├── sitemap.ts        # /sitemap.xml generator
+│   │   ├── feed.ts           # /feed.xml RSS generator
+│   │   └── search-index.ts   # /search-index.json generator
+│   ├── directory.ts          # Directory listing (enhanced)
+│   └── types.ts              # All shared types
+├── bin/
+│   └── mdsvr.js
+├── dist/
+├── test/
+└── README.md
+```
+
+### Extended Request Flow
+
+```
+Browser Request
+      │
+      ▼
+  settings.ts ── load settings.json (once at startup, watch for changes)
+      │
+      ▼
+  router.ts
+      │
+      ├── /sitemap.xml          → generators/sitemap.ts
+      ├── /feed.xml             → generators/feed.ts
+      ├── /search-index.json    → generators/search-index.ts
+      ├── /__mdsvr__/*          → internal static assets (CSS, JS, icons)
+      │
+      ├── path is directory?    → sidebar.ts + directory.ts → HTML
+      │
+      ├── .md file?             → renderer/markdown.ts → template → HTML
+      ├── .mdx file?            → renderer/mdx.ts → template → HTML
+      │
+      ├── file in allowedExtensions?   → serveStatic()
+      ├── file in blockedExtensions?   → 403 Forbidden
+      │
+      └── not found → 404
+```
+
+---
+
+## 3. `settings.json` — Full Specification
+
+Đặt file này tại **root directory** được serve (ví dụ `./docs/settings.json`).  
+Tất cả fields đều **optional** — server vẫn chạy hoàn hảo nếu không có file này.
+
+```json
+{
+  "$schema": "https://mdsvr.dev/schema/v2.json",
+
+  "site": {
+    "title": "My Docs",
+    "description": "Project documentation",
+    "baseUrl": "https://docs.example.com",
+    "language": "en",
+    "logo": {
+      "src": "./assets/logo.svg",
+      "alt": "My Project",
+      "href": "/"
+    },
+    "favicon": "./assets/favicon.ico"
+  },
+
+  "appearance": {
+    "defaultTheme": "system",
+    "allowThemeToggle": true,
+    "accentColor": "#0969da",
+    "codeTheme": {
+      "light": "github-light",
+      "dark": "github-dark"
+    },
+    "fontFamily": {
+      "body": "-apple-system, 'Segoe UI', sans-serif",
+      "code": "'SFMono-Regular', Consolas, monospace",
+      "heading": null
+    }
+  },
+
+  "seo": {
+    "titleTemplate": "%s | My Docs",
+    "defaultImage": "./assets/og-default.png",
+    "twitterCard": "summary_large_image",
+    "twitterSite": "@myhandle",
+    "noIndex": false,
+    "generateSitemap": true,
+    "generateRssFeed": true,
+    "rss": {
+      "title": "My Docs Updates",
+      "feedUrl": "/feed.xml",
+      "siteUrl": "https://docs.example.com"
+    }
+  },
+
+  "navigation": {
+    "sidebar": {
+      "enabled": true,
+      "autoGenerate": true,
+      "showFileCount": false,
+      "collapsible": true,
+      "defaultOpen": true
+    },
+    "breadcrumbs": true,
+    "prevNextLinks": true,
+    "tocEnabled": true,
+    "tocMaxDepth": 3,
+    "editOnGithub": {
+      "enabled": false,
+      "repo": "https://github.com/user/repo",
+      "branch": "main",
+      "docsDir": "docs/"
+    }
+  },
+
+  "search": {
+    "enabled": true,
+    "placeholder": "Search docs...",
+    "maxResults": 10
+  },
+
+  "files": {
+    "extensions": {
+      "serve": [
+        ".md",
+        ".mdx",
+        ".txt",
+        ".pdf",
+        ".png",
+        ".jpg",
+        ".jpeg",
+        ".gif",
+        ".webp",
+        ".svg",
+        ".ico",
+        ".css",
+        ".js",
+        ".json",
+        ".mp4",
+        ".mp3"
+      ],
+      "block": [".env", ".key", ".pem", ".p12", ".secret", ".password"],
+      "hidden": ["settings.json", ".git", "node_modules", ".DS_Store"]
+    },
+    "indexFiles": ["README.md", "index.md", "INDEX.md"],
+    "ignorePatterns": ["**/node_modules/**", "**/.git/**", "**/.env*"]
+  },
+
+  "mdx": {
+    "enabled": true,
+    "components": {
+      "Callout": true,
+      "CodeGroup": true,
+      "Steps": true,
+      "Card": true,
+      "CardGroup": true,
+      "Tabs": true,
+      "Accordion": true,
+      "Badge": true,
+      "Mermaid": true
+    },
+    "remarkPlugins": [],
+    "rehypePlugins": []
+  },
+
+  "footer": {
+    "text": "Built with mdsvr",
+    "links": [{ "label": "GitHub", "href": "https://github.com/..." }]
+  }
+}
+```
+
+### Settings Schema — TypeScript Types (`src/settings/schema.ts`)
+
+```typescript
+import { z } from "zod";
+
+export const LogoSchema = z.object({
+  src: z.string(),
+  alt: z.string().default("Logo"),
+  href: z.string().default("/"),
+});
+
+export const SiteSchema = z.object({
+  title: z.string().default("mdsvr Docs"),
+  description: z.string().default(""),
+  baseUrl: z.string().url().optional(),
+  language: z.string().default("en"),
+  logo: LogoSchema.optional(),
+  favicon: z.string().optional(),
+});
+
+export const AppearanceSchema = z.object({
+  defaultTheme: z.enum(["light", "dark", "system"]).default("system"),
+  allowThemeToggle: z.boolean().default(true),
+  accentColor: z.string().default("#0969da"),
+  codeTheme: z
+    .object({
+      light: z.string().default("github-light"),
+      dark: z.string().default("github-dark"),
+    })
+    .default({}),
+  fontFamily: z
+    .object({
+      body: z.string().optional(),
+      code: z.string().optional(),
+      heading: z.string().nullable().optional(),
+    })
+    .default({}),
+});
+
+export const SeoSchema = z.object({
+  titleTemplate: z.string().default("%s"),
+  defaultImage: z.string().optional(),
+  twitterCard: z
+    .enum(["summary", "summary_large_image"])
+    .default("summary_large_image"),
+  twitterSite: z.string().optional(),
+  noIndex: z.boolean().default(false),
+  generateSitemap: z.boolean().default(true),
+  generateRssFeed: z.boolean().default(false),
+  rss: z
+    .object({
+      title: z.string(),
+      feedUrl: z.string().default("/feed.xml"),
+      siteUrl: z.string().url(),
+    })
+    .optional(),
+});
+
+export const FilesSchema = z.object({
+  extensions: z
+    .object({
+      serve: z.array(z.string()).default(DEFAULT_SERVE_EXTENSIONS),
+      block: z.array(z.string()).default(DEFAULT_BLOCK_EXTENSIONS),
+      hidden: z.array(z.string()).default(DEFAULT_HIDDEN_FILES),
+    })
+    .default({}),
+  indexFiles: z.array(z.string()).default(["README.md", "index.md"]),
+  ignorePatterns: z.array(z.string()).default([]),
+});
+
+export const MdxSchema = z.object({
+  enabled: z.boolean().default(true),
+  components: z.record(z.boolean()).default({}),
+  remarkPlugins: z.array(z.string()).default([]),
+  rehypePlugins: z.array(z.string()).default([]),
+});
+
+export const SettingsSchema = z.object({
+  $schema: z.string().optional(),
+  site: SiteSchema.default({}),
+  appearance: AppearanceSchema.default({}),
+  seo: SeoSchema.default({}),
+  navigation: NavigationSchema.default({}),
+  search: SearchSchema.default({}),
+  files: FilesSchema.default({}),
+  mdx: MdxSchema.default({}),
+  footer: FooterSchema.default({}),
+});
+
+export type Settings = z.infer<typeof SettingsSchema>;
+```
+
+### Settings Loader (`src/settings/index.ts`)
+
+```typescript
+import { watch } from "node:fs";
+import { SettingsSchema, Settings } from "./schema.ts";
+
+export async function loadSettings(rootDir: string): Promise<Settings> {
+  const settingsPath = path.join(rootDir, "settings.json");
+  try {
+    const raw = await fs.readFile(settingsPath, "utf-8");
+    const parsed = JSON.parse(raw);
+    const result = SettingsSchema.safeParse(parsed);
+    if (!result.success) {
+      console.warn(
+        "[mdsvr] settings.json validation errors:",
+        result.error.flatten(),
+      );
+      return SettingsSchema.parse({}); // fallback to defaults
+    }
+    return result.data;
+  } catch {
+    return SettingsSchema.parse({}); // no settings.json → all defaults
+  }
+}
+
+export function watchSettings(
+  rootDir: string,
+  onChange: (s: Settings) => void,
+): void {
+  // Re-load on file change without restarting server
+  watch(path.join(rootDir, "settings.json"), async () => {
+    const newSettings = await loadSettings(rootDir);
+    onChange(newSettings);
+  });
+}
+```
+
+---
+
+## 4. MDX Support (`src/renderer/mdx.ts`)
+
+### Strategy: Server-side MDX → Static HTML
+
+MDX được compile **hoàn toàn server-side** — không cần React runtime ở browser. Output là pure HTML.
+
+```
+.mdx file
+    │
+    ▼
+  @mdx-js/mdx (compile)
+    │  - parse MDX syntax
+    │  - resolve <Component> tags → built-in component registry
+    │  - remark plugins (GFM, frontmatter, etc.)
+    │  - rehype plugins (highlight, anchor, etc.)
+    ▼
+  JavaScript module (ESM string)
+    │
+    ▼
+  import() via data: URL (Node.js)
+    │
+    ▼
+  React.renderToStaticMarkup() → HTML string
+    │
+    ▼
+  template.ts → Full HTML page
+```
+
+```typescript
+// src/renderer/mdx.ts
+import { compile } from "@mdx-js/mdx";
+import * as runtime from "react/jsx-runtime";
+import { renderToStaticMarkup } from "react-dom/server";
+import remarkGfm from "remark-gfm";
+import remarkFrontmatter from "remark-frontmatter";
+import remarkMdxFrontmatter from "remark-mdx-frontmatter";
+import rehypeSlug from "rehype-slug";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import { builtinComponents } from "./components.ts";
+
+export interface MdxRenderResult {
+  html: string;
+  frontmatter: Record<string, unknown>;
+  toc: TocItem[];
+}
+
+export async function renderMdx(
+  content: string,
+  settings: Settings,
+): Promise<MdxRenderResult> {
+  const compiled = await compile(content, {
+    outputFormat: "function-body",
+    remarkPlugins: [remarkGfm, remarkFrontmatter, remarkMdxFrontmatter],
+    rehypePlugins: [rehypeSlug, rehypeAutolinkHeadings],
+    development: false,
+  });
+
+  // Execute compiled MDX in Node.js
+  const { default: MDXContent, frontmatter } = await run(String(compiled), {
+    ...runtime,
+    baseUrl: import.meta.url,
+  });
+
+  // Render to static HTML with built-in components injected
+  const html = renderToStaticMarkup(
+    MDXContent({ components: builtinComponents }),
+  );
+
+  return { html, frontmatter: frontmatter ?? {}, toc: extractToc(html) };
+}
+```
+
+### Frontmatter Support (cả `.md` và `.mdx`)
+
+```markdown
+---
+title: Getting Started
+description: How to install and configure
+date: 2025-01-15
+author: John Doe
+image: ./assets/hero.png
+tags: [setup, quickstart]
+noIndex: false
+---
+
+# Getting Started
+```
+
+Frontmatter được extract để:
+
+- Override SEO `<title>`, `<meta description>`, OG tags
+- Hiển thị `author`, `date` dưới heading
+- Generate RSS feed entries
+
+---
+
+## 5. Built-in MDX Components (`src/renderer/components.ts`)
+
+Các component này được render **server-side thành HTML** — không cần JS ở client (trừ Tabs).
+
+### Callout
+
+```mdx
+<Callout type="warning" title="Important">
+  This will delete all your data.
+</Callout>
+```
+
+Types: `info` | `warning` | `danger` | `success` | `tip`
+
+### CodeGroup
+
+````mdx
+<CodeGroup title="Install">
+  ```bash npm
+  npm install mdsvr
+````
+
+```bash pnpm
+pnpm add mdsvr
+```
+
+</CodeGroup>
+```
+
+### Steps
+
+```mdx
+<Steps>
+  ### Install the package Run `npm install mdsvr` ### Create your docs folder
+  Create a `./docs` directory ### Start the server Run `npx mdsvr ./docs --open`
+</Steps>
+```
+
+### Card / CardGroup
+
+```mdx
+<CardGroup cols={2}>
+  <Card title="Quick Start" icon="⚡" href="/quickstart">
+    Get up and running in 5 minutes
+  </Card>
+  <Card title="Configuration" icon="⚙️" href="/config">
+    Full settings reference
+  </Card>
+</CardGroup>
+```
+
+### Tabs
+
+````mdx
+<Tabs items={["JavaScript", "TypeScript", "Python"]}>
+  <Tab>```js\nconsole.log('hello')\n```</Tab>
+  <Tab>```ts\nconsole.log('hello')\n```</Tab>
+  <Tab>```py\nprint('hello')\n```</Tab>
+</Tabs>
+````
+
+> Tabs cần minimal JS (~200 bytes inline) để toggle visibility.
+
+### Accordion
+
+```mdx
+<Accordion title="Is this free?">
+  Yes, mdsvr is open source under MIT.
+</Accordion>
+```
+
+### Badge
+
+```mdx
+<Badge color="green">New</Badge>
+<Badge color="orange">Beta</Badge>
+<Badge color="red">Deprecated</Badge>
+```
+
+### Mermaid
+
+```mdx
+<Mermaid>
+  graph TD
+    A[Start] --> B{Is it working?}
+    B -->|Yes| C[Great!]
+    B -->|No| D[Debug]
+</Mermaid>
+```
+
+> Render via mermaid.js (lazy-loaded client-side).
+
+---
+
+## 6. SEO Layer (`src/template/seo.ts`)
+
+```typescript
+export interface SeoData {
+  title: string;
+  description?: string;
+  image?: string;
+  url?: string;
+  type?: "website" | "article";
+  date?: string;
+  author?: string;
+  noIndex?: boolean;
+}
+
+export function buildSeoTags(data: SeoData, settings: Settings): string {
+  const title = settings.seo.titleTemplate.replace("%s", data.title);
+  const image = data.image ?? settings.seo.defaultImage;
+
+  return `
+    <title>${escapeHtml(title)}</title>
+    <meta name="description" content="${escapeHtml(data.description ?? settings.site.description)}">
+    ${data.noIndex || settings.seo.noIndex ? '<meta name="robots" content="noindex">' : ""}
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="${escapeHtml(title)}">
+    <meta property="og:description" content="${escapeHtml(data.description ?? "")}">
+    <meta property="og:type" content="${data.type ?? "website"}">
+    ${data.url ? `<meta property="og:url" content="${data.url}">` : ""}
+    ${image ? `<meta property="og:image" content="${resolveImageUrl(image, settings)}">` : ""}
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="${settings.seo.twitterCard}">
+    ${settings.seo.twitterSite ? `<meta name="twitter:site" content="${settings.seo.twitterSite}">` : ""}
+    <meta name="twitter:title" content="${escapeHtml(title)}">
+    ${image ? `<meta name="twitter:image" content="${resolveImageUrl(image, settings)}">` : ""}
+
+    <!-- Article meta -->
+    ${data.date ? `<meta property="article:published_time" content="${data.date}">` : ""}
+    ${data.author ? `<meta property="article:author" content="${data.author}">` : ""}
+
+    <!-- Canonical -->
+    ${data.url && settings.site.baseUrl ? `<link rel="canonical" href="${data.url}">` : ""}
+    ${settings.seo.generateSitemap ? `<link rel="sitemap" type="application/xml" href="/sitemap.xml">` : ""}
+    ${settings.seo.generateRssFeed ? `<link rel="alternate" type="application/rss+xml" href="/feed.xml">` : ""}
+  `;
+}
+```
+
+---
+
+## 7. Sidebar Navigation (`src/template/sidebar.ts`)
+
+Auto-generate từ file tree, respect settings.
+
+```typescript
+export interface NavItem {
+  title: string; // from frontmatter.title or filename
+  href: string; // URL path
+  children?: NavItem[]; // subdirectory
+  active?: boolean; // current page
+  type: "file" | "dir";
+}
+
+export async function buildSidebar(
+  rootDir: string,
+  currentPath: string,
+  settings: Settings,
+): Promise<NavItem[]>;
+```
+
+**Title resolution priority:**
+
+1. `frontmatter.title` (from .md/.mdx file)
+2. First `# H1` in file
+3. Filename humanized (`getting-started.md` → `Getting Started`)
+
+**Sort order:**
+
+- Folders before files (configurable)
+- Alphabetical within each group
+- Override with `frontmatter.order: 1` (lower = higher)
+
+**Hidden files:**
+
+- Files/dirs matching `settings.files.hidden`
+- Files starting with `_` (e.g., `_draft.md`)
+- `settings.json` itself
+
+---
+
+## 8. Full-Text Search (`src/generators/search-index.ts`)
+
+Search index được generate **tại startup** và serve dưới `/search-index.json`.  
+Client-side search dùng lightweight fuzzy match — không cần server.
+
+```typescript
+export interface SearchEntry {
+  title: string;
+  href: string;
+  excerpt: string; // first 200 chars of content
+  headings: string[]; // all h1-h6 text
+  content: string; // full plain text (stripped of markdown)
+}
+
+export async function buildSearchIndex(
+  rootDir: string,
+  settings: Settings,
+): Promise<SearchEntry[]>;
+// Crawl all .md/.mdx files, extract text, return array
+```
+
+**Client-side search UI:**
+
+- Keyboard shortcut `Cmd+K` / `Ctrl+K` opens search modal
+- Fuzzy match on `title + headings + content`
+- Highlight matching term in results
+- ~3KB inline JS, no external dependency
+
+---
+
+## 9. Generators
+
+### Sitemap (`src/generators/sitemap.ts`)
+
+```typescript
+// Serves GET /sitemap.xml
+export async function generateSitemap(
+  rootDir: string,
+  settings: Settings,
+): Promise<string>; // returns XML string
+
+// Output format:
+// <?xml version="1.0" encoding="UTF-8"?>
+// <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+//   <url>
+//     <loc>https://docs.example.com/getting-started</loc>
+//     <lastmod>2025-01-15</lastmod>
+//     <changefreq>weekly</changefreq>
+//   </url>
+// </urlset>
+```
+
+### RSS Feed (`src/generators/feed.ts`)
+
+```typescript
+// Serves GET /feed.xml
+// Only includes files with frontmatter.date (treat as "blog posts")
+export async function generateFeed(
+  rootDir: string,
+  settings: Settings,
+): Promise<string>; // returns RSS XML string
+```
+
+---
+
+## 10. Updated Template (`src/template/index.ts`)
+
+V2 template là một **full SPA shell** với sidebar, header, TOC, và theme toggle — vẫn là **pure HTML/CSS**, không cần framework.
+
+```
+┌─────────────────────────────────────────────────────┐
+│ HEADER: [Logo] [Site Title]          [🔍] [🌙/☀️]  │
+├────────────┬────────────────────────┬────────────────┤
+│            │                        │                │
+│  SIDEBAR   │    CONTENT AREA        │   TOC (right)  │
+│            │                        │                │
+│  📁 Guide  │  # Page Title          │  On this page  │
+│  📄 Intro  │                        │  ─ Section 1   │
+│  📄 Setup  │  Content renders here  │  ─ Section 2   │
+│  📁 API    │                        │  ─ Section 3   │
+│  📄 Ref    │                        │                │
+│            │  ◀ Prev | Next ▶       │                │
+├────────────┴────────────────────────┴────────────────┤
+│ FOOTER: Built with mdsvr | [Links]                   │
+└─────────────────────────────────────────────────────┘
+```
+
+**CSS Variables cho theming:**
+
+```css
+:root[data-theme="light"] {
+  --bg: #ffffff;
+  --bg-secondary: #f6f8fa;
+  --border: #d1d9e0;
+  --text: #1f2328;
+  --text-muted: #636c76;
+  --accent: var(--accent-color, #0969da);
+  --code-bg: #f6f8fa;
+  --sidebar-width: 260px;
+  --toc-width: 220px;
+}
+
+:root[data-theme="dark"] {
+  --bg: #0d1117;
+  --bg-secondary: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --text-muted: #8d96a0;
+  --accent: var(--accent-color, #58a6ff);
+  --code-bg: #161b22;
+}
+```
+
+**Theme toggle logic (~50 bytes inline JS):**
+
+```javascript
+// Runs before paint to prevent flash
+const t =
+  localStorage.getItem("theme") ||
+  (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+document.documentElement.setAttribute("data-theme", t);
+```
+
+---
+
+## 11. Updated Router (`src/router.ts`)
+
+```typescript
+export async function route(
+  req: http.IncomingMessage,
+  res: http.ServerResponse,
+  rootDir: string,
+  settings: Settings, // ← NEW: injected from server
+): Promise<void> {
+  const urlPath = parseUrl(req.url);
+
+  // Internal assets
+  if (urlPath.startsWith("/__mdsvr__/"))
+    return serveInternalAsset(urlPath, res);
+
+  // Generated routes
+  if (urlPath === "/sitemap.xml" && settings.seo.generateSitemap)
+    return res.end(await generateSitemap(rootDir, settings));
+  if (urlPath === "/feed.xml" && settings.seo.generateRssFeed)
+    return res.end(await generateFeed(rootDir, settings));
+  if (urlPath === "/search-index.json" && settings.search.enabled)
+    return serveSearchIndex(rootDir, settings, res);
+
+  // ... rest of V1 routing logic, extended with:
+  // - settings.files.extensions.block → 403
+  // - settings.files.hidden → 404 (pretend not exists)
+  // - .mdx → renderMdx()
+  // - all renders now receive `settings` for template building
+}
+```
+
+---
+
+## 12. Updated `ServeOptions` & `ServerInstance`
+
+```typescript
+export interface ServeOptions {
+  port?: number; // default: 1900
+  host?: string; // default: 'localhost'
+  open?: boolean; // default: false
+  silent?: boolean; // default: false
+  watchSettings?: boolean; // default: true — reload on settings.json change
+}
+
+export interface ServerInstance {
+  close(): Promise<void>;
+  port: number;
+  host: string;
+  url: string;
+  settings: Settings; // ← NEW: expose loaded settings
+  reloadSettings(): Promise<void>; // ← NEW: manual reload
+}
+```
+
+---
+
+## 13. New Dependencies
+
+```json
+{
+  "dependencies": {
+    "markdown-it": "^14.1.0",
+    "markdown-it-anchor": "^9.2.0",
+    "highlight.js": "^11.10.0",
+    "@mdx-js/mdx": "^3.1.0",
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0",
+    "remark-gfm": "^4.0.0",
+    "remark-frontmatter": "^5.0.0",
+    "remark-mdx-frontmatter": "^4.0.0",
+    "rehype-slug": "^6.0.0",
+    "rehype-autolink-headings": "^7.1.0",
+    "gray-matter": "^4.0.3",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "@types/markdown-it": "^14.1.0",
+    "@types/node": "^22.0.0",
+    "typescript": "^5.5.0"
+  }
+}
+```
+
+---
+
+## 14. Updated CLI
+
+```
+mdsvr [dir] [options]
+
+Options:
+  --port, -p      <number>   Port to listen on (default: 1900)
+  --host          <string>   Host to bind (default: localhost)
+  --open, -o                 Auto-open in browser
+  --silent, -s               Suppress all console output
+  --no-watch                 Disable settings.json hot-reload
+  --version, -v              Print version
+  --help, -h                 Show help
+
+New in v2:
+  --init                     Create a starter settings.json in [dir]
+  --validate                 Validate settings.json and exit
+```
+
+**`--init` output** (`settings.json` starter):
+
+```bash
+$ npx mdsvr ./docs --init
+✔ Created docs/settings.json with defaults
+✔ Run `npx mdsvr ./docs` to start
+```
+
+**Startup log v2:**
+
+```
+  mdsvr v2.0.0
+
+  Local:    http://localhost:1900
+  Network:  http://192.168.1.x:1900
+
+  Serving  /absolute/path/to/docs
+  Settings docs/settings.json  ← loaded (or "using defaults" if absent)
+  MDX      enabled
+  Search   enabled
+  Sitemap  http://localhost:1900/sitemap.xml
+
+  Hit Ctrl+C to stop.
+```
+
+---
+
+## 15. Testing — New Test Cases
+
+Kế thừa toàn bộ V1 tests, bổ sung:
+
+```
+test/
+├── mdx.test.ts           — MDX render: components, frontmatter, JSX
+├── settings.test.ts      — Load, validate, defaults, invalid JSON
+├── seo.test.ts           — SEO tag generation from frontmatter
+├── sidebar.test.ts       — NavItem tree building, title resolution
+├── search-index.test.ts  — Index generation, content extraction
+├── sitemap.test.ts       — XML output, lastmod dates
+├── feed.test.ts          — RSS XML, only dated entries
+├── theme.test.ts         — CSS variable presence in template
+└── security.test.ts      — block extensions return 403, hidden files 404
+```
+
+Key new test cases:
+
+- `GET /page.mdx` → 200, contains rendered `<Callout>` HTML
+- `GET /settings.json` → 404 (hidden by default)
+- `GET /.env` → 403 (blocked extension)
+- Frontmatter `title: Custom Title` → `<title>Custom Title | My Docs</title>`
+- `GET /sitemap.xml` → 200, valid XML, contains all .md/.mdx URLs
+- `settings.appearance.accentColor = "#ff0000"` → CSS var in HTML
+
+---
+
+## 16. MVP Implementation Order (V2)
+
+Build on top of V1 dist — do not rewrite from scratch.
+
+1. `settings/schema.ts` + `settings/defaults.ts` — Zod schema
+2. `settings/index.ts` — loader + watcher
+3. `renderer/markdown.ts` — refactor V1 renderer to accept `Settings`
+4. `renderer/components.ts` — built-in MDX component library (HTML strings)
+5. `renderer/mdx.ts` — MDX compile + run pipeline
+6. `template/seo.ts` — SEO tag builder
+7. `template/sidebar.ts` — NavItem tree builder
+8. `template/search.ts` — search modal HTML + inline JS
+9. `template/index.ts` — full V2 shell template
+10. `generators/search-index.ts`
+11. `generators/sitemap.ts`
+12. `generators/feed.ts`
+13. `router.ts` — extend with new routes + settings injection
+14. `server.ts` — integrate settings load/watch
+15. `cli.ts` — add `--init`, `--validate`, `--no-watch`
+16. Tests
+17. README update
+
+---
+
+## 17. Out of Scope (V2 MVP → defer to V3)
+
+- Custom MDX component injection from user's own files (e.g., `components/MyCard.jsx`)
+- `mdsvr build` → export to static HTML files (SSG mode)
+- Authentication / private pages
+- Analytics integration
+- i18n / multi-language docs
+- Plugin API (custom renderers, middleware)
+- Live reload / HMR
+- AI-powered search (semantic)

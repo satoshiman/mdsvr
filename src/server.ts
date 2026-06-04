@@ -3,8 +3,18 @@ import path from "node:path";
 import { promises as fs } from "node:fs";
 import os from "node:os";
 import { fileURLToPath } from "node:url";
-import { ServeOptions, ServerInstance } from "./types.js";
+import type { ServeOptions, ServerInstance } from "./types.js";
 import { route } from "./router.js";
+import {
+  loadSettings,
+  watchSettings,
+  type Settings,
+} from "./settings/index.js";
+import { buildSearchIndex } from "./generators/search-index.js";
+
+// Global state for the server
+let currentSettings: Settings;
+let searchIndexCache: unknown = null;
 
 export async function createServer(
   rootDir: string,
@@ -23,26 +33,62 @@ export async function createServer(
     throw new Error(`Directory does not exist: ${absoluteRoot}`);
   }
 
+  // Load settings
+  currentSettings = await loadSettings(absoluteRoot);
+
+  // Build search index
+  if (currentSettings.search.enabled) {
+    searchIndexCache = await buildSearchIndex(absoluteRoot, currentSettings);
+  }
+
   const port = options.port ?? 1900;
   const host = options.host ?? "localhost";
+  const watchSettingsEnabled = options.watchSettings ?? true;
 
   return new Promise((resolve, reject) => {
     const server = http.createServer((req, res) => {
-      route(req, res, absoluteRoot).catch((err) => {
-        console.error("Routing error:", err);
-        res.writeHead(500, { "Content-Type": "text/plain" });
-        res.end("Internal Server Error");
-      });
+      route(req, res, absoluteRoot, currentSettings, searchIndexCache).catch(
+        (err) => {
+          console.error("Routing error:", err);
+          res.writeHead(500, { "Content-Type": "text/plain" });
+          res.end("Internal Server Error");
+        },
+      );
     });
 
     server.listen(port, host, () => {
       const actualPort = (server.address() as { port: number }).port;
       const url = `http://${host}:${actualPort}`;
 
+      // Watch settings file for changes
+      if (watchSettingsEnabled) {
+        (async () => {
+          try {
+            const settingsPath = path.join(absoluteRoot, "settings.json");
+            await fs.access(settingsPath);
+            watchSettings(absoluteRoot, async (newSettings) => {
+              currentSettings = newSettings;
+              if (currentSettings.search.enabled) {
+                searchIndexCache = await buildSearchIndex(
+                  absoluteRoot,
+                  currentSettings,
+                );
+              }
+              if (!options.silent) {
+                console.log("[mdsvr] Settings reloaded");
+              }
+            });
+          } catch {
+            // No settings.json to watch, that's fine
+          }
+        })();
+      }
+
       const instance: ServerInstance = {
         port: actualPort,
         host,
         url,
+        settings: currentSettings,
         close: () =>
           new Promise((res, rej) => {
             server.close((err) => {
@@ -50,6 +96,15 @@ export async function createServer(
               else res();
             });
           }),
+        reloadSettings: async () => {
+          currentSettings = await loadSettings(absoluteRoot);
+          if (currentSettings.search.enabled) {
+            searchIndexCache = await buildSearchIndex(
+              absoluteRoot,
+              currentSettings,
+            );
+          }
+        },
       };
 
       resolve(instance);
@@ -74,3 +129,6 @@ export function getNetworkAddress(): string | undefined {
   }
   return undefined;
 }
+
+// Export for use by router
+export { currentSettings, searchIndexCache };
