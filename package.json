@@ -1,12 +1,12 @@
 {
   "name": "mdsvr",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "Static file server with auto Markdown → HTML rendering",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "bin": {
-    "mdsvr": "./bin/mdsvr.js"
+    "mdsvr": "bin/mdsvr.js"
   },
   "exports": {
     ".": {
@@ -51,6 +51,6 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/satoshiman/mdsvr.git"
+    "url": "git+https://github.com/satoshiman/mdsvr.git"
   }
 }

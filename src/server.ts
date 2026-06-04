@@ -23,7 +23,7 @@ export async function createServer(
     throw new Error(`Directory does not exist: ${absoluteRoot}`);
   }
 
-  const port = options.port ?? 3000;
+  const port = options.port ?? 1900;
   const host = options.host ?? "localhost";
 
   return new Promise((resolve, reject) => {
@@ -36,10 +36,11 @@ export async function createServer(
     });
 
     server.listen(port, host, () => {
-      const url = `http://${host}:${port}`;
+      const actualPort = (server.address() as { port: number }).port;
+      const url = `http://${host}:${actualPort}`;
 
       const instance: ServerInstance = {
-        port,
+        port: actualPort,
         host,
         url,
         close: () =>

@@ -6,7 +6,7 @@ describe("renderer", () => {
   it("renders basic markdown", () => {
     const md = "# Hello\n\nThis is **bold** and _italic_.";
     const html = renderMarkdown(md);
-    assert.ok(html.includes("<h1>"));
+    assert.ok(html.includes("<h1"));
     assert.ok(html.includes("Hello"));
     assert.ok(
       html.includes("<strong>bold</strong>") || html.includes("<strong>"),

@@ -1,5 +1,6 @@
 import { describe, it, before, after } from "node:test";
 import assert from "node:assert";
+import http from "node:http";
 import { createServer } from "../dist/server.js";
 import type { ServerInstance } from "../dist/index.js";
 import { promises as fs } from "node:fs";
@@ -41,7 +42,7 @@ describe("router", () => {
     assert.ok(res.headers.get("content-type")?.includes("text/html"));
     const body = await res.text();
     assert.ok(body.includes("Hello World"));
-    assert.ok(body.includes("<h1>"));
+    assert.ok(body.includes("<h1"));
   });
 
   it("returns 200 for static text file", async () => {
@@ -65,8 +66,20 @@ describe("router", () => {
   });
 
   it("returns 403 for path traversal attempt", async () => {
-    const res = await fetch(`${baseUrl}/../secret.txt`);
-    assert.strictEqual(res.status, 403);
+    // Use raw HTTP request to avoid URL normalization by fetch
+    const url = new URL(baseUrl);
+    const options = {
+      hostname: url.hostname,
+      port: url.port,
+      path: "/../secret.txt",
+      method: "GET",
+    };
+    const res = await new Promise<http.IncomingMessage>((resolve, reject) => {
+      const req = http.request(options, resolve);
+      req.on("error", reject);
+      req.end();
+    });
+    assert.strictEqual(res.statusCode, 403);
   });
 
   it("returns 405 for POST requests", async () => {

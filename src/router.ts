@@ -45,7 +45,9 @@ export async function route(
   const urlPath = decodeURIComponent(url.split("?")[0]);
 
   // Resolve path and check for path traversal
-  const resolvedPath = path.resolve(path.join(rootDir, urlPath));
+  // Remove leading slash from urlPath to ensure proper relative resolution
+  const cleanUrlPath = urlPath.replace(/^\/+/, "");
+  const resolvedPath = path.resolve(path.join(rootDir, cleanUrlPath));
   if (!resolvedPath.startsWith(rootDir)) {
     sendError(res, 403, "Forbidden");
     return;

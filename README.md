@@ -29,7 +29,7 @@ Usage: mdsvr [dir] [options]
 
 Options:
   [dir]              Root directory to serve (default: .)
-  -p, --port N       Port number (default: 3000)
+  -p, --port N       Port number (default: 1900)
   --host H           Bind address (default: localhost)
   -o, --open         Auto-open browser
   -s, --silent       Suppress console output

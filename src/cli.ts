@@ -18,7 +18,7 @@ interface ParsedArgs {
 function parseArgs(argv: string[]): ParsedArgs {
   const args: ParsedArgs = {
     dir: ".",
-    port: 3000,
+    port: 1900,
     host: "localhost",
     open: false,
     silent: false,
@@ -57,7 +57,7 @@ Usage: mdsvr [dir] [options]
 
 Options:
   [dir]              Root directory to serve (default: .)
-  -p, --port N       Port number (default: 3000)
+  -p, --port N       Port number (default: 1900)
   --host H           Bind address (default: localhost)
   -o, --open         Auto-open browser
   -s, --silent       Suppress console output
@@ -137,8 +137,11 @@ async function main(): Promise<void> {
       await openBrowser(server.url);
     }
 
-    // Graceful shutdown
-    process.on("SIGINT", async () => {
+    // Graceful shutdown - use once() and flag to prevent multiple shutdowns
+    let isShuttingDown = false;
+    process.once("SIGINT", async () => {
+      if (isShuttingDown) return;
+      isShuttingDown = true;
       if (!args.silent) {
         console.log("\nShutting down...");
       }

@@ -93,7 +93,7 @@ export function createServer(
 
 - Resolve `rootDir` to absolute path (throw if not exist)
 - Create `http.Server`, call `route(req, res, rootDir)` on each request
-- Listen on `options.port ?? 3000`, `options.host ?? 'localhost'`
+- Listen on `options.port ?? 1900`, `options.host ?? 'localhost'`
 - Return `ServerInstance` with `.close()` method
 
 ### `src/router.ts`
@@ -109,9 +109,10 @@ export async function route(
 Logic:
 
 1. Parse `req.url`, decode URI, strip query string
-2. Resolve to absolute path = `path.join(rootDir, urlPath)`
-3. **Security**: Ensure resolved path starts with `rootDir` (path traversal guard)
-4. `stat` the path:
+2. Strip leading slash from `urlPath` to prevent path traversal via `/../`
+3. Resolve to absolute path = `path.resolve(path.join(rootDir, cleanUrlPath))`
+4. **Security**: Ensure resolved path starts with `rootDir` (path traversal guard)
+5. `stat` the path:
    - **Directory**: call `serveDirectory()`
    - **`.md` file**: call `serveMarkdown()`
    - **Other file**: call `serveStatic()`
@@ -132,10 +133,10 @@ export function renderMarkdown(content: string): string;
 // Returns: raw HTML string (not full page, just body content)
 ```
 
-**markdown-it plugins to include:**
+**markdown-it plugins:**
 
 - `markdown-it-anchor` — header anchors (#)
-- `markdown-it-highlight` or Prism.js via plugin — code syntax highlight
+- `highlight.js` — code syntax highlighting in dark code blocks
 
 ### `src/template.ts`
 
@@ -163,7 +164,7 @@ export function wrapHtml(params: {
 ```typescript
 export function renderDirectory(params: {
   urlPath: string;
-  entries: fs.Dirent[];
+  entries: (Dirent & { size?: number })[];
 }): string;
 // Returns: full HTML page with file listing
 ```
@@ -222,8 +223,14 @@ import { createServer } from "mdsvr";
 const server = await createServer("./docs", { port: 4000, open: true });
 console.log(`Running at ${server.url}`);
 
-// Graceful shutdown
-process.on("SIGINT", () => server.close());
+// Graceful shutdown - prevents multiple SIGINT triggers
+let isShuttingDown = false;
+process.once("SIGINT", async () => {
+  if (isShuttingDown) return;
+  isShuttingDown = true;
+  await server.close();
+  process.exit(0);
+});
 ```
 
 ---
@@ -233,13 +240,13 @@ process.on("SIGINT", () => server.close());
 ```json
 {
   "name": "mdsvr",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "Static file server with auto Markdown → HTML rendering",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "bin": {
-    "mdsvr": "./bin/mdsvr.js"
+    "mdsvr": "bin/mdsvr.js"
   },
   "exports": {
     ".": {
@@ -249,18 +256,20 @@ process.on("SIGINT", () => server.close());
   },
   "scripts": {
     "build": "tsc",
+    "build:test": "tsc -p tsconfig.test.json",
     "dev": "tsc --watch",
-    "test": "node --test",
+    "test": "npm run build && npm run build:test && node --test dist-test/*.test.js",
     "prepublishOnly": "npm run build && npm test"
   },
   "dependencies": {
-    "markdown-it": "^14.x",
-    "markdown-it-anchor": "^9.x"
+    "markdown-it": "^14.1.0",
+    "markdown-it-anchor": "^9.2.0",
+    "highlight.js": "^11.10.0"
   },
   "devDependencies": {
-    "@types/markdown-it": "^14.x",
-    "@types/node": "^22.x",
-    "typescript": "^5.x"
+    "@types/markdown-it": "^14.1.0",
+    "@types/node": "^22.0.0",
+    "typescript": "^5.5.0"
   },
   "engines": {
     "node": ">=18.0.0"
@@ -347,12 +356,25 @@ test/
 ├── renderer.test.ts    — unit test: markdown → html output
 ├── router.test.ts      — unit test: path resolution, MIME types, security
 ├── server.test.ts      — integration: actual HTTP requests with fetch()
-└── fixtures/
-    ├── sample.md
-    ├── nested/
-    │   └── deep.md
-    └── assets/
-        └── image.png
+├── directory.test.ts   — unit test: directory listing HTML generation
+└── template.test.ts    — unit test: HTML template rendering
+```
+
+**tsconfig.test.json** — separate config for test compilation:
+
+```json
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "outDir": "./dist-test",
+    "rootDir": "./test",
+    "strict": true,
+    "esModuleInterop": true
+  },
+  "include": ["test/**/*"]
+}
 ```
 
 Key test cases:
