@@ -223,7 +223,7 @@ async function main(): Promise<void> {
       if (!args.silent) {
         console.log("\nShutting down...");
       }
-      await server.close();
+      server.close();
       process.exit(0);
     });
   } catch (err) {
