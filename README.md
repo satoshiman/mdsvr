@@ -44,6 +44,24 @@ npm install -g mdsvr
 mdsvr ./docs
 ```
 
+## Docker
+
+Pull and run with Docker:
+
+```bash
+docker pull thedeployer/mdsvr:latest
+docker run -d --name docs-server -p 1900:1900 -v /path/to/docs:/app/docs thedeployer/mdsvr:latest
+```
+
+Then open http://localhost:1900 in your browser.
+
+### Build from source
+
+```bash
+docker build -t mdsvr:latest .
+docker run -d --name docs-server -p 1900:1900 -v /path/to/docs:/app/docs mdsvr:latest
+```
+
 ## CLI Usage
 
 ```

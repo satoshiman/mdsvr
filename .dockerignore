@@ -1,0 +1,12 @@
+node_modules
+npm-debug.log
+.git
+.gitignore
+README.md
+LICENSE
+dist
+dist-test
+test
+docs
+AGENT.md
+AGENT-v2.md
