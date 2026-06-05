@@ -41,7 +41,7 @@ export async function createServer(
     searchIndexCache = await buildSearchIndex(absoluteRoot, currentSettings);
   }
 
-  const port = options.port ?? 1900;
+  const port = options.port ?? 1800;
   const host = options.host ?? "localhost";
   const watchSettingsEnabled = options.watchSettings ?? true;
   const maxRetries = 10;

@@ -30,8 +30,8 @@ RUN npm ci --omit=dev
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/bin ./bin
 
-# Expose port (default: 1900)
-EXPOSE 1900
+# Expose port (default: 1800)
+EXPOSE 1800
 
 # Start the application
 ENTRYPOINT ["node", "bin/mdsvr.js", "--host", "0.0.0.0"]

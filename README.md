@@ -31,10 +31,10 @@ npx mdsvr ./docs
 npx mdsvr ./docs --init
 
 # With options
-npx mdsvr ./notes --port 4000 --open
+npx mdsvr ./notes --port 1800 --open
 
 # Expose to LAN
-npx mdsvr . --host 0.0.0.0 --port 8080
+npx mdsvr . --host 0.0.0.0 --port 1800
 ```
 
 ## Installation
@@ -50,16 +50,16 @@ Pull and run with Docker:
 
 ```bash
 docker pull thedeployer/mdsvr:latest
-docker run -d --name docs-server -p 1900:1900 -v /path/to/docs:/app/docs thedeployer/mdsvr:latest
+docker run -d --name docs-server -p 1800:1800 -v /path/to/docs:/app/docs thedeployer/mdsvr:latest
 ```
 
-Then open http://localhost:1900 in your browser.
+Then open http://localhost:1800 in your browser.
 
 ### Build from source
 
 ```bash
 docker build -t mdsvr:latest .
-docker run -d --name docs-server -p 1900:1900 -v /path/to/docs:/app/docs mdsvr:latest
+docker run -d --name docs-server -p 1800:1800 -v /path/to/docs:/app/docs mdsvr:latest
 ```
 
 ## CLI Usage
@@ -69,7 +69,7 @@ Usage: mdsvr [dir] [options]
 
 Options:
   [dir]              Root directory to serve (default: .)
-  -p, --port N       Port number (default: 1900)
+  -p, --port N       Port number (default: 1800)
   --host H           Bind address (default: localhost)
   -o, --open         Auto-open browser
   -s, --silent       Suppress console output

@@ -60,7 +60,7 @@ Browser Request
 
 ```typescript
 export interface ServeOptions {
-  port?: number; // default: 1900
+  port?: number; // default: 1800
   host?: string; // default: 'localhost'
   open?: boolean; // default: false — auto open browser
   silent?: boolean; // default: false — suppress logs
@@ -93,7 +93,7 @@ export function createServer(
 
 - Resolve `rootDir` to absolute path (throw if not exist)
 - Create `http.Server`, call `route(req, res, rootDir)` on each request
-- Listen on `options.port ?? 1900`, `options.host ?? 'localhost'`
+- Listen on `options.port ?? 1800`, `options.host ?? 'localhost'`
 - Return `ServerInstance` with `.close()` method
 
 ### `src/router.ts`
@@ -186,7 +186,7 @@ CLI flags:
 | Flag | Default | Description |
 |---|---|---|
 | `[dir]` | `.` | Root directory to serve |
-| `--port, -p` | `1900` | Port number |
+| `--port, -p` | `1800` | Port number |
 | `--host` | `localhost` | Bind address (`0.0.0.0` for LAN) |
 | `--open, -o` | `false` | Auto-open browser |
 | `--silent, -s` | `false` | No console output |
@@ -198,8 +198,8 @@ Startup log format:
 ```
   mdsvr v1.0.0
 
-  Local:    http://localhost:1900
-  Network:  http://192.168.1.x:1900   ← only shown when host != localhost
+  Local:    http://localhost:1800
+  Network:  http://192.168.1.x:1800   ← only shown when host != localhost
 
   Serving /absolute/path/to/dir
   Hit Ctrl+C to stop.
@@ -416,7 +416,7 @@ npx mdsvr . --host 0.0.0.0 --port 8080
 
 # Programmatic
 import { createServer } from 'mdsvr';
-const s = await createServer('./docs', { port: 1900 });
+const s = await createServer('./docs', { port: 1800 });
 ```
 
 ---

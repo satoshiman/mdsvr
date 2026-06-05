@@ -798,7 +798,7 @@ export async function route(
 
 ```typescript
 export interface ServeOptions {
-  port?: number; // default: 1900
+  port?: number; // default: 1800
   host?: string; // default: 'localhost'
   open?: boolean; // default: false
   silent?: boolean; // default: false
@@ -854,7 +854,7 @@ export interface ServerInstance {
 mdsvr [dir] [options]
 
 Options:
-  --port, -p      <number>   Port to listen on (default: 1900)
+  --port, -p      <number>   Port to listen on (default: 1800)
   --host          <string>   Host to bind (default: localhost)
   --open, -o                 Auto-open in browser
   --silent, -s               Suppress all console output
@@ -880,14 +880,14 @@ $ npx mdsvr ./docs --init
 ```
   mdsvr v2.0.0
 
-  Local:    http://localhost:1900
-  Network:  http://192.168.1.x:1900
+  Local:    http://localhost:1800
+  Network:  http://192.168.1.x:1800
 
   Serving  /absolute/path/to/docs
   Settings docs/settings.json  ← loaded (or "using defaults" if absent)
   MDX      enabled
   Search   enabled
-  Sitemap  http://localhost:1900/sitemap.xml
+  Sitemap  http://localhost:1800/sitemap.xml
 
   Hit Ctrl+C to stop.
 ```

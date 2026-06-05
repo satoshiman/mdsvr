@@ -102,7 +102,7 @@ export async function generateFeed(
   rootDir: string,
   settings: Settings,
 ): Promise<string> {
-  const baseUrl = settings.site.baseUrl || "http://localhost:1900";
+  const baseUrl = settings.site.baseUrl || "http://localhost:1800";
   const feedUrl = settings.seo.rss?.feedUrl || "/feed.xml";
   const siteUrl = settings.seo.rss?.siteUrl || baseUrl;
 

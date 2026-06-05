@@ -93,7 +93,7 @@ export async function generateSitemap(
   rootDir: string,
   settings: Settings,
 ): Promise<string> {
-  const baseUrl = settings.site.baseUrl || "http://localhost:1900";
+  const baseUrl = settings.site.baseUrl || "http://localhost:1800";
 
   const entries = await readDirRecursive(rootDir, rootDir, baseUrl, settings);
 
