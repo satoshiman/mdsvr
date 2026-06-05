@@ -69,6 +69,22 @@ function isHidden(filePath: string, settings: Settings): boolean {
   return false;
 }
 
+async function hasDirectoryIndex(
+  dirPath: string,
+  settings: Settings,
+): Promise<boolean> {
+  for (const indexFile of settings.files.indexFiles) {
+    const indexPath = path.join(dirPath, indexFile);
+    try {
+      await fs.access(indexPath);
+      return true;
+    } catch {
+      // Continue to next index file
+    }
+  }
+  return false;
+}
+
 async function readDirRecursive(
   dirPath: string,
   rootDir: string,
@@ -92,7 +108,17 @@ async function readDirRecursive(
         currentPath,
         settings,
       );
-      if (children.length > 0) {
+      // Check if directory has any files (not just .md/.mdx)
+      const entries = await fs.readdir(fullPath);
+      const hasAnyFile = entries.some(
+        (name) => !isHidden(path.join(fullPath, name), settings),
+      );
+      // Include directory if it has children OR has any file OR has index file
+      if (
+        children.length > 0 ||
+        hasAnyFile ||
+        (await hasDirectoryIndex(fullPath, settings))
+      ) {
         items.push({
           title: humanizeFilename(entry.name),
           href: relativePath + "/",
@@ -200,12 +226,25 @@ export function renderSidebar(
 
     const icon = item.type === "dir" ? "📁" : "📄";
 
-    lines.push(
-      `${indent}    <a href="${item.href}" class="nav-link${activeClass}">${icon} ${escapeHtml(item.title)}</a>`,
-    );
+    if (hasChildren) {
+      lines.push(`${indent}    <div class="nav-item-header">`);
+      lines.push(
+        `${indent}      <button class="nav-toggle" data-expanded="${settings.navigation.sidebar.defaultOpen}" aria-label="Toggle folder">▶</button>`,
+      );
+      lines.push(
+        `${indent}      <a href="${item.href}" class="nav-link${activeClass}">${icon} ${escapeHtml(item.title)}</a>`,
+      );
+      lines.push(`${indent}    </div>`);
+    } else {
+      lines.push(
+        `${indent}    <a href="${item.href}" class="nav-link${activeClass}">${icon} ${escapeHtml(item.title)}</a>`,
+      );
+    }
 
-    if (hasChildren && settings.navigation.sidebar.defaultOpen) {
-      lines.push(`${indent}    <div class="nav-children">`);
+    if (hasChildren) {
+      lines.push(
+        `${indent}    <div class="nav-children" data-expanded="${settings.navigation.sidebar.defaultOpen}">`,
+      );
       lines.push(renderSidebar(item.children!, settings, level + 1));
       lines.push(`${indent}    </div>`);
     }

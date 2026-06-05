@@ -241,7 +241,9 @@ async function serveMarkdownOrMdx(
   }
 
   const title =
-    (result.frontmatter.title as string) || path.basename(filePath, ext);
+    (result.frontmatter.title as string) ||
+    extractFirstHeading(content) ||
+    humanizeFilename(path.basename(filePath, ext));
 
   // Build sidebar if enabled
   let sidebar: NavItem[] = [];
@@ -319,4 +321,16 @@ function isBlocked(ext: string, settings: Settings): boolean {
 
 function isAllowedExtension(ext: string, settings: Settings): boolean {
   return settings.files.extensions.serve.includes(ext);
+}
+
+function extractFirstHeading(content: string): string | null {
+  const h1Match = content.match(/^#\s+(.+)$/m);
+  if (h1Match) {
+    return h1Match[1].trim();
+  }
+  return null;
+}
+
+function humanizeFilename(filename: string): string {
+  return filename.replace(/[-_]/g, " ").replace(/^\w/, (c) => c.toUpperCase());
 }

@@ -14,9 +14,19 @@ export const DEFAULT_SERVE_EXTENSIONS = [
   ".ico",
   ".css",
   ".js",
+  ".mjs",
   ".json",
   ".mp4",
+  ".m4v",
   ".mp3",
+  ".html",
+  ".woff",
+  ".woff2",
+  ".ttf",
+  ".otf",
+  ".eot",
+  ".xml",
+  ".zip",
 ];
 
 export const DEFAULT_BLOCK_EXTENSIONS = [

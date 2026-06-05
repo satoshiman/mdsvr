@@ -18,7 +18,10 @@ export function renderDirectory(params: {
       const name = entry.name;
       const isDir = entry.isDirectory();
       const icon = isDir ? "📁" : name.endsWith(".md") ? "📄" : "📃";
-      const href = encodeURIComponent(name) + (isDir ? "/" : "");
+      const href =
+        (urlPath ? urlPath + "/" : "") +
+        encodeURIComponent(name) +
+        (isDir ? "/" : "");
       const size =
         !isDir && entry.isFile()
           ? formatSize((entry as unknown as { size: number }).size || 0)
@@ -125,7 +128,6 @@ export function renderDirectory(params: {
   </style>
 </head>
 <body>
-  <div class="container">
     <table>
       <thead>
         <tr><th>Name</th><th class="size">Size</th></tr>
@@ -142,7 +144,6 @@ ${
 ${rows || '      <tr><td colspan="2" class="empty">Empty directory</td></tr>'}
       </tbody>
     </table>
-  </div>
 </body>
 </html>`;
 }
