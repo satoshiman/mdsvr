@@ -65,6 +65,12 @@ export async function createServer(
         const actualPort = (server.address() as { port: number }).port;
         const url = `http://${host}:${actualPort}`;
 
+        if (currentPort !== port) {
+          console.warn(
+            `[mdsvr] Port ${port} in use, auto-incremented to ${currentPort}`,
+          );
+        }
+
         // Watch settings file for changes
         if (watchSettingsEnabled) {
           (async () => {
