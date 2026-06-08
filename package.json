@@ -25,10 +25,9 @@
     "version:minor": "npm version minor",
     "version:major": "npm version major",
     "release": "npm run release:patch",
-    "release:patch": "npm version patch && npm run build && npm test && npm publish",
-    "release:minor": "npm version minor && npm run build && npm test && npm publish",
-    "release:major": "npm version major && npm run build && npm test && npm publish",
-    "publish": "npm publish"
+    "release:patch": "npm version patch && npm publish",
+    "release:minor": "npm version minor && npm publish",
+    "release:major": "npm version major && npm publish"
   },
   "dependencies": {
     "markdown-it": "^14.1.0",
