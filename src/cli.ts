@@ -11,6 +11,7 @@ import {
 
 interface ParsedArgs {
   dir: string;
+  dirSpecified: boolean;
   port: number;
   host: string;
   open: boolean;
@@ -25,6 +26,7 @@ interface ParsedArgs {
 function parseArgs(argv: string[]): ParsedArgs {
   const args: ParsedArgs = {
     dir: ".",
+    dirSpecified: false,
     port: 1800,
     host: "localhost",
     open: false,
@@ -61,6 +63,7 @@ function parseArgs(argv: string[]): ParsedArgs {
       args.watchSettings = false;
     } else if (!arg.startsWith("--") && !arg.startsWith("-")) {
       args.dir = arg;
+      args.dirSpecified = true;
     }
   }
 
@@ -139,7 +142,14 @@ async function main(): Promise<void> {
     process.exit(0);
   }
 
-  const absoluteDir = path.resolve(args.dir);
+  // If no directory specified, serve default-docs directory
+  let dir = args.dir;
+  if (!args.dirSpecified) {
+    const __dirname = path.dirname(fileURLToPath(import.meta.url));
+    dir = path.join(__dirname, "..", "default-docs");
+  }
+
+  const absoluteDir = path.resolve(dir);
 
   // Handle --init
   if (args.init) {
@@ -174,7 +184,7 @@ async function main(): Promise<void> {
   }
 
   try {
-    const server = await createServer(args.dir, {
+    const server = await createServer(dir, {
       port: args.port,
       host: args.host,
       open: args.open,

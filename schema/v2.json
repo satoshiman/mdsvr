@@ -52,7 +52,9 @@
               "description": "Link destination for logo"
             }
           },
-          "required": ["src"]
+          "required": [
+            "src"
+          ]
         },
         "favicon": {
           "type": "string",
@@ -66,7 +68,11 @@
       "properties": {
         "defaultTheme": {
           "type": "string",
-          "enum": ["light", "dark", "system"],
+          "enum": [
+            "light",
+            "dark",
+            "system"
+          ],
           "default": "system",
           "description": "Default color theme"
         },
@@ -109,7 +115,10 @@
               "description": "Font family for code blocks"
             },
             "heading": {
-              "type": ["string", "null"],
+              "type": [
+                "string",
+                "null"
+              ],
               "description": "Font family for headings"
             }
           }
@@ -131,7 +140,10 @@
         },
         "twitterCard": {
           "type": "string",
-          "enum": ["summary", "summary_large_image"],
+          "enum": [
+            "summary",
+            "summary_large_image"
+          ],
           "default": "summary_large_image",
           "description": "Twitter card type"
         },
@@ -173,7 +185,10 @@
               "description": "Site base URL for RSS"
             }
           },
-          "required": ["title", "siteUrl"]
+          "required": [
+            "title",
+            "siteUrl"
+          ]
         }
       }
     },
@@ -290,33 +305,76 @@
           "properties": {
             "serve": {
               "type": "array",
-              "items": { "type": "string" },
-              "default": [".md", ".mdx", ".txt", ".pdf", ".png", ".jpg", ".jpeg", ".gif", ".webp", ".svg", ".ico", ".css", ".js", ".json", ".mp4", ".mp3"],
+              "items": {
+                "type": "string"
+              },
+              "default": [
+                ".md",
+                ".mdx",
+                ".txt",
+                ".pdf",
+                ".png",
+                ".jpg",
+                ".jpeg",
+                ".gif",
+                ".webp",
+                ".svg",
+                ".ico",
+                ".css",
+                ".js",
+                ".json",
+                ".mp4",
+                ".mp3"
+              ],
               "description": "File extensions to serve"
             },
             "block": {
               "type": "array",
-              "items": { "type": "string" },
-              "default": [".env", ".key", ".pem", ".p12", ".secret", ".password"],
+              "items": {
+                "type": "string"
+              },
+              "default": [
+                ".env",
+                ".key",
+                ".pem",
+                ".p12",
+                ".secret",
+                ".password"
+              ],
               "description": "File extensions to block"
             },
             "hidden": {
               "type": "array",
-              "items": { "type": "string" },
-              "default": ["settings.json", ".git", "node_modules", ".DS_Store"],
+              "items": {
+                "type": "string"
+              },
+              "default": [
+                "settings.json",
+                ".git",
+                "node_modules",
+                ".DS_Store"
+              ],
               "description": "Files/directories to hide"
             }
           }
         },
         "indexFiles": {
           "type": "array",
-          "items": { "type": "string" },
-          "default": ["README.md", "index.md", "INDEX.md"],
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "README.md",
+            "index.md",
+            "INDEX.md"
+          ],
           "description": "Index file names to look for"
         },
         "ignorePatterns": {
           "type": "array",
-          "items": { "type": "string" },
+          "items": {
+            "type": "string"
+          },
           "default": [],
           "description": "Glob patterns to ignore"
         }
@@ -333,19 +391,25 @@
         },
         "components": {
           "type": "object",
-          "additionalProperties": { "type": "boolean" },
+          "additionalProperties": {
+            "type": "boolean"
+          },
           "default": {},
           "description": "Enable/disable MDX components"
         },
         "remarkPlugins": {
           "type": "array",
-          "items": { "type": "string" },
+          "items": {
+            "type": "string"
+          },
           "default": [],
           "description": "Remark plugins to use"
         },
         "rehypePlugins": {
           "type": "array",
-          "items": { "type": "string" },
+          "items": {
+            "type": "string"
+          },
           "default": [],
           "description": "Rehype plugins to use"
         }
@@ -365,10 +429,17 @@
           "items": {
             "type": "object",
             "properties": {
-              "label": { "type": "string" },
-              "href": { "type": "string" }
+              "label": {
+                "type": "string"
+              },
+              "href": {
+                "type": "string"
+              }
             },
-            "required": ["label", "href"]
+            "required": [
+              "label",
+              "href"
+            ]
           },
           "default": [],
           "description": "Footer links"

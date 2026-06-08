@@ -18,8 +18,17 @@
     "build": "tsc && cp -r src/assets dist/assets",
     "build:test": "tsc -p tsconfig.test.json",
     "dev": "tsc --watch",
+    "start": "npm run build && node bin/mdsvr.js",
     "test": "npm run build && npm run build:test && node --test dist-test/*.test.js",
-    "prepublishOnly": "npm run build && npm test"
+    "prepublishOnly": "npm run build && npm test",
+    "version:patch": "npm version patch",
+    "version:minor": "npm version minor",
+    "version:major": "npm version major",
+    "release": "npm run release:patch",
+    "release:patch": "npm run test && npm version patch && git push --follow-tags && npm publish",
+    "release:minor": "npm run test && npm version minor && git push --follow-tags && npm publish",
+    "release:major": "npm run test && npm version major && git push --follow-tags && npm publish",
+    "publish": "npm publish"
   },
   "dependencies": {
     "markdown-it": "^14.1.0",
