@@ -29,10 +29,14 @@ RUN npm ci --omit=dev
 # Copy built files from builder
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/bin ./bin
+COPY --from=builder /app/default-docs ./default-docs
+
+# Copy entrypoint script
+COPY docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
 # Expose port (default: 1800)
 EXPOSE 1800
 
 # Start the application
-ENTRYPOINT ["node", "bin/mdsvr.js", "--host", "0.0.0.0"]
-CMD ["/app/docs"]
+ENTRYPOINT ["docker-entrypoint.sh"]

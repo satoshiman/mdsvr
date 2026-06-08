@@ -35,6 +35,29 @@ Options:
   -h, --help         Print this help
 ```
 
+## Docker
+
+> **Note:** If you're seeing this page, it means you haven't mounted your own documentation directory yet. See the examples below to serve your own docs.
+
+### Serve your own documentation
+
+```bash
+docker run -p 1800:1800 -v /path/to/your/docs:/app/docs thedeployer/mdsvr
+```
+
+### Custom port
+
+```bash
+docker run -p 8080:1800 -v /path/to/your/docs:/app/docs thedeployer/mdsvr
+```
+
+### Build from source
+
+```bash
+docker build -t mdsvr .
+docker run -p 1800:1800 -v /path/to/your/docs:/app/docs mdsvr
+```
+
 ## Documentation
 
 Visit [mdsvr GitHub](https://github.com/satoshiman/mdsvr) for more information.

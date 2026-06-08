@@ -27,7 +27,8 @@
     "release": "npm run release:patch",
     "release:patch": "npm version patch && npm publish",
     "release:minor": "npm version minor && npm publish",
-    "release:major": "npm version major && npm publish"
+    "release:major": "npm version major && npm publish",
+    "docker:release": "bash docker-release.sh"
   },
   "dependencies": {
     "markdown-it": "^14.1.0",
