@@ -25,9 +25,9 @@
     "version:minor": "npm version minor",
     "version:major": "npm version major",
     "release": "npm run release:patch",
-    "release:patch": "npm run test && npm version patch && git push --follow-tags && npm publish",
-    "release:minor": "npm run test && npm version minor && git push --follow-tags && npm publish",
-    "release:major": "npm run test && npm version major && git push --follow-tags && npm publish",
+    "release:patch": "npm version patch && npm run build && npm test && npm publish",
+    "release:minor": "npm version minor && npm run build && npm test && npm publish",
+    "release:major": "npm version major && npm run build && npm test && npm publish",
     "publish": "npm publish"
   },
   "dependencies": {
