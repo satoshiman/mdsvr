@@ -19,7 +19,7 @@ export function renderDirectory(params: {
       const isDir = entry.isDirectory();
       const icon = isDir ? "📁" : name.endsWith(".md") ? "📄" : "📃";
       const href =
-        (urlPath ? urlPath + "/" : "") +
+        (urlPath ? urlPath.replace(/\/+$/, "") + "/" : "") +
         encodeURIComponent(name) +
         (isDir ? "/" : "");
       const size =
