@@ -1,8 +1,18 @@
 # mdsvr
 
-> Full-featured documentation website server with **MDX support**, **site-wide settings**, **dark/light mode**, **SEO meta tags**, and **auto-generated navigation**.
+> Full-featured documentation website server with **MDX support**, **site-wide settings**, **dark/light mode**, **SEO meta tags**, **search ready**, and **auto-generated navigation**.
 
 Transform any folder of Markdown/Markdown files into a beautiful documentation website — zero config required.
+
+```text
+█   █ ████   ████ █   █ ████
+██ ██ █   █ █     █   █ █   █
+█ █ █ █   █  ███  █   █ ████
+█   █ █   █     █  █ █  █  █
+█   █ ████  ████    █   █   █
+
+     [markdown server]
+```
 
 ```bash
 npx mdsvr ./docs
@@ -36,6 +46,10 @@ npx mdsvr ./notes --port 1800 --open
 # Expose to LAN
 npx mdsvr . --host 0.0.0.0 --port 1800
 ```
+
+## Why Port 1800?
+
+Just like a 1-800 toll-free number is globally recognized as a dedicated hotline for customer support and guidance, mdsvr uses port 1800 as your local "hotline" for project documentation. It's easy to remember, avoids conflicts with common development ports (like 3000 or 8080), and serves as the central hub where users go to get their questions answered.
 
 ## Installation
 

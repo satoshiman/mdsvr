@@ -42,20 +42,20 @@ Options:
 ### Serve your own documentation
 
 ```bash
-docker run -p 1800:1800 -v /path/to/your/docs:/app/docs thedeployer/mdsvr
+docker run -d -p 1800:1800 -v /path/to/your/docs:/app/docs thedeployer/mdsvr
 ```
 
 ### Custom port
 
 ```bash
-docker run -p 8080:1800 -v /path/to/your/docs:/app/docs thedeployer/mdsvr
+docker run -d -p 8080:1800 -v /path/to/your/docs:/app/docs thedeployer/mdsvr
 ```
 
 ### Build from source
 
 ```bash
 docker build -t mdsvr .
-docker run -p 1800:1800 -v /path/to/your/docs:/app/docs mdsvr
+docker run -d -p 1800:1800 -v /path/to/your/docs:/app/docs mdsvr
 ```
 
 ## Documentation
