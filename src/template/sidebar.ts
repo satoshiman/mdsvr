@@ -85,11 +85,34 @@ async function hasDirectoryIndex(
   return false;
 }
 
+async function hasDocFiles(
+  dirPath: string,
+  settings: Settings,
+): Promise<boolean> {
+  const entries = await fs.readdir(dirPath, { withFileTypes: true });
+  for (const entry of entries) {
+    const fullPath = path.join(dirPath, entry.name);
+    if (isHidden(fullPath, settings)) continue;
+
+    if (entry.isDirectory()) {
+      if (await hasDocFiles(fullPath, settings)) return true;
+    } else if (
+      entry.name.endsWith(".md") ||
+      entry.name.endsWith(".mdx") ||
+      entry.name.endsWith(".txt")
+    ) {
+      return true;
+    }
+  }
+  return false;
+}
+
 async function readDirRecursive(
   dirPath: string,
   rootDir: string,
   currentPath: string,
   settings: Settings,
+  depth: number = 0,
 ): Promise<NavItem[]> {
   const entries = await fs.readdir(dirPath, { withFileTypes: true });
   const items: NavItem[] = [];
@@ -102,12 +125,28 @@ async function readDirRecursive(
     if (isHidden(fullPath, settings)) continue;
 
     if (entry.isDirectory()) {
-      const children = await readDirRecursive(
-        fullPath,
-        rootDir,
-        currentPath,
-        settings,
-      );
+      // Check docsOnly - skip directories without doc files
+      if (settings.navigation.sidebar.docsOnly) {
+        const hasDocs = await hasDocFiles(fullPath, settings);
+        if (!hasDocs && !(await hasDirectoryIndex(fullPath, settings))) {
+          continue;
+        }
+      }
+
+      // Check depth - stop recursion if depth exceeds limit
+      const maxDepth = settings.navigation.sidebar.depth;
+      const shouldRecurse = depth < maxDepth;
+
+      const children = shouldRecurse
+        ? await readDirRecursive(
+            fullPath,
+            rootDir,
+            currentPath,
+            settings,
+            depth + 1,
+          )
+        : [];
+
       // Check if directory has any files (not just .md/.mdx)
       const entries = await fs.readdir(fullPath);
       const hasAnyFile = entries.some(
@@ -163,7 +202,13 @@ export async function buildSidebar(
     return [];
   }
 
-  const items = await readDirRecursive(rootDir, rootDir, currentPath, settings);
+  const items = await readDirRecursive(
+    rootDir,
+    rootDir,
+    currentPath,
+    settings,
+    0,
+  );
 
   // Check for root README.md and add Home item
   const readmePath = path.join(rootDir, "README.md");

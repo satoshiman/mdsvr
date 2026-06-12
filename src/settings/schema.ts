@@ -48,6 +48,8 @@ export const NavigationSchema = z.object({
       showFileCount: z.boolean().default(false),
       collapsible: z.boolean().default(true),
       defaultOpen: z.boolean().default(true),
+      depth: z.number().default(2),
+      docsOnly: z.boolean().default(false),
     })
     .default({}),
   breadcrumbs: z.boolean().default(true),

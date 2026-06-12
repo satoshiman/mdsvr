@@ -100,7 +100,7 @@ Place `settings.json` in your docs root for full customization:
 
 ```json
 {
-  "$schema": "https://mdsvr.dev/schema/v2.json",
+  "$schema": "https://raw.githubusercontent.com/satoshiman/mdsvr/main/schema/v2.json",
   "site": {
     "title": "My Docs",
     "description": "Project documentation",
@@ -195,7 +195,7 @@ console.log(`Settings: ${server.settings.site.title}`);
 // Manual settings reload
 await server.reloadSettings();
 
-// Graceful shutdown
+// Graceful shutdown - SIGINT is sent when user presses Ctrl+C
 process.on("SIGINT", () => server.close());
 ```
 

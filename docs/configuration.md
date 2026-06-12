@@ -19,7 +19,7 @@ Or create it manually:
 
 ```json
 {
-  "$schema": "https://mdsvr.dev/schema/v2.json",
+  "$schema": "https://raw.githubusercontent.com/satoshiman/mdsvr/main/schema/v2.json",
   "site": {
     "title": "My Docs",
     "description": "Project documentation"
@@ -219,7 +219,7 @@ Here's a complete `settings.json` with all available options:
 
 ```json
 {
-  "$schema": "https://mdsvr.dev/schema/v2.json",
+  "$schema": "https://raw.githubusercontent.com/satoshiman/mdsvr/main/schema/v2.json",
   "site": {
     "title": "My Docs",
     "description": "Project documentation",

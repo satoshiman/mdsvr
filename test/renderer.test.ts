@@ -21,6 +21,8 @@ describe("renderer", () => {
         showFileCount: false,
         collapsible: true,
         defaultOpen: true,
+        depth: 2,
+        docsOnly: false,
       },
       breadcrumbs: true,
       prevNextLinks: true,

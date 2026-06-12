@@ -1,6 +1,5 @@
 {
   "$schema": "https://raw.githubusercontent.com/satoshiman/mdsvr/main/schema/v2.json",
-  "defaultDocs": "docs",
   "site": {
     "title": "My Docs",
     "description": "Project documentation",
@@ -18,7 +17,11 @@
   "navigation": {
     "sidebar": {
       "enabled": true,
-      "autoGenerate": true
+      "autoGenerate": true,
+      "depth": 2,
+      "docsOnly": true,
+      "collapsible": true,
+      "defaultOpen": false
     },
     "tocEnabled": true
   },

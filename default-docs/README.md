@@ -1,16 +1,26 @@
-# Welcome to mdsvr /Markdown Server/!
+# Welcome to mdsvr (Markdown Server)
 
-You haven't specified a documentation directory.
+<span style="color: #16a34a; font-weight: bold;">✅ Your **mdsvr** instance is running successfully.</span>
 
-## How to use
+> <span style="color: #dc2626; font-weight: bold;">⚠️ Configuration required</span>
+>
+> <span style="color: #dc2626;">If you are seeing this page, your documentation has not been loaded correctly. This usually means one of the following:</span>
+>
+> <span style="color: #dc2626;">1. No documentation directory was specified when starting <code>mdsvr &lt;directory&gt;</code>.</span>
+>
+> <span style="color: #dc2626;">2. Your Markdown files were not mounted into the Docker container at <code>/app/docs</code>.</span>
 
-To serve your documentation, run:
+Please verify your configuration and follow the instructions below.
+
+## Getting Started
+
+To serve a directory containing Markdown files, run:
 
 ```bash
 mdsvr <docs-directory>
 ```
 
-**Examples:**
+### Examples
 
 ```bash
 mdsvr ./docs

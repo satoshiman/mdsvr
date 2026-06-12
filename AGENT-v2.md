@@ -103,7 +103,7 @@ Tất cả fields đều **optional** — server vẫn chạy hoàn hảo nếu 
 
 ```json
 {
-  "$schema": "https://mdsvr.dev/schema/v2.json",
+  "$schema": "https://raw.githubusercontent.com/satoshiman/mdsvr/main/schema/v2.json",
 
   "site": {
     "title": "My Docs",
