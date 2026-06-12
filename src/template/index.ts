@@ -448,9 +448,9 @@ body {
 }
 
 .nav-children {
-  margin-left: 12px;
+  margin-left: 4px;
   border-left: 1px solid var(--border);
-  padding-left: 8px;
+  padding-left: 10px;
 }
 
 .nav-children[data-expanded="false"] {
