@@ -14,8 +14,12 @@ import { dirname, join } from "path";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+function scopeCss(css: string, selector: string): string {
+  return css.replace(/(^|\n)(\.hljs)/g, `$1${selector} $2`);
+}
+
 function getHighlightJsStyles(settings: Settings): string {
-  const lightTheme = settings.appearance.codeTheme.light || "lightfair";
+  const lightTheme = settings.appearance.codeTheme.light || "github";
   const darkTheme = settings.appearance.codeTheme.dark || "github-dark";
 
   try {
@@ -32,17 +36,11 @@ function getHighlightJsStyles(settings: Settings): string {
     );
 
     return `
-/* Highlight.js - Light theme */
-:root[data-theme="light"] .hljs {
-  background: var(--code-bg);
-}
-${lightCss}
+${scopeCss(lightCss, ':root[data-theme="light"]')}
+:root[data-theme="light"] .hljs { background: var(--code-bg); }
 
-/* Highlight.js - Dark theme */
-:root[data-theme="dark"] .hljs {
-  background: var(--code-bg);
-}
-${darkCss}
+${scopeCss(darkCss, ':root[data-theme="dark"]')}
+:root[data-theme="dark"] .hljs { background: var(--code-bg); }
 `;
   } catch (error) {
     console.error("Error loading highlight.js styles:", error);
@@ -240,6 +238,15 @@ if (document.readyState === 'loading') {
 } else {
   initSidebarToggle();
 }
+  </script>
+
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: isDark ? 'dark' : 'default',
+    });
   </script>
 </body>
 </html>`;

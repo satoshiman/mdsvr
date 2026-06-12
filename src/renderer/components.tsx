@@ -152,18 +152,9 @@ interface MermaidProps {
 }
 
 export function Mermaid({ children }: MermaidProps) {
-  // Mermaid diagrams are rendered client-side
-  // Server-side we just wrap in a special div for client JS to process
   return (
-    <div
-      className="mermaid"
-      style={{
-        textAlign: "center",
-        padding: "16px",
-      }}
-    >
-      <pre style={{ display: "none" }}>{children}</pre>
-      <div className="mermaid-output">Loading diagram...</div>
+    <div className="mermaid" style={{ textAlign: "center", padding: "16px" }}>
+      {children}
     </div>
   );
 }

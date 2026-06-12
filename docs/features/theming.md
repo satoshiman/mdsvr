@@ -74,7 +74,7 @@ Configure syntax highlighting themes for light and dark modes:
 {
   "appearance": {
     "codeTheme": {
-      "light": "lightfair",
+      "light": "github",
       "dark": "github-dark"
     }
   }
@@ -147,7 +147,7 @@ This ensures the correct theme is applied immediately without any visible flash.
     "allowThemeToggle": true,
     "accentColor": "#8250df",
     "codeTheme": {
-      "light": "lightfair",
+      "light": "github",
       "dark": "github-dark"
     }
   }

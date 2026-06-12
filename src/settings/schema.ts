@@ -27,7 +27,7 @@ export const AppearanceSchema = z.object({
   accentColor: z.string().default("#0969da"),
   codeTheme: z
     .object({
-      light: z.string().default("lightfair"),
+      light: z.string().default("github"),
       dark: z.string().default("github-dark"),
     })
     .default({}),

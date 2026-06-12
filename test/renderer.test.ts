@@ -62,7 +62,7 @@ describe("renderer", () => {
       allowThemeToggle: true,
       accentColor: "#0969da",
       codeTheme: {
-        light: "lightfair",
+        light: "github",
         dark: "github-dark",
       },
       fontFamily: {},

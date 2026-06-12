@@ -92,7 +92,7 @@
           "properties": {
             "light": {
               "type": "string",
-              "default": "lightfair",
+              "default": "github",
               "description": "Highlight.js theme for light mode"
             },
             "dark": {

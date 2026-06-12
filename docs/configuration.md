@@ -57,7 +57,7 @@ Control the look and feel of your documentation:
     "allowThemeToggle": true,
     "accentColor": "#0969da",
     "codeTheme": {
-      "light": "lightfair",
+      "light": "github",
       "dark": "github-dark"
     }
   }

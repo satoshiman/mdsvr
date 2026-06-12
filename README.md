@@ -241,6 +241,7 @@ When enabled in `settings.json`:
 - **Hot reload**: Settings auto-reload on change
 - **Path traversal protection**: Secure by default
 - **Zero config**: Works out of the box, fully customizable
+- **Mermaid diagram support**: Render ` ```mermaid ``` ` code blocks as diagrams
 
 ## File Structure
 

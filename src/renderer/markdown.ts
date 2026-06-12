@@ -24,9 +24,17 @@ function createMarkdownIt(settings: Settings): MarkdownIt {
     linkify: true,
     typographer: true,
     highlight: (str: string, lang: string): string => {
+      // ADD: intercept mermaid blocks
+      if (lang === "mermaid") {
+        return `<div class="mermaid">${str.trim()}</div>`;
+      }
+
+      // existing hljs logic — KEEP AS IS
       if (lang && hljs.getLanguage(lang)) {
         try {
-          return hljs.highlight(str, { language: lang }).value;
+          return `<pre><code class="hljs language-${lang}">${
+            hljs.highlight(str, { language: lang }).value
+          }</code></pre>\n`;
         } catch {
           // Fall through to plain text
         }
@@ -83,9 +91,17 @@ export function renderMarkdownSimple(content: string): string {
     linkify: true,
     typographer: true,
     highlight: (str: string, lang: string): string => {
+      // ADD: intercept mermaid blocks
+      if (lang === "mermaid") {
+        return `<div class="mermaid">${str.trim()}</div>`;
+      }
+
+      // existing hljs logic — KEEP AS IS
       if (lang && hljs.getLanguage(lang)) {
         try {
-          return hljs.highlight(str, { language: lang }).value;
+          return `<pre><code class="hljs language-${lang}">${
+            hljs.highlight(str, { language: lang }).value
+          }</code></pre>\n`;
         } catch {
           // Fall through to plain text
         }

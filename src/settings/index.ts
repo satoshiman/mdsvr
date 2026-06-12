@@ -72,7 +72,7 @@ export function generateDefaultSettings(): object {
       allowThemeToggle: true,
       accentColor: "#0969da",
       codeTheme: {
-        light: "lightfair",
+        light: "github",
         dark: "github-dark",
       },
     },
