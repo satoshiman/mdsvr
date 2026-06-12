@@ -8,6 +8,7 @@ export interface NavItem {
   href: string;
   children?: NavItem[];
   active?: boolean;
+  hasActiveChild?: boolean;
   type: "file" | "dir";
   order?: number;
   sortBy: string;
@@ -226,22 +227,39 @@ export async function buildSidebar(
     // No README.md at root
   }
 
-  // Mark active item - only exact match, not parent paths
-  function markActive(items: NavItem[]): void {
+  // Mark active item and parent directories
+  function markActive(items: NavItem[]): boolean {
+    let hasActive = false;
     for (const item of items) {
       const isRoot = item.href === "/";
       const isExactMatch = item.href === currentPath;
-      // Only exact match, no parent path highlighting
+
+      // Check if currentPath is an index file within this directory
+      // e.g., currentPath="/features/README.md" should match folder href="/features/"
+      const isIndexMatch =
+        item.type === "dir" &&
+        (currentPath === item.href + "README.md" ||
+          currentPath === item.href + "readme.md" ||
+          currentPath === item.href + "index.md");
+
       const isActive = isRoot
         ? currentPath === "/" || currentPath === ""
-        : isExactMatch;
+        : isExactMatch || isIndexMatch;
+
       if (isActive) {
         item.active = true;
+        hasActive = true;
       }
+
       if (item.children) {
-        markActive(item.children);
+        const childHasActive = markActive(item.children);
+        if (childHasActive) {
+          item.hasActiveChild = true;
+          hasActive = true;
+        }
       }
     }
+    return hasActive;
   }
 
   markActive(items);
@@ -265,6 +283,12 @@ export function renderSidebar(
     const activeClass = item.active ? " active" : "";
     const folderClass = item.type === "dir" ? " folder" : "";
 
+    // Auto-expand folders that contain active item or have active child
+    const shouldExpand =
+      item.hasActiveChild ||
+      item.active ||
+      settings.navigation.sidebar.defaultOpen;
+
     lines.push(
       `${indent}  <li class="nav-item${activeClass}${folderClass}" data-type="${item.type}">`,
     );
@@ -274,7 +298,7 @@ export function renderSidebar(
     if (hasChildren) {
       lines.push(`${indent}    <div class="nav-item-header">`);
       lines.push(
-        `${indent}      <button class="nav-toggle" data-expanded="${settings.navigation.sidebar.defaultOpen}" aria-label="Toggle folder">▶</button>`,
+        `${indent}      <button class="nav-toggle" data-expanded="${shouldExpand}" aria-label="Toggle folder">▶</button>`,
       );
       lines.push(
         `${indent}      <a href="${item.href}" class="nav-link${activeClass}">${icon} ${escapeHtml(item.title)}</a>`,
@@ -288,7 +312,7 @@ export function renderSidebar(
 
     if (hasChildren) {
       lines.push(
-        `${indent}    <div class="nav-children" data-expanded="${settings.navigation.sidebar.defaultOpen}">`,
+        `${indent}    <div class="nav-children" data-expanded="${shouldExpand}">`,
       );
       lines.push(renderSidebar(item.children!, settings, level + 1));
       lines.push(`${indent}    </div>`);
