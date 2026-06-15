@@ -153,8 +153,88 @@ interface MermaidProps {
 
 export function Mermaid({ children }: MermaidProps) {
   return (
-    <div className="mermaid" style={{ textAlign: "center", padding: "16px" }}>
-      {children}
+    <div className="mermaid-container">
+      <div className="mermaid-toolbar">
+        <button className="mermaid-btn mermaid-btn-chart" title="Chart view">
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
+            <rect x="3" y="3" width="18" height="18" rx="2" />
+            <path d="M3 9h18M9 21V9" />
+          </svg>
+        </button>
+        <button
+          className="mermaid-btn mermaid-btn-fullscreen"
+          title="Fullscreen"
+        >
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
+            <path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3" />
+          </svg>
+        </button>
+        <button className="mermaid-btn mermaid-btn-code" title="Show code">
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
+            <polyline points="16 18 22 12 16 6" />
+            <polyline points="8 6 2 12 8 18" />
+          </svg>
+        </button>
+      </div>
+      <div className="mermaid-zoom-controls">
+        <button className="mermaid-btn mermaid-btn-zoom-in" title="Zoom in">
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
+            <line x1="12" y1="5" x2="12" y2="19" />
+            <line x1="5" y1="12" x2="19" y2="12" />
+          </svg>
+        </button>
+        <button className="mermaid-btn mermaid-btn-zoom-out" title="Zoom out">
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
+            <line x1="5" y1="12" x2="19" y2="12" />
+          </svg>
+        </button>
+      </div>
+      <div className="mermaid-chart">
+        <div
+          className="mermaid"
+          style={{ textAlign: "center", padding: "16px" }}
+        >
+          {children}
+        </div>
+      </div>
+      <pre className="mermaid-source">
+        <code>{children}</code>
+      </pre>
     </div>
   );
 }

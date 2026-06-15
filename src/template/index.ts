@@ -196,11 +196,33 @@ ${getHighlightJsStyles(settings)}
   ${settings.search.enabled ? getSearchInlineScript() : ""}
 
   <script>
+function rerenderMermaid(theme) {
+  if (!window.__mermaid) return;
+  var diagrams = document.querySelectorAll(".mermaid");
+  if (!diagrams.length) return;
+
+  diagrams.forEach(function (el) {
+    var src = el.getAttribute("data-mermaid-src");
+    if (src) el.textContent = src;
+    else {
+      el.setAttribute("data-mermaid-src", el.textContent);
+    }
+    el.removeAttribute("data-processed");
+  });
+
+  window.__mermaid.initialize({
+    startOnLoad: false,
+    theme: theme === "dark" ? "dark" : "default",
+  });
+  window.__mermaid.run({ nodes: diagrams });
+}
+
 function toggleTheme() {
   var current = document.documentElement.getAttribute('data-theme');
   var next = current === 'dark' ? 'light' : 'dark';
   document.documentElement.setAttribute('data-theme', next);
   localStorage.setItem('theme', next);
+  rerenderMermaid(next);
 }
 
 // Sidebar collapse/expand
@@ -227,26 +249,169 @@ if (window.matchMedia) {
   var mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
   mediaQuery.addListener(function(e) {
     if (localStorage.getItem('theme') === 'system' || !localStorage.getItem('theme')) {
-      document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light');
+      var next = e.matches ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+      rerenderMermaid(next);
+    }
+  });
+}
+
+// Mermaid toolbar interactivity
+function initMermaidToolbars() {
+  var containers = document.querySelectorAll('.mermaid-container');
+  containers.forEach(function(container) {
+    var chartBtn = container.querySelector('.mermaid-btn-chart');
+    var fullscreenBtn = container.querySelector('.mermaid-btn-fullscreen');
+    var codeBtn = container.querySelector('.mermaid-btn-code');
+    var zoomInBtn = container.querySelector('.mermaid-btn-zoom-in');
+    var zoomOutBtn = container.querySelector('.mermaid-btn-zoom-out');
+    var chartDiv = container.querySelector('.mermaid-chart');
+    var zoom = 1;
+    if (chartBtn) chartBtn.classList.add('active');
+
+    function resetZoom() {
+      zoom = 1;
+      if (chartDiv) {
+        chartDiv.style.transform = '';
+        chartDiv.style.transformOrigin = '';
+      }
+    }
+    resetZoom();
+
+    function clearActive() {
+      if (chartBtn) chartBtn.classList.remove('active');
+      if (fullscreenBtn) fullscreenBtn.classList.remove('active');
+      if (codeBtn) codeBtn.classList.remove('active');
+    }
+
+    function fitToFullscreen() {
+      if (!chartDiv) return;
+      var svg = chartDiv.querySelector('svg');
+      if (!svg) return;
+      // Let the SVG naturally fill by resetting any manual zoom
+      resetZoom();
+      svg.style.maxWidth = '100%';
+      svg.style.maxHeight = '100%';
+      svg.style.width = 'auto';
+      svg.style.height = 'auto';
+    }
+
+    function resetFromFullscreen() {
+      if (!chartDiv) return;
+      var svg = chartDiv.querySelector('svg');
+      if (svg) {
+        svg.style.maxWidth = '100%';
+        svg.style.maxHeight = '';
+        svg.style.width = '';
+        svg.style.height = '';
+      }
+      resetZoom();
+    }
+
+    if (chartBtn) {
+      chartBtn.addEventListener('click', function() {
+        container.removeAttribute('data-mode');
+        container.classList.remove('fullscreen');
+        document.body.style.overflow = '';
+        resetFromFullscreen();
+        clearActive();
+        chartBtn.classList.add('active');
+      });
+    }
+
+    if (codeBtn) {
+      codeBtn.addEventListener('click', function() {
+        container.classList.remove('fullscreen');
+        document.body.style.overflow = '';
+        resetFromFullscreen();
+        container.setAttribute('data-mode', 'code');
+        clearActive();
+        codeBtn.classList.add('active');
+      });
+    }
+
+    if (fullscreenBtn) {
+      fullscreenBtn.addEventListener('click', function() {
+        container.removeAttribute('data-mode');
+        container.classList.add('fullscreen');
+        document.body.style.overflow = 'hidden';
+        clearActive();
+        fullscreenBtn.classList.add('active');
+        setTimeout(fitToFullscreen, 0);
+      });
+    }
+
+    if (zoomInBtn && chartDiv) {
+      zoomInBtn.addEventListener('click', function() {
+        zoom = Math.min(zoom + 0.25, 4);
+        chartDiv.style.transform = 'scale(' + zoom + ')';
+        chartDiv.style.transformOrigin = 'center center';
+      });
+    }
+
+    if (zoomOutBtn && chartDiv) {
+      zoomOutBtn.addEventListener('click', function() {
+        zoom = Math.max(zoom - 0.25, 0.25);
+        chartDiv.style.transform = 'scale(' + zoom + ')';
+        chartDiv.style.transformOrigin = 'center center';
+      });
+    }
+  });
+
+  // ESC to exit fullscreen
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      var fs = document.querySelector('.mermaid-container.fullscreen');
+      if (fs) {
+        fs.classList.remove('fullscreen');
+        document.body.style.overflow = '';
+        var btns = fs.querySelectorAll('.mermaid-btn');
+        btns.forEach(function(b) { b.classList.remove('active'); });
+        var chartBtn = fs.querySelector('.mermaid-btn-chart');
+        if (chartBtn) chartBtn.classList.add('active');
+        // Reset SVG sizing
+        var chartDiv = fs.querySelector('.mermaid-chart');
+        if (chartDiv) {
+          chartDiv.style.transform = '';
+          chartDiv.style.transformOrigin = '';
+          var svg = chartDiv.querySelector('svg');
+          if (svg) {
+            svg.style.maxWidth = '100%';
+            svg.style.maxHeight = '';
+            svg.style.width = '';
+            svg.style.height = '';
+          }
+        }
+      }
     }
   });
 }
 
 // Initialize sidebar toggle on DOM ready
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initSidebarToggle);
+  document.addEventListener('DOMContentLoaded', function() {
+    initSidebarToggle();
+    initMermaidToolbars();
+  });
 } else {
   initSidebarToggle();
+  initMermaidToolbars();
 }
   </script>
 
   <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
     const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const diagrams = document.querySelectorAll('.mermaid');
+    diagrams.forEach(function(el) {
+      el.setAttribute('data-mermaid-src', el.textContent);
+    });
     mermaid.initialize({
-      startOnLoad: true,
+      startOnLoad: false,
       theme: isDark ? 'dark' : 'default',
     });
+    mermaid.run({ nodes: diagrams });
+    window.__mermaid = mermaid;
   </script>
 </body>
 </html>`;
@@ -624,7 +789,6 @@ body {
 .markdown-body li + li { margin-top: 0.25em; }
 .markdown-body code {
   font-family: ${settings.appearance.fontFamily.code || "'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace"};
-  font-size: 85%;
   padding: 0.2em 0.4em;
   background: var(--code-bg);
   border-radius: 6px;
@@ -634,7 +798,6 @@ body {
   border-radius: 6px;
   padding: 16px;
   overflow: auto;
-  font-size: 85%;
   line-height: 1.45;
   margin-bottom: 16px;
 }
@@ -1006,6 +1169,142 @@ body {
 }
 .tab-content {
   padding: 16px;
+}
+
+/* Mermaid wrapper - reset pre defaults */
+.mermaid-wrapper {
+  all: unset;
+  display: block;
+}
+
+pre.mermaid-wrapper{
+  padding: 0;
+}
+
+
+/* Mermaid container */
+.mermaid-container {
+  position: relative;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.mermaid-toolbar {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  gap: 4px;
+  opacity: 0;
+  transition: opacity 0.2s;
+  z-index: 10;
+}
+.mermaid-container:hover .mermaid-toolbar {
+  opacity: 1;
+}
+.mermaid-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--bg);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+}
+.mermaid-btn:hover {
+  color: var(--text);
+  border-color: var(--accent);
+  background: var(--bg-secondary);
+}
+.mermaid-btn.active {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--bg-secondary);
+}
+.mermaid-zoom-controls {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  opacity: 0;
+  transition: opacity 0.2s;
+  z-index: 10;
+}
+.mermaid-container:hover .mermaid-zoom-controls {
+  opacity: 1;
+}
+.mermaid-container[data-mode="code"] .mermaid-zoom-controls {
+  display: none;
+}
+.mermaid-chart {
+  padding: 16px;
+  overflow: auto;
+  text-align: center;
+  min-height: 80px;
+  transition: transform 0.1s ease;
+}
+.mermaid-chart .mermaid svg {
+  max-width: 100%;
+  height: auto;
+}
+.mermaid-source {
+  display: none;
+  margin: 0;
+  border-radius: 0;
+  background: var(--code-bg);
+  padding: 16px;
+}
+.mermaid-container[data-mode="code"] .mermaid-chart {
+  display: none;
+}
+.mermaid-container[data-mode="code"] .mermaid-source {
+  display: block;
+}
+/* Mermaid fullscreen */
+.mermaid-container.fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  border-radius: 0;
+  border: none;
+  margin: 0;
+  overflow: visible;
+  background: var(--bg);
+}
+.mermaid-container.fullscreen .mermaid-toolbar {
+  opacity: 1;
+  top: 16px;
+  right: 16px;
+}
+.mermaid-container.fullscreen .mermaid-zoom-controls {
+  opacity: 1;
+  bottom: 16px;
+  right: 16px;
+}
+.mermaid-container.fullscreen .mermaid-chart {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 48px;
+  overflow: auto;
+}
+.mermaid-container.fullscreen .mermaid-chart .mermaid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
 }
 
 /* Responsive */
