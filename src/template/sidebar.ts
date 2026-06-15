@@ -429,6 +429,55 @@ export function renderToc(toc: TocItem[], settings: Settings): string {
   return lines.join("\n");
 }
 
+export interface PrevNextLinks {
+  prev: { title: string; href: string } | null;
+  next: { title: string; href: string } | null;
+}
+
+function flattenNavItems(items: NavItem[]): { title: string; href: string }[] {
+  const result: { title: string; href: string }[] = [];
+  for (const item of items) {
+    if (item.type === "file") {
+      result.push({ title: item.title, href: item.href });
+    }
+    if (item.type === "dir") {
+      // Include directory itself if it has an index page
+      result.push({ title: item.title, href: item.href });
+      if (item.children && item.children.length > 0) {
+        result.push(...flattenNavItems(item.children));
+      }
+    }
+  }
+  return result;
+}
+
+export function getPrevNext(
+  sidebar: NavItem[],
+  currentPath: string,
+): PrevNextLinks {
+  const flat = flattenNavItems(sidebar);
+
+  const currentIndex = flat.findIndex((item) => {
+    if (item.href === currentPath) return true;
+    // Match without trailing slash
+    if (item.href === currentPath + "/") return true;
+    if (item.href + "/" === currentPath) return true;
+    // Match .md/.mdx extension
+    if (item.href + ".md" === currentPath) return true;
+    if (item.href + ".mdx" === currentPath) return true;
+    return false;
+  });
+
+  if (currentIndex === -1) {
+    return { prev: null, next: null };
+  }
+
+  return {
+    prev: currentIndex > 0 ? flat[currentIndex - 1] : null,
+    next: currentIndex < flat.length - 1 ? flat[currentIndex + 1] : null,
+  };
+}
+
 function escapeHtml(text: string): string {
   const htmlEscapes: Record<string, string> = {
     "&": "&amp;",

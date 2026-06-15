@@ -1,7 +1,12 @@
 import type { Settings } from "../settings/index.js";
 import type { TocItem } from "../renderer/markdown.js";
 import { buildSeoTags, type SeoData } from "./seo.js";
-import { renderSidebar, renderToc, type NavItem } from "./sidebar.js";
+import {
+  renderSidebar,
+  renderToc,
+  getPrevNext,
+  type NavItem,
+} from "./sidebar.js";
 import {
   renderSearchModal,
   renderSearchTrigger,
@@ -107,16 +112,16 @@ export function renderPage(params: TemplateParams): string {
     ? `<aside class="sidebar" id="sidebar">${renderSidebar(sidebar, settings)}</aside>`
     : "";
 
-  // Sidebar toggle button for mobile
+  // Sidebar toggle buttons
   const sidebarToggle = hasSidebar
-    ? `<button class="sidebar-toggle" onclick="document.getElementById('sidebar').classList.toggle('open')" aria-label="Toggle menu">☰</button>`
+    ? `<button class="sidebar-toggle sidebar-toggle-mobile" onclick="document.getElementById('sidebar').classList.toggle('open')" aria-label="Toggle menu">☰</button><button class="sidebar-toggle sidebar-toggle-desktop" onclick="document.body.classList.toggle('sidebar-collapsed')" aria-label="Toggle sidebar">☰</button>`
     : "";
 
   // Render TOC if enabled
-  const tocHtml =
-    settings.navigation.tocEnabled && toc.length > 0
-      ? `<aside class="toc-sidebar">${renderToc(toc, settings)}</aside>`
-      : "";
+  const hasToc = settings.navigation.tocEnabled && toc.length > 0;
+  const tocHtml = hasToc
+    ? `<aside class="toc-sidebar">${renderToc(toc, settings)}</aside>`
+    : "";
 
   // Search trigger in header
   const searchTrigger = renderSearchTrigger(settings);
@@ -155,6 +160,18 @@ export function renderPage(params: TemplateParams): string {
     ? renderBreadcrumbs(urlPath, settings)
     : "";
 
+  // Prev/Next links
+  let prevNextHtml = "";
+  if (settings.navigation.prevNextLinks && sidebar.length > 0) {
+    const { prev, next } = getPrevNext(sidebar, urlPath);
+    if (prev || next) {
+      prevNextHtml = `<nav class="prev-next-nav">
+        ${prev ? `<a href="${prev.href}" class="prev-next-card prev-card"><span class="prev-next-label">← Prev</span><span class="prev-next-title">${escapeHtml(prev.title)}</span></a>` : `<span></span>`}
+        ${next ? `<a href="${next.href}" class="prev-next-card next-card"><span class="prev-next-label">Next →</span><span class="prev-next-title">${escapeHtml(next.title)}</span></a>` : `<span></span>`}
+      </nav>`;
+    }
+  }
+
   return `<!DOCTYPE html>
 <html lang="${settings.site.language}" data-theme="${defaultTheme}">
 <head>
@@ -180,13 +197,14 @@ ${getHighlightJsStyles(settings)}
     </div>
   </header>
 
-  <div class="site-container">
+  <div class="site-container${hasToc ? " has-toc" : ""}">
     ${sidebarHtml}
     <main class="content">
       ${breadcrumbs}
       <article class="markdown-body">
         ${body}
       </article>
+      ${prevNextHtml}
       ${footerHtml}
     </main>
     ${tocHtml}
@@ -607,7 +625,8 @@ body {
   background: transparent;
   border: 1px solid var(--border);
   color: var(--text-muted);
-  padding: 8px 12px;
+  height: 36px;
+  padding: 0 12px;
   border-radius: 6px;
   cursor: pointer;
   font-size: 14px;
@@ -622,14 +641,41 @@ body {
 }
 
 .sidebar-toggle {
-  display: none;
   font-size: 18px;
   padding: 6px 10px;
 }
 
+.sidebar-toggle-mobile {
+  display: none;
+}
+
+.sidebar-toggle-desktop {
+  display: flex;
+}
+
 @media (max-width: 768px) {
-  .sidebar-toggle {
+  .sidebar-toggle-mobile {
     display: flex;
+  }
+  .sidebar-toggle-desktop {
+    display: none;
+  }
+}
+
+@media (min-width: 769px) {
+  body.sidebar-collapsed .sidebar {
+    transform: translateX(-100%);
+  }
+
+  body.sidebar-collapsed .content {
+    margin-left: 0;
+    max-width: 100%;
+  }
+}
+
+@media (min-width: 1025px) {
+  body.sidebar-collapsed .has-toc .content {
+    max-width: calc(100% - var(--toc-width));
   }
 }
 
@@ -655,6 +701,7 @@ body {
   top: 60px;
   bottom: 0;
   left: 0;
+  transition: transform 0.25s ease;
 }
 
 .sidebar-nav {
@@ -726,7 +773,14 @@ body {
   flex: 1;
   margin-left: var(--sidebar-width);
   padding: 32px 48px;
-  max-width: calc(100% - var(--sidebar-width) - var(--toc-width));
+  max-width: calc(100% - var(--sidebar-width));
+  transition: margin-left 0.25s ease, max-width 0.25s ease;
+}
+
+@media (min-width: 1025px) {
+  .has-toc .content {
+    max-width: calc(100% - var(--sidebar-width) - var(--toc-width));
+  }
 }
 
 .toc-sidebar {
@@ -918,6 +972,56 @@ body {
 .footer-links a {
   color: var(--accent);
   text-decoration: none;
+}
+
+/* Prev/Next navigation */
+.prev-next-nav {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 48px;
+  max-width: 800px;
+}
+
+.prev-next-card {
+  display: flex;
+  flex-direction: column;
+  padding: 16px 20px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--text);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.prev-next-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  text-decoration: none;
+}
+
+.prev-next-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.prev-next-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.next-card {
+  text-align: right;
+  align-items: flex-end;
+}
+
+@media (max-width: 640px) {
+  .prev-next-nav {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* Search modal styles */
@@ -1383,8 +1487,9 @@ pre.mermaid-wrapper{
   .toc-sidebar {
     display: none;
   }
-  .content {
-    max-width: none;
+  .content,
+  .has-toc .content {
+    max-width: calc(100% - var(--sidebar-width));
     margin-right: 0;
   }
 }
@@ -1399,8 +1504,10 @@ pre.mermaid-wrapper{
   .sidebar.open {
     transform: translateX(0);
   }
-  .content {
+  .content,
+  .has-toc .content {
     margin-left: 0;
+    max-width: 100%;
     padding: 24px;
   }
   .site-container {

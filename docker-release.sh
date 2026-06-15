@@ -38,15 +38,20 @@ IMAGE_NAME="thedeployer/mdsvr"
 
 echo "Building Docker image for version $VERSION (multi-platform)..."
 
-# Build with version tag for multiple platforms
-if ! docker buildx build --platform linux/amd64,linux/arm64 -t "$IMAGE_NAME:$VERSION" --push .; then
-  echo "Error: Docker build failed"
-  exit 1
+# Ensure a multi-platform capable builder exists
+BUILDER_NAME="mdsvr-multiplatform"
+if ! docker buildx inspect "$BUILDER_NAME" >/dev/null 2>&1; then
+  echo "Creating buildx builder '$BUILDER_NAME'..."
+  docker buildx create --name "$BUILDER_NAME" --driver docker-container --bootstrap
 fi
+docker buildx use "$BUILDER_NAME"
 
-# Also tag as latest for multiple platforms
-if ! docker buildx build --platform linux/amd64,linux/arm64 -t "$IMAGE_NAME:latest" --push .; then
-  echo "Error: Docker build failed for latest tag"
+# Build and push both tags in one pass
+if ! docker buildx build --platform linux/amd64,linux/arm64 \
+  -t "$IMAGE_NAME:$VERSION" \
+  -t "$IMAGE_NAME:latest" \
+  --push .; then
+  echo "Error: Docker build failed"
   exit 1
 fi
 
