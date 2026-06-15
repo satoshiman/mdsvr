@@ -18,7 +18,7 @@ Transform any folder of Markdown/Markdown files into a beautiful documentation w
 npx mdsvr ./docs
 ```
 
-## What's New in v2.0
+## What's New in v2.2
 
 | Feature            | v1  | v2                      |
 | ------------------ | --- | ----------------------- |
@@ -30,6 +30,8 @@ npx mdsvr ./docs
 | Sidebar navigation | ❌  | ✅ Auto-generated       |
 | Search             | ❌  | ✅ Full-text            |
 | Sitemap/RSS        | ❌  | ✅ Auto-generated       |
+| Mermaid diagrams   | ❌  | ✅ Interactive viewer   |
+| Mermaid fullscreen | ❌  | ✅ Pan & zoom           |
 
 ## Quick Start
 
@@ -241,7 +243,7 @@ When enabled in `settings.json`:
 - **Hot reload**: Settings auto-reload on change
 - **Path traversal protection**: Secure by default
 - **Zero config**: Works out of the box, fully customizable
-- **Mermaid diagram support**: Render ` ```mermaid ``` ` code blocks as diagrams
+- **Mermaid diagrams**: Render ` ```mermaid ``` ` blocks as interactive diagrams with fullscreen, pan, zoom, and source view
 
 ## File Structure
 

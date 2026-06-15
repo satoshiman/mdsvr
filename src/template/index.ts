@@ -266,17 +266,34 @@ function initMermaidToolbars() {
     var zoomInBtn = container.querySelector('.mermaid-btn-zoom-in');
     var zoomOutBtn = container.querySelector('.mermaid-btn-zoom-out');
     var chartDiv = container.querySelector('.mermaid-chart');
+    var mermaidInner = container.querySelector('.mermaid');
     var zoom = 1;
+    var panX = 0;
+    var panY = 0;
+    var isDragging = false;
+    var dragStartX = 0;
+    var dragStartY = 0;
+    var dragStartPanX = 0;
+    var dragStartPanY = 0;
     if (chartBtn) chartBtn.classList.add('active');
 
-    function resetZoom() {
-      zoom = 1;
-      if (chartDiv) {
-        chartDiv.style.transform = '';
-        chartDiv.style.transformOrigin = '';
+    function applyTransform() {
+      if (mermaidInner) {
+        mermaidInner.style.transform = 'translate(' + panX + 'px, ' + panY + 'px) scale(' + zoom + ')';
+        mermaidInner.style.transformOrigin = 'center center';
       }
     }
-    resetZoom();
+
+    function resetTransform() {
+      zoom = 1;
+      panX = 0;
+      panY = 0;
+      if (mermaidInner) {
+        mermaidInner.style.transform = '';
+        mermaidInner.style.transformOrigin = '';
+        mermaidInner.style.cursor = '';
+      }
+    }
 
     function clearActive() {
       if (chartBtn) chartBtn.classList.remove('active');
@@ -288,8 +305,7 @@ function initMermaidToolbars() {
       if (!chartDiv) return;
       var svg = chartDiv.querySelector('svg');
       if (!svg) return;
-      // Let the SVG naturally fill by resetting any manual zoom
-      resetZoom();
+      resetTransform();
       svg.style.maxWidth = '100%';
       svg.style.maxHeight = '100%';
       svg.style.width = 'auto';
@@ -305,8 +321,54 @@ function initMermaidToolbars() {
         svg.style.width = '';
         svg.style.height = '';
       }
-      resetZoom();
+      resetTransform();
     }
+
+    // Wheel zoom (fullscreen only)
+    if (chartDiv) {
+      chartDiv.addEventListener('wheel', function(e) {
+        if (!container.classList.contains('fullscreen')) return;
+        e.preventDefault();
+        var delta = e.deltaY > 0 ? -0.03 : 0.03;
+        var newZoom = Math.min(Math.max(zoom + delta, 0.1), 10);
+        // Zoom toward mouse cursor position
+        var rect = mermaidInner ? mermaidInner.getBoundingClientRect() : chartDiv.getBoundingClientRect();
+        var mouseX = e.clientX - rect.left - rect.width / 2;
+        var mouseY = e.clientY - rect.top - rect.height / 2;
+        panX = panX - mouseX * (newZoom / zoom - 1);
+        panY = panY - mouseY * (newZoom / zoom - 1);
+        zoom = newZoom;
+        applyTransform();
+      }, { passive: false });
+
+      // Drag/pan (fullscreen only)
+      chartDiv.addEventListener('mousedown', function(e) {
+        if (!container.classList.contains('fullscreen')) return;
+        if (e.button !== 0) return;
+        isDragging = true;
+        dragStartX = e.clientX;
+        dragStartY = e.clientY;
+        dragStartPanX = panX;
+        dragStartPanY = panY;
+        chartDiv.style.cursor = 'grabbing';
+        if (mermaidInner) mermaidInner.style.cursor = 'grabbing';
+        e.preventDefault();
+      });
+    }
+
+    document.addEventListener('mousemove', function(e) {
+      if (!isDragging) return;
+      panX = dragStartPanX + (e.clientX - dragStartX);
+      panY = dragStartPanY + (e.clientY - dragStartY);
+      applyTransform();
+    });
+
+    document.addEventListener('mouseup', function(e) {
+      if (!isDragging) return;
+      isDragging = false;
+      if (chartDiv) chartDiv.style.cursor = '';
+      if (mermaidInner) mermaidInner.style.cursor = '';
+    });
 
     if (chartBtn) {
       chartBtn.addEventListener('click', function() {
@@ -341,19 +403,19 @@ function initMermaidToolbars() {
       });
     }
 
-    if (zoomInBtn && chartDiv) {
+    if (zoomInBtn) {
       zoomInBtn.addEventListener('click', function() {
-        zoom = Math.min(zoom + 0.25, 4);
-        chartDiv.style.transform = 'scale(' + zoom + ')';
-        chartDiv.style.transformOrigin = 'center center';
+        if (!container.classList.contains('fullscreen')) return;
+        zoom = Math.min(zoom + 0.25, 10);
+        applyTransform();
       });
     }
 
-    if (zoomOutBtn && chartDiv) {
+    if (zoomOutBtn) {
       zoomOutBtn.addEventListener('click', function() {
-        zoom = Math.max(zoom - 0.25, 0.25);
-        chartDiv.style.transform = 'scale(' + zoom + ')';
-        chartDiv.style.transformOrigin = 'center center';
+        if (!container.classList.contains('fullscreen')) return;
+        zoom = Math.max(zoom - 0.25, 0.1);
+        applyTransform();
       });
     }
   });
@@ -371,9 +433,14 @@ function initMermaidToolbars() {
         if (chartBtn) chartBtn.classList.add('active');
         // Reset SVG sizing
         var chartDiv = fs.querySelector('.mermaid-chart');
+        var mermaidInner = fs.querySelector('.mermaid');
+        if (mermaidInner) {
+          mermaidInner.style.transform = '';
+          mermaidInner.style.transformOrigin = '';
+          mermaidInner.style.cursor = '';
+        }
         if (chartDiv) {
-          chartDiv.style.transform = '';
-          chartDiv.style.transformOrigin = '';
+          chartDiv.style.cursor = '';
           var svg = chartDiv.querySelector('svg');
           if (svg) {
             svg.style.maxWidth = '100%';
@@ -1228,15 +1295,12 @@ pre.mermaid-wrapper{
   position: absolute;
   bottom: 8px;
   right: 8px;
-  display: flex;
+  display: none;
   flex-direction: column;
   gap: 2px;
   opacity: 0;
   transition: opacity 0.2s;
   z-index: 10;
-}
-.mermaid-container:hover .mermaid-zoom-controls {
-  opacity: 1;
 }
 .mermaid-container[data-mode="code"] .mermaid-zoom-controls {
   display: none;
@@ -1287,6 +1351,7 @@ pre.mermaid-wrapper{
   right: 16px;
 }
 .mermaid-container.fullscreen .mermaid-zoom-controls {
+  display: flex;
   opacity: 1;
   bottom: 16px;
   right: 16px;
@@ -1297,7 +1362,12 @@ pre.mermaid-wrapper{
   justify-content: center;
   height: 100%;
   padding: 48px;
-  overflow: auto;
+  overflow: hidden;
+  cursor: grab;
+  user-select: none;
+}
+.mermaid-container.fullscreen .mermaid-chart:active {
+  cursor: grabbing;
 }
 .mermaid-container.fullscreen .mermaid-chart .mermaid {
   display: flex;
@@ -1305,6 +1375,7 @@ pre.mermaid-wrapper{
   justify-content: center;
   width: 100%;
   height: 100%;
+  will-change: transform;
 }
 
 /* Responsive */

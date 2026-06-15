@@ -164,8 +164,8 @@ export function Mermaid({ children }: MermaidProps) {
             stroke="currentColor"
             strokeWidth="2"
           >
-            <rect x="3" y="3" width="18" height="18" rx="2" />
-            <path d="M3 9h18M9 21V9" />
+            <path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z" />
+            <path d="M21.21 15.89A10 10 0 1 1 8 2.83" />
           </svg>
         </button>
         <button
@@ -180,7 +180,14 @@ export function Mermaid({ children }: MermaidProps) {
             stroke="currentColor"
             strokeWidth="2"
           >
-            <path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3" />
+            <path d="m15 15 6 6" />
+            <path d="m15 9 6-6" />
+            <path d="M21 16v5h-5" />
+            <path d="M21 8V3h-5" />
+            <path d="M3 16v5h5" />
+            <path d="m3 21 6-6" />
+            <path d="M3 8V3h5" />
+            <path d="M9 9 3 3" />
           </svg>
         </button>
         <button className="mermaid-btn mermaid-btn-code" title="Show code">
@@ -192,8 +199,9 @@ export function Mermaid({ children }: MermaidProps) {
             stroke="currentColor"
             strokeWidth="2"
           >
-            <polyline points="16 18 22 12 16 6" />
-            <polyline points="8 6 2 12 8 18" />
+            <path d="m18 16 4-4-4-4" />
+            <path d="m6 8-4 4 4 4" />
+            <path d="m14.5 4-5 16" />
           </svg>
         </button>
       </div>
