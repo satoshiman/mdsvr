@@ -64,6 +64,10 @@ function createMarkdownIt(settings: Settings): MarkdownIt {
       encodeURIComponent(String(s).trim().toLowerCase().replace(/\s+/g, "-")),
   });
 
+  // Wrap tables in a scrollable container for mobile responsiveness
+  md.renderer.rules.table_open = () => '<div class="table-wrapper"><table>\n';
+  md.renderer.rules.table_close = () => "</table></div>\n";
+
   return md;
 }
 
@@ -145,6 +149,9 @@ export function renderMarkdownSimple(content: string): string {
     slugify: (s: string) =>
       encodeURIComponent(String(s).trim().toLowerCase().replace(/\s+/g, "-")),
   });
+
+  md.renderer.rules.table_open = () => '<div class="table-wrapper"><table>\n';
+  md.renderer.rules.table_close = () => "</table></div>\n";
 
   return md.render(content);
 }

@@ -17,3 +17,7 @@ export {
   validateSettingsFile,
   generateDefaultSettings,
 } from "./settings/index.js";
+export {
+  exportStaticSite,
+  type ExportOptions,
+} from "./generators/static-export.js";

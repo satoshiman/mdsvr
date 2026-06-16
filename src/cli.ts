@@ -21,6 +21,7 @@ interface ParsedArgs {
   init: boolean;
   validate: boolean;
   watchSettings: boolean;
+  export: string | null;
 }
 
 function parseArgs(argv: string[]): ParsedArgs {
@@ -36,6 +37,7 @@ function parseArgs(argv: string[]): ParsedArgs {
     init: false,
     validate: false,
     watchSettings: true,
+    export: null,
   };
 
   for (let i = 0; i < argv.length; i++) {
@@ -61,6 +63,15 @@ function parseArgs(argv: string[]): ParsedArgs {
       args.validate = true;
     } else if (arg === "--no-watch") {
       args.watchSettings = false;
+    } else if (arg === "--export" || arg === "-e") {
+      const val = argv[++i];
+      // If value provided and not a flag, use it; otherwise null for default
+      if (val && !val.startsWith("-")) {
+        args.export = val;
+      } else {
+        if (val) i--; // Put back if it's a flag
+        args.export = null; // Will use default _html folder
+      }
     } else if (!arg.startsWith("--") && !arg.startsWith("-")) {
       args.dir = arg;
       args.dirSpecified = true;
@@ -80,6 +91,7 @@ Options:
   --host H           Bind address (default: localhost)
   -o, --open         Auto-open browser
   -s, --silent       Suppress console output
+  -e, --export [PATH]  Export static HTML (default: _html/public in input dir)
   --init             Create a starter settings.json in [dir]
   --validate         Validate settings.json and exit
   --no-watch         Disable settings.json hot-reload
@@ -90,6 +102,8 @@ Examples:
   mdsvr ./docs
   mdsvr ./notes --port 4000 --open
   mdsvr . --host 0.0.0.0 --port 8080
+  mdsvr ./docs --export       # Export to ./_html/public
+  mdsvr ./docs -e ./output    # Export to custom directory
   mdsvr ./docs --init
   mdsvr ./docs --validate
 `);
@@ -179,6 +193,38 @@ async function main(): Promise<void> {
       }
     } catch (err) {
       console.error("Error:", err instanceof Error ? err.message : err);
+      process.exit(1);
+    }
+  }
+
+  // Handle --export
+  if (
+    args.export !== null ||
+    process.argv.includes("--export") ||
+    process.argv.includes("-e")
+  ) {
+    try {
+      const { loadSettings } = await import("./settings/index.js");
+      const { exportStaticSite } =
+        await import("./generators/static-export.js");
+
+      const settings = await loadSettings(absoluteDir);
+      // Default to _html/public folder in input directory if no output specified
+      const outputDir =
+        args.export || path.join(absoluteDir, "_html", "public");
+      await exportStaticSite({
+        rootDir: absoluteDir,
+        outputDir,
+        settings,
+        silent: args.silent,
+      });
+
+      if (!args.silent) {
+        console.log(`\n  ✔ Static site exported to: ${outputDir}\n`);
+      }
+      process.exit(0);
+    } catch (err) {
+      console.error("Export error:", err instanceof Error ? err.message : err);
       process.exit(1);
     }
   }

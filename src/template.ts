@@ -113,16 +113,21 @@ export function wrapHtml(params: {
       color: #656d76;
       border-left: 0.25em solid #d0d7de;
     }
+    .markdown-body .table-wrapper {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin-bottom: 16px;
+    }
     .markdown-body table {
       border-collapse: collapse;
       width: 100%;
-      margin-bottom: 16px;
+      margin-bottom: 0;
     }
     .markdown-body th, .markdown-body td {
       padding: 6px 13px;
       border: 1px solid #d0d7de;
     }
-    .markdown-body th { background: #f6f8fa; font-weight: 600; }
+    .markdown-body th { background: #f6f8fa; font-weight: 600; white-space: nowrap; }
     .markdown-body tr:nth-child(2n) { background: #f6f8fa; }
     .markdown-body img { max-width: 100%; height: auto; }
     .markdown-body hr {

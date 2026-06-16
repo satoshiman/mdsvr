@@ -69,8 +69,14 @@ async function readDirRecursive(
       try {
         const content = await fs.readFile(fullPath, "utf-8");
         const parsed = matter(content);
-        const relativePath = "/" + path.relative(rootDir, fullPath).replace(/\\/g, "/");
-        const href = relativePath.replace(/\.(md|mdx)$/, "");
+        const relativePath =
+          "/" + path.relative(rootDir, fullPath).replace(/\\/g, "/");
+        let href = relativePath.replace(/\.(md|mdx)$/, "");
+        // README becomes directory index, so link to the directory path
+        if (path.basename(href).toLowerCase() === "readme") {
+          href = path.dirname(href);
+          if (!href.endsWith("/")) href += "/";
+        }
 
         const title =
           (parsed.data.title as string) ||

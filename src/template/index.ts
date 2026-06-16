@@ -933,16 +933,21 @@ body {
   color: var(--text-muted);
   border-left: 0.25em solid var(--border);
 }
+.markdown-body .table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 16px;
+}
 .markdown-body table {
   border-collapse: collapse;
   width: 100%;
-  margin-bottom: 16px;
+  margin-bottom: 0;
 }
 .markdown-body th, .markdown-body td {
   padding: 6px 13px;
   border: 1px solid var(--border);
 }
-.markdown-body th { background: var(--bg-secondary); font-weight: 600; }
+.markdown-body th { background: var(--bg-secondary); font-weight: 600; white-space: nowrap; }
 .markdown-body tr:nth-child(2n) { background: var(--bg-secondary); }
 .markdown-body img { max-width: 100%; height: auto; }
 .markdown-body hr {

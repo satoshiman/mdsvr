@@ -18,20 +18,58 @@ Transform any folder of Markdown/Markdown files into a beautiful documentation w
 npx mdsvr ./docs
 ```
 
-## What's New in v2.2
+## Features
 
-| Feature            | v1  | v2                      |
-| ------------------ | --- | ----------------------- |
-| Markdown rendering | ✅  | ✅ Enhanced             |
-| MDX support        | ❌  | ✅ Full pipeline        |
-| Site settings      | ❌  | ✅ `settings.json`      |
-| Dark/Light mode    | ❌  | ✅ Toggle + auto        |
-| SEO meta tags      | ❌  | ✅ OG, Twitter, sitemap |
-| Sidebar navigation | ❌  | ✅ Auto-generated       |
-| Search             | ❌  | ✅ Full-text            |
-| Sitemap/RSS        | ❌  | ✅ Auto-generated       |
-| Mermaid diagrams   | ❌  | ✅ Interactive viewer   |
-| Mermaid fullscreen | ❌  | ✅ Pan & zoom           |
+### Markdown & MDX Rendering
+
+Serve `.md` and `.mdx` files as fully rendered HTML pages. MDX support enables interactive React components inline with your content — callouts, steps, tabs, code groups, and more — all processed server-side with zero client-side framework required.
+
+### Site Settings (`settings.json`)
+
+Place a `settings.json` in your docs root to configure everything: site title, description, language, accent color, theme, navigation, search, SEO, and MDX. Validated against a JSON Schema. Hot-reloads automatically when changed — no server restart needed.
+
+### Dark / Light Mode
+
+Visitors can toggle between dark and light themes, or let the server respect their OS preference automatically (`system` default). The accent color is fully customizable.
+
+### Sidebar Navigation
+
+Auto-generated from your file structure. Directories and files appear as collapsible sections and links without any manual configuration. The active page is highlighted.
+
+### Table of Contents
+
+Every page gets an auto-generated in-page TOC from its headings (`##`, `###`, etc.), making long documents easy to navigate.
+
+### Full-Text Search
+
+Client-side full-text search powered by a pre-built `/search-index.json`. Triggered by the `⌘K` (or `Ctrl+K`) keyboard shortcut. No external service required.
+
+### SEO & Meta Tags
+
+Generates Open Graph and Twitter Card meta tags for every page. Canonical URLs, `<title>` tags, and descriptions are derived from front matter or page content. Includes auto-generated `/sitemap.xml` and `/feed.xml` (RSS) when enabled.
+
+### Mermaid Diagrams
+
+Render ` ```mermaid ``` ` code blocks as interactive diagrams. Supports fullscreen mode with pan, zoom, and a source view toggle — all client-side with no extra setup.
+
+### Syntax Highlighting
+
+Code blocks are highlighted using highlight.js with support for dozens of languages. The highlight style adapts to the current dark/light theme.
+
+### Static HTML Export
+
+Export your entire docs site to clean static HTML files suitable for hosting on Firebase, Netlify, GitHub Pages, or any static host. Generates clean URLs (`/guide/setup/` instead of `/guide/setup.html`) and auto-creates index pages for directories without a README.
+
+### Directory Listings
+
+When navigating to a directory without a README, mdsvr renders a clean listing of its contents with clickable links to files and subdirectories.
+
+### Security
+
+- Resolved paths are verified to stay within the root directory (path traversal protection)
+- Files starting with `_` or listed as hidden in settings are not served
+- Sensitive extensions (`.env`, `.key`, `.pem`, etc.) are blocked by default
+- Server is strictly read-only — no write operations exposed
 
 ## Quick Start
 
@@ -89,6 +127,7 @@ Options:
   --host H           Bind address (default: localhost)
   -o, --open         Auto-open browser
   -s, --silent       Suppress console output
+  -e, --export [PATH]  Export static HTML (default: _html/public)
   --init             Create a starter settings.json in [dir]
   --validate         Validate settings.json and exit
   --no-watch         Disable settings.json hot-reload
@@ -214,6 +253,80 @@ const result = await validateSettingsFile("./docs");
 if (!result.valid) {
   console.error(result.errors);
 }
+
+// Export static HTML for hosting
+import { exportStaticSite } from "mdsvr";
+
+await exportStaticSite({
+  rootDir: "./docs",
+  outputDir: "./docs/_html/public",
+  settings,
+});
+```
+
+## CLI: Export Static Site
+
+Generate a static HTML site for any static hosting (Firebase, Netlify, GitHub Pages, etc.):
+
+```bash
+# Export to default _html/public folder
+npx mdsvr ./docs --export
+
+# Export to custom directory
+npx mdsvr ./docs -e ./dist
+```
+
+**Export features:**
+
+- Clean URLs: `/features/markdown-formats/` instead of `/features/markdown-formats.html`
+- Auto-generated index pages for directories without README
+- Sidebar navigation preserved
+- All static assets copied
+- Directory listings for folders without index files
+
+## Example: Deploy to Firebase Hosting
+
+### 1. Install Firebase CLI
+
+```bash
+# Install Firebase CLI globally
+npm install -g firebase-tools
+
+# Navigate to your docs directory
+cd /path/to/your/docs
+
+# Export static HTML
+mdsvr -e
+
+cd _html
+
+# Login to Firebase
+firebase login
+
+# Initialize Firebase Hosting
+firebase init hosting
+```
+
+When prompted:
+
+- **What do you want to use as your public directory?** `public`
+- **Configure as a single-page app?** `n` (No - this is a multi-page static site)
+
+```bash
+# Deploy to Firebase
+cd _html
+firebase deploy
+```
+
+**Tip:** Add to your `package.json`:
+
+```json
+{
+  "scripts": {
+    "export": "mdsvr . --export",
+    "deploy": "npm run export && cd _html && firebase deploy"
+  }
+}
 ```
 
 ## Generated Endpoints
@@ -225,25 +338,6 @@ When enabled in `settings.json`:
 | `/sitemap.xml`       | XML sitemap for search engines      |
 | `/feed.xml`          | RSS feed for blog posts             |
 | `/search-index.json` | Search index for client-side search |
-
-## Features
-
-- **Markdown rendering**: `.md` files automatically rendered as beautiful HTML
-- **MDX support**: Interactive components in your docs
-- **Directory listings**: Browse directories with clickable file links
-- **Static files**: Serve any file type with correct MIME types
-- **Syntax highlighting**: Code blocks highlighted with highlight.js
-- **Anchor links**: Headers have clickable anchors
-- **Sidebar navigation**: Auto-generated from your file structure
-- **Table of contents**: Auto-generated from page headings
-- **Dark/Light mode**: Toggle or auto-detect system preference
-- **Full-text search**: Client-side search with keyboard shortcut (⌘K)
-- **SEO optimized**: Open Graph, Twitter Cards, canonical URLs, sitemap
-- **Mobile responsive**: Works on all devices
-- **Hot reload**: Settings auto-reload on change
-- **Path traversal protection**: Secure by default
-- **Zero config**: Works out of the box, fully customizable
-- **Mermaid diagrams**: Render ` ```mermaid ``` ` blocks as interactive diagrams with fullscreen, pan, zoom, and source view
 
 ## File Structure
 
