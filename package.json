@@ -57,11 +57,20 @@
   },
   "keywords": [
     "markdown",
-    "serve",
-    "static",
     "server",
     "docs",
-    "cli"
+    "documentation",
+    "mdx",
+    "static-site-generator",
+    "zero-config",
+    "serve",
+    "cli",
+    "dark-mode",
+    "search",
+    "seo",
+    "docusaurus-alternative",
+    "nextra-alternative",
+    "markdown-server"
   ],
   "files": [
     "dist/**/*",
