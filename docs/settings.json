@@ -1,8 +1,8 @@
 {
   "$schema": "https://raw.githubusercontent.com/satoshiman/mdsvr/main/schema/v2.json",
   "site": {
-    "title": "My Docs",
-    "description": "Project documentation",
+    "title": "mdsvr",
+    "description": "Full-featured documentation website server with MDX support, site settings, SEO, and navigation",
     "language": "en"
   },
   "appearance": {
@@ -18,15 +18,21 @@
     "sidebar": {
       "enabled": true,
       "autoGenerate": true,
-      "depth": 2,
+      "depth": 3,
       "docsOnly": true,
       "collapsible": true,
-      "defaultOpen": false
+      "defaultOpen": true
     },
     "tocEnabled": true
   },
   "search": {
-    "enabled": true
+    "enabled": true,
+    "placeholder": "Search documentation...",
+    "maxResults": 10
+  },
+  "seo": {
+    "generateSitemap": true,
+    "generateRssFeed": false
   },
   "mdx": {
     "enabled": true

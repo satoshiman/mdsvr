@@ -10,19 +10,24 @@ This page demonstrates all supported Markdown formats.
 ## Headings
 
 # Heading 1
+
 ## Heading 2
+
 ### Heading 3
+
 #### Heading 4
+
 ##### Heading 5
+
 ###### Heading 6
 
 ## Text Formatting
 
 **Bold text** using `**text**`
 
-*Italic text* using `*text*`
+_Italic text_ using `*text*`
 
-***Bold and italic*** using `***text***`
+**_Bold and italic_** using `***text***`
 
 ~~Strikethrough~~ using `~~text~~`
 
@@ -34,11 +39,11 @@ This page demonstrates all supported Markdown formats.
 
 [Link with title](https://example.com "Example Site")
 
-[Relative link](/configuration)
+[Relative link](/2.-settings)
 
 ## Images
 
-![Alt text](https://via.placeholder.com/300x200)
+![Alt text](https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExbWZkcHFvMDc3YnVjZ3g2cjllMWFiZnZpODYzMjFraXNlZWJneHQxbSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/kd9BlRovbPOykLBMqX/giphy.gif)
 
 ## Lists
 
@@ -72,7 +77,7 @@ This page demonstrates all supported Markdown formats.
 function greet(name) {
   console.log(`Hello, ${name}!`);
 }
-greet('World');
+greet("World");
 ```
 
 ### Python
@@ -112,14 +117,14 @@ without language
 
 ---
 
-***
+---
 
-___
+---
 
 ## Tables
 
 | Name | Age | Occupation |
-|------|-----|------------|
+| ---- | --- | ---------- |
 | John | 30  | Engineer   |
 | Jane | 25  | Designer   |
 | Bob  | 35  | Manager    |
@@ -127,9 +132,9 @@ ___
 ### Table with alignment
 
 | Left | Center | Right |
-|:-----|:------:|------:|
-| L1   | C1     | R1    |
-| L2   | C2     | R2    |
+| :--- | :----: | ----: |
+| L1   |   C1   |    R1 |
+| L2   |   C2   |    R2 |
 
 ## HTML
 
@@ -182,3 +187,49 @@ This is a reference[^1].
 > **Warning:** This is a warning block.
 
 > **Tip:** This is a tip block.
+
+## Mermaid Diagrams
+
+mdsvr supports Mermaid diagrams via the `mermaid` code block:
+
+### Database Schema Diagram
+
+```mermaid
+erDiagram
+    USER {
+        int id PK
+        string email
+        string username
+        datetime created_at
+    }
+    POST {
+        int id PK
+        string title
+        text content
+        int author_id FK
+        datetime published_at
+    }
+    COMMENT {
+        int id PK
+        text body
+        int post_id FK
+        int author_id FK
+        datetime created_at
+    }
+    TAG {
+        int id PK
+        string name
+        string slug
+    }
+    POST_TAG {
+        int post_id FK
+        int tag_id FK
+    }
+
+    USER ||--o{ POST : writes
+    USER ||--o{ COMMENT : writes
+    POST ||--o{ COMMENT : has
+    POST ||--o{ POST_TAG : tagged
+    TAG ||--o{ POST_TAG : assigned
+
+```

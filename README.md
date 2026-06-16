@@ -4,8 +4,11 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node.js 18+](https://img.shields.io/badge/Node.js-18+-green)](https://nodejs.org/)
 ![TypeScript](https://img.shields.io/badge/TypeScript-100%25-blue)
+[![Docs](https://img.shields.io/badge/docs-mdsvr--docs.web.app-blue)](https://mdsvr-docs.web.app/)
 
 > **The fastest way from Markdown to beautiful docs.** Zero config, one command, 10 seconds.
+
+📖 **[Official Documentation](https://mdsvr-docs.web.app/)**
 
 Transform any folder of Markdown files into a full-featured documentation website — no build step, no configuration required.
 

@@ -44,35 +44,48 @@ npx mdsvr ./docs
 
 ## Key Features
 
-| Feature                               | Description                                                    |
-| ------------------------------------- | -------------------------------------------------------------- |
-| 📝 [Markdown & MDX](/features/mdx)    | Render .md and .mdx files with built-in interactive components |
-| 🎨 [Themes](/features/theming)        | Dark/light mode with customizable accent colors                |
-| 🔍 [Search](/features/search)         | Built-in full-text search with keyboard shortcut (⌘K)          |
-| 📑 [Navigation](/features/navigation) | Auto-generated sidebar and table of contents                   |
-| 🔎 [SEO](/features/seo)               | Sitemap, RSS feed, Open Graph, and Twitter Cards               |
-| ⚙️ [Settings](/configuration)         | Configure everything via settings.json                         |
+| Feature                                  | Description                                                    |
+| ---------------------------------------- | -------------------------------------------------------------- |
+| 📝 [Markdown & MDX](/3.-features)        | Render .md and .mdx files with built-in interactive components |
+| 🎨 [Themes](/3.-features/theming)        | Dark/light mode with customizable accent colors                |
+| 🔍 [Search](/3.-features/search)         | Built-in full-text search with keyboard shortcut (⌘K)          |
+| 📑 [Navigation](/3.-features/navigation) | Auto-generated sidebar and table of contents                   |
+| 🔎 [SEO](/3.-features/seo)               | Sitemap, RSS feed, Open Graph, and Twitter Cards               |
+| ⚙️ [Settings](/2.-settings)              | Configure everything via settings.json                         |
 
-## Project Structure
+## This docs structure for reference
 
 ```
 docs/
-├── settings.json      # Site configuration (optional)
-├── README.md          # Homepage (this file)
-├── features/          # Feature documentation
-│   ├── mdx.mdx       # MDX components demo
-│   ├── theming.md    # Theme customization
-│   ├── search.md     # Search functionality
-│   ├── navigation.md # Navigation features
-│   └── seo.md        # SEO features
-└── configuration.md  # Full configuration guide
+├── settings.json                # Site configuration (optional)
+├── README.md                    # Homepage (this file)
+├── 1.-getting-started/          # Getting started guides
+│   └── README.md              # Quick start & installation
+├── 2.-settings/                 # Settings & configuration
+│   └── README.md              # Configuration, writing & deployment
+├── 3.-features/                 # Feature documentation
+│   ├── README.md             # Features overview
+│   ├── markdown.md           # Markdown support
+│   ├── mdx.mdx               # MDX components demo
+│   ├── theming.md            # Theme customization
+│   ├── search.md             # Search functionality
+│   ├── navigation.md         # Navigation features
+│   ├── seo.md                # SEO features
+│   └── mermaid.md            # Mermaid diagrams
+└── 4.-reference/                # API/Reference
+    └── README.md             # CLI reference
 ```
 
 ## Next Steps
 
-- [New] Learn about [MDX Components](/features/mdx) to make your docs interactive
-- Learn how to [configure](/configuration) your documentation site
-- Check out all the [features](/features) mdsvr offers
+- **[Quick Start](/1.-getting-started)** — Get running in 30 seconds
+- **[Installation](/1.-getting-started)** — Install options
+- **[MDX Components](/3.-features/mdx)** — Make your docs interactive
+- **[Configuration](/2.-settings)** — Customize your site
+- **[Writing Content](/2.-settings)** — Best practices
+- **[Deployment](/2.-settings)** — Go live
+- **[Features](/3.-features)** — See all features
+- **[CLI Reference](/4.-reference)** — Command reference
 
 ---
 
