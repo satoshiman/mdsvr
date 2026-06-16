@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mdsvr — Zero Config Markdown Server</title>
+  <meta name="description" content="Transform any folder of Markdown files into a beautiful documentation website in 10 seconds. Zero config, MDX support, dark mode, full-text search." />
+  <meta property="og:title" content="mdsvr — Zero Config Markdown Server" />
+  <meta property="og:description" content="npx mdsvr ./docs — That's it. That's the whole setup." />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <span class="logo-bracket">[</span>mdsvr<span class="logo-bracket">]</span>
+    </a>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#compare">Compare</a>
+      <a href="#quickstart">Quick Start</a>
+      <a href="https://github.com/satoshiman/mdsvr" target="_blank" rel="noopener" class="nav-github">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12Z"/></svg>
+        GitHub
+      </a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">v2.2 · MIT License · Node 18+</div>
+    <h1 class="hero-title">
+      The fastest way from<br />
+      <span class="hero-accent">Markdown to beautiful docs</span>
+    </h1>
+    <p class="hero-sub">
+      Zero config. One command. MDX, dark mode, full-text search, SEO — everything included.
+    </p>
+
+    <div class="terminal" id="terminal">
+      <div class="terminal-bar">
+        <span class="dot dot-red"></span>
+        <span class="dot dot-yellow"></span>
+        <span class="dot dot-green"></span>
+        <span class="terminal-label">terminal</span>
+      </div>
+      <div class="terminal-body">
+        <div class="terminal-line">
+          <span class="prompt">$</span>
+          <span class="cmd" id="typedCmd"></span><span class="cursor" id="cursor">|</span>
+        </div>
+        <div class="terminal-output" id="terminalOutput"></div>
+      </div>
+    </div>
+
+    <div class="hero-ctas">
+      <button class="btn-copy" id="copyBtn" onclick="copyCmd()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        <span id="copyLabel">Copy command</span>
+      </button>
+      <a href="https://www.npmjs.com/package/mdsvr" target="_blank" rel="noopener" class="btn-secondary">
+        npm install -g mdsvr
+      </a>
+    </div>
+
+    <div class="hero-metrics">
+      <div class="metric">
+        <span class="metric-val">10s</span>
+        <span class="metric-lbl">to running docs</span>
+      </div>
+      <div class="metric-sep"></div>
+      <div class="metric">
+        <span class="metric-val">0</span>
+        <span class="metric-lbl">config files needed</span>
+      </div>
+      <div class="metric-sep"></div>
+      <div class="metric">
+        <span class="metric-val">150ms</span>
+        <span class="metric-lbl">startup time</span>
+      </div>
+      <div class="metric-sep"></div>
+      <div class="metric">
+        <span class="metric-val">56×</span>
+        <span class="metric-lbl">faster than Docusaurus</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-gradient"></div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <div class="section-inner">
+    <div class="section-label">Features</div>
+    <h2 class="section-title">Everything included, nothing to configure</h2>
+    <p class="section-sub">All the features of a professional docs platform, available in a single <code>npx</code> command.</p>
+
+    <div class="feature-grid">
+      <div class="feature-card feature-card--wide">
+        <div class="feature-icon">⚡</div>
+        <h3>Zero Config</h3>
+        <p>Point to any Markdown folder. No setup files, no build step, no scaffolding. mdsvr figures everything out.</p>
+        <div class="feature-code">
+          <code>npx mdsvr ./docs</code>
+          <span class="feature-comment"># Done.</span>
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">📝</div>
+        <h3>Markdown &amp; MDX</h3>
+        <p>Render <code>.md</code> and <code>.mdx</code> with React components — callouts, steps, tabs, cards, accordions.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🌓</div>
+        <h3>Dark / Light Mode</h3>
+        <p>Auto-detects OS preference. Fully customizable accent color. Theme toggle included.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🔍</div>
+        <h3>Full-Text Search</h3>
+        <p>Client-side search with <kbd>⌘K</kbd> shortcut. Pre-built index. No Algolia account needed.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🗂️</div>
+        <h3>Auto Navigation</h3>
+        <p>Sidebar and TOC auto-generated from your file structure. Active page highlighted. Collapsible sections.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🔎</div>
+        <h3>SEO Ready</h3>
+        <p>Open Graph, Twitter Cards, canonical URLs, <code>sitemap.xml</code>, RSS feed — all generated automatically.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <h3>Mermaid Diagrams</h3>
+        <p>Render flowcharts, sequence diagrams, ERDs from code blocks. Fullscreen, pan, zoom included.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">📦</div>
+        <h3>Static Export</h3>
+        <p>Export to clean HTML for Firebase, Netlify, or GitHub Pages. Clean URLs, no <code>.html</code> extensions.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🐳</div>
+        <h3>Docker Ready</h3>
+        <p>Official Docker image on Docker Hub. Mount your docs folder and go.</p>
+        <div class="feature-code">
+          <code>docker pull thedeployer/mdsvr</code>
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🔒</div>
+        <h3>Security Built-in</h3>
+        <p>Path traversal protection, hidden file blocking, sensitive extension filtering. Read-only by design.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MDX COMPONENTS SHOWCASE -->
+<section class="mdx-section">
+  <div class="section-inner">
+    <div class="section-label">MDX Components</div>
+    <h2 class="section-title">Interactive docs out of the box</h2>
+    <p class="section-sub">Drop these components directly into your Markdown files — no imports, no setup.</p>
+
+    <div class="mdx-grid">
+      <div class="mdx-card">
+        <div class="mdx-preview mdx-callout mdx-callout--warning">
+          <strong>Make sure you have Node.js 18+ installed.</strong>
+        </div>
+        <div class="mdx-label"><code>&lt;Callout type="warning"&gt;</code></div>
+      </div>
+
+      <div class="mdx-card">
+        <div class="mdx-preview">
+          <div class="mdx-steps">
+            <div class="mdx-step"><span class="step-num">1</span><span>Install the package</span></div>
+            <div class="mdx-step"><span class="step-num">2</span><span>Create docs folder</span></div>
+            <div class="mdx-step"><span class="step-num">3</span><span>Run the server</span></div>
+          </div>
+        </div>
+        <div class="mdx-label"><code>&lt;Steps&gt;</code></div>
+      </div>
+
+      <div class="mdx-card">
+        <div class="mdx-preview">
+          <div class="mdx-tabs">
+            <div class="mdx-tab mdx-tab--active">npm</div>
+            <div class="mdx-tab">yarn</div>
+            <div class="mdx-tab">pnpm</div>
+          </div>
+          <div class="mdx-tab-content"><code>npm install -g mdsvr</code></div>
+        </div>
+        <div class="mdx-label"><code>&lt;Tabs&gt;</code></div>
+      </div>
+
+      <div class="mdx-card">
+        <div class="mdx-preview">
+          <div class="mdx-cards-row">
+            <div class="mdx-mini-card"><span>⚡</span><small>Quick Start</small></div>
+            <div class="mdx-mini-card"><span>⚙️</span><small>Config</small></div>
+          </div>
+        </div>
+        <div class="mdx-label"><code>&lt;CardGroup&gt;</code></div>
+      </div>
+
+      <div class="mdx-card">
+        <div class="mdx-preview">
+          <div class="mdx-badges">
+            <span class="badge badge--green">stable</span>
+            <span class="badge badge--blue">TypeScript</span>
+            <span class="badge badge--orange">v2.2</span>
+          </div>
+        </div>
+        <div class="mdx-label"><code>&lt;Badge&gt;</code></div>
+      </div>
+
+      <div class="mdx-card">
+        <div class="mdx-preview">
+          <div class="mdx-accordion">
+            <div class="accordion-header">
+              <span>How does zero config work?</span>
+              <span>+</span>
+            </div>
+          </div>
+        </div>
+        <div class="mdx-label"><code>&lt;Accordion&gt;</code></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARE TABLE -->
+<section class="compare" id="compare">
+  <div class="section-inner">
+    <div class="section-label">Comparison</div>
+    <h2 class="section-title">Why mdsvr wins on simplicity</h2>
+    <p class="section-sub">Every alternative requires setup. mdsvr doesn't.</p>
+
+    <div class="table-wrap">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th class="col-mdsvr">mdsvr</th>
+            <th>Docusaurus</th>
+            <th>Nextra</th>
+            <th>MkDocs</th>
+            <th>Hugo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Setup</td>
+            <td class="col-mdsvr"><span class="badge-yes">⚡ Zero config</span></td>
+            <td><span class="badge-no">Config required</span></td>
+            <td><span class="badge-no">Config required</span></td>
+            <td><span class="badge-no">YAML config</span></td>
+            <td><span class="badge-no">hugo.toml</span></td>
+          </tr>
+          <tr>
+            <td>Language</td>
+            <td class="col-mdsvr">TypeScript / Node</td>
+            <td>Node + React</td>
+            <td>Next.js</td>
+            <td>Python</td>
+            <td>Go</td>
+          </tr>
+          <tr>
+            <td>MDX Support</td>
+            <td class="col-mdsvr"><span class="badge-yes">✓ Full</span></td>
+            <td><span class="badge-yes">✓ Full</span></td>
+            <td><span class="badge-yes">✓ Full</span></td>
+            <td><span class="badge-no">✗ No</span></td>
+            <td><span class="badge-no">✗ No</span></td>
+          </tr>
+          <tr>
+            <td>Dark Mode</td>
+            <td class="col-mdsvr"><span class="badge-yes">✓ Built-in</span></td>
+            <td><span class="badge-yes">✓ Built-in</span></td>
+            <td><span class="badge-yes">✓ Built-in</span></td>
+            <td><span class="badge-yes">✓ Built-in</span></td>
+            <td><span class="badge-yes">✓ Built-in</span></td>
+          </tr>
+          <tr>
+            <td>Search</td>
+            <td class="col-mdsvr"><span class="badge-yes">✓ Client-side</span></td>
+            <td>Algolia API</td>
+            <td><span class="badge-yes">✓ Client-side</span></td>
+            <td><span class="badge-yes">✓ Built-in</span></td>
+            <td><span class="badge-no">✗ No</span></td>
+          </tr>
+          <tr>
+            <td>Mermaid</td>
+            <td class="col-mdsvr"><span class="badge-yes">✓ Yes</span></td>
+            <td><span class="badge-yes">✓ Yes</span></td>
+            <td><span class="badge-yes">✓ Yes</span></td>
+            <td>Plugin only</td>
+            <td><span class="badge-yes">✓ Yes</span></td>
+          </tr>
+          <tr>
+            <td>Static Export</td>
+            <td class="col-mdsvr"><span class="badge-yes">✓ Yes</span></td>
+            <td><span class="badge-yes">✓ Yes</span></td>
+            <td><span class="badge-yes">✓ Yes</span></td>
+            <td><span class="badge-yes">✓ Yes</span></td>
+            <td><span class="badge-yes">✓ Yes</span></td>
+          </tr>
+          <tr>
+            <td>Build Step</td>
+            <td class="col-mdsvr"><span class="badge-yes">✗ Not needed</span></td>
+            <td><span class="badge-no">Required</span></td>
+            <td><span class="badge-no">Required</span></td>
+            <td><span class="badge-no">Required</span></td>
+            <td><span class="badge-no">Required</span></td>
+          </tr>
+          <tr>
+            <td>Docker</td>
+            <td class="col-mdsvr"><span class="badge-yes">✓ Official image</span></td>
+            <td>DIY</td>
+            <td>DIY</td>
+            <td>DIY</td>
+            <td>DIY</td>
+          </tr>
+          <tr>
+            <td>Startup Time</td>
+            <td class="col-mdsvr"><span class="badge-yes">150ms</span></td>
+            <td>8.5s build</td>
+            <td>6.2s build</td>
+            <td>~3s build</td>
+            <td>~1s build</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="vs-callouts">
+      <div class="vs-card">
+        <h4>vs Docusaurus</h4>
+        <div class="vs-row">
+          <div class="vs-bad"><code>npx create-docusaurus@latest my-docs classic</code><br/>Then config, then build, then...</div>
+          <div class="vs-good"><code>npx mdsvr ./docs</code></div>
+        </div>
+      </div>
+      <div class="vs-card">
+        <h4>vs MkDocs</h4>
+        <div class="vs-row">
+          <div class="vs-bad">Requires Python, pip, virtual env — before you write a single line of docs.</div>
+          <div class="vs-good">Node.js only. Already installed if you're a JS developer.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUICK START -->
+<section class="quickstart" id="quickstart">
+  <div class="section-inner">
+    <div class="section-label">Quick Start</div>
+    <h2 class="section-title">From zero to docs in 10 seconds</h2>
+
+    <div class="qs-steps">
+      <div class="qs-step">
+        <div class="qs-num">01</div>
+        <div class="qs-content">
+          <h3>Run without installing</h3>
+          <div class="code-block">
+            <button class="code-copy" onclick="copyCode(this, 'npx mdsvr ./docs')">Copy</button>
+            <pre><code><span class="c-prompt">$</span> npx mdsvr ./docs</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="qs-step">
+        <div class="qs-num">02</div>
+        <div class="qs-content">
+          <h3>Or install globally</h3>
+          <div class="code-block">
+            <button class="code-copy" onclick="copyCode(this, 'npm install -g mdsvr\nmdsvr ./docs')">Copy</button>
+            <pre><code><span class="c-prompt">$</span> npm install -g mdsvr
+<span class="c-prompt">$</span> mdsvr ./docs</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="qs-step">
+        <div class="qs-num">03</div>
+        <div class="qs-content">
+          <h3>Optional: add settings</h3>
+          <div class="code-block">
+            <button class="code-copy" onclick="copyCode(this, 'npx mdsvr ./docs --init')">Copy</button>
+            <pre><code><span class="c-prompt">$</span> npx mdsvr ./docs --init
+<span class="c-comment"># Creates settings.json — customize title, theme, SEO...</span></code></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="qs-step">
+        <div class="qs-num">04</div>
+        <div class="qs-content">
+          <h3>Export for static hosting</h3>
+          <div class="code-block">
+            <button class="code-copy" onclick="copyCode(this, 'npx mdsvr ./docs --export')">Copy</button>
+            <pre><code><span class="c-prompt">$</span> npx mdsvr ./docs --export
+<span class="c-comment"># Outputs to _html/public — deploy anywhere</span></code></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="qs-step">
+        <div class="qs-num">05</div>
+        <div class="qs-content">
+          <h3>Or use Docker</h3>
+          <div class="code-block">
+            <button class="code-copy" onclick="copyCode(this, 'docker run -p 1800:1800 -v /path/to/docs:/app/docs thedeployer/mdsvr:latest')">Copy</button>
+            <pre><code><span class="c-prompt">$</span> docker run -p 1800:1800 \
+    -v /path/to/docs:/app/docs \
+    thedeployer/mdsvr:latest</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="port-note">
+      <div class="port-icon">📞</div>
+      <div>
+        <strong>Why port 1800?</strong>
+        Like a 1-800 toll-free hotline, port 1800 is your local documentation hotline — memorable, conflict-free, and always there when you need answers.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- USP / SOCIAL PROOF -->
+<section class="usp">
+  <div class="section-inner">
+    <div class="usp-grid">
+      <div class="usp-main">
+        <div class="section-label">Why mdsvr</div>
+        <h2 class="section-title">Lightweight by design</h2>
+        <p>Other tools are built to be full frameworks. mdsvr is built to get out of your way.</p>
+        <ul class="usp-list">
+          <li>
+            <span class="usp-check">✓</span>
+            <div><strong>Fastest startup</strong> — 150ms vs 8s build time</div>
+          </li>
+          <li>
+            <span class="usp-check">✓</span>
+            <div><strong>Zero learning curve</strong> — if you know Markdown, you know mdsvr</div>
+          </li>
+          <li>
+            <span class="usp-check">✓</span>
+            <div><strong>No build pipeline</strong> — serve files directly, export when ready</div>
+          </li>
+          <li>
+            <span class="usp-check">✓</span>
+            <div><strong>Full-featured anyway</strong> — search, SEO, MDX, themes, diagrams</div>
+          </li>
+        </ul>
+        <div class="usp-ctas">
+          <a href="https://github.com/satoshiman/mdsvr" target="_blank" rel="noopener" class="btn-primary">View on GitHub</a>
+          <a href="https://www.npmjs.com/package/mdsvr" target="_blank" rel="noopener" class="btn-outline">npm package</a>
+        </div>
+      </div>
+
+      <div class="perf-card">
+        <div class="perf-title">Startup Time Comparison</div>
+        <div class="perf-bars">
+          <div class="perf-bar-row">
+            <span class="perf-name">mdsvr</span>
+            <div class="perf-bar-track">
+              <div class="perf-bar perf-bar--mdsvr" style="width: 2%"></div>
+            </div>
+            <span class="perf-val perf-val--best">150ms</span>
+          </div>
+          <div class="perf-bar-row">
+            <span class="perf-name">Hugo</span>
+            <div class="perf-bar-track">
+              <div class="perf-bar" style="width: 12%"></div>
+            </div>
+            <span class="perf-val">~1s</span>
+          </div>
+          <div class="perf-bar-row">
+            <span class="perf-name">MkDocs</span>
+            <div class="perf-bar-track">
+              <div class="perf-bar" style="width: 36%"></div>
+            </div>
+            <span class="perf-val">~3s</span>
+          </div>
+          <div class="perf-bar-row">
+            <span class="perf-name">Nextra</span>
+            <div class="perf-bar-track">
+              <div class="perf-bar" style="width: 74%"></div>
+            </div>
+            <span class="perf-val">6.2s</span>
+          </div>
+          <div class="perf-bar-row">
+            <span class="perf-name">Docusaurus</span>
+            <div class="perf-bar-track">
+              <div class="perf-bar perf-bar--worst" style="width: 100%"></div>
+            </div>
+            <span class="perf-val">8.5s</span>
+          </div>
+        </div>
+        <div class="perf-note">mdsvr is <strong>56× faster</strong> than Docusaurus</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="section-inner cta-inner">
+    <div class="cta-glow"></div>
+    <div class="social-box">
+      <pre class="social-pre">🚀 One command docs server
+
+<span class="s-cmd">npx mdsvr ./docs</span>
+
+✨ No config needed
+🎨 Dark/light mode
+🔍 Full-text search
+📄 SEO optimized
+🐳 Docker ready
+
+That's it. That's the whole setup.</pre>
+    </div>
+    <div class="cta-text">
+      <h2>Ready to simplify your docs?</h2>
+      <p>No signup. No credit card. No configuration.<br />Just Markdown and one command.</p>
+      <div class="cta-cmd">
+        <code>npx mdsvr ./docs</code>
+        <button class="cta-copy-btn" onclick="copyCode(this, 'npx mdsvr ./docs')">Copy</button>
+      </div>
+      <div class="cta-links">
+        <a href="https://github.com/satoshiman/mdsvr" target="_blank" rel="noopener" class="btn-primary btn-lg">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12Z"/></svg>
+          View on GitHub
+        </a>
+        <a href="https://www.npmjs.com/package/mdsvr" target="_blank" rel="noopener" class="btn-outline">npm page</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <span class="logo-bracket">[</span>mdsvr<span class="logo-bracket">]</span>
+    </div>
+    <p class="footer-desc">Zero config Markdown server with MDX, dark mode, search, and SEO.</p>
+    <div class="footer-links">
+      <a href="https://github.com/satoshiman/mdsvr" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://www.npmjs.com/package/mdsvr" target="_blank" rel="noopener">npm</a>
+      <a href="https://hub.docker.com/r/thedeployer/mdsvr" target="_blank" rel="noopener">Docker Hub</a>
+      <a href="https://github.com/satoshiman/mdsvr/blob/main/LICENSE" target="_blank" rel="noopener">MIT License</a>
+    </div>
+    <p class="footer-copy">Built with mdsvr · MIT License</p>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>
