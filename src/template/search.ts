@@ -45,7 +45,10 @@ export function renderSearchTrigger(settings: Settings): string {
 `;
 }
 
-export function getSearchInlineScript(): string {
+export function getSearchInlineScript(basePath: string = ""): string {
+  const normalizedBase = basePath.endsWith("/")
+    ? basePath.slice(0, -1)
+    : basePath;
   return `
 <script>
 (function() {
@@ -99,7 +102,7 @@ export function getSearchInlineScript(): string {
 
   async function loadSearchIndex() {
     try {
-      const res = await fetch('/search-index.json');
+      const res = await fetch('${normalizedBase}/search-index.json');
       if (res.ok) {
         searchIndex = await res.json();
       }

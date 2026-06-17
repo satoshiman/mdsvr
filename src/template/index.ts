@@ -217,7 +217,7 @@ ${getHighlightJsStyles(settings)}
   </div>
 
   ${renderSearchModal(settings)}
-  ${settings.search.enabled ? getSearchInlineScript() : ""}
+  ${settings.search.enabled ? getSearchInlineScript(settings.generate.basePath) : ""}
 
   <script>
 function rerenderMermaid(theme) {

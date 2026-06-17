@@ -69,7 +69,10 @@ export async function route(
     return;
   }
 
-  if (urlPath === "/search-index.json" && settings.search.enabled) {
+  const basePath = (settings.generate.basePath || "").replace(/\/$/, "");
+  const searchIndexPaths = ["/search-index.json"];
+  if (basePath) searchIndexPaths.push(basePath + "/search-index.json");
+  if (searchIndexPaths.includes(urlPath) && settings.search.enabled) {
     res.writeHead(200, { "Content-Type": "application/json" });
     res.end(JSON.stringify(searchIndexCache ?? []));
     return;
