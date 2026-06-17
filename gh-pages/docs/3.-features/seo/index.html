@@ -1689,7 +1689,7 @@ Sitemap: https://docs.example.com/sitemap.xml
 
   async function loadSearchIndex() {
     try {
-      const res = await fetch('/search-index.json');
+      const res = await fetch('/docs/search-index.json');
       if (res.ok) {
         searchIndex = await res.json();
       }
