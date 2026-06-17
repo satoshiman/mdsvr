@@ -322,8 +322,8 @@ npm install -g firebase-tools
 # Navigate to your docs directory
 cd /path/to/your/docs
 
-# Export static HTML
-mdsvr -e
+# Export static HTML to _html/public directory
+mdsvr . -e
 
 cd _html
 
