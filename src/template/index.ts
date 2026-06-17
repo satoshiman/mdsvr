@@ -63,6 +63,7 @@ export interface TemplateParams {
   toc?: TocItem[];
   sidebar?: NavItem[];
   urlPath?: string;
+  isStaticExport?: boolean;
 }
 
 export function renderPage(params: TemplateParams): string {
@@ -134,10 +135,12 @@ export function renderPage(params: TemplateParams): string {
        </button>`
     : "";
 
+  const { isStaticExport } = params;
+
   // Logo/header
   const logoHref = settings.site.logo
     ? settings.site.logo.href
-    : withBasePath("/", settings);
+    : withBasePath("/", settings, isStaticExport);
   const logoHtml = settings.site.logo
     ? `<a href="${logoHref}" class="site-logo">
         <img src="${settings.site.logo.src}" alt="${settings.site.logo.alt}" />
@@ -160,7 +163,7 @@ export function renderPage(params: TemplateParams): string {
 
   // Breadcrumbs
   const breadcrumbs = settings.navigation.breadcrumbs
-    ? renderBreadcrumbs(urlPath, settings)
+    ? renderBreadcrumbs(urlPath, settings, isStaticExport)
     : "";
 
   // Prev/Next links
@@ -169,8 +172,8 @@ export function renderPage(params: TemplateParams): string {
     const { prev, next } = getPrevNext(sidebar, urlPath);
     if (prev || next) {
       prevNextHtml = `<nav class="prev-next-nav">
-        ${prev ? `<a href="${withBasePath(prev.href, settings)}" class="prev-next-card prev-card"><span class="prev-next-label">← Prev</span><span class="prev-next-title">${escapeHtml(prev.title)}</span></a>` : `<span></span>`}
-        ${next ? `<a href="${withBasePath(next.href, settings)}" class="prev-next-card next-card"><span class="prev-next-label">Next →</span><span class="prev-next-title">${escapeHtml(next.title)}</span></a>` : `<span></span>`}
+        ${prev ? `<a href="${withBasePath(prev.href, settings, isStaticExport)}" class="prev-next-card prev-card"><span class="prev-next-label">← Prev</span><span class="prev-next-title">${escapeHtml(prev.title)}</span></a>` : `<span></span>`}
+        ${next ? `<a href="${withBasePath(next.href, settings, isStaticExport)}" class="prev-next-card next-card"><span class="prev-next-label">Next →</span><span class="prev-next-title">${escapeHtml(next.title)}</span></a>` : `<span></span>`}
       </nav>`;
     }
   }
@@ -505,8 +508,13 @@ if (document.readyState === 'loading') {
 </html>`;
 }
 
-function withBasePath(href: string, settings: Settings): string {
-  const basePath = settings.site.basePath || "";
+function withBasePath(
+  href: string,
+  settings: Settings,
+  isStaticExport?: boolean,
+): string {
+  if (!isStaticExport) return href;
+  const basePath = settings.generate.basePath || "";
   if (!basePath) return href;
   const normalizedBase = basePath.endsWith("/")
     ? basePath.slice(0, -1)
@@ -514,7 +522,11 @@ function withBasePath(href: string, settings: Settings): string {
   return normalizedBase + href;
 }
 
-function renderBreadcrumbs(urlPath: string, settings: Settings): string {
+function renderBreadcrumbs(
+  urlPath: string,
+  settings: Settings,
+  isStaticExport?: boolean,
+): string {
   if (urlPath === "/") return "";
 
   const parts = urlPath.split("/").filter(Boolean);
@@ -527,11 +539,11 @@ function renderBreadcrumbs(urlPath: string, settings: Settings): string {
     if (isLast) {
       return `<span class="breadcrumb-current">${escapeHtml(label)}</span>`;
     }
-    return `<a href="${withBasePath(accum, settings)}">${escapeHtml(label)}</a>`;
+    return `<a href="${withBasePath(accum, settings, isStaticExport)}">${escapeHtml(label)}</a>`;
   });
 
   return `<nav class="breadcrumbs">
-    <a href="${withBasePath("/", settings)}">Home</a>
+    <a href="${withBasePath("/", settings, isStaticExport)}">Home</a>
     ${links.length > 0 ? '<span class="breadcrumb-sep">/</span>' + links.join('<span class="breadcrumb-sep">/</span>') : ""}
   </nav>`;
 }

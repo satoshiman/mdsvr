@@ -108,8 +108,13 @@ async function hasDocFiles(
   return false;
 }
 
-function withBasePath(href: string, settings: Settings): string {
-  const basePath = settings.site.basePath || "";
+function withBasePath(
+  href: string,
+  settings: Settings,
+  isStaticExport?: boolean,
+): string {
+  if (!isStaticExport) return href;
+  const basePath = settings.generate.basePath || "";
   if (!basePath) return href;
   // Ensure basePath starts with / but doesn't end with /
   const normalizedBase = basePath.endsWith("/")
@@ -124,6 +129,7 @@ async function readDirRecursive(
   rootDir: string,
   currentPath: string,
   settings: Settings,
+  isStaticExport: boolean = false,
   depth: number = 0,
 ): Promise<NavItem[]> {
   const entries = await fs.readdir(dirPath, { withFileTypes: true });
@@ -155,6 +161,7 @@ async function readDirRecursive(
             rootDir,
             currentPath,
             settings,
+            isStaticExport,
             depth + 1,
           )
         : [];
@@ -172,7 +179,7 @@ async function readDirRecursive(
       ) {
         items.push({
           title: humanizeFilename(entry.name),
-          href: withBasePath(relativePath + "/", settings),
+          href: withBasePath(relativePath + "/", settings, isStaticExport),
           children,
           type: "dir",
           sortBy: entry.name.toLowerCase(),
@@ -190,6 +197,7 @@ async function readDirRecursive(
       const href = withBasePath(
         relativePath.replace(/\.(md|mdx)$/, ""),
         settings,
+        isStaticExport,
       );
       items.push({
         title,
@@ -212,6 +220,7 @@ export async function buildSidebar(
   rootDir: string,
   currentPath: string,
   settings: Settings,
+  isStaticExport: boolean = false,
 ): Promise<NavItem[]> {
   if (!settings.navigation.sidebar.enabled) {
     return [];
@@ -222,6 +231,7 @@ export async function buildSidebar(
     rootDir,
     currentPath,
     settings,
+    isStaticExport,
     0,
   );
 
@@ -233,7 +243,7 @@ export async function buildSidebar(
     // Insert Home at the beginning
     items.unshift({
       title: title || "Home",
-      href: withBasePath("/", settings),
+      href: withBasePath("/", settings, isStaticExport),
       type: "file",
       sortBy: "",
     });

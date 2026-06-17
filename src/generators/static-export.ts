@@ -22,7 +22,7 @@ interface DirInfo {
 }
 
 function withBasePath(href: string, settings: Settings): string {
-  const basePath = settings.site.basePath || "";
+  const basePath = settings.generate.basePath || "";
   if (!basePath) return href;
   const normalizedBase = basePath.endsWith("/")
     ? basePath.slice(0, -1)
@@ -261,7 +261,7 @@ async function renderMarkdownFile(
   // Build sidebar if enabled
   let sidebar: NavItem[] = [];
   if (settings.navigation.sidebar.enabled) {
-    sidebar = await buildSidebar(rootDir, urlPath, settings);
+    sidebar = await buildSidebar(rootDir, urlPath, settings, true);
   }
 
   // Fix asset paths for subdirectories
@@ -276,6 +276,7 @@ async function renderMarkdownFile(
     toc: result.toc,
     sidebar,
     urlPath,
+    isStaticExport: true,
   });
 
   await fs.writeFile(outputPath, html, "utf-8");
@@ -415,7 +416,7 @@ async function generateAutoIndex(
   // Build sidebar if enabled
   let sidebar: NavItem[] = [];
   if (settings.navigation.sidebar.enabled) {
-    sidebar = await buildSidebar(rootDir, dirInfo.urlPath, settings);
+    sidebar = await buildSidebar(rootDir, dirInfo.urlPath, settings, true);
   }
 
   // Use same renderDirectory as server, wrap in renderPage
@@ -433,6 +434,7 @@ async function generateAutoIndex(
     settings,
     urlPath: dirInfo.urlPath,
     sidebar,
+    isStaticExport: true,
   });
 
   const indexPath = path.join(dirInfo.outputPath, "index.html");

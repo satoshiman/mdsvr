@@ -104,4 +104,5 @@ export type {
   Files,
   Mdx,
   Footer,
+  Generate,
 } from "./schema.js";

@@ -3,7 +3,9 @@
   "site": {
     "title": "MDSVR | Markdown Documentation Server",
     "description": "Full-featured documentation website server with MDX support, site settings, SEO, and navigation",
-    "language": "en",
+    "language": "en"
+  },
+  "generate": {
     "basePath": "/docs"
   },
   "appearance": {

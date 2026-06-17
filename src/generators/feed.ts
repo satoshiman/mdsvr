@@ -103,7 +103,7 @@ export async function generateFeed(
   settings: Settings,
 ): Promise<string> {
   const baseUrl = settings.site.baseUrl || "http://localhost:1800";
-  const basePath = settings.site.basePath || "";
+  const basePath = settings.generate.basePath || "";
   const feedUrl = settings.seo.rss?.feedUrl || "/feed.xml";
   const siteUrl = settings.seo.rss?.siteUrl || baseUrl + basePath;
   const fullBaseUrl = baseUrl.replace(/\/$/, "") + basePath;

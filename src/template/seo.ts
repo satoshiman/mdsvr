@@ -100,14 +100,14 @@ export function buildSeoTags(data: SeoData, settings: Settings): string {
   }
 
   if (settings.seo.generateSitemap) {
-    const basePath = settings.site.basePath || "";
+    const basePath = settings.generate.basePath || "";
     tags.push(
       `<link rel="sitemap" type="application/xml" href="${basePath}/sitemap.xml">`,
     );
   }
 
   if (settings.seo.generateRssFeed) {
-    const basePath = settings.site.basePath || "";
+    const basePath = settings.generate.basePath || "";
     tags.push(
       `<link rel="alternate" type="application/rss+xml" href="${basePath}/feed.xml">`,
     );

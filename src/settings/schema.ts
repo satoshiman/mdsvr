@@ -17,7 +17,6 @@ export const SiteSchema = z.object({
   title: z.string().default("mdsvr Docs"),
   description: z.string().default(""),
   baseUrl: z.string().url().optional(),
-  basePath: z.string().default(""),
   language: z.string().default("en"),
   logo: LogoSchema.optional(),
   favicon: z.string().optional(),
@@ -125,6 +124,11 @@ export const FooterSchema = z.object({
     .default([]),
 });
 
+export const GenerateSchema = z.object({
+  basePath: z.string().default(""),
+  outputDir: z.string().default("dist"),
+});
+
 export const SettingsSchema = z.object({
   $schema: z.string().optional(),
   site: SiteSchema.default({}),
@@ -135,6 +139,7 @@ export const SettingsSchema = z.object({
   files: FilesSchema.default({}),
   mdx: MdxSchema.default({}),
   footer: FooterSchema.default({}),
+  generate: GenerateSchema.default({}),
 });
 
 export type Settings = z.infer<typeof SettingsSchema>;
@@ -147,3 +152,4 @@ export type Seo = z.infer<typeof SeoSchema>;
 export type Files = z.infer<typeof FilesSchema>;
 export type Mdx = z.infer<typeof MdxSchema>;
 export type Footer = z.infer<typeof FooterSchema>;
+export type Generate = z.infer<typeof GenerateSchema>;

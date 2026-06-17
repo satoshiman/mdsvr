@@ -465,6 +465,22 @@
           "description": "Footer links"
         }
       }
+    },
+    "generate": {
+      "type": "object",
+      "description": "Static site generation settings",
+      "properties": {
+        "basePath": {
+          "type": "string",
+          "default": "",
+          "description": "Base path for all generated links (e.g., /docs for GitHub Pages subpath)"
+        },
+        "outputDir": {
+          "type": "string",
+          "default": "dist",
+          "description": "Output directory for static export"
+        }
+      }
     }
   }
 }

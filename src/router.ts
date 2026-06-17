@@ -206,7 +206,7 @@ async function serveDirectory(
   // Build sidebar if enabled
   let sidebar: NavItem[] = [];
   if (settings.navigation.sidebar.enabled) {
-    sidebar = await buildSidebar(rootDir, urlPath, settings);
+    sidebar = await buildSidebar(rootDir, urlPath, settings, false);
   }
 
   const html = renderPage({
@@ -216,6 +216,7 @@ async function serveDirectory(
     settings,
     urlPath,
     sidebar,
+    isStaticExport: false,
   });
 
   res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
@@ -248,7 +249,7 @@ async function serveMarkdownOrMdx(
   // Build sidebar if enabled
   let sidebar: NavItem[] = [];
   if (settings.navigation.sidebar.enabled) {
-    sidebar = await buildSidebar(rootDir, urlPath, settings);
+    sidebar = await buildSidebar(rootDir, urlPath, settings, false);
   }
 
   const html = renderPage({
@@ -260,6 +261,7 @@ async function serveMarkdownOrMdx(
     toc: result.toc,
     sidebar,
     urlPath,
+    isStaticExport: false,
   });
 
   res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
@@ -299,6 +301,7 @@ function sendError(
 </div>`,
     filePath: "",
     settings,
+    isStaticExport: false,
   });
 
   res.writeHead(code, { "Content-Type": "text/html; charset=utf-8" });

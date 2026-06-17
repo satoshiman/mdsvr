@@ -47,7 +47,7 @@ function extractHeadings(content: string): string[] {
 }
 
 function withBasePath(href: string, settings: Settings): string {
-  const basePath = settings.site.basePath || "";
+  const basePath = settings.generate.basePath || "";
   if (!basePath) return href;
   const normalizedBase = basePath.endsWith("/")
     ? basePath.slice(0, -1)

@@ -13,6 +13,11 @@ describe("renderer", () => {
       },
       indexFiles: [],
       ignorePatterns: [],
+      staticFolders: [],
+    },
+    generate: {
+      basePath: "",
+      outputDir: "dist",
     },
     navigation: {
       sidebar: {
