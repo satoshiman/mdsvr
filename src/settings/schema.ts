@@ -4,6 +4,7 @@ import {
   DEFAULT_BLOCK_EXTENSIONS,
   DEFAULT_HIDDEN_FILES,
   DEFAULT_INDEX_FILES,
+  DEFAULT_STATIC_FOLDERS,
 } from "./defaults.js";
 
 export const LogoSchema = z.object({
@@ -16,6 +17,7 @@ export const SiteSchema = z.object({
   title: z.string().default("mdsvr Docs"),
   description: z.string().default(""),
   baseUrl: z.string().url().optional(),
+  basePath: z.string().default(""),
   language: z.string().default("en"),
   logo: LogoSchema.optional(),
   favicon: z.string().optional(),
@@ -101,6 +103,7 @@ export const FilesSchema = z.object({
     .default({}),
   indexFiles: z.array(z.string()).default(DEFAULT_INDEX_FILES),
   ignorePatterns: z.array(z.string()).default([]),
+  staticFolders: z.array(z.string()).default(DEFAULT_STATIC_FOLDERS),
 });
 
 export const MdxSchema = z.object({

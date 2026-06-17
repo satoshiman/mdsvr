@@ -135,11 +135,14 @@ export function renderPage(params: TemplateParams): string {
     : "";
 
   // Logo/header
+  const logoHref = settings.site.logo
+    ? settings.site.logo.href
+    : withBasePath("/", settings);
   const logoHtml = settings.site.logo
-    ? `<a href="${settings.site.logo.href}" class="site-logo">
+    ? `<a href="${logoHref}" class="site-logo">
         <img src="${settings.site.logo.src}" alt="${settings.site.logo.alt}" />
        </a>`
-    : `<a href="/" class="site-logo">${settings.site.title}</a>`;
+    : `<a href="${logoHref}" class="site-logo">${settings.site.title}</a>`;
 
   // Footer
   const footerLinks = settings.footer.links
@@ -166,8 +169,8 @@ export function renderPage(params: TemplateParams): string {
     const { prev, next } = getPrevNext(sidebar, urlPath);
     if (prev || next) {
       prevNextHtml = `<nav class="prev-next-nav">
-        ${prev ? `<a href="${prev.href}" class="prev-next-card prev-card"><span class="prev-next-label">← Prev</span><span class="prev-next-title">${escapeHtml(prev.title)}</span></a>` : `<span></span>`}
-        ${next ? `<a href="${next.href}" class="prev-next-card next-card"><span class="prev-next-label">Next →</span><span class="prev-next-title">${escapeHtml(next.title)}</span></a>` : `<span></span>`}
+        ${prev ? `<a href="${withBasePath(prev.href, settings)}" class="prev-next-card prev-card"><span class="prev-next-label">← Prev</span><span class="prev-next-title">${escapeHtml(prev.title)}</span></a>` : `<span></span>`}
+        ${next ? `<a href="${withBasePath(next.href, settings)}" class="prev-next-card next-card"><span class="prev-next-label">Next →</span><span class="prev-next-title">${escapeHtml(next.title)}</span></a>` : `<span></span>`}
       </nav>`;
     }
   }
@@ -502,6 +505,15 @@ if (document.readyState === 'loading') {
 </html>`;
 }
 
+function withBasePath(href: string, settings: Settings): string {
+  const basePath = settings.site.basePath || "";
+  if (!basePath) return href;
+  const normalizedBase = basePath.endsWith("/")
+    ? basePath.slice(0, -1)
+    : basePath;
+  return normalizedBase + href;
+}
+
 function renderBreadcrumbs(urlPath: string, settings: Settings): string {
   if (urlPath === "/") return "";
 
@@ -515,11 +527,11 @@ function renderBreadcrumbs(urlPath: string, settings: Settings): string {
     if (isLast) {
       return `<span class="breadcrumb-current">${escapeHtml(label)}</span>`;
     }
-    return `<a href="${accum}">${escapeHtml(label)}</a>`;
+    return `<a href="${withBasePath(accum, settings)}">${escapeHtml(label)}</a>`;
   });
 
   return `<nav class="breadcrumbs">
-    <a href="/">Home</a>
+    <a href="${withBasePath("/", settings)}">Home</a>
     ${links.length > 0 ? '<span class="breadcrumb-sep">/</span>' + links.join('<span class="breadcrumb-sep">/</span>') : ""}
   </nav>`;
 }

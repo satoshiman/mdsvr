@@ -1,9 +1,10 @@
 {
   "$schema": "https://raw.githubusercontent.com/satoshiman/mdsvr/main/schema/v2.json",
   "site": {
-    "title": "mdsvr",
+    "title": "MDSVR | Markdown Documentation Server",
     "description": "Full-featured documentation website server with MDX support, site settings, SEO, and navigation",
-    "language": "en"
+    "language": "en",
+    "basePath": "/docs"
   },
   "appearance": {
     "defaultTheme": "system",

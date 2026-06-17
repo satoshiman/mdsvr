@@ -21,6 +21,15 @@ interface DirInfo {
   hasIndex: boolean;
 }
 
+function withBasePath(href: string, settings: Settings): string {
+  const basePath = settings.site.basePath || "";
+  if (!basePath) return href;
+  const normalizedBase = basePath.endsWith("/")
+    ? basePath.slice(0, -1)
+    : basePath;
+  return normalizedBase + href;
+}
+
 export async function exportStaticSite(options: ExportOptions): Promise<void> {
   const { rootDir, outputDir, settings, silent = false } = options;
 
@@ -108,9 +117,10 @@ async function processDirectory(
   const relativePath = path.relative(rootDir, dirPath);
   const urlPath =
     "/" + relativePath.replace(/\\/g, "/") + (relativePath ? "/" : "");
+  const finalUrlPath = urlPath === "//" ? "/" : urlPath;
   dirMap.set(dirPath, {
     outputPath,
-    urlPath: urlPath === "//" ? "/" : urlPath,
+    urlPath: withBasePath(finalUrlPath, settings),
     hasIndex: false,
   });
 
@@ -133,18 +143,23 @@ async function processDirectory(
     }
 
     if (entry.isDirectory()) {
-      // Create directory in output
-      await fs.mkdir(outputFilePath, { recursive: true });
-      count = await processDirectory(
-        fullPath,
-        outputFilePath,
-        rootDir,
-        settings,
-        silent,
-        dirMap,
-        updateCount,
-        count,
-      );
+      if (isStaticFolder(entry.name, settings)) {
+        // Copy static folder as-is (all files regardless of extension)
+        await copyStaticFolder(fullPath, outputFilePath, rootDir, silent);
+      } else {
+        // Create directory in output and process normally
+        await fs.mkdir(outputFilePath, { recursive: true });
+        count = await processDirectory(
+          fullPath,
+          outputFilePath,
+          rootDir,
+          settings,
+          silent,
+          dirMap,
+          updateCount,
+          count,
+        );
+      }
     } else if (entry.isFile()) {
       const ext = path.extname(entry.name).toLowerCase();
 
@@ -163,10 +178,12 @@ async function processDirectory(
         if (baseNameLower === "readme") {
           // README becomes index.html at current directory level
           htmlOutputPath = path.join(outputPath, "index.html");
-          urlPath = "/" + path.relative(rootDir, dirPath).replace(/\\/g, "/");
-          if (urlPath !== "/") {
-            urlPath += "/";
+          let rawUrlPath =
+            "/" + path.relative(rootDir, dirPath).replace(/\\/g, "/");
+          if (rawUrlPath !== "/") {
+            rawUrlPath += "/";
           }
+          urlPath = withBasePath(rawUrlPath, settings);
           // Mark directory as having index
           const dirInfo = dirMap.get(dirPath);
           if (dirInfo) {
@@ -177,12 +194,13 @@ async function processDirectory(
           const folderPath = path.join(outputPath, baseName);
           await fs.mkdir(folderPath, { recursive: true });
           htmlOutputPath = path.join(folderPath, "index.html");
-          urlPath =
+          const rawUrlPath =
             "/" +
             path
               .relative(rootDir, fullPath)
               .replace(/\\/g, "/")
               .replace(/\.(md|mdx)$/, "");
+          urlPath = withBasePath(rawUrlPath, settings);
         }
 
         await renderMarkdownFile(
@@ -246,9 +264,12 @@ async function renderMarkdownFile(
     sidebar = await buildSidebar(rootDir, urlPath, settings);
   }
 
+  // Fix asset paths for subdirectories
+  const fixedHtml = fixAssetPaths(result.html, urlPath);
+
   const html = renderPage({
     title,
-    body: result.html,
+    body: fixedHtml,
     filePath: urlPath,
     settings,
     frontmatter: result.frontmatter,
@@ -284,12 +305,77 @@ function isAllowedExtension(ext: string, settings: Settings): boolean {
   return settings.files.extensions.serve.includes(ext);
 }
 
+function isStaticFolder(folderName: string, settings: Settings): boolean {
+  return settings.files.staticFolders.includes(folderName);
+}
+
+async function copyStaticFolder(
+  srcDir: string,
+  destDir: string,
+  rootDir: string,
+  silent: boolean,
+): Promise<void> {
+  await fs.mkdir(destDir, { recursive: true });
+
+  const entries = await fs.readdir(srcDir, { withFileTypes: true });
+
+  for (const entry of entries) {
+    const srcPath = path.join(srcDir, entry.name);
+    const destPath = path.join(destDir, entry.name);
+    const relativePath = path.relative(rootDir, srcPath);
+
+    // Skip hidden files
+    if (entry.name.startsWith(".") || entry.name.startsWith("_")) {
+      continue;
+    }
+
+    if (entry.isDirectory()) {
+      await copyStaticFolder(srcPath, destPath, rootDir, silent);
+    } else {
+      const data = await fs.readFile(srcPath);
+      await fs.writeFile(destPath, data);
+      if (!silent) {
+        console.log(`  ✓ ${relativePath} → ${relativePath}`);
+      }
+    }
+  }
+}
+
 function extractFirstHeading(content: string): string | null {
   const h1Match = content.match(/^#\s+(.+)$/m);
   if (h1Match) {
     return h1Match[1].trim();
   }
   return null;
+}
+
+function fixAssetPaths(html: string, urlPath: string): string {
+  // Calculate the root path for assets (everything up to the current directory)
+  const pathSegments = urlPath.split("/").filter(Boolean);
+
+  // Build the absolute assets path based on the current directory structure
+  let absoluteAssetsPath = "";
+
+  if (pathSegments.length === 0) {
+    // Root level: /assets/
+    absoluteAssetsPath = "/assets/";
+  } else {
+    // Subdirectory: assets are at the root level of the project
+    // Use all segments except the last one to build the path to assets
+    // For /k8s/LFS158-docs/12/, assets should be at /k8s/LFS158-docs/assets/
+    const rootSegments = pathSegments.slice(0, -1);
+    if (rootSegments.length > 0) {
+      absoluteAssetsPath = "/" + rootSegments.join("/") + "/assets/";
+    } else {
+      absoluteAssetsPath = "/assets/";
+    }
+  }
+
+  // Replace all relative assets/ paths with absolute paths
+  return html.replace(
+    /(src|href|data-src|poster|content)="assets\//g,
+    `$1="${absoluteAssetsPath}`,
+  );
 }
 
 function humanizeFilename(filename: string): string {

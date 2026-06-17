@@ -387,6 +387,16 @@
           },
           "default": [],
           "description": "Glob patterns to ignore"
+        },
+        "staticFolders": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "assets"
+          ],
+          "description": "Folder names to copy as-is during static export (all files regardless of extension)"
         }
       }
     },

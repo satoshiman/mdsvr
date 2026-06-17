@@ -46,3 +46,5 @@ export const DEFAULT_HIDDEN_FILES = [
 ];
 
 export const DEFAULT_INDEX_FILES = ["README.md", "index.md", "INDEX.md"];
+
+export const DEFAULT_STATIC_FOLDERS = ["assets"];

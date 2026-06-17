@@ -46,6 +46,15 @@ function extractHeadings(content: string): string[] {
   return headings;
 }
 
+function withBasePath(href: string, settings: Settings): string {
+  const basePath = settings.site.basePath || "";
+  if (!basePath) return href;
+  const normalizedBase = basePath.endsWith("/")
+    ? basePath.slice(0, -1)
+    : basePath;
+  return normalizedBase + href;
+}
+
 async function readDirRecursive(
   dirPath: string,
   rootDir: string,
@@ -88,7 +97,7 @@ async function readDirRecursive(
 
         entries.push({
           title,
-          href,
+          href: withBasePath(href, settings),
           excerpt: plainContent.slice(0, 200),
           headings,
           content: plainContent,

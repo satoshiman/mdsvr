@@ -43,9 +43,7 @@ export function buildSeoTags(data: SeoData, settings: Settings): string {
 
   // Basic meta
   tags.push(`<title>${escapeHtml(title)}</title>`);
-  tags.push(
-    `<meta name="description" content="${escapeHtml(description)}">`,
-  );
+  tags.push(`<meta name="description" content="${escapeHtml(description)}">`);
 
   if (data.noIndex || settings.seo.noIndex) {
     tags.push('<meta name="robots" content="noindex">');
@@ -53,7 +51,9 @@ export function buildSeoTags(data: SeoData, settings: Settings): string {
 
   // Open Graph
   tags.push(`<meta property="og:title" content="${escapeHtml(title)}">`);
-  tags.push(`<meta property="og:description" content="${escapeHtml(description)}">`);
+  tags.push(
+    `<meta property="og:description" content="${escapeHtml(description)}">`,
+  );
   tags.push(`<meta property="og:type" content="${data.type ?? "website"}">`);
 
   if (data.url) {
@@ -100,11 +100,17 @@ export function buildSeoTags(data: SeoData, settings: Settings): string {
   }
 
   if (settings.seo.generateSitemap) {
-    tags.push('<link rel="sitemap" type="application/xml" href="/sitemap.xml">');
+    const basePath = settings.site.basePath || "";
+    tags.push(
+      `<link rel="sitemap" type="application/xml" href="${basePath}/sitemap.xml">`,
+    );
   }
 
   if (settings.seo.generateRssFeed) {
-    tags.push('<link rel="alternate" type="application/rss+xml" href="/feed.xml">');
+    const basePath = settings.site.basePath || "";
+    tags.push(
+      `<link rel="alternate" type="application/rss+xml" href="${basePath}/feed.xml">`,
+    );
   }
 
   return tags.join("\n    ");

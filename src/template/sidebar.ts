@@ -108,6 +108,17 @@ async function hasDocFiles(
   return false;
 }
 
+function withBasePath(href: string, settings: Settings): string {
+  const basePath = settings.site.basePath || "";
+  if (!basePath) return href;
+  // Ensure basePath starts with / but doesn't end with /
+  const normalizedBase = basePath.endsWith("/")
+    ? basePath.slice(0, -1)
+    : basePath;
+  // href always starts with /, so we combine them
+  return normalizedBase + href;
+}
+
 async function readDirRecursive(
   dirPath: string,
   rootDir: string,
@@ -161,7 +172,7 @@ async function readDirRecursive(
       ) {
         items.push({
           title: humanizeFilename(entry.name),
-          href: relativePath + "/",
+          href: withBasePath(relativePath + "/", settings),
           children,
           type: "dir",
           sortBy: entry.name.toLowerCase(),
@@ -176,7 +187,10 @@ async function readDirRecursive(
       if (baseName === "readme") continue;
 
       const title = await extractTitle(fullPath, settings);
-      const href = relativePath.replace(/\.(md|mdx)$/, "");
+      const href = withBasePath(
+        relativePath.replace(/\.(md|mdx)$/, ""),
+        settings,
+      );
       items.push({
         title,
         href,
@@ -219,7 +233,7 @@ export async function buildSidebar(
     // Insert Home at the beginning
     items.unshift({
       title: title || "Home",
-      href: "/",
+      href: withBasePath("/", settings),
       type: "file",
       sortBy: "",
     });
