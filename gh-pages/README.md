@@ -6,60 +6,39 @@ Landing page for [mdsvr](https://github.com/satoshiman/mdsvr) — zero config Ma
 
 ```
 gh-pages/
-├── index.html   # Landing page (single file, no build step)
+├── index.html   # Landing page
 ├── styles.css   # All styles (dark/light mode, responsive)
 ├── main.js      # Theme toggle, terminal animation, copy, scroll effects
+├── docs/        # Generated documentation (from docs/ folder)
 └── README.md    # This file
 ```
 
 ## Deploy to GitHub Pages
 
-### Option A — Dedicated `gh-pages` branch (recommended)
+### 1. Generate documentation
 
 ```bash
-# From repo root
+npm run docs:generate
+```
+
+This exports the static site from `docs/` to `gh-pages/docs/`.
+
+### 2. Push to gh-pages branch
+
+```bash
+git add gh-pages/
+git commit -m "Update generated docs"
 git subtree push --prefix gh-pages origin gh-pages
 ```
 
-Then in GitHub → Settings → Pages:
+### 3. GitHub Pages Settings
+
+Go to **Settings → Pages**:
+
 - **Source**: Deploy from a branch
 - **Branch**: `gh-pages` / `/ (root)`
 
-Your site will be live at: `https://satoshiman.github.io/mdsvr/`
-
-### Option B — `/docs` folder on `main`
-
-```bash
-# Copy gh-pages/ content to docs/ folder (already used by mdsvr for its own docs)
-# Not recommended — conflicts with mdsvr's own docs folder
-```
-
-### Option C — GitHub Actions (auto deploy on push)
-
-Create `.github/workflows/pages.yml`:
-
-```yaml
-name: Deploy GitHub Pages
-on:
-  push:
-    branches: [main]
-    paths: [gh-pages/**]
-
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - uses: actions/checkout@v4
-      - name: Deploy to gh-pages branch
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./gh-pages
-```
-
-Then push and it auto-deploys on every change to `gh-pages/`.
+Site will be live at: `https://satoshiman.github.io/mdsvr/`
 
 ## Local Preview
 
