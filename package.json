@@ -20,6 +20,7 @@
     "dev": "tsc --watch",
     "start": "npm run build && node bin/mdsvr.js",
     "test": "npm run build && npm run build:test && node --test dist-test/*.test.js",
+    "docs:generate": "rm -rf ./gh-pages/docs && npm run start -- ./docs -e ./gh-pages/docs",
     "prepublishOnly": "npm run build && npm test",
     "version:patch": "npm version patch",
     "version:minor": "npm version minor",

@@ -58,18 +58,7 @@ pie
     "Other" : 10
 ```
 
-## Flowchart
-
-```mermaid
-flowchart LR
-  A[Start] --> B{Decision}
-  B -->|Yes| C[Do it]
-  B -->|No| D[Skip]
-  C --> E[End]
-  D --> E
-```
-
-## Sequence Diagram
+## 7. Sequence Diagram
 
 ```mermaid
 sequenceDiagram
@@ -77,7 +66,7 @@ sequenceDiagram
   Bob-->>Alice: Hi there
 ```
 
-## Mindmap
+## 8. Mindmap
 
 ```mermaid
 mindmap
@@ -99,7 +88,7 @@ mindmap
       Mermaid
 ```
 
-### Giant E-Commerce Database Schema
+### 9. Giant E-Commerce Database Schema
 
 ```mermaid
 erDiagram
