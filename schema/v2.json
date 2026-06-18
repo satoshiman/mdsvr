@@ -1,0 +1,559 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://mdsvr.js.org/schema/v2.json",
+  "title": "mdsvr Settings v2",
+  "description": "Configuration schema for mdsvr documentation server",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "JSON schema reference"
+    },
+    "site": {
+      "type": "object",
+      "description": "Site metadata and branding",
+      "properties": {
+        "title": {
+          "type": "string",
+          "default": "mdsvr Docs",
+          "description": "Site title"
+        },
+        "description": {
+          "type": "string",
+          "default": "",
+          "description": "Site description for SEO"
+        },
+        "baseUrl": {
+          "type": "string",
+          "format": "uri",
+          "description": "Base URL for the site (used for sitemap/RSS)"
+        },
+        "language": {
+          "type": "string",
+          "default": "en",
+          "description": "Site language code"
+        },
+        "logo": {
+          "type": "object",
+          "description": "Custom logo configuration",
+          "properties": {
+            "src": {
+              "type": "string",
+              "description": "Logo image path or URL"
+            },
+            "alt": {
+              "type": "string",
+              "default": "Logo",
+              "description": "Alt text for logo"
+            },
+            "href": {
+              "type": "string",
+              "default": "/",
+              "description": "Link destination for logo"
+            }
+          },
+          "required": [
+            "src"
+          ]
+        },
+        "favicon": {
+          "type": "string",
+          "description": "Favicon path or URL"
+        }
+      }
+    },
+    "appearance": {
+      "type": "object",
+      "description": "Visual appearance settings",
+      "properties": {
+        "defaultTheme": {
+          "type": "string",
+          "enum": [
+            "light",
+            "dark",
+            "system"
+          ],
+          "default": "system",
+          "description": "Default color theme"
+        },
+        "allowThemeToggle": {
+          "type": "boolean",
+          "default": true,
+          "description": "Allow users to toggle theme"
+        },
+        "accentColor": {
+          "type": "string",
+          "default": "#0969da",
+          "description": "Primary accent color (hex)"
+        },
+        "codeTheme": {
+          "type": "object",
+          "description": "Syntax highlighting themes",
+          "properties": {
+            "light": {
+              "type": "string",
+              "default": "github",
+              "description": "Highlight.js theme for light mode"
+            },
+            "dark": {
+              "type": "string",
+              "default": "github-dark",
+              "description": "Highlight.js theme for dark mode"
+            }
+          }
+        },
+        "fontFamily": {
+          "type": "object",
+          "description": "Custom font families",
+          "properties": {
+            "body": {
+              "type": "string",
+              "description": "Font family for body text"
+            },
+            "code": {
+              "type": "string",
+              "description": "Font family for code blocks"
+            },
+            "heading": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "Font family for headings"
+            }
+          }
+        }
+      }
+    },
+    "seo": {
+      "type": "object",
+      "description": "SEO and metadata settings",
+      "properties": {
+        "titleTemplate": {
+          "type": "string",
+          "default": "%s",
+          "description": "Title template (%s replaced with page title)"
+        },
+        "defaultImage": {
+          "type": "string",
+          "description": "Default OG image URL"
+        },
+        "twitterCard": {
+          "type": "string",
+          "enum": [
+            "summary",
+            "summary_large_image"
+          ],
+          "default": "summary_large_image",
+          "description": "Twitter card type"
+        },
+        "twitterSite": {
+          "type": "string",
+          "description": "Twitter site handle (@username)"
+        },
+        "noIndex": {
+          "type": "boolean",
+          "default": false,
+          "description": "Add noindex meta tag"
+        },
+        "generateSitemap": {
+          "type": "boolean",
+          "default": true,
+          "description": "Generate sitemap.xml"
+        },
+        "generateRssFeed": {
+          "type": "boolean",
+          "default": false,
+          "description": "Generate RSS feed"
+        },
+        "rss": {
+          "type": "object",
+          "description": "RSS feed configuration",
+          "properties": {
+            "title": {
+              "type": "string",
+              "description": "RSS feed title"
+            },
+            "feedUrl": {
+              "type": "string",
+              "default": "/feed.xml",
+              "description": "RSS feed URL path"
+            },
+            "siteUrl": {
+              "type": "string",
+              "format": "uri",
+              "description": "Site base URL for RSS"
+            }
+          },
+          "required": [
+            "title",
+            "siteUrl"
+          ]
+        },
+        "og": {
+          "type": "object",
+          "description": "Open Graph image generation settings",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "default": false,
+              "description": "Enable OG image generation"
+            },
+            "template": {
+              "type": "string",
+              "default": "default",
+              "description": "OG image template name"
+            },
+            "imageFormat": {
+              "type": "string",
+              "enum": [
+                "jpg",
+                "png"
+              ],
+              "default": "jpg",
+              "description": "OG image format"
+            },
+            "generateOnServe": {
+              "type": "boolean",
+              "default": false,
+              "description": "Generate OG images during serve mode"
+            },
+            "fontFamily": {
+              "type": "string",
+              "default": "Inter",
+              "description": "Font family for OG images"
+            },
+            "colors": {
+              "type": "object",
+              "description": "Color scheme for OG images",
+              "properties": {
+                "background": {
+                  "type": "string",
+                  "default": "#0a0a0f",
+                  "description": "Background color"
+                },
+                "text": {
+                  "type": "string",
+                  "default": "#ffffff",
+                  "description": "Text color"
+                },
+                "accent": {
+                  "type": "string",
+                  "default": "#3b82f6",
+                  "description": "Accent color"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "navigation": {
+      "type": "object",
+      "description": "Navigation and layout settings",
+      "properties": {
+        "sidebar": {
+          "type": "object",
+          "description": "Sidebar configuration",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "default": true,
+              "description": "Enable sidebar navigation"
+            },
+            "autoGenerate": {
+              "type": "boolean",
+              "default": true,
+              "description": "Auto-generate sidebar from file structure"
+            },
+            "showFileCount": {
+              "type": "boolean",
+              "default": false,
+              "description": "Show file count in sidebar"
+            },
+            "collapsible": {
+              "type": "boolean",
+              "default": true,
+              "description": "Allow collapsing sidebar sections"
+            },
+            "defaultOpen": {
+              "type": "boolean",
+              "default": true,
+              "description": "Sidebar sections open by default"
+            },
+            "depth": {
+              "type": "number",
+              "default": 2,
+              "description": "Maximum depth level for sidebar (2 = root + child)"
+            },
+            "docsOnly": {
+              "type": "boolean",
+              "default": false,
+              "description": "Only show directories that contain documentation files"
+            },
+            "orderBy": {
+              "type": "string",
+              "enum": [
+                "alphabetical",
+                "prior-dir",
+                "manual"
+              ],
+              "default": "alphabetical",
+              "description": "How to order items in the sidebar"
+            },
+            "manualOrder": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Manual ordering of sidebar items (when orderBy is 'manual')"
+            }
+          }
+        },
+        "breadcrumbs": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show breadcrumb navigation"
+        },
+        "prevNextLinks": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show prev/next page links"
+        },
+        "tocEnabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable table of contents"
+        },
+        "tocMaxDepth": {
+          "type": "number",
+          "default": 3,
+          "description": "Maximum heading depth for TOC"
+        },
+        "editOnGithub": {
+          "type": "object",
+          "description": "Edit on GitHub link configuration",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "default": false,
+              "description": "Enable edit on GitHub link"
+            },
+            "repo": {
+              "type": "string",
+              "description": "GitHub repository URL"
+            },
+            "branch": {
+              "type": "string",
+              "default": "main",
+              "description": "Default branch name"
+            },
+            "docsDir": {
+              "type": "string",
+              "default": "docs/",
+              "description": "Docs directory path in repo"
+            }
+          }
+        }
+      }
+    },
+    "search": {
+      "type": "object",
+      "description": "Search functionality settings",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable search"
+        },
+        "placeholder": {
+          "type": "string",
+          "default": "Search docs...",
+          "description": "Search input placeholder text"
+        },
+        "maxResults": {
+          "type": "number",
+          "default": 10,
+          "description": "Maximum search results to show"
+        }
+      }
+    },
+    "files": {
+      "type": "object",
+      "description": "File serving configuration",
+      "properties": {
+        "extensions": {
+          "type": "object",
+          "description": "File extension handling",
+          "properties": {
+            "serve": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "default": [
+                ".md",
+                ".mdx",
+                ".txt",
+                ".pdf",
+                ".png",
+                ".jpg",
+                ".jpeg",
+                ".gif",
+                ".webp",
+                ".svg",
+                ".ico",
+                ".css",
+                ".js",
+                ".json",
+                ".mp4",
+                ".mp3"
+              ],
+              "description": "File extensions to serve"
+            },
+            "block": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "default": [
+                ".env",
+                ".key",
+                ".pem",
+                ".p12",
+                ".secret",
+                ".password"
+              ],
+              "description": "File extensions to block"
+            },
+            "hidden": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "default": [
+                "settings.json",
+                ".git",
+                "node_modules",
+                ".DS_Store"
+              ],
+              "description": "Files/directories to hide"
+            }
+          }
+        },
+        "indexFiles": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "README.md",
+            "index.md",
+            "INDEX.md"
+          ],
+          "description": "Index file names to look for"
+        },
+        "ignorePatterns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "description": "Glob patterns to ignore"
+        },
+        "staticFolders": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "assets"
+          ],
+          "description": "Folder names to copy as-is during static export (all files regardless of extension)"
+        }
+      }
+    },
+    "mdx": {
+      "type": "object",
+      "description": "MDX processing settings",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable MDX support"
+        },
+        "components": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "boolean"
+          },
+          "default": {},
+          "description": "Enable/disable MDX components"
+        },
+        "remarkPlugins": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "description": "Remark plugins to use"
+        },
+        "rehypePlugins": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "description": "Rehype plugins to use"
+        }
+      }
+    },
+    "footer": {
+      "type": "object",
+      "description": "Footer configuration",
+      "properties": {
+        "text": {
+          "type": "string",
+          "default": "Built with mdsvr",
+          "description": "Footer text"
+        },
+        "links": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "href": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "label",
+              "href"
+            ]
+          },
+          "default": [],
+          "description": "Footer links"
+        }
+      }
+    },
+    "generate": {
+      "type": "object",
+      "description": "Static site generation settings",
+      "properties": {
+        "basePath": {
+          "type": "string",
+          "default": "",
+          "description": "Base path for all generated links (e.g., /docs for GitHub Pages subpath)"
+        },
+        "outputDir": {
+          "type": "string",
+          "default": "dist",
+          "description": "Output directory for static export"
+        }
+      }
+    }
+  }
+}
