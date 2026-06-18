@@ -28,6 +28,7 @@ describe("renderer", () => {
         defaultOpen: true,
         depth: 2,
         docsOnly: false,
+        orderBy: "alphabetical",
       },
       breadcrumbs: true,
       prevNextLinks: true,
@@ -51,6 +52,18 @@ describe("renderer", () => {
       generateSitemap: true,
       generateRssFeed: false,
       twitterCard: "summary",
+      og: {
+        enabled: false,
+        generateOnServe: false,
+        template: "default",
+        fontFamily: "system-ui",
+        imageFormat: "png",
+        colors: {
+          background: "#ffffff",
+          text: "#000000",
+          accent: "#0969da",
+        },
+      },
     },
     site: {
       title: "Test",

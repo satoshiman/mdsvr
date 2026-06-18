@@ -60,8 +60,7 @@ export async function validateSettingsFile(
 
 export function generateDefaultSettings(): object {
   return {
-    $schema:
-      "https://raw.githubusercontent.com/satoshiman/mdsvr/main/schema/v2.json",
+    $schema: "https://mdsvr.js.org/schema/v2.json",
     site: {
       title: "My Docs",
       description: "Project documentation",

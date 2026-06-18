@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://raw.githubusercontent.com/satoshiman/mdsvr/main/schema/v2.json",
+  "$id": "https://mdsvr.js.org/schema/v2.json",
   "title": "mdsvr Settings v2",
   "description": "Configuration schema for mdsvr documentation server",
   "type": "object",
@@ -189,6 +189,62 @@
             "title",
             "siteUrl"
           ]
+        },
+        "og": {
+          "type": "object",
+          "description": "Open Graph image generation settings",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "default": false,
+              "description": "Enable OG image generation"
+            },
+            "template": {
+              "type": "string",
+              "default": "default",
+              "description": "OG image template name"
+            },
+            "imageFormat": {
+              "type": "string",
+              "enum": [
+                "jpg",
+                "png"
+              ],
+              "default": "jpg",
+              "description": "OG image format"
+            },
+            "generateOnServe": {
+              "type": "boolean",
+              "default": false,
+              "description": "Generate OG images during serve mode"
+            },
+            "fontFamily": {
+              "type": "string",
+              "default": "Inter",
+              "description": "Font family for OG images"
+            },
+            "colors": {
+              "type": "object",
+              "description": "Color scheme for OG images",
+              "properties": {
+                "background": {
+                  "type": "string",
+                  "default": "#0a0a0f",
+                  "description": "Background color"
+                },
+                "text": {
+                  "type": "string",
+                  "default": "#ffffff",
+                  "description": "Text color"
+                },
+                "accent": {
+                  "type": "string",
+                  "default": "#3b82f6",
+                  "description": "Accent color"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -234,6 +290,23 @@
               "type": "boolean",
               "default": false,
               "description": "Only show directories that contain documentation files"
+            },
+            "orderBy": {
+              "type": "string",
+              "enum": [
+                "alphabetical",
+                "prior-dir",
+                "manual"
+              ],
+              "default": "alphabetical",
+              "description": "How to order items in the sidebar"
+            },
+            "manualOrder": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Manual ordering of sidebar items (when orderBy is 'manual')"
             }
           }
         },
