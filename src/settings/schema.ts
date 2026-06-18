@@ -51,6 +51,10 @@ export const NavigationSchema = z.object({
       defaultOpen: z.boolean().default(true),
       depth: z.number().default(2),
       docsOnly: z.boolean().default(false),
+      orderBy: z
+        .enum(["alphabetical", "prior-dir", "manual"])
+        .default("alphabetical"),
+      manualOrder: z.array(z.string()).optional(),
     })
     .default({}),
   breadcrumbs: z.boolean().default(true),
@@ -73,6 +77,21 @@ export const SearchSchema = z.object({
   maxResults: z.number().default(10),
 });
 
+export const OgSchema = z.object({
+  enabled: z.boolean().default(false),
+  template: z.string().default("default"),
+  imageFormat: z.enum(["jpg", "png"]).default("jpg"),
+  generateOnServe: z.boolean().default(false),
+  fontFamily: z.string().default("Inter"),
+  colors: z
+    .object({
+      background: z.string().default("#0a0a0f"),
+      text: z.string().default("#ffffff"),
+      accent: z.string().default("#0969da"),
+    })
+    .default({}),
+});
+
 export const SeoSchema = z.object({
   titleTemplate: z.string().default("%s"),
   defaultImage: z.string().optional(),
@@ -90,6 +109,7 @@ export const SeoSchema = z.object({
       siteUrl: z.string().url(),
     })
     .optional(),
+  og: OgSchema.default({}),
 });
 
 export const FilesSchema = z.object({
@@ -149,6 +169,7 @@ export type Appearance = z.infer<typeof AppearanceSchema>;
 export type Navigation = z.infer<typeof NavigationSchema>;
 export type Search = z.infer<typeof SearchSchema>;
 export type Seo = z.infer<typeof SeoSchema>;
+export type Og = z.infer<typeof OgSchema>;
 export type Files = z.infer<typeof FilesSchema>;
 export type Mdx = z.infer<typeof MdxSchema>;
 export type Footer = z.infer<typeof FooterSchema>;

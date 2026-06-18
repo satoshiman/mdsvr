@@ -103,6 +103,77 @@ function extractToc(html: string): TocItem[] {
   return toc;
 }
 
+/**
+ * Extract the first H1 heading from markdown content (for SEO title fallback)
+ */
+export function extractFirstHeading(content: string): string | null {
+  // Match markdown H1 heading (# Heading text)
+  const h1Match = content.match(/^#\s+(.+)$/m);
+  if (h1Match) {
+    return h1Match[1].trim();
+  }
+  return null;
+}
+
+/**
+ * Extract the first paragraph text from markdown content (for SEO description fallback)
+ * Skips frontmatter, headings, code blocks, and HTML comments
+ */
+export function extractFirstParagraph(content: string): string | null {
+  // Remove frontmatter
+  const withoutFrontmatter = content.replace(/^---[\s\S]*?---/, "");
+
+  // Remove code blocks
+  const withoutCodeBlocks = withoutFrontmatter.replace(/```[\s\S]*?```/g, "");
+
+  // Remove HTML comments
+  const withoutComments = withoutCodeBlocks.replace(/<!--[\s\S]*?-->/g, "");
+
+  // Remove headings
+  const withoutHeadings = withoutComments.replace(/^#{1,6}\s+.+$/gm, "");
+
+  // Remove horizontal rules
+  const withoutRules = withoutHeadings.replace(/^[\s]*[-_*]{3,}[\s]*$/gm, "");
+
+  // Find first non-empty paragraph (text followed by blank line or end of string)
+  // Match text that isn't a list item, blockquote, or other special markdown
+  const paragraphRegex = /^([^\s#\-\*\>\|\!\`].+)$/m;
+  const match = withoutRules.match(paragraphRegex);
+
+  if (match) {
+    // Clean up the text: remove markdown formatting and trim
+    let text = match[1]
+      .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1") // Remove links, keep text
+      .replace(/\*\*([^*]+)\*\*/g, "$1") // Remove bold
+      .replace(/\*([^*]+)\*/g, "$1") // Remove italic
+      .replace(/`([^`]+)`/g, "$1") // Remove inline code
+      .replace(/\s+/g, " ") // Normalize whitespace
+      .trim();
+
+    // Limit to reasonable length for description
+    if (text.length > 300) {
+      text = text.slice(0, 297).trim() + "...";
+    }
+
+    return text || null;
+  }
+
+  return null;
+}
+
+/**
+ * Extract SEO data from markdown content
+ */
+export function extractSeoData(content: string): {
+  title: string | null;
+  description: string | null;
+} {
+  return {
+    title: extractFirstHeading(content),
+    description: extractFirstParagraph(content),
+  };
+}
+
 // For V1 compatibility - simple render without frontmatter extraction
 export function renderMarkdownSimple(content: string): string {
   const md = new MarkdownIt({

@@ -1,12 +1,21 @@
 import { promises as fs, type Dirent } from "node:fs";
 import path from "node:path";
-import { renderMarkdown, type MarkdownResult } from "../renderer/markdown.js";
+import {
+  renderMarkdown,
+  type MarkdownResult,
+  extractSeoData,
+} from "../renderer/markdown.js";
 import { renderMdx, type MdxRenderResult } from "../renderer/mdx.js";
 import { renderPage } from "../template/index.js";
 import { buildSidebar, type NavItem } from "../template/sidebar.js";
 import { renderDirectory } from "../directory.js";
 import { buildSearchIndex } from "./search-index.js";
 import type { Settings } from "../settings/index.js";
+import {
+  generateOgImage,
+  getOgImagePath,
+  type OgImageData,
+} from "../og/index.js";
 
 export interface ExportOptions {
   rootDir: string;
@@ -19,6 +28,13 @@ interface DirInfo {
   outputPath: string;
   urlPath: string;
   hasIndex: boolean;
+}
+
+interface PageInfo {
+  urlPath: string;
+  outputPath: string;
+  title: string;
+  description?: string;
 }
 
 function withBasePath(href: string, settings: Settings): string {
@@ -56,6 +72,7 @@ export async function exportStaticSite(options: ExportOptions): Promise<void> {
     // 2. Process all markdown files
     let processedCount = 0;
     const dirMap = new Map<string, DirInfo>();
+    const pageInfos: PageInfo[] = [];
     await processDirectory(
       absRootDir,
       absOutputDir,
@@ -63,6 +80,7 @@ export async function exportStaticSite(options: ExportOptions): Promise<void> {
       settings,
       silent,
       dirMap,
+      pageInfos,
       (count) => {
         processedCount = count;
       },
@@ -82,7 +100,15 @@ export async function exportStaticSite(options: ExportOptions): Promise<void> {
       }
     }
 
-    // 4. Generate search-index.json if search is enabled
+    // 4. Generate OG images if enabled
+    if (settings.seo.og?.enabled) {
+      if (!silent) {
+        console.log(`\n  🖼️  Generating OG images...`);
+      }
+      await generateOgImages(pageInfos, absOutputDir, settings, silent);
+    }
+
+    // 5. Generate search-index.json if search is enabled
     if (settings.search.enabled) {
       const searchIndex = await buildSearchIndex(absRootDir, settings);
       const searchIndexPath = path.join(absOutputDir, "search-index.json");
@@ -108,6 +134,7 @@ async function processDirectory(
   settings: Settings,
   silent: boolean,
   dirMap: Map<string, DirInfo>,
+  pageInfos: PageInfo[],
   updateCount: (count: number) => void,
   count: number = 0,
 ): Promise<number> {
@@ -156,6 +183,7 @@ async function processDirectory(
           settings,
           silent,
           dirMap,
+          pageInfos,
           updateCount,
           count,
         );
@@ -203,13 +231,14 @@ async function processDirectory(
           urlPath = withBasePath(rawUrlPath, settings);
         }
 
-        await renderMarkdownFile(
+        const pageInfo = await renderMarkdownFile(
           fullPath,
           htmlOutputPath,
           urlPath,
           rootDir,
           settings,
         );
+        pageInfos.push(pageInfo);
 
         if (!silent) {
           const displayPath =
@@ -241,7 +270,7 @@ async function renderMarkdownFile(
   urlPath: string,
   rootDir: string,
   settings: Settings,
-): Promise<void> {
+): Promise<PageInfo> {
   const content = await fs.readFile(filePath, "utf-8");
   const ext = path.extname(filePath).toLowerCase();
 
@@ -280,6 +309,14 @@ async function renderMarkdownFile(
   });
 
   await fs.writeFile(outputPath, html, "utf-8");
+
+  // Return page info for OG generation
+  return {
+    urlPath,
+    outputPath,
+    title,
+    description: result.frontmatter.description as string | undefined,
+  };
 }
 
 async function copyFile(src: string, dest: string): Promise<void> {
@@ -381,6 +418,100 @@ function fixAssetPaths(html: string, urlPath: string): string {
 
 function humanizeFilename(filename: string): string {
   return filename.replace(/[-_]/g, " ").replace(/^\w/, (c) => c.toUpperCase());
+}
+
+/**
+ * Generate OG images for all pages
+ */
+async function generateOgImages(
+  pageInfos: PageInfo[],
+  outputDir: string,
+  settings: Settings,
+  silent: boolean,
+): Promise<void> {
+  const publicDir = path.join(outputDir, "public");
+  const ogDir = path.join(publicDir, "og");
+  const format = settings.seo.og?.imageFormat || "jpg";
+  const ogSettings = settings.seo.og;
+
+  let generatedCount = 0;
+  let failedCount = 0;
+
+  for (const pageInfo of pageInfos) {
+    // Skip if the page already has a custom image
+    // if (pageInfo.image) continue;
+
+    const ogImagePath = getOgImagePath(
+      pageInfo.urlPath,
+      ogDir,
+      format,
+      settings.generate.basePath,
+    );
+
+    // Build OG image data
+    const ogData: OgImageData = {
+      title: pageInfo.title,
+      description: pageInfo.description,
+      siteName: settings.site.title,
+      urlPath: pageInfo.urlPath,
+      accentColor: settings.appearance.accentColor,
+      fontFamily: ogSettings?.fontFamily || "Inter",
+      backgroundColor: ogSettings?.colors?.background || "#0a0a0f",
+      textColor: ogSettings?.colors?.text || "#ffffff",
+    };
+
+    // Generate the OG image
+    const result = await generateOgImage(ogData, {
+      outputPath: ogImagePath,
+      format,
+      quality: 85,
+    });
+
+    if (result.success) {
+      generatedCount++;
+      if (!silent) {
+        const displayPath = path.relative(outputDir, ogImagePath);
+        console.log(`  ✓ OG image: ${displayPath}`);
+      }
+    } else {
+      failedCount++;
+      if (!silent) {
+        console.log(
+          `  ✗ OG image failed: ${pageInfo.urlPath} (${result.error})`,
+        );
+      }
+    }
+  }
+
+  // Add empty index.html to prevent directory listing
+  await createEmptyIndexFile(publicDir);
+  await createEmptyIndexFile(ogDir);
+
+  if (!silent) {
+    console.log(
+      `  ✓ OG images: ${generatedCount} generated, ${failedCount} failed`,
+    );
+  }
+}
+
+/**
+ * Create an empty index.html file to prevent directory listing
+ */
+async function createEmptyIndexFile(dirPath: string): Promise<void> {
+  try {
+    await fs.mkdir(dirPath, { recursive: true });
+    const indexPath = path.join(dirPath, "index.html");
+    // Check if file exists first
+    try {
+      await fs.access(indexPath);
+      // File exists, don't overwrite
+    } catch {
+      // File doesn't exist, create empty one
+      await fs.writeFile(indexPath, "", "utf-8");
+    }
+  } catch {
+    // Ignore errors
+  }
 }
 
 async function generateAutoIndex(

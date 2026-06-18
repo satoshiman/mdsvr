@@ -12,6 +12,7 @@ export interface NavItem {
   type: "file" | "dir";
   order?: number;
   sortBy: string;
+  manualOrder?: number;
 }
 
 // Extract title from content (first h1 or frontmatter)
@@ -84,6 +85,29 @@ async function hasDirectoryIndex(
     }
   }
   return false;
+}
+
+async function getDirectoryTitle(
+  dirPath: string,
+  folderName: string,
+  settings: Settings,
+): Promise<string> {
+  // Try to extract title from index file (README.md, index.md, etc.)
+  for (const indexFile of settings.files.indexFiles) {
+    const indexPath = path.join(dirPath, indexFile);
+    try {
+      await fs.access(indexPath);
+      const title = await extractTitle(indexPath, settings);
+      if (title && title !== "Home") {
+        return title;
+      }
+    } catch {
+      // Continue to next index file
+    }
+  }
+
+  // Fallback to humanizeFilename
+  return humanizeFilename(folderName);
 }
 
 async function hasDocFiles(
@@ -177,8 +201,13 @@ async function readDirRecursive(
         hasAnyFile ||
         (await hasDirectoryIndex(fullPath, settings))
       ) {
+        const dirTitle = await getDirectoryTitle(
+          fullPath,
+          entry.name,
+          settings,
+        );
         items.push({
-          title: humanizeFilename(entry.name),
+          title: dirTitle,
           href: withBasePath(relativePath + "/", settings, isStaticExport),
           children,
           type: "dir",
@@ -208,11 +237,36 @@ async function readDirRecursive(
     }
   }
 
-  // Sort: folders first, then alphabetically by filename/folder name
+  // Sort based on orderBy setting
+  const orderBy = settings.navigation.sidebar.orderBy;
+  const manualOrderList = settings.navigation.sidebar.manualOrder || [];
+
   return items.sort((a, b) => {
-    if (a.type === "dir" && b.type !== "dir") return -1;
-    if (a.type !== "dir" && b.type === "dir") return 1;
-    return a.sortBy.localeCompare(b.sortBy);
+    switch (orderBy) {
+      case "manual": {
+        const aIndex = manualOrderList.indexOf(a.sortBy);
+        const bIndex = manualOrderList.indexOf(b.sortBy);
+        // Items in manualOrder list come first, in specified order
+        // Items not in list are appended at end, sorted alphabetically
+        if (aIndex !== -1 && bIndex !== -1) return aIndex - bIndex;
+        if (aIndex !== -1) return -1;
+        if (bIndex !== -1) return 1;
+        return a.sortBy.localeCompare(b.sortBy);
+      }
+
+      case "prior-dir": {
+        // Folder first, then file; same type sort by name
+        if (a.type === "dir" && b.type !== "dir") return -1;
+        if (a.type !== "dir" && b.type === "dir") return 1;
+        return a.sortBy.localeCompare(b.sortBy);
+      }
+
+      case "alphabetical":
+      default: {
+        // Mixed: folder & file together, pure alphabetical
+        return a.sortBy.localeCompare(b.sortBy);
+      }
+    }
   });
 }
 

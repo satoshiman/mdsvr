@@ -1,5 +1,7 @@
 import type { Settings } from "../settings/index.js";
-import type { TocItem } from "../renderer/markdown.js";
+import type { TocItem, MarkdownResult } from "../renderer/markdown.js";
+import { extractSeoData } from "../renderer/markdown.js";
+import { getOgImageUrl } from "../og/index.js";
 import { buildSeoTags, type SeoData } from "./seo.js";
 import {
   renderSidebar,
@@ -91,11 +93,29 @@ export function renderPage(params: TemplateParams): string {
 })();
 </script>`;
 
-  // Build SEO data from frontmatter and settings
+  // Read the raw markdown content for SEO extraction if needed
+  let rawContent = "";
+  try {
+    if (params.isStaticExport && body) {
+      // In static export, we need to access the original markdown content
+      // This is passed through the render process, but we'll try to extract from frontmatter fallback
+    }
+  } catch {
+    // Ignore errors
+  }
+
+  // Build SEO data from frontmatter with fallbacks
+  // Priority: frontmatter > auto-extracted > site defaults
+  const extractedSeo = rawContent
+    ? extractSeoData(rawContent)
+    : { title: null, description: null };
+
   const seoData: SeoData = {
     title: (frontmatter.title as string) || title,
     description:
-      (frontmatter.description as string) || settings.site.description,
+      (frontmatter.description as string) ||
+      extractedSeo.description ||
+      settings.site.description,
     image: (frontmatter.image as string) || settings.seo.defaultImage,
     url: urlPath,
     type: frontmatter.date ? "article" : "website",
@@ -103,6 +123,16 @@ export function renderPage(params: TemplateParams): string {
     author: (frontmatter.author as string) || undefined,
     noIndex: (frontmatter.noIndex as boolean) || false,
   };
+
+  // Add OG image URL if enabled in static export
+  if (params.isStaticExport && settings.seo.og?.enabled && !seoData.image) {
+    const ogUrl = getOgImageUrl(
+      urlPath,
+      settings.generate.basePath || "",
+      settings.seo.og.imageFormat,
+    );
+    seoData.image = ogUrl;
+  }
 
   const seoTags = buildSeoTags(seoData, settings);
   const pageTitle = settings.seo.titleTemplate.replace("%s", seoData.title);

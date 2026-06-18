@@ -35,7 +35,12 @@
   },
   "seo": {
     "generateSitemap": true,
-    "generateRssFeed": false
+    "generateRssFeed": false,
+    "og": {
+      "enabled": true,
+      "imageFormat": "jpg",
+      "generateOnServe": false
+    }
   },
   "mdx": {
     "enabled": true
