@@ -16,11 +16,11 @@
   },
   "scripts": {
     "build": "tsc && cp -r src/assets dist/assets",
-    "build:test": "tsc -p tsconfig.test.json",
+    "build:test": "tsc -p tsconfig.test.json && cp -r src/assets dist-test/src/assets",
     "dev": "tsc --watch",
     "start": "node bin/mdsvr.js",
     "build:start": "npm run build && node bin/mdsvr.js",
-    "test": "npm run build && npm run build:test && node --test dist-test/*.test.js",
+    "test": "npm run build && npm run build:test && node --test dist-test/test/*.test.js",
     "docs:generate": "rm -rf ./gh-pages/docs && npm run start -- ./docs -e ./gh-pages/docs",
     "docs:deploy": "npm run docs:generate && gh-pages -d gh-pages",
     "prepublishOnly": "npm run build && npm test",

@@ -212,8 +212,11 @@ async function serveDirectory(
     sidebar = await buildSidebar(rootDir, urlPath, settings, false);
   }
 
+  const dirName = urlPath
+    ? path.basename(urlPath.replace(/\/+$/, "")) || urlPath
+    : "";
   const html = renderPage({
-    title: urlPath ? `Index of ${urlPath}` : "Index",
+    title: dirName ? humanizeFilename(dirName) : "Index",
     body: renderDirectory({ urlPath, entries: entriesWithSize }),
     filePath: urlPath,
     settings,
@@ -338,5 +341,9 @@ function extractFirstHeading(content: string): string | null {
 }
 
 function humanizeFilename(filename: string): string {
-  return filename.replace(/[-_]/g, " ").replace(/^\w/, (c) => c.toUpperCase());
+  return filename
+    .replace(/^\d+\./, "")
+    .replace(/[-_]/g, " ")
+    .trim()
+    .replace(/^\w/, (c) => c.toUpperCase());
 }

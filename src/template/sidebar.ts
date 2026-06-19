@@ -48,8 +48,10 @@ async function extractTitle(
 
 function humanizeFilename(filename: string): string {
   return filename
+    .replace(/^\d+\./, "")
     .replace(/[-_]/g, " ")
     .replace(/\.\w+$/, "")
+    .trim()
     .replace(/^\w/, (c) => c.toUpperCase());
 }
 
@@ -394,20 +396,26 @@ export function renderSidebar(
       `${indent}  <li class="nav-item${activeClass}${folderClass}" data-type="${item.type}">`,
     );
 
-    const icon = item.type === "dir" ? "📁" : "📄";
+    const icon =
+      item.type === "dir"
+        ? hasChildren
+          ? shouldExpand
+            ? "📂"
+            : "📁"
+          : "📁"
+        : "";
 
     if (hasChildren) {
-      lines.push(`${indent}    <div class="nav-item-header">`);
       lines.push(
-        `${indent}      <button class="nav-toggle" data-expanded="${shouldExpand}" aria-label="Toggle folder">▶</button>`,
+        `${indent}    <div class="nav-item-header" data-expanded="${shouldExpand}">`,
       );
       lines.push(
-        `${indent}      <a href="${item.href}" class="nav-link${activeClass}">${icon} ${escapeHtml(item.title)}</a>`,
+        `${indent}      <a href="${item.href}" class="nav-link${activeClass}" data-folder-icon="${shouldExpand ? "open" : "closed"}"><span class="folder-icon">${icon}</span> ${escapeHtml(item.title)}</a>`,
       );
       lines.push(`${indent}    </div>`);
     } else {
       lines.push(
-        `${indent}    <a href="${item.href}" class="nav-link${activeClass}">${icon} ${escapeHtml(item.title)}</a>`,
+        `${indent}    <a href="${item.href}" class="nav-link${activeClass}">${icon ? icon + " " : ""}${escapeHtml(item.title)}</a>`,
       );
     }
 
@@ -512,15 +520,17 @@ export interface PrevNextLinks {
   next: { title: string; href: string } | null;
 }
 
-function flattenNavItems(items: NavItem[]): { title: string; href: string }[] {
-  const result: { title: string; href: string }[] = [];
+function flattenNavItems(
+  items: NavItem[],
+): { title: string; href: string; type: "file" | "dir" }[] {
+  const result: { title: string; href: string; type: "file" | "dir" }[] = [];
   for (const item of items) {
     if (item.type === "file") {
-      result.push({ title: item.title, href: item.href });
+      result.push({ title: item.title, href: item.href, type: item.type });
     }
     if (item.type === "dir") {
       // Include directory itself if it has an index page
-      result.push({ title: item.title, href: item.href });
+      result.push({ title: item.title, href: item.href, type: item.type });
       if (item.children && item.children.length > 0) {
         result.push(...flattenNavItems(item.children));
       }
@@ -543,6 +553,15 @@ export function getPrevNext(
     // Match .md/.mdx extension
     if (item.href + ".md" === currentPath) return true;
     if (item.href + ".mdx" === currentPath) return true;
+    // Match directory index files (README.md, index.md served under dir href)
+    if (
+      item.type === "dir" &&
+      (currentPath === item.href + "README.md" ||
+        currentPath === item.href + "readme.md" ||
+        currentPath === item.href + "index.md" ||
+        currentPath === item.href + "index.mdx")
+    )
+      return true;
     return false;
   });
 

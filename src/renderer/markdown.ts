@@ -17,6 +17,48 @@ export interface MarkdownResult {
   toc: TocItem[];
 }
 
+function renderCodeBlockWithToolbar(
+  codeHtml: string,
+  lang: string | null,
+  rawCode: string,
+  escapeHtml: (str: string) => string,
+): string {
+  const langClass = lang ? ` class="hljs language-${lang}"` : ' class="hljs"';
+  const escapedRaw = escapeHtml(rawCode);
+  return `<pre class="code-block-wrapper"><div class="code-block-container">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code${langClass}>${codeHtml}</code></pre>
+  <pre class="code-block-raw" style="display:none;"><code>${escapedRaw}</code></pre>
+</div></pre>\n`;
+}
+
 // Create markdown-it instance with settings
 function createMarkdownIt(settings: Settings): MarkdownIt {
   const md = new MarkdownIt({
@@ -30,8 +72,8 @@ function createMarkdownIt(settings: Settings): MarkdownIt {
         return `<pre class="mermaid-wrapper"><div class="mermaid-container">
   <div class="mermaid-toolbar">
     <button class="mermaid-btn mermaid-btn-chart" title="Chart view"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z"/><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/></svg></button>
-    <button class="mermaid-btn mermaid-btn-fullscreen" title="Fullscreen"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 15 6 6"/><path d="m15 9 6-6"/><path d="M21 16v5h-5"/><path d="M21 8V3h-5"/><path d="M3 16v5h5"/><path d="m3 21 6-6"/><path d="M3 8V3h5"/><path d="M9 9 3 3"/></svg></button>
     <button class="mermaid-btn mermaid-btn-code" title="Show code"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-fullscreen" title="Fullscreen"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 15 6 6"/><path d="m15 9 6-6"/><path d="M21 16v5h-5"/><path d="M21 8V3h-5"/><path d="M3 16v5h5"/><path d="m3 21 6-6"/><path d="M3 8V3h5"/><path d="M9 9 3 3"/></svg></button>
   </div>
   <div class="mermaid-zoom-controls">
     <button class="mermaid-btn mermaid-btn-zoom-in" title="Zoom in"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
@@ -47,14 +89,22 @@ function createMarkdownIt(settings: Settings): MarkdownIt {
       // existing hljs logic — KEEP AS IS
       if (lang && hljs.getLanguage(lang)) {
         try {
-          return `<pre><code class="hljs language-${lang}">${
-            hljs.highlight(str, { language: lang }).value
-          }</code></pre>\n`;
+          return renderCodeBlockWithToolbar(
+            hljs.highlight(str, { language: lang }).value,
+            lang,
+            str,
+            md.utils.escapeHtml,
+          );
         } catch {
           // Fall through to plain text
         }
       }
-      return md.utils.escapeHtml(str);
+      return renderCodeBlockWithToolbar(
+        md.utils.escapeHtml(str),
+        null,
+        str,
+        md.utils.escapeHtml,
+      );
     },
   });
 
@@ -187,8 +237,8 @@ export function renderMarkdownSimple(content: string): string {
         return `<pre class="mermaid-wrapper"><div class="mermaid-container">
   <div class="mermaid-toolbar">
     <button class="mermaid-btn mermaid-btn-chart" title="Chart view"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z"/><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/></svg></button>
-    <button class="mermaid-btn mermaid-btn-fullscreen" title="Fullscreen"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 15 6 6"/><path d="m15 9 6-6"/><path d="M21 16v5h-5"/><path d="M21 8V3h-5"/><path d="M3 16v5h5"/><path d="m3 21 6-6"/><path d="M3 8V3h5"/><path d="M9 9 3 3"/></svg></button>
     <button class="mermaid-btn mermaid-btn-code" title="Show code"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-fullscreen" title="Fullscreen"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 15 6 6"/><path d="m15 9 6-6"/><path d="M21 16v5h-5"/><path d="M21 8V3h-5"/><path d="M3 16v5h5"/><path d="m3 21 6-6"/><path d="M3 8V3h5"/><path d="M9 9 3 3"/></svg></button>
   </div>
   <div class="mermaid-zoom-controls">
     <button class="mermaid-btn mermaid-btn-zoom-in" title="Zoom in"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
@@ -204,14 +254,22 @@ export function renderMarkdownSimple(content: string): string {
       // existing hljs logic — KEEP AS IS
       if (lang && hljs.getLanguage(lang)) {
         try {
-          return `<pre><code class="hljs language-${lang}">${
-            hljs.highlight(str, { language: lang }).value
-          }</code></pre>\n`;
+          return renderCodeBlockWithToolbar(
+            hljs.highlight(str, { language: lang }).value,
+            lang,
+            str,
+            md.utils.escapeHtml,
+          );
         } catch {
           // Fall through to plain text
         }
       }
-      return md.utils.escapeHtml(str);
+      return renderCodeBlockWithToolbar(
+        md.utils.escapeHtml(str),
+        null,
+        str,
+        md.utils.escapeHtml,
+      );
     },
   });
 

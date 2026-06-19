@@ -92,6 +92,15 @@ export async function exportStaticSite(options: ExportOptions): Promise<void> {
       if (!dirInfo.hasIndex) {
         await generateAutoIndex(dirInfo, rootDir, settings);
         autoIndexCount++;
+
+        // Add to pageInfos so OG images are generated for auto-index pages
+        pageInfos.push({
+          urlPath: dirInfo.urlPath,
+          outputPath: path.join(dirInfo.outputPath, "index.html"),
+          title: dirInfo.urlPath ? `Index of ${dirInfo.urlPath}` : "Index",
+          description: settings.site.description,
+        });
+
         if (!silent) {
           console.log(
             `  ✓ ${path.relative(absOutputDir, dirInfo.outputPath)}/index.html (auto-generated)`,

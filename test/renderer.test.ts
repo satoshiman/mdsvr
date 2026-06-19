@@ -112,6 +112,24 @@ describe("renderer", () => {
     assert.ok(result.html.includes("<code"));
   });
 
+  it("renders code blocks with toolbar and raw source", () => {
+    const md = "```js\nconst x = 1;\n```";
+    const result = renderMarkdown(md, settings);
+    assert.ok(result.html.includes('class="code-block-container"'));
+    assert.ok(result.html.includes('class="code-block-toolbar"'));
+    assert.ok(
+      result.html.includes('class="code-block-btn code-block-btn-copy"'),
+    );
+    assert.ok(
+      result.html.includes('class="code-block-btn code-block-btn-wrap"'),
+    );
+    assert.ok(
+      result.html.includes('class="code-block-btn code-block-btn-fullscreen"'),
+    );
+    assert.ok(result.html.includes('class="code-block-raw"'));
+    assert.ok(result.html.includes("const x = 1;"));
+  });
+
   it("auto-links URLs", () => {
     const md = "Visit https://example.com for more info.";
     const result = renderMarkdown(md, settings);
@@ -139,5 +157,18 @@ describe("renderer", () => {
     assert.strictEqual(result.toc[3].text, "H2-2");
     assert.strictEqual(result.toc[4].level, 3);
     assert.strictEqual(result.toc[4].text, "H3-2");
+  });
+
+  it("renders mermaid block with toolbar and source panel", () => {
+    const md = "```mermaid\nflowchart TD\n  A --> B\n```";
+    const result = renderMarkdown(md, settings);
+    assert.ok(result.html.includes('class="mermaid-container"'));
+    assert.ok(result.html.includes('class="mermaid-toolbar"'));
+    assert.ok(
+      result.html.includes('class="mermaid-btn mermaid-btn-fullscreen"'),
+    );
+    assert.ok(result.html.includes('class="mermaid-btn mermaid-btn-code"'));
+    assert.ok(result.html.includes('class="mermaid-source"'));
+    assert.ok(result.html.includes("A --> B"));
   });
 });

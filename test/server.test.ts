@@ -1,6 +1,6 @@
 import { describe, it, before, after } from "node:test";
 import assert from "node:assert";
-import { createServer } from "../dist/server.js";
+import { createServer } from "../src/server.js";
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import os from "node:os";

@@ -1,6 +1,6 @@
 import { describe, it } from "node:test";
 import assert from "node:assert";
-import { wrapHtml } from "../dist/template.js";
+import { wrapHtml } from "../src/template.js";
 
 describe("template", () => {
   it("wraps markdown body in HTML", () => {

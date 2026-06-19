@@ -25,6 +25,22 @@ const FONT_URLS: Record<string, string> = {
     "https://cdn.jsdelivr.net/npm/@fontsource/inter@5.0.8/files/inter-latin-700-normal.woff",
   "Inter-800":
     "https://cdn.jsdelivr.net/npm/@fontsource/inter@5.0.8/files/inter-latin-800-normal.woff",
+  "Inter-400-vietnamese":
+    "https://cdn.jsdelivr.net/npm/@fontsource/inter@5.0.8/files/inter-vietnamese-400-normal.woff",
+  "Inter-600-vietnamese":
+    "https://cdn.jsdelivr.net/npm/@fontsource/inter@5.0.8/files/inter-vietnamese-600-normal.woff",
+  "Inter-700-vietnamese":
+    "https://cdn.jsdelivr.net/npm/@fontsource/inter@5.0.8/files/inter-vietnamese-700-normal.woff",
+  "Inter-800-vietnamese":
+    "https://cdn.jsdelivr.net/npm/@fontsource/inter@5.0.8/files/inter-vietnamese-800-normal.woff",
+  "NotoSans-400-vietnamese":
+    "https://cdn.jsdelivr.net/npm/@fontsource/noto-sans@5.0.19/files/noto-sans-vietnamese-400-normal.woff",
+  "NotoSans-600-vietnamese":
+    "https://cdn.jsdelivr.net/npm/@fontsource/noto-sans@5.0.19/files/noto-sans-vietnamese-600-normal.woff",
+  "NotoSans-700-vietnamese":
+    "https://cdn.jsdelivr.net/npm/@fontsource/noto-sans@5.0.19/files/noto-sans-vietnamese-700-normal.woff",
+  "NotoSans-800-vietnamese":
+    "https://cdn.jsdelivr.net/npm/@fontsource/noto-sans@5.0.19/files/noto-sans-vietnamese-800-normal.woff",
 };
 
 // Font data cache
@@ -122,6 +138,39 @@ async function loadFont(
 }
 
 /**
+ * Load a Vietnamese-capable font for the given font family and weight.
+ * For Inter, use the Inter Vietnamese variant. For other fonts, fall back to
+ * Noto Sans Vietnamese so Vietnamese characters (diacritics) render correctly.
+ */
+async function loadVietnameseFont(
+  fontFamily: string,
+  weight = 400,
+): Promise<Buffer | null> {
+  const cacheKey = `${fontFamily}-${weight}-vietnamese`;
+
+  if (fontCache.has(cacheKey)) {
+    return fontCache.get(cacheKey)!;
+  }
+
+  const isInter = fontFamily.toLowerCase() === "inter";
+  const fontUrl = isInter
+    ? FONT_URLS[`Inter-${weight}-vietnamese`]
+    : FONT_URLS[`NotoSans-${weight}-vietnamese`];
+
+  if (!fontUrl) {
+    return null;
+  }
+
+  try {
+    const data = await downloadFont(fontUrl);
+    fontCache.set(cacheKey, data);
+    return data;
+  } catch {
+    return null;
+  }
+}
+
+/**
  * Generate OG image using Satori and Resvg
  */
 export async function generateOgImage(
@@ -160,6 +209,16 @@ export async function generateOgImage(
         fonts.push({
           name: fontFamily,
           data: fontData,
+          weight,
+        });
+      }
+
+      // Load Vietnamese-capable variant for the same weight so diacritics render
+      const vietnameseFontData = await loadVietnameseFont(fontFamily, weight);
+      if (vietnameseFontData) {
+        fonts.push({
+          name: fontFamily,
+          data: vietnameseFontData,
           weight,
         });
       }
