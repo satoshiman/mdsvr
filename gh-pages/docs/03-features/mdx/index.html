@@ -13,16 +13,16 @@
   document.documentElement.setAttribute('data-theme', theme);
 })();
 </script>
-  <title>Welcome</title>
-    <meta name="description" content="Full-featured documentation website server with MDX support, site settings, SEO, and navigation">
-    <meta property="og:title" content="Welcome">
-    <meta property="og:description" content="Full-featured documentation website server with MDX support, site settings, SEO, and navigation">
+  <title>MDX Components</title>
+    <meta name="description" content="Interactive components for your documentation">
+    <meta property="og:title" content="MDX Components">
+    <meta property="og:description" content="Interactive components for your documentation">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="/docs/">
-    <meta property="og:image" content="/docs/public/og/index.jpg">
+    <meta property="og:url" content="/docs/03-features/mdx">
+    <meta property="og:image" content="/docs/public/og/03-features/mdx/index.jpg">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Welcome">
-    <meta name="twitter:image" content="/docs/public/og/index.jpg">
+    <meta name="twitter:title" content="MDX Components">
+    <meta name="twitter:image" content="/docs/public/og/03-features/mdx/index.jpg">
     <link rel="sitemap" type="application/xml" href="/docs/sitemap.xml">
   
   <style>
@@ -1358,10 +1358,10 @@ code.hljs {
     </div>
   </header>
 
-  <div class="site-container has-toc">
+  <div class="site-container">
     <aside class="sidebar" id="sidebar"><ul class="sidebar-nav" data-level="0">
-  <li class="nav-item active" data-type="file">
-    <a href="/docs/" class="nav-link active">Welcome</a>
+  <li class="nav-item" data-type="file">
+    <a href="/docs/" class="nav-link">Welcome</a>
   </li>
   <li class="nav-item folder" data-type="dir">
     <a href="/docs/01-getting-started/" class="nav-link">📁 Getting Started</a>
@@ -1369,17 +1369,17 @@ code.hljs {
   <li class="nav-item folder" data-type="dir">
     <a href="/docs/02-settings/" class="nav-link">📁 Guides</a>
   </li>
-  <li class="nav-item folder" data-type="dir">
+  <li class="nav-item active folder" data-type="dir">
     <div class="nav-item-header" data-expanded="true">
-      <a href="/docs/03-features/" class="nav-link" data-folder-icon="open"><span class="folder-icon">📂</span> Features</a>
+      <a href="/docs/03-features/" class="nav-link active" data-folder-icon="open"><span class="folder-icon">📂</span> Features</a>
     </div>
     <div class="nav-children" data-expanded="true">
     <ul class="sidebar-nav" data-level="1">
       <li class="nav-item" data-type="file">
         <a href="/docs/03-features/markdown" class="nav-link">Markdown Formats</a>
       </li>
-      <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/mdx" class="nav-link">MDX Components</a>
+      <li class="nav-item active" data-type="file">
+        <a href="/docs/03-features/mdx" class="nav-link active">MDX Components</a>
       </li>
       <li class="nav-item" data-type="file">
         <a href="/docs/03-features/mermaid" class="nav-link">Mermaid Chart</a>
@@ -1406,297 +1406,141 @@ code.hljs {
     <main class="content">
       <nav class="breadcrumbs">
     <a href="/docs/">Home</a>
-    <span class="breadcrumb-sep">/</span><span class="breadcrumb-current">Docs</span>
+    <span class="breadcrumb-sep">/</span><a href="/docs/docs">Docs</a><span class="breadcrumb-sep">/</span><a href="/docs/docs/03-features">03 features</a><span class="breadcrumb-sep">/</span><span class="breadcrumb-current">Mdx</span>
   </nav>
       <article class="markdown-body">
-        <h1 id="welcome-to-mdsvr" tabindex="-1">Welcome to mdsvr</h1>
-<p>Transform any folder of Markdown/Markdown files into a beautiful documentation website — zero config required.</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
-  <div class="code-block-toolbar">
-    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
-        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-      </svg>
-    </button>
-    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="m16 16-3 3 3 3"/>
-        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
-        <path d="M3 19h6"/>
-        <path d="M3 5h18"/>
-      </svg>
-    </button>
-    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="m15 15 6 6"/>
-        <path d="m15 9 6-6"/>
-        <path d="M21 16v5h-5"/>
-        <path d="M21 8V3h-5"/>
-        <path d="M3 16v5h5"/>
-        <path d="m3 21 6-6"/>
-        <path d="M3 8V3h5"/>
-        <path d="M9 9 3 3"/>
-      </svg>
-    </button>
-  </div>
-  <pre><code class="hljs language-bash">npx mdsvr ./docs
-</code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>npx mdsvr ./docs
-</code></pre>
-</div></pre>
+        <h1 id="mdx-components"><a aria-hidden="true" tabindex="-1" href="#mdx-components"><span class="icon icon-link"></span></a>MDX Components</h1>
+<p>mdsvr supports <strong>MDX</strong> — Markdown with JSX. This allows you to use interactive components directly in your documentation.</p>
+<div class="callout callout-info"><strong style="display:block;margin-bottom:8px">ℹ️ Info</strong><div><p>MDX must be enabled in <code>settings.json</code> with <code>&quot;mdx.enabled&quot;: true</code>.</p></div></div>
+<h2 id="callout"><a aria-hidden="true" tabindex="-1" href="#callout"><span class="icon icon-link"></span></a>Callout</h2>
+<p>Use callouts to highlight important information:</p>
+<pre><code class="language-mdx">&lt;Callout type=&quot;info&quot;&gt;This is an informational callout.&lt;/Callout&gt;
 
-<blockquote>
-<p>ℹ️ <strong>Info:</strong> This documentation itself is served by <strong>mdsvr</strong>! Explore the files in this directory to see how everything works.</p>
-</blockquote>
-<h2 id="what-is-mdsvr%3F" tabindex="-1">What is mdsvr?</h2>
-<p><strong>mdsvr</strong> is a static file server that automatically renders Markdown and MDX files as beautiful HTML. It’s similar to Vercel’s <code>serve</code> but understands <code>.md</code> and <code>.mdx</code> files.</p>
-<h2 id="quick-start" tabindex="-1">Quick Start</h2>
-<ol>
-<li>
-<p><strong>Install</strong></p>
-<p>No installation needed! Just use <code>npx</code>:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
-  <div class="code-block-toolbar">
-    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
-        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-      </svg>
-    </button>
-    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="m16 16-3 3 3 3"/>
-        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
-        <path d="M3 19h6"/>
-        <path d="M3 5h18"/>
-      </svg>
-    </button>
-    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="m15 15 6 6"/>
-        <path d="m15 9 6-6"/>
-        <path d="M21 16v5h-5"/>
-        <path d="M21 8V3h-5"/>
-        <path d="M3 16v5h5"/>
-        <path d="m3 21 6-6"/>
-        <path d="M3 8V3h5"/>
-        <path d="M9 9 3 3"/>
-      </svg>
-    </button>
-  </div>
-  <pre><code class="hljs language-bash">npx mdsvr ./docs
+&lt;Callout type=&quot;warning&quot; title=&quot;Important&quot;&gt;
+  This will delete all your data.
+&lt;/Callout&gt;
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>npx mdsvr ./docs
-</code></pre>
-</div></pre>
+<h3 id="types"><a aria-hidden="true" tabindex="-1" href="#types"><span class="icon icon-link"></span></a>Types</h3>
+<div class="callout callout-info"><strong style="display:block;margin-bottom:8px">ℹ️ Info</strong><div><strong>Info</strong> — General information and tips</div></div>
+<div class="callout callout-warning"><strong style="display:block;margin-bottom:8px">⚠️ Warning</strong><div><strong>Warning</strong> — Caution about potential issues</div></div>
+<div class="callout callout-danger"><strong style="display:block;margin-bottom:8px">🚫 Danger</strong><div><p><strong>Danger</strong> — Critical warnings about destructive actions</p></div></div>
+<div class="callout callout-success"><strong style="display:block;margin-bottom:8px">✅ Success</strong><div><p><strong>Success</strong> — Positive confirmation or success states</p></div></div>
+<div class="callout callout-tip"><strong style="display:block;margin-bottom:8px">💡 Tip</strong><div><strong>Tip</strong> — Helpful suggestions and best practices</div></div>
+<h2 id="steps"><a aria-hidden="true" tabindex="-1" href="#steps"><span class="icon icon-link"></span></a>Steps</h2>
+<p>Create step-by-step guides:</p>
+<pre><code class="language-mdx">&lt;Steps&gt;
+  ### Step 1: Install
+  Run `npm install mdsvr`
 
-</li>
-<li>
-<p><strong>Create your docs</strong></p>
-<p>Create a folder with some <code>.md</code> files:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
-  <div class="code-block-toolbar">
-    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
-        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-      </svg>
-    </button>
-    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="m16 16-3 3 3 3"/>
-        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
-        <path d="M3 19h6"/>
-        <path d="M3 5h18"/>
-      </svg>
-    </button>
-    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="m15 15 6 6"/>
-        <path d="m15 9 6-6"/>
-        <path d="M21 16v5h-5"/>
-        <path d="M21 8V3h-5"/>
-        <path d="M3 16v5h5"/>
-        <path d="m3 21 6-6"/>
-        <path d="M3 8V3h5"/>
-        <path d="M9 9 3 3"/>
-      </svg>
-    </button>
-  </div>
-  <pre><code class="hljs language-bash"><span class="hljs-built_in">mkdir</span> docs
-<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;# Hello World&quot;</span> &gt; docs/readme.md
-</code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>mkdir docs
-echo &quot;# Hello World&quot; &gt; docs/readme.md
-</code></pre>
-</div></pre>
+### Step 2: Configure
 
-</li>
-<li>
-<p><strong>Start the server</strong></p>
-<pre class="code-block-wrapper"><div class="code-block-container">
-  <div class="code-block-toolbar">
-    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
-        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-      </svg>
-    </button>
-    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="m16 16-3 3 3 3"/>
-        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
-        <path d="M3 19h6"/>
-        <path d="M3 5h18"/>
-      </svg>
-    </button>
-    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="m15 15 6 6"/>
-        <path d="m15 9 6-6"/>
-        <path d="M21 16v5h-5"/>
-        <path d="M21 8V3h-5"/>
-        <path d="M3 16v5h5"/>
-        <path d="m3 21 6-6"/>
-        <path d="M3 8V3h5"/>
-        <path d="M9 9 3 3"/>
-      </svg>
-    </button>
-  </div>
-  <pre><code class="hljs language-bash">npx mdsvr ./docs --open
-</code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>npx mdsvr ./docs --open
-</code></pre>
-</div></pre>
+Create your `settings.json`
 
-</li>
-</ol>
-<h2 id="key-features" tabindex="-1">Key Features</h2>
-<div class="table-wrapper"><table>
-<thead>
-<tr>
-<th>Feature</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>📝 <a href="/3.-features">Markdown &amp; MDX</a></td>
-<td>Render .md and .mdx files with built-in interactive components</td>
-</tr>
-<tr>
-<td>🎨 <a href="/3.-features/theming">Themes</a></td>
-<td>Dark/light mode with customizable accent colors</td>
-</tr>
-<tr>
-<td>🔍 <a href="/3.-features/search">Search</a></td>
-<td>Built-in full-text search with keyboard shortcut (⌘K)</td>
-</tr>
-<tr>
-<td>📑 <a href="/3.-features/navigation">Navigation</a></td>
-<td>Auto-generated sidebar and table of contents</td>
-</tr>
-<tr>
-<td>🔎 <a href="/3.-features/seo">SEO</a></td>
-<td>Sitemap, RSS feed, Open Graph, and Twitter Cards</td>
-</tr>
-<tr>
-<td>⚙️ <a href="/2.-settings">Settings</a></td>
-<td>Configure everything via settings.json</td>
-</tr>
-</tbody>
-</table></div>
-<h2 id="this-docs-structure-for-reference" tabindex="-1">This docs structure for reference</h2>
-<pre class="code-block-wrapper"><div class="code-block-container">
-  <div class="code-block-toolbar">
-    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
-        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-      </svg>
-    </button>
-    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="m16 16-3 3 3 3"/>
-        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
-        <path d="M3 19h6"/>
-        <path d="M3 5h18"/>
-      </svg>
-    </button>
-    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="m15 15 6 6"/>
-        <path d="m15 9 6-6"/>
-        <path d="M21 16v5h-5"/>
-        <path d="M21 8V3h-5"/>
-        <path d="M3 16v5h5"/>
-        <path d="m3 21 6-6"/>
-        <path d="M3 8V3h5"/>
-        <path d="M9 9 3 3"/>
-      </svg>
-    </button>
-  </div>
-  <pre><code class="hljs">docs/
-├── settings.json                # Site configuration (optional)
-├── README.md                    # Homepage (this file)
-├── 1.-getting-started/          # Getting started guides
-│   └── README.md              # Quick start &amp; installation
-├── 2.-settings/                 # Settings &amp; configuration
-│   └── README.md              # Configuration, writing &amp; deployment
-├── 3.-features/                 # Feature documentation
-│   ├── README.md             # Features overview
-│   ├── markdown.md           # Markdown support
-│   ├── mdx.mdx               # MDX components demo
-│   ├── theming.md            # Theme customization
-│   ├── search.md             # Search functionality
-│   ├── navigation.md         # Navigation features
-│   ├── seo.md                # SEO features
-│   └── mermaid.md            # Mermaid diagrams
-└── 4.-reference/                # API/Reference
-    └── README.md             # CLI reference
-</code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>docs/
-├── settings.json                # Site configuration (optional)
-├── README.md                    # Homepage (this file)
-├── 1.-getting-started/          # Getting started guides
-│   └── README.md              # Quick start &amp; installation
-├── 2.-settings/                 # Settings &amp; configuration
-│   └── README.md              # Configuration, writing &amp; deployment
-├── 3.-features/                 # Feature documentation
-│   ├── README.md             # Features overview
-│   ├── markdown.md           # Markdown support
-│   ├── mdx.mdx               # MDX components demo
-│   ├── theming.md            # Theme customization
-│   ├── search.md             # Search functionality
-│   ├── navigation.md         # Navigation features
-│   ├── seo.md                # SEO features
-│   └── mermaid.md            # Mermaid diagrams
-└── 4.-reference/                # API/Reference
-    └── README.md             # CLI reference
-</code></pre>
-</div></pre>
+### Step 3: Launch
 
-<h2 id="next-steps" tabindex="-1">Next Steps</h2>
+Run `npx mdsvr ./docs`
+
+&lt;/Steps&gt;
+</code></pre>
+<div class="steps"><div class="step-item"><h3 id="install-the-package"><a aria-hidden="true" tabindex="-1" href="#install-the-package"><span class="icon icon-link"></span></a>Install the package</h3></div><div class="step-item"><p>Run <code>npm install mdsvr</code></p></div><div class="step-item"><h3 id="create-your-docs-folder"><a aria-hidden="true" tabindex="-1" href="#create-your-docs-folder"><span class="icon icon-link"></span></a>Create your docs folder</h3></div><div class="step-item"><p>Create a <code>./docs</code> directory with some <code>.md</code> files</p></div><div class="step-item"><h3 id="start-the-server"><a aria-hidden="true" tabindex="-1" href="#start-the-server"><span class="icon icon-link"></span></a>Start the server</h3></div><div class="step-item"><p>Run <code>npx mdsvr ./docs --open</code></p></div></div>
+<h2 id="cards"><a aria-hidden="true" tabindex="-1" href="#cards"><span class="icon icon-link"></span></a>Cards</h2>
+<p>Display links as beautiful cards:</p>
+<pre><code class="language-mdx">&lt;Card title=&quot;Quick Start&quot; icon=&quot;⚡&quot; href=&quot;/quickstart&quot;&gt;
+  Get up and running in 5 minutes
+&lt;/Card&gt;
+</code></pre>
+<a href="/configuration" class="card"><div class="card-title"><span>⚙️</span><span>Configuration</span></div><div class="card-description"><p>Full settings reference</p></div></a>
+<h3 id="card-groups"><a aria-hidden="true" tabindex="-1" href="#card-groups"><span class="icon icon-link"></span></a>Card Groups</h3>
+<div class="card-group" style="grid-template-columns:repeat(2, 1fr)"><a href="#" class="card"><div class="card-title"><span>📝</span><span>Markdown</span></div><div class="card-description"><p>Standard Markdown support</p></div></a><a href="#" class="card"><div class="card-title"><span>⚛️</span><span>MDX</span></div><div class="card-description"><p>React components in docs</p></div></a><a href="#" class="card"><div class="card-title"><span>🎨</span><span>Themes</span></div><div class="card-description"><p>Dark and light mode</p></div></a><a href="#" class="card"><div class="card-title"><span>🔍</span><span>Search</span></div><div class="card-description"><p>Full-text search</p></div></a></div>
+<h2 id="tabs"><a aria-hidden="true" tabindex="-1" href="#tabs"><span class="icon icon-link"></span></a>Tabs</h2>
+<p>Organize content in tabs:</p>
+<pre><code class="language-mdx">&lt;Tabs items={[&quot;npm&quot;, &quot;yarn&quot;, &quot;pnpm&quot;]}&gt;
+  &lt;Tab&gt;```bash npm install mdsvr ```&lt;/Tab&gt;
+  &lt;Tab&gt;```bash yarn add mdsvr ```&lt;/Tab&gt;
+  &lt;Tab&gt;```bash pnpm add mdsvr ```&lt;/Tab&gt;
+&lt;/Tabs&gt;
+</code></pre>
+<h2 id="code-groups"><a aria-hidden="true" tabindex="-1" href="#code-groups"><span class="icon icon-link"></span></a>Code Groups</h2>
+<p>Group related code blocks:</p>
+<pre><code class="language-mdx">&lt;CodeGroup title=&quot;Installation&quot;&gt;
+  ```bash npm npm install mdsvr ``` ```bash yarn yarn add mdsvr ``` ```bash pnpm
+  pnpm add mdsvr ```
+&lt;/CodeGroup&gt;
+</code></pre>
+<div class="code-group"><div class="code-group-title">Configuration</div><div style="margin:0"><pre><code class="language-json">{
+  &quot;site&quot;: {
+    &quot;title&quot;: &quot;My Docs&quot;
+  }
+}
+</code></pre><pre><code class="language-js">module.exports = {
+  site: {
+    title: &quot;My Docs&quot;,
+  },
+};
+</code></pre></div></div>
+<h2 id="accordion"><a aria-hidden="true" tabindex="-1" href="#accordion"><span class="icon icon-link"></span></a>Accordion</h2>
+<p>Create collapsible sections:</p>
+<pre><code class="language-mdx">&lt;Accordion title=&quot;Is this free?&quot;&gt;
+  Yes, mdsvr is open source under MIT license.
+&lt;/Accordion&gt;
+</code></pre>
+<div class="accordion"><button class="accordion-summary">What are the system requirements?<span class="accordion-icon ">▼</span></button></div>
+<div class="accordion"><button class="accordion-summary">Can I use custom components?<span class="accordion-icon ">▼</span></button></div>
+<h2 id="badge"><a aria-hidden="true" tabindex="-1" href="#badge"><span class="icon icon-link"></span></a>Badge</h2>
+<p>Add status badges inline:</p>
+<pre><code class="language-mdx">New feature &lt;Badge color=&quot;green&quot;&gt;New&lt;/Badge&gt;
+
+Beta feature &lt;Badge color=&quot;orange&quot;&gt;Beta&lt;/Badge&gt;
+
+Deprecated &lt;Badge color=&quot;red&quot;&gt;Deprecated&lt;/Badge&gt;
+</code></pre>
+<p>Available colors: <code>green</code>, <code>orange</code>, <code>red</code>, <code>blue</code>, <code>purple</code>, <code>gray</code></p>
 <ul>
-<li><strong><a href="/1.-getting-started">Quick Start</a></strong> — Get running in 30 seconds</li>
-<li><strong><a href="/1.-getting-started">Installation</a></strong> — Install options</li>
-<li><strong><a href="/3.-features/mdx">MDX Components</a></strong> — Make your docs interactive</li>
-<li><strong><a href="/2.-settings">Configuration</a></strong> — Customize your site</li>
-<li><strong><a href="/2.-settings">Writing Content</a></strong> — Best practices</li>
-<li><strong><a href="/2.-settings">Deployment</a></strong> — Go live</li>
-<li><strong><a href="/3.-features">Features</a></strong> — See all features</li>
-<li><strong><a href="/4.-reference">CLI Reference</a></strong> — Command reference</li>
+<li><span class="badge badge-green">New</span> — New features</li>
+<li><span class="badge badge-orange">Beta</span> — Beta features</li>
+<li><span class="badge badge-red">Deprecated</span> — Deprecated features</li>
+<li><span class="badge badge-blue">Info</span> — Informational</li>
+<li><span class="badge badge-purple">Tip</span> — Tips and tricks</li>
+<li><span class="badge badge-gray">Note</span> — General notes</li>
 </ul>
-<hr>
-<blockquote>
-<p>💡 <strong>Tip:</strong> Press <code>⌘+K</code> (or <code>Ctrl+K</code>) to open the search modal and find anything in this documentation!</p>
-</blockquote>
+<h2 id="mermaid"><a aria-hidden="true" tabindex="-1" href="#mermaid"><span class="icon icon-link"></span></a>Mermaid</h2>
+<p>Create diagrams with Mermaid syntax:</p>
+<pre><code class="language-mdx">&lt;Mermaid&gt;
+  graph TD
+    A[Start] --&gt; B{Is it working?}
+    B --&gt;|Yes| C[Great!]
+    B --&gt;|No| D[Debug]
+    D --&gt; E[Fix Issues]
+    E --&gt; B
+&lt;/Mermaid&gt;
+</code></pre>
+<div class="callout callout-tip"><strong style="display:block;margin-bottom:8px">💡 Tip</strong><div><p>Mermaid diagrams are rendered client-side, so they work without any
+server-side dependencies.</p></div></div>
+<h2 id="frontmatter"><a aria-hidden="true" tabindex="-1" href="#frontmatter"><span class="icon icon-link"></span></a>Frontmatter</h2>
+<p>All MDX files support YAML frontmatter for metadata:</p>
+<pre><code class="language-mdx">---
+title: Page Title
+description: Page description for SEO
+image: ./assets/og-image.png
+date: 2025-01-15
+author: John Doe
+tags: [setup, quickstart]
+noIndex: false
+---
 
+# Your Content
+</code></pre>
+<p>This metadata is used for:</p>
+<ul>
+<li>SEO <code>&lt;title&gt;</code> and meta tags</li>
+<li>Open Graph / Twitter Cards</li>
+<li>RSS feed entries (when <code>date</code> is present)</li>
+<li>Search index weighting</li>
+</ul>
       </article>
       <nav class="prev-next-nav">
-        <span></span>
-        <a href="/docs/docs/01-getting-started/" class="prev-next-card next-card"><span class="prev-next-label">Next →</span><span class="prev-next-title">Getting Started</span></a>
+        <a href="/docs/docs/03-features/markdown" class="prev-next-card prev-card"><span class="prev-next-label">← Prev</span><span class="prev-next-title">Markdown Formats</span></a>
+        <a href="/docs/docs/03-features/mermaid" class="prev-next-card next-card"><span class="prev-next-label">Next →</span><span class="prev-next-title">Mermaid Chart</span></a>
       </nav>
       <footer class="footer">
     <div class="footer-content">
@@ -1705,19 +1549,7 @@ echo &quot;# Hello World&quot; &gt; docs/readme.md
     </div>
   </footer>
     </main>
-    <aside class="toc-sidebar"><nav class="toc">
-  <h3>On this page</h3>
-<ul class="toc-list toc-level-1">
-<li class="toc-item"><a href="#welcome-to-mdsvr">Welcome to mdsvr</a></li>
-<ul class="toc-list toc-level-2">
-<li class="toc-item"><a href="#what-is-mdsvr%3F">What is mdsvr?</a></li>
-<li class="toc-item"><a href="#quick-start">Quick Start</a></li>
-<li class="toc-item"><a href="#key-features">Key Features</a></li>
-<li class="toc-item"><a href="#this-docs-structure-for-reference">This docs structure for reference</a></li>
-<li class="toc-item"><a href="#next-steps">Next Steps</a></li>
-</ul>
-</ul>
-</nav></aside>
+    
   </div>
 
   

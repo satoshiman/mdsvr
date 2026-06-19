@@ -13,16 +13,17 @@
   document.documentElement.setAttribute('data-theme', theme);
 })();
 </script>
-  <title>Welcome</title>
-    <meta name="description" content="Full-featured documentation website server with MDX support, site settings, SEO, and navigation">
-    <meta property="og:title" content="Welcome">
-    <meta property="og:description" content="Full-featured documentation website server with MDX support, site settings, SEO, and navigation">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="/docs/">
-    <meta property="og:image" content="/docs/public/og/index.jpg">
+  <title>SEO</title>
+    <meta name="description" content="Search engine optimization features">
+    <meta property="og:title" content="SEO">
+    <meta property="og:description" content="Search engine optimization features">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="/docs/03-features/seo">
+    <meta property="og:image" content="/docs/public/og/03-features/seo/index.jpg">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Welcome">
-    <meta name="twitter:image" content="/docs/public/og/index.jpg">
+    <meta name="twitter:title" content="SEO">
+    <meta name="twitter:image" content="/docs/public/og/03-features/seo/index.jpg">
+    <meta property="article:published_time" content="Wed Jan 15 2025 07:00:00 GMT+0700 (Indochina Time)">
     <link rel="sitemap" type="application/xml" href="/docs/sitemap.xml">
   
   <style>
@@ -1360,8 +1361,8 @@ code.hljs {
 
   <div class="site-container has-toc">
     <aside class="sidebar" id="sidebar"><ul class="sidebar-nav" data-level="0">
-  <li class="nav-item active" data-type="file">
-    <a href="/docs/" class="nav-link active">Welcome</a>
+  <li class="nav-item" data-type="file">
+    <a href="/docs/" class="nav-link">Welcome</a>
   </li>
   <li class="nav-item folder" data-type="dir">
     <a href="/docs/01-getting-started/" class="nav-link">📁 Getting Started</a>
@@ -1369,9 +1370,9 @@ code.hljs {
   <li class="nav-item folder" data-type="dir">
     <a href="/docs/02-settings/" class="nav-link">📁 Guides</a>
   </li>
-  <li class="nav-item folder" data-type="dir">
+  <li class="nav-item active folder" data-type="dir">
     <div class="nav-item-header" data-expanded="true">
-      <a href="/docs/03-features/" class="nav-link" data-folder-icon="open"><span class="folder-icon">📂</span> Features</a>
+      <a href="/docs/03-features/" class="nav-link active" data-folder-icon="open"><span class="folder-icon">📂</span> Features</a>
     </div>
     <div class="nav-children" data-expanded="true">
     <ul class="sidebar-nav" data-level="1">
@@ -1390,8 +1391,8 @@ code.hljs {
       <li class="nav-item" data-type="file">
         <a href="/docs/03-features/search" class="nav-link">Search</a>
       </li>
-      <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/seo" class="nav-link">SEO</a>
+      <li class="nav-item active" data-type="file">
+        <a href="/docs/03-features/seo" class="nav-link active">SEO</a>
       </li>
       <li class="nav-item" data-type="file">
         <a href="/docs/03-features/theming" class="nav-link">Theming</a>
@@ -1406,11 +1407,14 @@ code.hljs {
     <main class="content">
       <nav class="breadcrumbs">
     <a href="/docs/">Home</a>
-    <span class="breadcrumb-sep">/</span><span class="breadcrumb-current">Docs</span>
+    <span class="breadcrumb-sep">/</span><a href="/docs/docs">Docs</a><span class="breadcrumb-sep">/</span><a href="/docs/docs/03-features">03 features</a><span class="breadcrumb-sep">/</span><span class="breadcrumb-current">Seo</span>
   </nav>
       <article class="markdown-body">
-        <h1 id="welcome-to-mdsvr" tabindex="-1">Welcome to mdsvr</h1>
-<p>Transform any folder of Markdown/Markdown files into a beautiful documentation website — zero config required.</p>
+        <h1 id="seo-features" tabindex="-1">SEO Features</h1>
+<p>mdsvr includes built-in SEO features to help your documentation rank better in search engines and look great when shared on social media.</p>
+<h2 id="meta-tags" tabindex="-1">Meta Tags</h2>
+<p>Every page includes optimized meta tags based on your <code>settings.json</code> and page frontmatter.</p>
+<h3 id="title-template" tabindex="-1">Title Template</h3>
 <pre class="code-block-wrapper"><div class="code-block-container">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -1440,22 +1444,26 @@ code.hljs {
       </svg>
     </button>
   </div>
-  <pre><code class="hljs language-bash">npx mdsvr ./docs
+  <pre><code class="hljs language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;seo&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;titleTemplate&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;%s | My Docs&quot;</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>npx mdsvr ./docs
+  <pre class="code-block-raw" style="display:none;"><code>{
+  &quot;seo&quot;: {
+    &quot;titleTemplate&quot;: &quot;%s | My Docs&quot;
+  }
+}
 </code></pre>
 </div></pre>
 
-<blockquote>
-<p>ℹ️ <strong>Info:</strong> This documentation itself is served by <strong>mdsvr</strong>! Explore the files in this directory to see how everything works.</p>
-</blockquote>
-<h2 id="what-is-mdsvr%3F" tabindex="-1">What is mdsvr?</h2>
-<p><strong>mdsvr</strong> is a static file server that automatically renders Markdown and MDX files as beautiful HTML. It’s similar to Vercel’s <code>serve</code> but understands <code>.md</code> and <code>.mdx</code> files.</p>
-<h2 id="quick-start" tabindex="-1">Quick Start</h2>
-<ol>
-<li>
-<p><strong>Install</strong></p>
-<p>No installation needed! Just use <code>npx</code>:</p>
+<ul>
+<li><code>%s</code> is replaced with the page title</li>
+<li>Example: <code>Installation | My Docs</code></li>
+</ul>
+<h3 id="page-level-titles" tabindex="-1">Page-Level Titles</h3>
+<p>Override the title for individual pages using frontmatter:</p>
 <pre class="code-block-wrapper"><div class="code-block-container">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -1485,16 +1493,28 @@ code.hljs {
       </svg>
     </button>
   </div>
-  <pre><code class="hljs language-bash">npx mdsvr ./docs
+  <pre><code class="hljs">---
+title: Custom Page Title
+description: A description for SEO and social sharing
+---
+
+# Page Heading
+
+Content...
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>npx mdsvr ./docs
+  <pre class="code-block-raw" style="display:none;"><code>---
+title: Custom Page Title
+description: A description for SEO and social sharing
+---
+
+# Page Heading
+
+Content...
 </code></pre>
 </div></pre>
 
-</li>
-<li>
-<p><strong>Create your docs</strong></p>
-<p>Create a folder with some <code>.md</code> files:</p>
+<h2 id="open-graph" tabindex="-1">Open Graph</h2>
+<p>Open Graph tags ensure your pages look great when shared on Facebook, LinkedIn, and other platforms.</p>
 <pre class="code-block-wrapper"><div class="code-block-container">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -1524,17 +1544,29 @@ code.hljs {
       </svg>
     </button>
   </div>
-  <pre><code class="hljs language-bash"><span class="hljs-built_in">mkdir</span> docs
-<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;# Hello World&quot;</span> &gt; docs/readme.md
+  <pre><code class="hljs language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;seo&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;defaultImage&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;./assets/og-image.png&quot;</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>mkdir docs
-echo &quot;# Hello World&quot; &gt; docs/readme.md
+  <pre class="code-block-raw" style="display:none;"><code>{
+  &quot;seo&quot;: {
+    &quot;defaultImage&quot;: &quot;./assets/og-image.png&quot;
+  }
+}
 </code></pre>
 </div></pre>
 
-</li>
-<li>
-<p><strong>Start the server</strong></p>
+<p>Generated tags:</p>
+<ul>
+<li><code>og:title</code> — Page title</li>
+<li><code>og:description</code> — Page or site description</li>
+<li><code>og:type</code> — <code>website</code> or <code>article</code></li>
+<li><code>og:url</code> — Canonical URL</li>
+<li><code>og:image</code> — Featured image</li>
+</ul>
+<h3 id="custom-images-per-page" tabindex="-1">Custom Images Per Page</h3>
 <pre class="code-block-wrapper"><div class="code-block-container">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -1564,50 +1596,582 @@ echo &quot;# Hello World&quot; &gt; docs/readme.md
       </svg>
     </button>
   </div>
-  <pre><code class="hljs language-bash">npx mdsvr ./docs --open
+  <pre><code class="hljs">---
+title: My Article
+description: Article description
+image: ./assets/article-image.png
+---
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>npx mdsvr ./docs --open
+  <pre class="code-block-raw" style="display:none;"><code>---
+title: My Article
+description: Article description
+image: ./assets/article-image.png
+---
 </code></pre>
 </div></pre>
 
-</li>
-</ol>
-<h2 id="key-features" tabindex="-1">Key Features</h2>
-<div class="table-wrapper"><table>
-<thead>
-<tr>
-<th>Feature</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>📝 <a href="/3.-features">Markdown &amp; MDX</a></td>
-<td>Render .md and .mdx files with built-in interactive components</td>
-</tr>
-<tr>
-<td>🎨 <a href="/3.-features/theming">Themes</a></td>
-<td>Dark/light mode with customizable accent colors</td>
-</tr>
-<tr>
-<td>🔍 <a href="/3.-features/search">Search</a></td>
-<td>Built-in full-text search with keyboard shortcut (⌘K)</td>
-</tr>
-<tr>
-<td>📑 <a href="/3.-features/navigation">Navigation</a></td>
-<td>Auto-generated sidebar and table of contents</td>
-</tr>
-<tr>
-<td>🔎 <a href="/3.-features/seo">SEO</a></td>
-<td>Sitemap, RSS feed, Open Graph, and Twitter Cards</td>
-</tr>
-<tr>
-<td>⚙️ <a href="/2.-settings">Settings</a></td>
-<td>Configure everything via settings.json</td>
-</tr>
-</tbody>
-</table></div>
-<h2 id="this-docs-structure-for-reference" tabindex="-1">This docs structure for reference</h2>
+<h2 id="twitter-cards" tabindex="-1">Twitter Cards</h2>
+<p>Twitter Cards make your links stand out on Twitter/X.</p>
+<pre class="code-block-wrapper"><div class="code-block-container">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;seo&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;twitterCard&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;summary_large_image&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;twitterSite&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;@myhandle&quot;</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+  <pre class="code-block-raw" style="display:none;"><code>{
+  &quot;seo&quot;: {
+    &quot;twitterCard&quot;: &quot;summary_large_image&quot;,
+    &quot;twitterSite&quot;: &quot;@myhandle&quot;
+  }
+}
+</code></pre>
+</div></pre>
+
+<h3 id="card-types" tabindex="-1">Card Types</h3>
+<ul>
+<li><code>summary</code> — Small square image + text</li>
+<li><code>summary_large_image</code> — Large featured image (recommended)</li>
+</ul>
+<h2 id="sitemap" tabindex="-1">Sitemap</h2>
+<p>Generate an XML sitemap for search engines.</p>
+<h3 id="enabling" tabindex="-1">Enabling</h3>
+<pre class="code-block-wrapper"><div class="code-block-container">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;seo&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;generateSitemap&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+  <pre class="code-block-raw" style="display:none;"><code>{
+  &quot;seo&quot;: {
+    &quot;generateSitemap&quot;: true
+  }
+}
+</code></pre>
+</div></pre>
+
+<h3 id="endpoint" tabindex="-1">Endpoint</h3>
+<p>Access your sitemap at:</p>
+<pre class="code-block-wrapper"><div class="code-block-container">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs">https://yoursite.com/sitemap.xml
+</code></pre>
+  <pre class="code-block-raw" style="display:none;"><code>https://yoursite.com/sitemap.xml
+</code></pre>
+</div></pre>
+
+<h3 id="sitemap-contents" tabindex="-1">Sitemap Contents</h3>
+<p>The sitemap includes:</p>
+<ul>
+<li>All <code>.md</code> and <code>.mdx</code> files</li>
+<li>Last modified date (from file mtime or frontmatter <code>date</code>)</li>
+<li>Change frequency (<code>weekly</code>)</li>
+</ul>
+<h3 id="example-output" tabindex="-1">Example Output</h3>
+<pre class="code-block-wrapper"><div class="code-block-container">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-xml"><span class="hljs-meta">&lt;?xml version=<span class="hljs-string">&quot;1.0&quot;</span> encoding=<span class="hljs-string">&quot;UTF-8&quot;</span>?&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">urlset</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">&quot;http://www.sitemaps.org/schemas/sitemap/0.9&quot;</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">url</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">loc</span>&gt;</span>https://docs.example.com/<span class="hljs-tag">&lt;/<span class="hljs-name">loc</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">lastmod</span>&gt;</span>2025-01-15<span class="hljs-tag">&lt;/<span class="hljs-name">lastmod</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">changefreq</span>&gt;</span>weekly<span class="hljs-tag">&lt;/<span class="hljs-name">changefreq</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">url</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">url</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">loc</span>&gt;</span>https://docs.example.com/configuration<span class="hljs-tag">&lt;/<span class="hljs-name">loc</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">lastmod</span>&gt;</span>2025-01-10<span class="hljs-tag">&lt;/<span class="hljs-name">lastmod</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">changefreq</span>&gt;</span>weekly<span class="hljs-tag">&lt;/<span class="hljs-name">changefreq</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">url</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">urlset</span>&gt;</span>
+</code></pre>
+  <pre class="code-block-raw" style="display:none;"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;urlset xmlns=&quot;http://www.sitemaps.org/schemas/sitemap/0.9&quot;&gt;
+  &lt;url&gt;
+    &lt;loc&gt;https://docs.example.com/&lt;/loc&gt;
+    &lt;lastmod&gt;2025-01-15&lt;/lastmod&gt;
+    &lt;changefreq&gt;weekly&lt;/changefreq&gt;
+  &lt;/url&gt;
+  &lt;url&gt;
+    &lt;loc&gt;https://docs.example.com/configuration&lt;/loc&gt;
+    &lt;lastmod&gt;2025-01-10&lt;/lastmod&gt;
+    &lt;changefreq&gt;weekly&lt;/changefreq&gt;
+  &lt;/url&gt;
+&lt;/urlset&gt;
+</code></pre>
+</div></pre>
+
+<h2 id="rss-feed" tabindex="-1">RSS Feed</h2>
+<p>Generate an RSS feed for blog posts or changelogs.</p>
+<h3 id="enabling-1" tabindex="-1">Enabling</h3>
+<pre class="code-block-wrapper"><div class="code-block-container">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;seo&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;generateRssFeed&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;rss&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">&quot;title&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;My Docs Updates&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;feedUrl&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;/feed.xml&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;siteUrl&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;https://docs.example.com&quot;</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+  <pre class="code-block-raw" style="display:none;"><code>{
+  &quot;seo&quot;: {
+    &quot;generateRssFeed&quot;: true,
+    &quot;rss&quot;: {
+      &quot;title&quot;: &quot;My Docs Updates&quot;,
+      &quot;feedUrl&quot;: &quot;/feed.xml&quot;,
+      &quot;siteUrl&quot;: &quot;https://docs.example.com&quot;
+    }
+  }
+}
+</code></pre>
+</div></pre>
+
+<h3 id="endpoint-1" tabindex="-1">Endpoint</h3>
+<p>Access the feed at:</p>
+<pre class="code-block-wrapper"><div class="code-block-container">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs">https://yoursite.com/feed.xml
+</code></pre>
+  <pre class="code-block-raw" style="display:none;"><code>https://yoursite.com/feed.xml
+</code></pre>
+</div></pre>
+
+<h3 id="including-posts" tabindex="-1">Including Posts</h3>
+<p>Pages are included in the RSS feed when they have a <code>date</code> in their frontmatter:</p>
+<pre class="code-block-wrapper"><div class="code-block-container">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs">---
+title: New Feature Released
+description: We just shipped a great new feature
+date: 2025-01-15
+---
+
+# New Feature Released
+
+Content...
+</code></pre>
+  <pre class="code-block-raw" style="display:none;"><code>---
+title: New Feature Released
+description: We just shipped a great new feature
+date: 2025-01-15
+---
+
+# New Feature Released
+
+Content...
+</code></pre>
+</div></pre>
+
+<p>Posts are sorted by date (newest first) and limited to the 20 most recent entries.</p>
+<h2 id="canonical-urls" tabindex="-1">Canonical URLs</h2>
+<p>Canonical URLs help search engines understand the primary version of a page.</p>
+<pre class="code-block-wrapper"><div class="code-block-container">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;site&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;baseUrl&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;https://docs.example.com&quot;</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+  <pre class="code-block-raw" style="display:none;"><code>{
+  &quot;site&quot;: {
+    &quot;baseUrl&quot;: &quot;https://docs.example.com&quot;
+  }
+}
+</code></pre>
+</div></pre>
+
+<p>With <code>baseUrl</code> set, every page includes:</p>
+<pre class="code-block-wrapper"><div class="code-block-container">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-html"><span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;canonical&quot;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;https://docs.example.com/page-path&quot;</span>&gt;</span>
+</code></pre>
+  <pre class="code-block-raw" style="display:none;"><code>&lt;link rel=&quot;canonical&quot; href=&quot;https://docs.example.com/page-path&quot;&gt;
+</code></pre>
+</div></pre>
+
+<h2 id="no-index" tabindex="-1">No-Index</h2>
+<p>Prevent specific pages from being indexed:</p>
+<h3 id="site-wide" tabindex="-1">Site-Wide</h3>
+<pre class="code-block-wrapper"><div class="code-block-container">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;seo&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;noIndex&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+  <pre class="code-block-raw" style="display:none;"><code>{
+  &quot;seo&quot;: {
+    &quot;noIndex&quot;: true
+  }
+}
+</code></pre>
+</div></pre>
+
+<h3 id="per-page" tabindex="-1">Per Page</h3>
+<pre class="code-block-wrapper"><div class="code-block-container">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs">---
+noIndex: true
+---
+
+# Draft Page
+
+This page won't be indexed by search engines.
+</code></pre>
+  <pre class="code-block-raw" style="display:none;"><code>---
+noIndex: true
+---
+
+# Draft Page
+
+This page won't be indexed by search engines.
+</code></pre>
+</div></pre>
+
+<p>This adds:</p>
+<pre class="code-block-wrapper"><div class="code-block-container">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-html"><span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;robots&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;noindex&quot;</span>&gt;</span>
+</code></pre>
+  <pre class="code-block-raw" style="display:none;"><code>&lt;meta name=&quot;robots&quot; content=&quot;noindex&quot;&gt;
+</code></pre>
+</div></pre>
+
+<h2 id="robots.txt" tabindex="-1">robots.txt</h2>
+<p>While mdsvr doesn’t generate <code>robots.txt</code> automatically, you can create one in your docs root:</p>
 <pre class="code-block-wrapper"><div class="code-block-container">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -1638,65 +2202,160 @@ echo &quot;# Hello World&quot; &gt; docs/readme.md
     </button>
   </div>
   <pre><code class="hljs">docs/
-├── settings.json                # Site configuration (optional)
-├── README.md                    # Homepage (this file)
-├── 1.-getting-started/          # Getting started guides
-│   └── README.md              # Quick start &amp; installation
-├── 2.-settings/                 # Settings &amp; configuration
-│   └── README.md              # Configuration, writing &amp; deployment
-├── 3.-features/                 # Feature documentation
-│   ├── README.md             # Features overview
-│   ├── markdown.md           # Markdown support
-│   ├── mdx.mdx               # MDX components demo
-│   ├── theming.md            # Theme customization
-│   ├── search.md             # Search functionality
-│   ├── navigation.md         # Navigation features
-│   ├── seo.md                # SEO features
-│   └── mermaid.md            # Mermaid diagrams
-└── 4.-reference/                # API/Reference
-    └── README.md             # CLI reference
+├── robots.txt
+├── README.md
+└── ...
 </code></pre>
   <pre class="code-block-raw" style="display:none;"><code>docs/
-├── settings.json                # Site configuration (optional)
-├── README.md                    # Homepage (this file)
-├── 1.-getting-started/          # Getting started guides
-│   └── README.md              # Quick start &amp; installation
-├── 2.-settings/                 # Settings &amp; configuration
-│   └── README.md              # Configuration, writing &amp; deployment
-├── 3.-features/                 # Feature documentation
-│   ├── README.md             # Features overview
-│   ├── markdown.md           # Markdown support
-│   ├── mdx.mdx               # MDX components demo
-│   ├── theming.md            # Theme customization
-│   ├── search.md             # Search functionality
-│   ├── navigation.md         # Navigation features
-│   ├── seo.md                # SEO features
-│   └── mermaid.md            # Mermaid diagrams
-└── 4.-reference/                # API/Reference
-    └── README.md             # CLI reference
+├── robots.txt
+├── README.md
+└── ...
 </code></pre>
 </div></pre>
 
-<h2 id="next-steps" tabindex="-1">Next Steps</h2>
+<p>Example <code>robots.txt</code>:</p>
+<pre class="code-block-wrapper"><div class="code-block-container">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs">User-agent: *
+Allow: /
+Sitemap: https://docs.example.com/sitemap.xml
+</code></pre>
+  <pre class="code-block-raw" style="display:none;"><code>User-agent: *
+Allow: /
+Sitemap: https://docs.example.com/sitemap.xml
+</code></pre>
+</div></pre>
+
+<h2 id="social-sharing-preview" tabindex="-1">Social Sharing Preview</h2>
+<p>To get the best social sharing previews:</p>
+<ol>
+<li><strong>Set a default image</strong> in <code>settings.json</code></li>
+<li><strong>Use custom images</strong> for important pages</li>
+<li><strong>Write good descriptions</strong> in frontmatter</li>
+<li><strong>Keep titles concise</strong> (under 60 characters)</li>
+</ol>
+<h3 id="recommended-image-sizes" tabindex="-1">Recommended Image Sizes</h3>
 <ul>
-<li><strong><a href="/1.-getting-started">Quick Start</a></strong> — Get running in 30 seconds</li>
-<li><strong><a href="/1.-getting-started">Installation</a></strong> — Install options</li>
-<li><strong><a href="/3.-features/mdx">MDX Components</a></strong> — Make your docs interactive</li>
-<li><strong><a href="/2.-settings">Configuration</a></strong> — Customize your site</li>
-<li><strong><a href="/2.-settings">Writing Content</a></strong> — Best practices</li>
-<li><strong><a href="/2.-settings">Deployment</a></strong> — Go live</li>
-<li><strong><a href="/3.-features">Features</a></strong> — See all features</li>
-<li><strong><a href="/4.-reference">CLI Reference</a></strong> — Command reference</li>
+<li><strong>Open Graph</strong>: 1200×630 pixels</li>
+<li><strong>Twitter Cards</strong>: 1200×600 pixels (large image)</li>
 </ul>
-<hr>
-<blockquote>
-<p>💡 <strong>Tip:</strong> Press <code>⌘+K</code> (or <code>Ctrl+K</code>) to open the search modal and find anything in this documentation!</p>
-</blockquote>
+<h2 id="complete-seo-configuration" tabindex="-1">Complete SEO Configuration</h2>
+<pre class="code-block-wrapper"><div class="code-block-container">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;site&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;title&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;My Documentation&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;description&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Comprehensive documentation for My Project&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;baseUrl&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;https://docs.example.com&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;language&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;en&quot;</span>
+  <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;seo&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;titleTemplate&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;%s | My Docs&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;defaultImage&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;./assets/og-default.png&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;twitterCard&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;summary_large_image&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;twitterSite&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;@myhandle&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;noIndex&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;generateSitemap&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;generateRssFeed&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;rss&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">&quot;title&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;My Docs Blog&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;feedUrl&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;/feed.xml&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;siteUrl&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;https://docs.example.com&quot;</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+  <pre class="code-block-raw" style="display:none;"><code>{
+  &quot;site&quot;: {
+    &quot;title&quot;: &quot;My Documentation&quot;,
+    &quot;description&quot;: &quot;Comprehensive documentation for My Project&quot;,
+    &quot;baseUrl&quot;: &quot;https://docs.example.com&quot;,
+    &quot;language&quot;: &quot;en&quot;
+  },
+  &quot;seo&quot;: {
+    &quot;titleTemplate&quot;: &quot;%s | My Docs&quot;,
+    &quot;defaultImage&quot;: &quot;./assets/og-default.png&quot;,
+    &quot;twitterCard&quot;: &quot;summary_large_image&quot;,
+    &quot;twitterSite&quot;: &quot;@myhandle&quot;,
+    &quot;noIndex&quot;: false,
+    &quot;generateSitemap&quot;: true,
+    &quot;generateRssFeed&quot;: true,
+    &quot;rss&quot;: {
+      &quot;title&quot;: &quot;My Docs Blog&quot;,
+      &quot;feedUrl&quot;: &quot;/feed.xml&quot;,
+      &quot;siteUrl&quot;: &quot;https://docs.example.com&quot;
+    }
+  }
+}
+</code></pre>
+</div></pre>
+
+<h2 id="testing" tabindex="-1">Testing</h2>
+<p>Test your SEO implementation with these tools:</p>
+<ul>
+<li><a href="https://developers.facebook.com/tools/debug/">Facebook Sharing Debugger</a></li>
+<li><a href="https://cards-dev.twitter.com/validator">Twitter Card Validator</a></li>
+<li><a href="https://search.google.com/test/rich-results">Google Rich Results Test</a></li>
+</ul>
 
       </article>
       <nav class="prev-next-nav">
-        <span></span>
-        <a href="/docs/docs/01-getting-started/" class="prev-next-card next-card"><span class="prev-next-label">Next →</span><span class="prev-next-title">Getting Started</span></a>
+        <a href="/docs/docs/03-features/search" class="prev-next-card prev-card"><span class="prev-next-label">← Prev</span><span class="prev-next-title">Search</span></a>
+        <a href="/docs/docs/03-features/theming" class="prev-next-card next-card"><span class="prev-next-label">Next →</span><span class="prev-next-title">Theming</span></a>
       </nav>
       <footer class="footer">
     <div class="footer-content">
@@ -1708,13 +2367,47 @@ echo &quot;# Hello World&quot; &gt; docs/readme.md
     <aside class="toc-sidebar"><nav class="toc">
   <h3>On this page</h3>
 <ul class="toc-list toc-level-1">
-<li class="toc-item"><a href="#welcome-to-mdsvr">Welcome to mdsvr</a></li>
+<li class="toc-item"><a href="#seo-features">SEO Features</a></li>
 <ul class="toc-list toc-level-2">
-<li class="toc-item"><a href="#what-is-mdsvr%3F">What is mdsvr?</a></li>
-<li class="toc-item"><a href="#quick-start">Quick Start</a></li>
-<li class="toc-item"><a href="#key-features">Key Features</a></li>
-<li class="toc-item"><a href="#this-docs-structure-for-reference">This docs structure for reference</a></li>
-<li class="toc-item"><a href="#next-steps">Next Steps</a></li>
+<li class="toc-item"><a href="#meta-tags">Meta Tags</a></li>
+<ul class="toc-list toc-level-3">
+<li class="toc-item"><a href="#title-template">Title Template</a></li>
+<li class="toc-item"><a href="#page-level-titles">Page-Level Titles</a></li>
+</ul>
+<li class="toc-item"><a href="#open-graph">Open Graph</a></li>
+<ul class="toc-list toc-level-3">
+<li class="toc-item"><a href="#custom-images-per-page">Custom Images Per Page</a></li>
+</ul>
+<li class="toc-item"><a href="#twitter-cards">Twitter Cards</a></li>
+<ul class="toc-list toc-level-3">
+<li class="toc-item"><a href="#card-types">Card Types</a></li>
+</ul>
+<li class="toc-item"><a href="#sitemap">Sitemap</a></li>
+<ul class="toc-list toc-level-3">
+<li class="toc-item"><a href="#enabling">Enabling</a></li>
+<li class="toc-item"><a href="#endpoint">Endpoint</a></li>
+<li class="toc-item"><a href="#sitemap-contents">Sitemap Contents</a></li>
+<li class="toc-item"><a href="#example-output">Example Output</a></li>
+</ul>
+<li class="toc-item"><a href="#rss-feed">RSS Feed</a></li>
+<ul class="toc-list toc-level-3">
+<li class="toc-item"><a href="#enabling-1">Enabling</a></li>
+<li class="toc-item"><a href="#endpoint-1">Endpoint</a></li>
+<li class="toc-item"><a href="#including-posts">Including Posts</a></li>
+</ul>
+<li class="toc-item"><a href="#canonical-urls">Canonical URLs</a></li>
+<li class="toc-item"><a href="#no-index">No-Index</a></li>
+<ul class="toc-list toc-level-3">
+<li class="toc-item"><a href="#site-wide">Site-Wide</a></li>
+<li class="toc-item"><a href="#per-page">Per Page</a></li>
+</ul>
+<li class="toc-item"><a href="#robots.txt">robots.txt</a></li>
+<li class="toc-item"><a href="#social-sharing-preview">Social Sharing Preview</a></li>
+<ul class="toc-list toc-level-3">
+<li class="toc-item"><a href="#recommended-image-sizes">Recommended Image Sizes</a></li>
+</ul>
+<li class="toc-item"><a href="#complete-seo-configuration">Complete SEO Configuration</a></li>
+<li class="toc-item"><a href="#testing">Testing</a></li>
 </ul>
 </ul>
 </nav></aside>

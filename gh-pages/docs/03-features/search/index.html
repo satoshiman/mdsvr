@@ -13,16 +13,16 @@
   document.documentElement.setAttribute('data-theme', theme);
 })();
 </script>
-  <title>Welcome</title>
-    <meta name="description" content="Full-featured documentation website server with MDX support, site settings, SEO, and navigation">
-    <meta property="og:title" content="Welcome">
-    <meta property="og:description" content="Full-featured documentation website server with MDX support, site settings, SEO, and navigation">
+  <title>Search</title>
+    <meta name="description" content="Full-text search for your documentation">
+    <meta property="og:title" content="Search">
+    <meta property="og:description" content="Full-text search for your documentation">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="/docs/">
-    <meta property="og:image" content="/docs/public/og/index.jpg">
+    <meta property="og:url" content="/docs/03-features/search">
+    <meta property="og:image" content="/docs/public/og/03-features/search/index.jpg">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Welcome">
-    <meta name="twitter:image" content="/docs/public/og/index.jpg">
+    <meta name="twitter:title" content="Search">
+    <meta name="twitter:image" content="/docs/public/og/03-features/search/index.jpg">
     <link rel="sitemap" type="application/xml" href="/docs/sitemap.xml">
   
   <style>
@@ -1360,8 +1360,8 @@ code.hljs {
 
   <div class="site-container has-toc">
     <aside class="sidebar" id="sidebar"><ul class="sidebar-nav" data-level="0">
-  <li class="nav-item active" data-type="file">
-    <a href="/docs/" class="nav-link active">Welcome</a>
+  <li class="nav-item" data-type="file">
+    <a href="/docs/" class="nav-link">Welcome</a>
   </li>
   <li class="nav-item folder" data-type="dir">
     <a href="/docs/01-getting-started/" class="nav-link">📁 Getting Started</a>
@@ -1369,9 +1369,9 @@ code.hljs {
   <li class="nav-item folder" data-type="dir">
     <a href="/docs/02-settings/" class="nav-link">📁 Guides</a>
   </li>
-  <li class="nav-item folder" data-type="dir">
+  <li class="nav-item active folder" data-type="dir">
     <div class="nav-item-header" data-expanded="true">
-      <a href="/docs/03-features/" class="nav-link" data-folder-icon="open"><span class="folder-icon">📂</span> Features</a>
+      <a href="/docs/03-features/" class="nav-link active" data-folder-icon="open"><span class="folder-icon">📂</span> Features</a>
     </div>
     <div class="nav-children" data-expanded="true">
     <ul class="sidebar-nav" data-level="1">
@@ -1387,8 +1387,8 @@ code.hljs {
       <li class="nav-item" data-type="file">
         <a href="/docs/03-features/navigation" class="nav-link">Navigation</a>
       </li>
-      <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/search" class="nav-link">Search</a>
+      <li class="nav-item active" data-type="file">
+        <a href="/docs/03-features/search" class="nav-link active">Search</a>
       </li>
       <li class="nav-item" data-type="file">
         <a href="/docs/03-features/seo" class="nav-link">SEO</a>
@@ -1406,11 +1406,13 @@ code.hljs {
     <main class="content">
       <nav class="breadcrumbs">
     <a href="/docs/">Home</a>
-    <span class="breadcrumb-sep">/</span><span class="breadcrumb-current">Docs</span>
+    <span class="breadcrumb-sep">/</span><a href="/docs/docs">Docs</a><span class="breadcrumb-sep">/</span><a href="/docs/docs/03-features">03 features</a><span class="breadcrumb-sep">/</span><span class="breadcrumb-current">Search</span>
   </nav>
       <article class="markdown-body">
-        <h1 id="welcome-to-mdsvr" tabindex="-1">Welcome to mdsvr</h1>
-<p>Transform any folder of Markdown/Markdown files into a beautiful documentation website — zero config required.</p>
+        <h1 id="search" tabindex="-1">Search</h1>
+<p>mdsvr includes a <strong>built-in full-text search</strong> that works entirely client-side. No external services or databases required.</p>
+<h2 id="enabling-search" tabindex="-1">Enabling Search</h2>
+<p>Search is enabled by default. Configure it in <code>settings.json</code>:</p>
 <pre class="code-block-wrapper"><div class="code-block-container">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -1440,174 +1442,87 @@ code.hljs {
       </svg>
     </button>
   </div>
-  <pre><code class="hljs language-bash">npx mdsvr ./docs
+  <pre><code class="hljs language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;search&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;enabled&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;placeholder&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Search docs...&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;maxResults&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">10</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>npx mdsvr ./docs
+  <pre class="code-block-raw" style="display:none;"><code>{
+  &quot;search&quot;: {
+    &quot;enabled&quot;: true,
+    &quot;placeholder&quot;: &quot;Search docs...&quot;,
+    &quot;maxResults&quot;: 10
+  }
+}
 </code></pre>
 </div></pre>
 
-<blockquote>
-<p>ℹ️ <strong>Info:</strong> This documentation itself is served by <strong>mdsvr</strong>! Explore the files in this directory to see how everything works.</p>
-</blockquote>
-<h2 id="what-is-mdsvr%3F" tabindex="-1">What is mdsvr?</h2>
-<p><strong>mdsvr</strong> is a static file server that automatically renders Markdown and MDX files as beautiful HTML. It’s similar to Vercel’s <code>serve</code> but understands <code>.md</code> and <code>.mdx</code> files.</p>
-<h2 id="quick-start" tabindex="-1">Quick Start</h2>
+<h2 id="using-search" tabindex="-1">Using Search</h2>
+<h3 id="keyboard-shortcut" tabindex="-1">Keyboard Shortcut</h3>
+<p>Press <code>⌘+K</code> (Mac) or <code>Ctrl+K</code> (Windows/Linux) to open the search modal from anywhere.</p>
+<h3 id="search-trigger" tabindex="-1">Search Trigger</h3>
+<p>Click the search icon in the header to open the search modal.</p>
+<h3 id="search-modal" tabindex="-1">Search Modal</h3>
+<p>The search modal includes:</p>
+<ul>
+<li><strong>Instant results</strong> as you type</li>
+<li><strong>Fuzzy matching</strong> for typo tolerance</li>
+<li><strong>Result highlighting</strong> with matching terms marked</li>
+<li><strong>Keyboard navigation</strong> with ↑/↓ arrows</li>
+<li><strong>Quick selection</strong> with Enter key</li>
+</ul>
+<h2 id="how-it-works" tabindex="-1">How It Works</h2>
 <ol>
-<li>
-<p><strong>Install</strong></p>
-<p>No installation needed! Just use <code>npx</code>:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
-  <div class="code-block-toolbar">
-    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
-        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-      </svg>
-    </button>
-    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="m16 16-3 3 3 3"/>
-        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
-        <path d="M3 19h6"/>
-        <path d="M3 5h18"/>
-      </svg>
-    </button>
-    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="m15 15 6 6"/>
-        <path d="m15 9 6-6"/>
-        <path d="M21 16v5h-5"/>
-        <path d="M21 8V3h-5"/>
-        <path d="M3 16v5h5"/>
-        <path d="m3 21 6-6"/>
-        <path d="M3 8V3h5"/>
-        <path d="M9 9 3 3"/>
-      </svg>
-    </button>
-  </div>
-  <pre><code class="hljs language-bash">npx mdsvr ./docs
-</code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>npx mdsvr ./docs
-</code></pre>
-</div></pre>
-
-</li>
-<li>
-<p><strong>Create your docs</strong></p>
-<p>Create a folder with some <code>.md</code> files:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
-  <div class="code-block-toolbar">
-    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
-        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-      </svg>
-    </button>
-    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="m16 16-3 3 3 3"/>
-        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
-        <path d="M3 19h6"/>
-        <path d="M3 5h18"/>
-      </svg>
-    </button>
-    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="m15 15 6 6"/>
-        <path d="m15 9 6-6"/>
-        <path d="M21 16v5h-5"/>
-        <path d="M21 8V3h-5"/>
-        <path d="M3 16v5h5"/>
-        <path d="m3 21 6-6"/>
-        <path d="M3 8V3h5"/>
-        <path d="M9 9 3 3"/>
-      </svg>
-    </button>
-  </div>
-  <pre><code class="hljs language-bash"><span class="hljs-built_in">mkdir</span> docs
-<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;# Hello World&quot;</span> &gt; docs/readme.md
-</code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>mkdir docs
-echo &quot;# Hello World&quot; &gt; docs/readme.md
-</code></pre>
-</div></pre>
-
-</li>
-<li>
-<p><strong>Start the server</strong></p>
-<pre class="code-block-wrapper"><div class="code-block-container">
-  <div class="code-block-toolbar">
-    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
-        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-      </svg>
-    </button>
-    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="m16 16-3 3 3 3"/>
-        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
-        <path d="M3 19h6"/>
-        <path d="M3 5h18"/>
-      </svg>
-    </button>
-    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="m15 15 6 6"/>
-        <path d="m15 9 6-6"/>
-        <path d="M21 16v5h-5"/>
-        <path d="M21 8V3h-5"/>
-        <path d="M3 16v5h5"/>
-        <path d="m3 21 6-6"/>
-        <path d="M3 8V3h5"/>
-        <path d="M9 9 3 3"/>
-      </svg>
-    </button>
-  </div>
-  <pre><code class="hljs language-bash">npx mdsvr ./docs --open
-</code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>npx mdsvr ./docs --open
-</code></pre>
-</div></pre>
-
-</li>
+<li><strong>Index Generation</strong>: When the server starts, it crawls all <code>.md</code> and <code>.mdx</code> files and builds a search index</li>
+<li><strong>JSON Endpoint</strong>: The index is served at <code>/search-index.json</code></li>
+<li><strong>Client-Side Search</strong>: A lightweight (~3KB) JavaScript library performs fuzzy matching in the browser</li>
+<li><strong>No Server Load</strong>: All search processing happens on the client</li>
 </ol>
-<h2 id="key-features" tabindex="-1">Key Features</h2>
+<h2 id="search-index" tabindex="-1">Search Index</h2>
+<p>The search index includes:</p>
+<ul>
+<li><strong>Title</strong> — Page titles (highest weight)</li>
+<li><strong>Headings</strong> — All H1-H6 headings</li>
+<li><strong>Content</strong> — Full text content (stripped of markdown)</li>
+<li><strong>Excerpt</strong> — First 200 characters for previews</li>
+</ul>
+<h2 id="scoring" tabindex="-1">Scoring</h2>
+<p>Results are ranked by relevance:</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
-<th>Feature</th>
-<th>Description</th>
+<th>Match Type</th>
+<th>Score</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>📝 <a href="/3.-features">Markdown &amp; MDX</a></td>
-<td>Render .md and .mdx files with built-in interactive components</td>
+<td>Exact title match</td>
+<td>+100</td>
 </tr>
 <tr>
-<td>🎨 <a href="/3.-features/theming">Themes</a></td>
-<td>Dark/light mode with customizable accent colors</td>
+<td>Title starts with query</td>
+<td>+50</td>
 </tr>
 <tr>
-<td>🔍 <a href="/3.-features/search">Search</a></td>
-<td>Built-in full-text search with keyboard shortcut (⌘K)</td>
+<td>Title contains query</td>
+<td>+25</td>
 </tr>
 <tr>
-<td>📑 <a href="/3.-features/navigation">Navigation</a></td>
-<td>Auto-generated sidebar and table of contents</td>
+<td>Heading contains query</td>
+<td>+15</td>
 </tr>
 <tr>
-<td>🔎 <a href="/3.-features/seo">SEO</a></td>
-<td>Sitemap, RSS feed, Open Graph, and Twitter Cards</td>
-</tr>
-<tr>
-<td>⚙️ <a href="/2.-settings">Settings</a></td>
-<td>Configure everything via settings.json</td>
+<td>Content contains query</td>
+<td>+10</td>
 </tr>
 </tbody>
 </table></div>
-<h2 id="this-docs-structure-for-reference" tabindex="-1">This docs structure for reference</h2>
+<h2 id="disabling-search" tabindex="-1">Disabling Search</h2>
+<p>To disable search entirely:</p>
 <pre class="code-block-wrapper"><div class="code-block-container">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -1637,66 +1552,163 @@ echo &quot;# Hello World&quot; &gt; docs/readme.md
       </svg>
     </button>
   </div>
-  <pre><code class="hljs">docs/
-├── settings.json                # Site configuration (optional)
-├── README.md                    # Homepage (this file)
-├── 1.-getting-started/          # Getting started guides
-│   └── README.md              # Quick start &amp; installation
-├── 2.-settings/                 # Settings &amp; configuration
-│   └── README.md              # Configuration, writing &amp; deployment
-├── 3.-features/                 # Feature documentation
-│   ├── README.md             # Features overview
-│   ├── markdown.md           # Markdown support
-│   ├── mdx.mdx               # MDX components demo
-│   ├── theming.md            # Theme customization
-│   ├── search.md             # Search functionality
-│   ├── navigation.md         # Navigation features
-│   ├── seo.md                # SEO features
-│   └── mermaid.md            # Mermaid diagrams
-└── 4.-reference/                # API/Reference
-    └── README.md             # CLI reference
+  <pre><code class="hljs language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;search&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;enabled&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>docs/
-├── settings.json                # Site configuration (optional)
-├── README.md                    # Homepage (this file)
-├── 1.-getting-started/          # Getting started guides
-│   └── README.md              # Quick start &amp; installation
-├── 2.-settings/                 # Settings &amp; configuration
-│   └── README.md              # Configuration, writing &amp; deployment
-├── 3.-features/                 # Feature documentation
-│   ├── README.md             # Features overview
-│   ├── markdown.md           # Markdown support
-│   ├── mdx.mdx               # MDX components demo
-│   ├── theming.md            # Theme customization
-│   ├── search.md             # Search functionality
-│   ├── navigation.md         # Navigation features
-│   ├── seo.md                # SEO features
-│   └── mermaid.md            # Mermaid diagrams
-└── 4.-reference/                # API/Reference
-    └── README.md             # CLI reference
+  <pre class="code-block-raw" style="display:none;"><code>{
+  &quot;search&quot;: {
+    &quot;enabled&quot;: false
+  }
+}
 </code></pre>
 </div></pre>
 
-<h2 id="next-steps" tabindex="-1">Next Steps</h2>
+<p>This will:</p>
 <ul>
-<li><strong><a href="/1.-getting-started">Quick Start</a></strong> — Get running in 30 seconds</li>
-<li><strong><a href="/1.-getting-started">Installation</a></strong> — Install options</li>
-<li><strong><a href="/3.-features/mdx">MDX Components</a></strong> — Make your docs interactive</li>
-<li><strong><a href="/2.-settings">Configuration</a></strong> — Customize your site</li>
-<li><strong><a href="/2.-settings">Writing Content</a></strong> — Best practices</li>
-<li><strong><a href="/2.-settings">Deployment</a></strong> — Go live</li>
-<li><strong><a href="/3.-features">Features</a></strong> — See all features</li>
-<li><strong><a href="/4.-reference">CLI Reference</a></strong> — Command reference</li>
+<li>Hide the search trigger in the header</li>
+<li>Remove the ⌘K keyboard shortcut</li>
+<li>Skip building the search index at startup</li>
+<li>Return empty array at <code>/search-index.json</code></li>
 </ul>
-<hr>
-<blockquote>
-<p>💡 <strong>Tip:</strong> Press <code>⌘+K</code> (or <code>Ctrl+K</code>) to open the search modal and find anything in this documentation!</p>
-</blockquote>
+<h2 id="search-data-structure" tabindex="-1">Search Data Structure</h2>
+<p>Each entry in the search index:</p>
+<pre class="code-block-wrapper"><div class="code-block-container">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-typescript">{
+  <span class="hljs-attr">title</span>: <span class="hljs-built_in">string</span>;      <span class="hljs-comment">// Page title</span>
+  <span class="hljs-attr">href</span>: <span class="hljs-built_in">string</span>;       <span class="hljs-comment">// URL path</span>
+  <span class="hljs-attr">excerpt</span>: <span class="hljs-built_in">string</span>;    <span class="hljs-comment">// First 200 chars</span>
+  <span class="hljs-attr">headings</span>: <span class="hljs-built_in">string</span>[]; <span class="hljs-comment">// All H1-H6 text</span>
+  <span class="hljs-attr">content</span>: <span class="hljs-built_in">string</span>;    <span class="hljs-comment">// Full plain text</span>
+}
+</code></pre>
+  <pre class="code-block-raw" style="display:none;"><code>{
+  title: string;      // Page title
+  href: string;       // URL path
+  excerpt: string;    // First 200 chars
+  headings: string[]; // All H1-H6 text
+  content: string;    // Full plain text
+}
+</code></pre>
+</div></pre>
+
+<h2 id="tips-for-better-search" tabindex="-1">Tips for Better Search</h2>
+<ol>
+<li><strong>Use descriptive titles</strong> — They have the highest search weight</li>
+<li><strong>Use headings</strong> — They help users find specific sections</li>
+<li><strong>Frontmatter title</strong> — Set <code>title:</code> in frontmatter for better control</li>
+</ol>
+<p>Example:</p>
+<pre class="code-block-wrapper"><div class="code-block-container">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs">---
+title: Authentication Guide
+---
+
+# Authentication
+
+## JWT Tokens
+
+How to use JWT tokens for authentication...
+
+## OAuth
+
+Setting up OAuth providers...
+</code></pre>
+  <pre class="code-block-raw" style="display:none;"><code>---
+title: Authentication Guide
+---
+
+# Authentication
+
+## JWT Tokens
+
+How to use JWT tokens for authentication...
+
+## OAuth
+
+Setting up OAuth providers...
+</code></pre>
+</div></pre>
+
+<h2 id="accessibility" tabindex="-1">Accessibility</h2>
+<p>The search modal is fully accessible:</p>
+<ul>
+<li>Keyboard navigation (Tab, Arrow keys, Enter, Escape)</li>
+<li>ARIA labels for screen readers</li>
+<li>Focus trap while modal is open</li>
+<li>Focus restoration when closed</li>
+</ul>
+<h2 id="performance" tabindex="-1">Performance</h2>
+<ul>
+<li>Search index is generated <strong>once at server startup</strong></li>
+<li>Index is cached and served as static JSON</li>
+<li>Fuzzy matching uses a lightweight algorithm</li>
+<li>No external dependencies (no Algolia, Elasticsearch, etc.)</li>
+</ul>
+<p>For large documentation sites (1000+ pages), the index generation and search performance remain fast.</p>
 
       </article>
       <nav class="prev-next-nav">
-        <span></span>
-        <a href="/docs/docs/01-getting-started/" class="prev-next-card next-card"><span class="prev-next-label">Next →</span><span class="prev-next-title">Getting Started</span></a>
+        <a href="/docs/docs/03-features/navigation" class="prev-next-card prev-card"><span class="prev-next-label">← Prev</span><span class="prev-next-title">Navigation</span></a>
+        <a href="/docs/docs/03-features/seo" class="prev-next-card next-card"><span class="prev-next-label">Next →</span><span class="prev-next-title">SEO</span></a>
       </nav>
       <footer class="footer">
     <div class="footer-content">
@@ -1708,13 +1720,23 @@ echo &quot;# Hello World&quot; &gt; docs/readme.md
     <aside class="toc-sidebar"><nav class="toc">
   <h3>On this page</h3>
 <ul class="toc-list toc-level-1">
-<li class="toc-item"><a href="#welcome-to-mdsvr">Welcome to mdsvr</a></li>
+<li class="toc-item"><a href="#search">Search</a></li>
 <ul class="toc-list toc-level-2">
-<li class="toc-item"><a href="#what-is-mdsvr%3F">What is mdsvr?</a></li>
-<li class="toc-item"><a href="#quick-start">Quick Start</a></li>
-<li class="toc-item"><a href="#key-features">Key Features</a></li>
-<li class="toc-item"><a href="#this-docs-structure-for-reference">This docs structure for reference</a></li>
-<li class="toc-item"><a href="#next-steps">Next Steps</a></li>
+<li class="toc-item"><a href="#enabling-search">Enabling Search</a></li>
+<li class="toc-item"><a href="#using-search">Using Search</a></li>
+<ul class="toc-list toc-level-3">
+<li class="toc-item"><a href="#keyboard-shortcut">Keyboard Shortcut</a></li>
+<li class="toc-item"><a href="#search-trigger">Search Trigger</a></li>
+<li class="toc-item"><a href="#search-modal">Search Modal</a></li>
+</ul>
+<li class="toc-item"><a href="#how-it-works">How It Works</a></li>
+<li class="toc-item"><a href="#search-index">Search Index</a></li>
+<li class="toc-item"><a href="#scoring">Scoring</a></li>
+<li class="toc-item"><a href="#disabling-search">Disabling Search</a></li>
+<li class="toc-item"><a href="#search-data-structure">Search Data Structure</a></li>
+<li class="toc-item"><a href="#tips-for-better-search">Tips for Better Search</a></li>
+<li class="toc-item"><a href="#accessibility">Accessibility</a></li>
+<li class="toc-item"><a href="#performance">Performance</a></li>
 </ul>
 </ul>
 </nav></aside>
