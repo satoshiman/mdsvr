@@ -13,16 +13,16 @@
   document.documentElement.setAttribute('data-theme', theme);
 })();
 </script>
-  <title>Welcome</title>
-    <meta name="description" content="Full-featured documentation website server with MDX support, site settings, SEO, and navigation">
-    <meta property="og:title" content="Welcome">
-    <meta property="og:description" content="Full-featured documentation website server with MDX support, site settings, SEO, and navigation">
+  <title>Reference</title>
+    <meta name="description" content="API and CLI reference documentation for mdsvr">
+    <meta property="og:title" content="Reference">
+    <meta property="og:description" content="API and CLI reference documentation for mdsvr">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="/docs/">
-    <meta property="og:image" content="/docs/public/og/index.jpg">
+    <meta property="og:url" content="/docs/04-reference/">
+    <meta property="og:image" content="/docs/public/og/04-reference/index.jpg">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Welcome">
-    <meta name="twitter:image" content="/docs/public/og/index.jpg">
+    <meta name="twitter:title" content="Reference">
+    <meta name="twitter:image" content="/docs/public/og/04-reference/index.jpg">
     <link rel="sitemap" type="application/xml" href="/docs/sitemap.xml">
   
   <style>
@@ -1360,8 +1360,8 @@ code.hljs {
 
   <div class="site-container has-toc">
     <aside class="sidebar" id="sidebar"><ul class="sidebar-nav" data-level="0">
-  <li class="nav-item active" data-type="file">
-    <a href="/docs/" class="nav-link active">Welcome</a>
+  <li class="nav-item" data-type="file">
+    <a href="/docs/" class="nav-link">Welcome</a>
   </li>
   <li class="nav-item folder" data-type="dir">
     <a href="/docs/01-getting-started/" class="nav-link">📁 Getting Started</a>
@@ -1399,18 +1399,22 @@ code.hljs {
     </ul>
     </div>
   </li>
-  <li class="nav-item folder" data-type="dir">
-    <a href="/docs/04-reference/" class="nav-link">📁 Reference</a>
+  <li class="nav-item active folder" data-type="dir">
+    <a href="/docs/04-reference/" class="nav-link active">📁 Reference</a>
   </li>
 </ul></aside>
     <main class="content">
       <nav class="breadcrumbs">
     <a href="/docs/">Home</a>
-    <span class="breadcrumb-sep">/</span><span class="breadcrumb-current">Docs</span>
+    <span class="breadcrumb-sep">/</span><a href="/docs/docs">Docs</a><span class="breadcrumb-sep">/</span><span class="breadcrumb-current">04 reference</span>
   </nav>
       <article class="markdown-body">
-        <h1 id="welcome-to-mdsvr" tabindex="-1">Welcome to mdsvr</h1>
-<p>Transform any folder of Markdown/Markdown files into a beautiful documentation website — zero config required.</p>
+        <h1 id="reference" tabindex="-1">Reference</h1>
+<p>Technical reference documentation for mdsvr.</p>
+<hr>
+<h2 id="cli-reference" tabindex="-1">CLI Reference</h2>
+<p>Complete reference for all mdsvr CLI commands and options.</p>
+<h3 id="global-usage" tabindex="-1">Global Usage</h3>
 <pre class="code-block-wrapper"><div class="code-block-container">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -1440,22 +1444,13 @@ code.hljs {
       </svg>
     </button>
   </div>
-  <pre><code class="hljs language-bash">npx mdsvr ./docs
+  <pre><code class="hljs language-bash">npx mdsvr [<span class="hljs-built_in">dir</span>] [options]
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>npx mdsvr ./docs
+  <pre class="code-block-raw" style="display:none;"><code>npx mdsvr [dir] [options]
 </code></pre>
 </div></pre>
 
-<blockquote>
-<p>ℹ️ <strong>Info:</strong> This documentation itself is served by <strong>mdsvr</strong>! Explore the files in this directory to see how everything works.</p>
-</blockquote>
-<h2 id="what-is-mdsvr%3F" tabindex="-1">What is mdsvr?</h2>
-<p><strong>mdsvr</strong> is a static file server that automatically renders Markdown and MDX files as beautiful HTML. It’s similar to Vercel’s <code>serve</code> but understands <code>.md</code> and <code>.mdx</code> files.</p>
-<h2 id="quick-start" tabindex="-1">Quick Start</h2>
-<ol>
-<li>
-<p><strong>Install</strong></p>
-<p>No installation needed! Just use <code>npx</code>:</p>
+<p>Or if installed globally:</p>
 <pre class="code-block-wrapper"><div class="code-block-container">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -1485,16 +1480,99 @@ code.hljs {
       </svg>
     </button>
   </div>
-  <pre><code class="hljs language-bash">npx mdsvr ./docs
+  <pre><code class="hljs language-bash">mdsvr [<span class="hljs-built_in">dir</span>] [options]
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>npx mdsvr ./docs
+  <pre class="code-block-raw" style="display:none;"><code>mdsvr [dir] [options]
 </code></pre>
 </div></pre>
 
-</li>
-<li>
-<p><strong>Create your docs</strong></p>
-<p>Create a folder with some <code>.md</code> files:</p>
+<h3 id="arguments" tabindex="-1">Arguments</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>Argument</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>[dir]</code></td>
+<td>Root directory to serve</td>
+<td><code>.</code> (current directory)</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="options" tabindex="-1">Options</h3>
+<h4 id="server-options" tabindex="-1">Server Options</h4>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-p, --port N</code></td>
+<td>Port number</td>
+<td><code>1800</code></td>
+</tr>
+<tr>
+<td><code>--host H</code></td>
+<td>Bind address</td>
+<td><code>localhost</code></td>
+</tr>
+<tr>
+<td><code>-o, --open</code></td>
+<td>Auto-open browser</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><code>-s, --silent</code></td>
+<td>Suppress console output</td>
+<td><code>false</code></td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="export-options" tabindex="-1">Export Options</h4>
+<p>| Option                | Description        |
+| --------------------- | ------------------ | ---------------------- |
+| <code>-e, --export [PATH]</code> | Export static HTML | <code>PATH</code>: <code>_html/public</code> |</p>
+<h4 id="utility-options" tabindex="-1">Utility Options</h4>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--init</code></td>
+<td>Create starter <code>settings.json</code></td>
+</tr>
+<tr>
+<td><code>--validate</code></td>
+<td>Validate <code>settings.json</code> and exit</td>
+</tr>
+<tr>
+<td><code>--no-watch</code></td>
+<td>Disable <code>settings.json</code> hot-reload</td>
+</tr>
+<tr>
+<td><code>-v, --version</code></td>
+<td>Print version</td>
+</tr>
+<tr>
+<td><code>-h, --help</code></td>
+<td>Print help</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="examples" tabindex="-1">Examples</h3>
+<h4 id="basic-server" tabindex="-1">Basic Server</h4>
 <pre class="code-block-wrapper"><div class="code-block-container">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -1524,17 +1602,33 @@ code.hljs {
       </svg>
     </button>
   </div>
-  <pre><code class="hljs language-bash"><span class="hljs-built_in">mkdir</span> docs
-<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;# Hello World&quot;</span> &gt; docs/readme.md
+  <pre><code class="hljs language-bash"><span class="hljs-comment"># Serve current directory</span>
+npx mdsvr
+
+<span class="hljs-comment"># Serve specific folder</span>
+npx mdsvr ./docs
+
+<span class="hljs-comment"># Custom port</span>
+npx mdsvr ./docs --port 3000
+
+<span class="hljs-comment"># Expose to LAN</span>
+npx mdsvr ./docs --host 0.0.0.0 --port 1800
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>mkdir docs
-echo &quot;# Hello World&quot; &gt; docs/readme.md
+  <pre class="code-block-raw" style="display:none;"><code># Serve current directory
+npx mdsvr
+
+# Serve specific folder
+npx mdsvr ./docs
+
+# Custom port
+npx mdsvr ./docs --port 3000
+
+# Expose to LAN
+npx mdsvr ./docs --host 0.0.0.0 --port 1800
 </code></pre>
 </div></pre>
 
-</li>
-<li>
-<p><strong>Start the server</strong></p>
+<h4 id="with-auto-open" tabindex="-1">With Auto-Open</h4>
 <pre class="code-block-wrapper"><div class="code-block-container">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -1570,44 +1664,7 @@ echo &quot;# Hello World&quot; &gt; docs/readme.md
 </code></pre>
 </div></pre>
 
-</li>
-</ol>
-<h2 id="key-features" tabindex="-1">Key Features</h2>
-<div class="table-wrapper"><table>
-<thead>
-<tr>
-<th>Feature</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>📝 <a href="/3.-features">Markdown &amp; MDX</a></td>
-<td>Render .md and .mdx files with built-in interactive components</td>
-</tr>
-<tr>
-<td>🎨 <a href="/3.-features/theming">Themes</a></td>
-<td>Dark/light mode with customizable accent colors</td>
-</tr>
-<tr>
-<td>🔍 <a href="/3.-features/search">Search</a></td>
-<td>Built-in full-text search with keyboard shortcut (⌘K)</td>
-</tr>
-<tr>
-<td>📑 <a href="/3.-features/navigation">Navigation</a></td>
-<td>Auto-generated sidebar and table of contents</td>
-</tr>
-<tr>
-<td>🔎 <a href="/3.-features/seo">SEO</a></td>
-<td>Sitemap, RSS feed, Open Graph, and Twitter Cards</td>
-</tr>
-<tr>
-<td>⚙️ <a href="/2.-settings">Settings</a></td>
-<td>Configure everything via settings.json</td>
-</tr>
-</tbody>
-</table></div>
-<h2 id="this-docs-structure-for-reference" tabindex="-1">This docs structure for reference</h2>
+<h4 id="export-static-site" tabindex="-1">Export Static Site</h4>
 <pre class="code-block-wrapper"><div class="code-block-container">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -1637,66 +1694,159 @@ echo &quot;# Hello World&quot; &gt; docs/readme.md
       </svg>
     </button>
   </div>
-  <pre><code class="hljs">docs/
-├── settings.json                # Site configuration (optional)
-├── README.md                    # Homepage (this file)
-├── 1.-getting-started/          # Getting started guides
-│   └── README.md              # Quick start &amp; installation
-├── 2.-settings/                 # Settings &amp; configuration
-│   └── README.md              # Configuration, writing &amp; deployment
-├── 3.-features/                 # Feature documentation
-│   ├── README.md             # Features overview
-│   ├── markdown.md           # Markdown support
-│   ├── mdx.mdx               # MDX components demo
-│   ├── theming.md            # Theme customization
-│   ├── search.md             # Search functionality
-│   ├── navigation.md         # Navigation features
-│   ├── seo.md                # SEO features
-│   └── mermaid.md            # Mermaid diagrams
-└── 4.-reference/                # API/Reference
-    └── README.md             # CLI reference
+  <pre><code class="hljs language-bash"><span class="hljs-comment"># Default output (_html/public)</span>
+npx mdsvr ./docs --<span class="hljs-built_in">export</span>
+
+<span class="hljs-comment"># Custom output</span>
+npx mdsvr ./docs --<span class="hljs-built_in">export</span> ./dist
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>docs/
-├── settings.json                # Site configuration (optional)
-├── README.md                    # Homepage (this file)
-├── 1.-getting-started/          # Getting started guides
-│   └── README.md              # Quick start &amp; installation
-├── 2.-settings/                 # Settings &amp; configuration
-│   └── README.md              # Configuration, writing &amp; deployment
-├── 3.-features/                 # Feature documentation
-│   ├── README.md             # Features overview
-│   ├── markdown.md           # Markdown support
-│   ├── mdx.mdx               # MDX components demo
-│   ├── theming.md            # Theme customization
-│   ├── search.md             # Search functionality
-│   ├── navigation.md         # Navigation features
-│   ├── seo.md                # SEO features
-│   └── mermaid.md            # Mermaid diagrams
-└── 4.-reference/                # API/Reference
-    └── README.md             # CLI reference
+  <pre class="code-block-raw" style="display:none;"><code># Default output (_html/public)
+npx mdsvr ./docs --export
+
+# Custom output
+npx mdsvr ./docs --export ./dist
 </code></pre>
 </div></pre>
 
-<h2 id="next-steps" tabindex="-1">Next Steps</h2>
+<h4 id="initialize-config" tabindex="-1">Initialize Config</h4>
+<pre class="code-block-wrapper"><div class="code-block-container">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-bash">npx mdsvr ./docs --init
+</code></pre>
+  <pre class="code-block-raw" style="display:none;"><code>npx mdsvr ./docs --init
+</code></pre>
+</div></pre>
+
+<p>Creates <code>settings.json</code> with starter configuration.</p>
+<h4 id="validate-settings" tabindex="-1">Validate Settings</h4>
+<pre class="code-block-wrapper"><div class="code-block-container">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-bash">npx mdsvr ./docs --validate
+</code></pre>
+  <pre class="code-block-raw" style="display:none;"><code>npx mdsvr ./docs --validate
+</code></pre>
+</div></pre>
+
+<p>Checks <code>settings.json</code> for errors without starting server.</p>
+<h3 id="environment-variables" tabindex="-1">Environment Variables</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PORT</code></td>
+<td>Default port (if not specified with <code>--port</code>)</td>
+</tr>
+<tr>
+<td><code>HOST</code></td>
+<td>Default host (if not specified with <code>--host</code>)</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="exit-codes" tabindex="-1">Exit Codes</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>0</code></td>
+<td>Success</td>
+</tr>
+<tr>
+<td><code>1</code></td>
+<td>General error</td>
+</tr>
+<tr>
+<td><code>2</code></td>
+<td>Invalid arguments</td>
+</tr>
+<tr>
+<td><code>3</code></td>
+<td>Settings validation failed</td>
+</tr>
+</tbody>
+</table></div>
+<hr>
+<h2 id="coming-soon" tabindex="-1">Coming Soon</h2>
 <ul>
-<li><strong><a href="/1.-getting-started">Quick Start</a></strong> — Get running in 30 seconds</li>
-<li><strong><a href="/1.-getting-started">Installation</a></strong> — Install options</li>
-<li><strong><a href="/3.-features/mdx">MDX Components</a></strong> — Make your docs interactive</li>
-<li><strong><a href="/2.-settings">Configuration</a></strong> — Customize your site</li>
-<li><strong><a href="/2.-settings">Writing Content</a></strong> — Best practices</li>
-<li><strong><a href="/2.-settings">Deployment</a></strong> — Go live</li>
-<li><strong><a href="/3.-features">Features</a></strong> — See all features</li>
-<li><strong><a href="/4.-reference">CLI Reference</a></strong> — Command reference</li>
+<li>JavaScript API reference</li>
+<li>Configuration schema documentation</li>
+<li>Component API reference</li>
 </ul>
 <hr>
-<blockquote>
-<p>💡 <strong>Tip:</strong> Press <code>⌘+K</code> (or <code>Ctrl+K</code>) to open the search modal and find anything in this documentation!</p>
-</blockquote>
+<h2 id="related" tabindex="-1">Related</h2>
+<ul>
+<li><a href="../2.-settings/README.md">Configuration</a> — Practical configuration guide</li>
+<li><a href="../3.-features/README.md">Features</a> — Feature documentation</li>
+<li><a href="../1.-getting-started/README.md">Getting Started</a> — Quick start guides</li>
+</ul>
 
       </article>
       <nav class="prev-next-nav">
+        <a href="/docs/docs/03-features/theming" class="prev-next-card prev-card"><span class="prev-next-label">← Prev</span><span class="prev-next-title">Theming</span></a>
         <span></span>
-        <a href="/docs/docs/01-getting-started/" class="prev-next-card next-card"><span class="prev-next-label">Next →</span><span class="prev-next-title">Getting Started</span></a>
       </nav>
       <footer class="footer">
     <div class="footer-content">
@@ -1708,13 +1858,19 @@ echo &quot;# Hello World&quot; &gt; docs/readme.md
     <aside class="toc-sidebar"><nav class="toc">
   <h3>On this page</h3>
 <ul class="toc-list toc-level-1">
-<li class="toc-item"><a href="#welcome-to-mdsvr">Welcome to mdsvr</a></li>
+<li class="toc-item"><a href="#reference">Reference</a></li>
 <ul class="toc-list toc-level-2">
-<li class="toc-item"><a href="#what-is-mdsvr%3F">What is mdsvr?</a></li>
-<li class="toc-item"><a href="#quick-start">Quick Start</a></li>
-<li class="toc-item"><a href="#key-features">Key Features</a></li>
-<li class="toc-item"><a href="#this-docs-structure-for-reference">This docs structure for reference</a></li>
-<li class="toc-item"><a href="#next-steps">Next Steps</a></li>
+<li class="toc-item"><a href="#cli-reference">CLI Reference</a></li>
+<ul class="toc-list toc-level-3">
+<li class="toc-item"><a href="#global-usage">Global Usage</a></li>
+<li class="toc-item"><a href="#arguments">Arguments</a></li>
+<li class="toc-item"><a href="#options">Options</a></li>
+<li class="toc-item"><a href="#examples">Examples</a></li>
+<li class="toc-item"><a href="#environment-variables">Environment Variables</a></li>
+<li class="toc-item"><a href="#exit-codes">Exit Codes</a></li>
+</ul>
+<li class="toc-item"><a href="#coming-soon">Coming Soon</a></li>
+<li class="toc-item"><a href="#related">Related</a></li>
 </ul>
 </ul>
 </nav></aside>

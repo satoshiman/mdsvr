@@ -13,16 +13,16 @@
   document.documentElement.setAttribute('data-theme', theme);
 })();
 </script>
-  <title>Welcome</title>
+  <title>Mermaid Chart</title>
     <meta name="description" content="Full-featured documentation website server with MDX support, site settings, SEO, and navigation">
-    <meta property="og:title" content="Welcome">
+    <meta property="og:title" content="Mermaid Chart">
     <meta property="og:description" content="Full-featured documentation website server with MDX support, site settings, SEO, and navigation">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="/docs/">
-    <meta property="og:image" content="/docs/public/og/index.jpg">
+    <meta property="og:url" content="/docs/03-features/mermaid">
+    <meta property="og:image" content="/docs/public/og/03-features/mermaid/index.jpg">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Welcome">
-    <meta name="twitter:image" content="/docs/public/og/index.jpg">
+    <meta name="twitter:title" content="Mermaid Chart">
+    <meta name="twitter:image" content="/docs/public/og/03-features/mermaid/index.jpg">
     <link rel="sitemap" type="application/xml" href="/docs/sitemap.xml">
   
   <style>
@@ -1360,8 +1360,8 @@ code.hljs {
 
   <div class="site-container has-toc">
     <aside class="sidebar" id="sidebar"><ul class="sidebar-nav" data-level="0">
-  <li class="nav-item active" data-type="file">
-    <a href="/docs/" class="nav-link active">Welcome</a>
+  <li class="nav-item" data-type="file">
+    <a href="/docs/" class="nav-link">Welcome</a>
   </li>
   <li class="nav-item folder" data-type="dir">
     <a href="/docs/01-getting-started/" class="nav-link">📁 Getting Started</a>
@@ -1369,9 +1369,9 @@ code.hljs {
   <li class="nav-item folder" data-type="dir">
     <a href="/docs/02-settings/" class="nav-link">📁 Guides</a>
   </li>
-  <li class="nav-item folder" data-type="dir">
+  <li class="nav-item active folder" data-type="dir">
     <div class="nav-item-header" data-expanded="true">
-      <a href="/docs/03-features/" class="nav-link" data-folder-icon="open"><span class="folder-icon">📂</span> Features</a>
+      <a href="/docs/03-features/" class="nav-link active" data-folder-icon="open"><span class="folder-icon">📂</span> Features</a>
     </div>
     <div class="nav-children" data-expanded="true">
     <ul class="sidebar-nav" data-level="1">
@@ -1381,8 +1381,8 @@ code.hljs {
       <li class="nav-item" data-type="file">
         <a href="/docs/03-features/mdx" class="nav-link">MDX Components</a>
       </li>
-      <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/mermaid" class="nav-link">Mermaid Chart</a>
+      <li class="nav-item active" data-type="file">
+        <a href="/docs/03-features/mermaid" class="nav-link active">Mermaid Chart</a>
       </li>
       <li class="nav-item" data-type="file">
         <a href="/docs/03-features/navigation" class="nav-link">Navigation</a>
@@ -1406,11 +1406,600 @@ code.hljs {
     <main class="content">
       <nav class="breadcrumbs">
     <a href="/docs/">Home</a>
-    <span class="breadcrumb-sep">/</span><span class="breadcrumb-current">Docs</span>
+    <span class="breadcrumb-sep">/</span><a href="/docs/docs">Docs</a><span class="breadcrumb-sep">/</span><a href="/docs/docs/03-features">03 features</a><span class="breadcrumb-sep">/</span><span class="breadcrumb-current">Mermaid</span>
   </nav>
       <article class="markdown-body">
-        <h1 id="welcome-to-mdsvr" tabindex="-1">Welcome to mdsvr</h1>
-<p>Transform any folder of Markdown/Markdown files into a beautiful documentation website — zero config required.</p>
+        <h1 id="mermaid-chart" tabindex="-1">Mermaid Chart</h1>
+<p>Learn more about Mermaid at <a href="https://mermaid.js.org/">mermaid.js.org</a></p>
+<h2 id="1.-flowchart" tabindex="-1">1. Flowchart</h2>
+<pre class="mermaid-wrapper"><div class="mermaid-container">
+  <div class="mermaid-toolbar">
+    <button class="mermaid-btn mermaid-btn-chart" title="Chart view"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z"/><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-code" title="Show code"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-fullscreen" title="Fullscreen"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 15 6 6"/><path d="m15 9 6-6"/><path d="M21 16v5h-5"/><path d="M21 8V3h-5"/><path d="M3 16v5h5"/><path d="m3 21 6-6"/><path d="M3 8V3h5"/><path d="M9 9 3 3"/></svg></button>
+  </div>
+  <div class="mermaid-zoom-controls">
+    <button class="mermaid-btn mermaid-btn-zoom-in" title="Zoom in"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+  </div>
+  <div class="mermaid-chart">
+    <div class="mermaid">flowchart TD
+    A["Start"] --> B["Process"]
+    B --> C{"Decision"}
+    C -->|"Yes"| D["Success ✅"]
+    C -->|"No"| E["Retry ⚠️"]
+    E --> B</div>
+  </div>
+  <pre class="mermaid-source"><code>flowchart TD
+    A["Start"] --&gt; B["Process"]
+    B --&gt; C{"Decision"}
+    C --&gt;|"Yes"| D["Success ✅"]
+    C --&gt;|"No"| E["Retry ⚠️"]
+    E --&gt; B</code></pre>
+</div></pre>
+
+<h2 id="2.-sequence-diagram" tabindex="-1">2. Sequence Diagram</h2>
+<pre class="mermaid-wrapper"><div class="mermaid-container">
+  <div class="mermaid-toolbar">
+    <button class="mermaid-btn mermaid-btn-chart" title="Chart view"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z"/><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-code" title="Show code"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-fullscreen" title="Fullscreen"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 15 6 6"/><path d="m15 9 6-6"/><path d="M21 16v5h-5"/><path d="M21 8V3h-5"/><path d="M3 16v5h5"/><path d="m3 21 6-6"/><path d="M3 8V3h5"/><path d="M9 9 3 3"/></svg></button>
+  </div>
+  <div class="mermaid-zoom-controls">
+    <button class="mermaid-btn mermaid-btn-zoom-in" title="Zoom in"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+  </div>
+  <div class="mermaid-chart">
+    <div class="mermaid">sequenceDiagram
+    participant User
+    participant API
+    participant DB
+
+    User ->> API: Request
+    API ->> DB: Query
+    DB -->> API: Result
+    API -->> User: Response</div>
+  </div>
+  <pre class="mermaid-source"><code>sequenceDiagram
+    participant User
+    participant API
+    participant DB
+
+    User -&gt;&gt; API: Request
+    API -&gt;&gt; DB: Query
+    DB --&gt;&gt; API: Result
+    API --&gt;&gt; User: Response</code></pre>
+</div></pre>
+
+<h2 id="3.-state-diagram" tabindex="-1">3. State Diagram</h2>
+<pre class="mermaid-wrapper"><div class="mermaid-container">
+  <div class="mermaid-toolbar">
+    <button class="mermaid-btn mermaid-btn-chart" title="Chart view"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z"/><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-code" title="Show code"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-fullscreen" title="Fullscreen"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 15 6 6"/><path d="m15 9 6-6"/><path d="M21 16v5h-5"/><path d="M21 8V3h-5"/><path d="M3 16v5h5"/><path d="m3 21 6-6"/><path d="M3 8V3h5"/><path d="M9 9 3 3"/></svg></button>
+  </div>
+  <div class="mermaid-zoom-controls">
+    <button class="mermaid-btn mermaid-btn-zoom-in" title="Zoom in"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+  </div>
+  <div class="mermaid-chart">
+    <div class="mermaid">stateDiagram-v2
+    [*] --> Idle
+    Idle --> Running : start
+    Running --> Done : complete
+    Running --> Error : fail
+    Error --> Idle : reset
+    Done --> [*]</div>
+  </div>
+  <pre class="mermaid-source"><code>stateDiagram-v2
+    [*] --&gt; Idle
+    Idle --&gt; Running : start
+    Running --&gt; Done : complete
+    Running --&gt; Error : fail
+    Error --&gt; Idle : reset
+    Done --&gt; [*]</code></pre>
+</div></pre>
+
+<h2 id="4.-er-diagram" tabindex="-1">4. ER Diagram</h2>
+<pre class="mermaid-wrapper"><div class="mermaid-container">
+  <div class="mermaid-toolbar">
+    <button class="mermaid-btn mermaid-btn-chart" title="Chart view"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z"/><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-code" title="Show code"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-fullscreen" title="Fullscreen"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 15 6 6"/><path d="m15 9 6-6"/><path d="M21 16v5h-5"/><path d="M21 8V3h-5"/><path d="M3 16v5h5"/><path d="m3 21 6-6"/><path d="M3 8V3h5"/><path d="M9 9 3 3"/></svg></button>
+  </div>
+  <div class="mermaid-zoom-controls">
+    <button class="mermaid-btn mermaid-btn-zoom-in" title="Zoom in"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+  </div>
+  <div class="mermaid-chart">
+    <div class="mermaid">erDiagram
+    USER ||--o{ ORDER : places
+    ORDER ||--|{ ITEM : contains</div>
+  </div>
+  <pre class="mermaid-source"><code>erDiagram
+    USER ||--o{ ORDER : places
+    ORDER ||--|{ ITEM : contains</code></pre>
+</div></pre>
+
+<h2 id="5.-pie-chart" tabindex="-1">5. Pie Chart</h2>
+<pre class="mermaid-wrapper"><div class="mermaid-container">
+  <div class="mermaid-toolbar">
+    <button class="mermaid-btn mermaid-btn-chart" title="Chart view"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z"/><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-code" title="Show code"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-fullscreen" title="Fullscreen"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 15 6 6"/><path d="m15 9 6-6"/><path d="M21 16v5h-5"/><path d="M21 8V3h-5"/><path d="M3 16v5h5"/><path d="m3 21 6-6"/><path d="M3 8V3h5"/><path d="M9 9 3 3"/></svg></button>
+  </div>
+  <div class="mermaid-zoom-controls">
+    <button class="mermaid-btn mermaid-btn-zoom-in" title="Zoom in"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+  </div>
+  <div class="mermaid-chart">
+    <div class="mermaid">pie
+    title Tech Stack
+    "Node.js" : 40
+    "React" : 30
+    "Python" : 20
+    "Other" : 10</div>
+  </div>
+  <pre class="mermaid-source"><code>pie
+    title Tech Stack
+    "Node.js" : 40
+    "React" : 30
+    "Python" : 20
+    "Other" : 10</code></pre>
+</div></pre>
+
+<h2 id="7.-sequence-diagram" tabindex="-1">7. Sequence Diagram</h2>
+<pre class="mermaid-wrapper"><div class="mermaid-container">
+  <div class="mermaid-toolbar">
+    <button class="mermaid-btn mermaid-btn-chart" title="Chart view"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z"/><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-code" title="Show code"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-fullscreen" title="Fullscreen"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 15 6 6"/><path d="m15 9 6-6"/><path d="M21 16v5h-5"/><path d="M21 8V3h-5"/><path d="M3 16v5h5"/><path d="m3 21 6-6"/><path d="M3 8V3h5"/><path d="M9 9 3 3"/></svg></button>
+  </div>
+  <div class="mermaid-zoom-controls">
+    <button class="mermaid-btn mermaid-btn-zoom-in" title="Zoom in"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+  </div>
+  <div class="mermaid-chart">
+    <div class="mermaid">sequenceDiagram
+  Alice->>Bob: Hello
+  Bob-->>Alice: Hi there</div>
+  </div>
+  <pre class="mermaid-source"><code>sequenceDiagram
+  Alice-&gt;&gt;Bob: Hello
+  Bob--&gt;&gt;Alice: Hi there</code></pre>
+</div></pre>
+
+<h2 id="8.-mindmap" tabindex="-1">8. Mindmap</h2>
+<pre class="mermaid-wrapper"><div class="mermaid-container">
+  <div class="mermaid-toolbar">
+    <button class="mermaid-btn mermaid-btn-chart" title="Chart view"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z"/><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-code" title="Show code"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-fullscreen" title="Fullscreen"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 15 6 6"/><path d="m15 9 6-6"/><path d="M21 16v5h-5"/><path d="M21 8V3h-5"/><path d="M3 16v5h5"/><path d="m3 21 6-6"/><path d="M3 8V3h5"/><path d="M9 9 3 3"/></svg></button>
+  </div>
+  <div class="mermaid-zoom-controls">
+    <button class="mermaid-btn mermaid-btn-zoom-in" title="Zoom in"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+  </div>
+  <div class="mermaid-chart">
+    <div class="mermaid">mindmap
+  root((mindmap))
+    Origins
+      Long history
+      ::icon(fa fa-book)
+      Popularisation
+        British popular psychology author Tony Buzan
+    Research
+      On effectiveness<br/>and features
+      On Automatic creation
+        Uses
+            Creative techniques
+            Strategic planning
+            Argument mapping
+    Tools
+      Pen and paper
+      Mermaid</div>
+  </div>
+  <pre class="mermaid-source"><code>mindmap
+  root((mindmap))
+    Origins
+      Long history
+      ::icon(fa fa-book)
+      Popularisation
+        British popular psychology author Tony Buzan
+    Research
+      On effectiveness&lt;br/&gt;and features
+      On Automatic creation
+        Uses
+            Creative techniques
+            Strategic planning
+            Argument mapping
+    Tools
+      Pen and paper
+      Mermaid</code></pre>
+</div></pre>
+
+<h3 id="9.-giant-e-commerce-database-schema" tabindex="-1">9. Giant E-Commerce Database Schema</h3>
+<pre class="mermaid-wrapper"><div class="mermaid-container">
+  <div class="mermaid-toolbar">
+    <button class="mermaid-btn mermaid-btn-chart" title="Chart view"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z"/><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-code" title="Show code"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-fullscreen" title="Fullscreen"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 15 6 6"/><path d="m15 9 6-6"/><path d="M21 16v5h-5"/><path d="M21 8V3h-5"/><path d="M3 16v5h5"/><path d="m3 21 6-6"/><path d="M3 8V3h5"/><path d="M9 9 3 3"/></svg></button>
+  </div>
+  <div class="mermaid-zoom-controls">
+    <button class="mermaid-btn mermaid-btn-zoom-in" title="Zoom in"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+  </div>
+  <div class="mermaid-chart">
+    <div class="mermaid">erDiagram
+    USER {
+        int id PK
+        string email UK
+        string password_hash
+        string first_name
+        string last_name
+        string phone
+        datetime created_at
+        datetime updated_at
+        boolean is_active
+    }
+    USER_PROFILE {
+        int user_id PK,FK
+        text bio
+        date date_of_birth
+        string avatar_url
+        string timezone
+        string language
+    }
+    USER_ADDRESS {
+        int id PK
+        int user_id FK
+        string street
+        string city
+        string state
+        string zip_code
+        string country
+        boolean is_default
+    }
+    PRODUCT_CATEGORY {
+        int id PK
+        string name UK
+        string slug UK
+        int parent_id FK
+        text description
+        int sort_order
+    }
+    PRODUCT {
+        int id PK
+        string sku UK
+        string name
+        text description
+        decimal price
+        decimal sale_price
+        int stock_quantity
+        int category_id FK
+        int brand_id FK
+        boolean is_active
+        datetime created_at
+    }
+    PRODUCT_IMAGE {
+        int id PK
+        int product_id FK
+        string url
+        string alt_text
+        int sort_order
+    }
+    PRODUCT_REVIEW {
+        int id PK
+        int product_id FK
+        int user_id FK
+        int rating
+        text comment
+        datetime created_at
+    }
+    BRAND {
+        int id PK
+        string name UK
+        string slug UK
+        string logo_url
+        text description
+    }
+    ORDER {
+        int id PK
+        string order_number UK
+        int user_id FK
+        int shipping_address_id FK
+        int billing_address_id FK
+        decimal subtotal
+        decimal shipping_cost
+        decimal discount_amount
+        decimal total_amount
+        string status
+        datetime ordered_at
+        datetime shipped_at
+        datetime delivered_at
+    }
+    ORDER_ITEM {
+        int id PK
+        int order_id FK
+        int product_id FK
+        int quantity
+        decimal unit_price
+        decimal total_price
+    }
+    PAYMENT {
+        int id PK
+        int order_id FK
+        string payment_method
+        string transaction_id UK
+        decimal amount
+        string status
+        datetime paid_at
+    }
+    SHOPPING_CART {
+        int id PK
+        int user_id FK
+        datetime created_at
+        datetime updated_at
+    }
+    CART_ITEM {
+        int id PK
+        int cart_id FK
+        int product_id FK
+        int quantity
+        datetime added_at
+    }
+    WISHLIST {
+        int id PK
+        int user_id FK
+        int product_id FK
+        datetime added_at
+    }
+    COUPON {
+        string code PK
+        string type
+        decimal value
+        decimal minimum_order
+        datetime valid_from
+        datetime valid_until
+        int usage_limit
+        int usage_count
+        boolean is_active
+    }
+    ORDER_COUPON {
+        int order_id FK
+        string coupon_code FK
+        decimal discount_amount
+    }
+    SHIPPING_METHOD {
+        int id PK
+        string name
+        string carrier
+        decimal base_cost
+        int estimated_days
+    }
+    INVENTORY_LOG {
+        int id PK
+        int product_id FK
+        int quantity_change
+        string reason
+        int reference_order_id FK
+        datetime created_at
+    }
+
+    USER ||--|| USER_PROFILE : has
+    USER ||--o{ USER_ADDRESS : owns
+    USER ||--o{ ORDER : places
+    USER ||--|| SHOPPING_CART : has
+    USER ||--o{ WISHLIST : saves
+    USER ||--o{ PRODUCT_REVIEW : writes
+
+    PRODUCT_CATEGORY ||--o{ PRODUCT_CATEGORY : "parent of"
+    PRODUCT_CATEGORY ||--o{ PRODUCT : contains
+    BRAND ||--o{ PRODUCT : manufactures
+    PRODUCT ||--o{ PRODUCT_IMAGE : has
+    PRODUCT ||--o{ PRODUCT_REVIEW : receives
+    PRODUCT ||--o{ ORDER_ITEM : "ordered in"
+    PRODUCT ||--o{ CART_ITEM : "in cart"
+    PRODUCT ||--o{ WISHLIST : "in wishlist"
+    PRODUCT ||--o{ INVENTORY_LOG : "logged in"
+
+    SHOPPING_CART ||--o{ CART_ITEM : contains
+    ORDER ||--|{ ORDER_ITEM : contains
+    ORDER ||--|| PAYMENT : has
+    ORDER ||--o{ ORDER_COUPON : uses
+    ORDER ||--o{ INVENTORY_LOG : "referenced by"
+    USER_ADDRESS ||--o{ ORDER : "shipped to"
+    USER_ADDRESS ||--o{ ORDER : "billed to"
+    SHIPPING_METHOD ||--o{ ORDER : used
+    COUPON ||--o{ ORDER_COUPON : applied</div>
+  </div>
+  <pre class="mermaid-source"><code>erDiagram
+    USER {
+        int id PK
+        string email UK
+        string password_hash
+        string first_name
+        string last_name
+        string phone
+        datetime created_at
+        datetime updated_at
+        boolean is_active
+    }
+    USER_PROFILE {
+        int user_id PK,FK
+        text bio
+        date date_of_birth
+        string avatar_url
+        string timezone
+        string language
+    }
+    USER_ADDRESS {
+        int id PK
+        int user_id FK
+        string street
+        string city
+        string state
+        string zip_code
+        string country
+        boolean is_default
+    }
+    PRODUCT_CATEGORY {
+        int id PK
+        string name UK
+        string slug UK
+        int parent_id FK
+        text description
+        int sort_order
+    }
+    PRODUCT {
+        int id PK
+        string sku UK
+        string name
+        text description
+        decimal price
+        decimal sale_price
+        int stock_quantity
+        int category_id FK
+        int brand_id FK
+        boolean is_active
+        datetime created_at
+    }
+    PRODUCT_IMAGE {
+        int id PK
+        int product_id FK
+        string url
+        string alt_text
+        int sort_order
+    }
+    PRODUCT_REVIEW {
+        int id PK
+        int product_id FK
+        int user_id FK
+        int rating
+        text comment
+        datetime created_at
+    }
+    BRAND {
+        int id PK
+        string name UK
+        string slug UK
+        string logo_url
+        text description
+    }
+    ORDER {
+        int id PK
+        string order_number UK
+        int user_id FK
+        int shipping_address_id FK
+        int billing_address_id FK
+        decimal subtotal
+        decimal shipping_cost
+        decimal discount_amount
+        decimal total_amount
+        string status
+        datetime ordered_at
+        datetime shipped_at
+        datetime delivered_at
+    }
+    ORDER_ITEM {
+        int id PK
+        int order_id FK
+        int product_id FK
+        int quantity
+        decimal unit_price
+        decimal total_price
+    }
+    PAYMENT {
+        int id PK
+        int order_id FK
+        string payment_method
+        string transaction_id UK
+        decimal amount
+        string status
+        datetime paid_at
+    }
+    SHOPPING_CART {
+        int id PK
+        int user_id FK
+        datetime created_at
+        datetime updated_at
+    }
+    CART_ITEM {
+        int id PK
+        int cart_id FK
+        int product_id FK
+        int quantity
+        datetime added_at
+    }
+    WISHLIST {
+        int id PK
+        int user_id FK
+        int product_id FK
+        datetime added_at
+    }
+    COUPON {
+        string code PK
+        string type
+        decimal value
+        decimal minimum_order
+        datetime valid_from
+        datetime valid_until
+        int usage_limit
+        int usage_count
+        boolean is_active
+    }
+    ORDER_COUPON {
+        int order_id FK
+        string coupon_code FK
+        decimal discount_amount
+    }
+    SHIPPING_METHOD {
+        int id PK
+        string name
+        string carrier
+        decimal base_cost
+        int estimated_days
+    }
+    INVENTORY_LOG {
+        int id PK
+        int product_id FK
+        int quantity_change
+        string reason
+        int reference_order_id FK
+        datetime created_at
+    }
+
+    USER ||--|| USER_PROFILE : has
+    USER ||--o{ USER_ADDRESS : owns
+    USER ||--o{ ORDER : places
+    USER ||--|| SHOPPING_CART : has
+    USER ||--o{ WISHLIST : saves
+    USER ||--o{ PRODUCT_REVIEW : writes
+
+    PRODUCT_CATEGORY ||--o{ PRODUCT_CATEGORY : "parent of"
+    PRODUCT_CATEGORY ||--o{ PRODUCT : contains
+    BRAND ||--o{ PRODUCT : manufactures
+    PRODUCT ||--o{ PRODUCT_IMAGE : has
+    PRODUCT ||--o{ PRODUCT_REVIEW : receives
+    PRODUCT ||--o{ ORDER_ITEM : "ordered in"
+    PRODUCT ||--o{ CART_ITEM : "in cart"
+    PRODUCT ||--o{ WISHLIST : "in wishlist"
+    PRODUCT ||--o{ INVENTORY_LOG : "logged in"
+
+    SHOPPING_CART ||--o{ CART_ITEM : contains
+    ORDER ||--|{ ORDER_ITEM : contains
+    ORDER ||--|| PAYMENT : has
+    ORDER ||--o{ ORDER_COUPON : uses
+    ORDER ||--o{ INVENTORY_LOG : "referenced by"
+    USER_ADDRESS ||--o{ ORDER : "shipped to"
+    USER_ADDRESS ||--o{ ORDER : "billed to"
+    SHIPPING_METHOD ||--o{ ORDER : used
+    COUPON ||--o{ ORDER_COUPON : applied</code></pre>
+</div></pre>
+
+<p>See more examples at <a href="https://mermaid.js.org/examples/index.html">mermaid.js.org</a></p>
+<h2 id="mermaid-best-practices-prompts" tabindex="-1">Mermaid best practices prompts</h2>
+<p>Add this prompt to your system prompt for generating mermaid diagrams best practices:</p>
 <pre class="code-block-wrapper"><div class="code-block-container">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -1440,263 +2029,609 @@ code.hljs {
       </svg>
     </button>
   </div>
-  <pre><code class="hljs language-bash">npx mdsvr ./docs
+  <pre><code class="hljs">## Mermaid Generation Requirements (IF you use Mermaid to generate chart)
+
+When generating Mermaid diagrams, always follow these rules.
+
+### 1. First choose the most appropriate diagram type
+
+Select the best Mermaid diagram based on the content instead of always using `flowchart`.
+
+Available Mermaid diagram types (latest common syntax):
+
+- flowchart
+- graph
+- sequenceDiagram
+- classDiagram
+- stateDiagram-v2
+- erDiagram
+- journey
+- gantt
+- pie
+- gitGraph
+- mindmap
+- timeline
+- quadrantChart
+- requirementDiagram
+- sankey-beta
+- xychart-beta
+- block-beta
+- packet-beta
+- architecture-beta
+- kanban
+
+If multiple formats are suitable, briefly explain why you chose one over the others.
+
+### 2. Generate Mermaid code with maximum compatibility
+
+Always produce Mermaid code that can render successfully on GitHub, Mermaid Live Editor, Obsidian, VSCode plugins, and common Markdown renderers.
+
+### 3. Mermaid syntax precautions
+
+Always follow these rules:
+
+#### Node IDs
+
+- Use only letters, numbers, and underscores.
+
+Example:
+
+```mermaid
+A
+user_service
+db_01
+```
+
+Avoid:
+
+```text
+user-service
+user.api
+node(id)
+```
+
+#### Node labels
+
+Prefer:
+
+```mermaid
+A[&quot;User Service&quot;]
+```
+
+instead of:
+
+```mermaid
+A(User Service)
+```
+
+because brackets are generally safer.
+
+#### Escape special characters
+
+Avoid unescaped:
+
+- (
+- )
+- [
+- ]
+- {
+- }
+- &lt;
+- &gt;
+- |
+- &quot;
+- '
+
+inside labels whenever possible.
+
+Prefer simple text.
+
+#### Avoid Markdown formatting
+
+Do NOT use inside labels:
+
+- `**`
+- `__`
+- `` ` ``
+- `#`
+- HTML tags
+- Markdown links
+
+Bad:
+
+```mermaid
+A[&quot;**API**&quot;]
+```
+
+Good:
+
+```mermaid
+A[&quot;API&quot;]
+```
+
+#### Keep labels concise
+
+Prefer:
+
+```mermaid
+A[&quot;API&quot;]
+```
+
+instead of:
+
+```mermaid
+A[&quot;This API service receives requests from authenticated users&quot;]
+```
+
+#### Quote labels containing spaces
+
+Good:
+
+```mermaid
+A[&quot;Order Service&quot;]
+```
+
+instead of:
+
+```mermaid
+A[Order Service]
+```
+
+#### Avoid reserved keywords as IDs
+
+Do not use IDs like:
+
+- end
+- class
+- click
+- style
+- graph
+- subgraph
+
+Rename them if needed.
+
+#### For flowcharts
+
+Always specify direction explicitly:
+
+```mermaid
+flowchart TD
+```
+
+or
+
+```mermaid
+flowchart LR
+```
+
+Never omit the direction.
+
+#### For subgraphs
+
+Always provide an explicit ID.
+
+Good:
+
+```mermaid
+subgraph backend[&quot;Backend&quot;]
+```
+
+instead of:
+
+```mermaid
+subgraph Backend
+```
+
+#### For sequence diagrams
+
+Always declare participants first.
+
+Example:
+
+```mermaid
+participant User
+participant API
+participant DB
+```
+
+before any messages.
+
+#### For ER diagrams
+
+Always define relationships using valid Mermaid syntax.
+
+Example:
+
+```mermaid
+USER ||--o{ ORDER : places
+```
+
+Avoid inventing custom operators.
+
+#### For class diagrams
+
+Use proper visibility and typing.
+
+Example:
+
+```text
++createUser()
+-password
++id: string
+```
+
+#### For state diagrams
+
+Prefer:
+
+```mermaid
+stateDiagram-v2
+```
+
+instead of the legacy version.
+
+#### Use latest Mermaid syntax Always use the latest stable Mermaid syntax. Avoid deprecated or legacy patterns such as: - `graph` (use `flowchart` instead) - Old `sequenceDiagram` arrow styles like `-&gt;` (use `-&gt;&gt;` or `--&gt;&gt;`) - Any syntax not supported in Mermaid v10+
+
+#### Line breaks in labels
+
+When a line break is needed inside a node label, always use `&lt;br /&gt;` instead of `\n`.
+
+Good:
+
+A[&quot;Line one&lt;br /&gt;Line two&quot;]
+
+Bad:
+
+A[&quot;Line one\n Line two&quot;]
+
+#### For architecture-beta and block-beta
+
+Use only officially supported syntax and avoid mixing flowchart syntax into beta diagrams.
+
+### 4. Styling guidelines
+
+Because the rendered environment may support both light mode and dark mode:
+
+- Do **NOT** use `style`, `classDef`, `class`, `linkStyle`, `themeVariables`, or hardcoded colors unless the user explicitly requests custom styling.
+- Do **NOT** rely on background color, border color, or text color to convey meaning.
+- Keep diagrams theme agnostic so they remain readable in any renderer.
+
+If visual emphasis is needed, prefer semantic text or emoji instead of colors.
+
+Examples:
+
+- ✅ Success
+- ❌ Failure
+- ⚠️ Warning
+- 🔒 Authentication
+- 🔑 Authorization
+- 🚀 Deployment
+- 📦 Package
+- 🗄️ Database
+- 🌐 External Service
+- 👤 User
+- 🤖 Worker
+- 💾 Storage
+
+Using emoji to communicate meaning is preferred over fixed styling because it works consistently across light and dark themes.
+
+### 5. Output format
+
+When generating Mermaid:
+
+1. Output only one complete Mermaid code block unless multiple diagrams are explicitly requested.
+2. Ensure the code is syntactically valid.
+3. Double check for parser-breaking characters before returning.
+4. Prefer readability over visual complexity.
+5. Do not add custom styling unless explicitly requested.
+6. If a diagram would become too crowded, split it into multiple diagrams only when explicitly requested by the user.
+
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>npx mdsvr ./docs
+  <pre class="code-block-raw" style="display:none;"><code>## Mermaid Generation Requirements (IF you use Mermaid to generate chart)
+
+When generating Mermaid diagrams, always follow these rules.
+
+### 1. First choose the most appropriate diagram type
+
+Select the best Mermaid diagram based on the content instead of always using `flowchart`.
+
+Available Mermaid diagram types (latest common syntax):
+
+- flowchart
+- graph
+- sequenceDiagram
+- classDiagram
+- stateDiagram-v2
+- erDiagram
+- journey
+- gantt
+- pie
+- gitGraph
+- mindmap
+- timeline
+- quadrantChart
+- requirementDiagram
+- sankey-beta
+- xychart-beta
+- block-beta
+- packet-beta
+- architecture-beta
+- kanban
+
+If multiple formats are suitable, briefly explain why you chose one over the others.
+
+### 2. Generate Mermaid code with maximum compatibility
+
+Always produce Mermaid code that can render successfully on GitHub, Mermaid Live Editor, Obsidian, VSCode plugins, and common Markdown renderers.
+
+### 3. Mermaid syntax precautions
+
+Always follow these rules:
+
+#### Node IDs
+
+- Use only letters, numbers, and underscores.
+
+Example:
+
+```mermaid
+A
+user_service
+db_01
+```
+
+Avoid:
+
+```text
+user-service
+user.api
+node(id)
+```
+
+#### Node labels
+
+Prefer:
+
+```mermaid
+A[&quot;User Service&quot;]
+```
+
+instead of:
+
+```mermaid
+A(User Service)
+```
+
+because brackets are generally safer.
+
+#### Escape special characters
+
+Avoid unescaped:
+
+- (
+- )
+- [
+- ]
+- {
+- }
+- &lt;
+- &gt;
+- |
+- &quot;
+- '
+
+inside labels whenever possible.
+
+Prefer simple text.
+
+#### Avoid Markdown formatting
+
+Do NOT use inside labels:
+
+- `**`
+- `__`
+- `` ` ``
+- `#`
+- HTML tags
+- Markdown links
+
+Bad:
+
+```mermaid
+A[&quot;**API**&quot;]
+```
+
+Good:
+
+```mermaid
+A[&quot;API&quot;]
+```
+
+#### Keep labels concise
+
+Prefer:
+
+```mermaid
+A[&quot;API&quot;]
+```
+
+instead of:
+
+```mermaid
+A[&quot;This API service receives requests from authenticated users&quot;]
+```
+
+#### Quote labels containing spaces
+
+Good:
+
+```mermaid
+A[&quot;Order Service&quot;]
+```
+
+instead of:
+
+```mermaid
+A[Order Service]
+```
+
+#### Avoid reserved keywords as IDs
+
+Do not use IDs like:
+
+- end
+- class
+- click
+- style
+- graph
+- subgraph
+
+Rename them if needed.
+
+#### For flowcharts
+
+Always specify direction explicitly:
+
+```mermaid
+flowchart TD
+```
+
+or
+
+```mermaid
+flowchart LR
+```
+
+Never omit the direction.
+
+#### For subgraphs
+
+Always provide an explicit ID.
+
+Good:
+
+```mermaid
+subgraph backend[&quot;Backend&quot;]
+```
+
+instead of:
+
+```mermaid
+subgraph Backend
+```
+
+#### For sequence diagrams
+
+Always declare participants first.
+
+Example:
+
+```mermaid
+participant User
+participant API
+participant DB
+```
+
+before any messages.
+
+#### For ER diagrams
+
+Always define relationships using valid Mermaid syntax.
+
+Example:
+
+```mermaid
+USER ||--o{ ORDER : places
+```
+
+Avoid inventing custom operators.
+
+#### For class diagrams
+
+Use proper visibility and typing.
+
+Example:
+
+```text
++createUser()
+-password
++id: string
+```
+
+#### For state diagrams
+
+Prefer:
+
+```mermaid
+stateDiagram-v2
+```
+
+instead of the legacy version.
+
+#### Use latest Mermaid syntax Always use the latest stable Mermaid syntax. Avoid deprecated or legacy patterns such as: - `graph` (use `flowchart` instead) - Old `sequenceDiagram` arrow styles like `-&gt;` (use `-&gt;&gt;` or `--&gt;&gt;`) - Any syntax not supported in Mermaid v10+
+
+#### Line breaks in labels
+
+When a line break is needed inside a node label, always use `&lt;br /&gt;` instead of `\n`.
+
+Good:
+
+A[&quot;Line one&lt;br /&gt;Line two&quot;]
+
+Bad:
+
+A[&quot;Line one\n Line two&quot;]
+
+#### For architecture-beta and block-beta
+
+Use only officially supported syntax and avoid mixing flowchart syntax into beta diagrams.
+
+### 4. Styling guidelines
+
+Because the rendered environment may support both light mode and dark mode:
+
+- Do **NOT** use `style`, `classDef`, `class`, `linkStyle`, `themeVariables`, or hardcoded colors unless the user explicitly requests custom styling.
+- Do **NOT** rely on background color, border color, or text color to convey meaning.
+- Keep diagrams theme agnostic so they remain readable in any renderer.
+
+If visual emphasis is needed, prefer semantic text or emoji instead of colors.
+
+Examples:
+
+- ✅ Success
+- ❌ Failure
+- ⚠️ Warning
+- 🔒 Authentication
+- 🔑 Authorization
+- 🚀 Deployment
+- 📦 Package
+- 🗄️ Database
+- 🌐 External Service
+- 👤 User
+- 🤖 Worker
+- 💾 Storage
+
+Using emoji to communicate meaning is preferred over fixed styling because it works consistently across light and dark themes.
+
+### 5. Output format
+
+When generating Mermaid:
+
+1. Output only one complete Mermaid code block unless multiple diagrams are explicitly requested.
+2. Ensure the code is syntactically valid.
+3. Double check for parser-breaking characters before returning.
+4. Prefer readability over visual complexity.
+5. Do not add custom styling unless explicitly requested.
+6. If a diagram would become too crowded, split it into multiple diagrams only when explicitly requested by the user.
+
 </code></pre>
 </div></pre>
 
-<blockquote>
-<p>ℹ️ <strong>Info:</strong> This documentation itself is served by <strong>mdsvr</strong>! Explore the files in this directory to see how everything works.</p>
-</blockquote>
-<h2 id="what-is-mdsvr%3F" tabindex="-1">What is mdsvr?</h2>
-<p><strong>mdsvr</strong> is a static file server that automatically renders Markdown and MDX files as beautiful HTML. It’s similar to Vercel’s <code>serve</code> but understands <code>.md</code> and <code>.mdx</code> files.</p>
-<h2 id="quick-start" tabindex="-1">Quick Start</h2>
-<ol>
-<li>
-<p><strong>Install</strong></p>
-<p>No installation needed! Just use <code>npx</code>:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
-  <div class="code-block-toolbar">
-    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
-        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-      </svg>
-    </button>
-    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="m16 16-3 3 3 3"/>
-        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
-        <path d="M3 19h6"/>
-        <path d="M3 5h18"/>
-      </svg>
-    </button>
-    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="m15 15 6 6"/>
-        <path d="m15 9 6-6"/>
-        <path d="M21 16v5h-5"/>
-        <path d="M21 8V3h-5"/>
-        <path d="M3 16v5h5"/>
-        <path d="m3 21 6-6"/>
-        <path d="M3 8V3h5"/>
-        <path d="M9 9 3 3"/>
-      </svg>
-    </button>
-  </div>
-  <pre><code class="hljs language-bash">npx mdsvr ./docs
-</code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>npx mdsvr ./docs
-</code></pre>
-</div></pre>
-
-</li>
-<li>
-<p><strong>Create your docs</strong></p>
-<p>Create a folder with some <code>.md</code> files:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
-  <div class="code-block-toolbar">
-    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
-        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-      </svg>
-    </button>
-    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="m16 16-3 3 3 3"/>
-        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
-        <path d="M3 19h6"/>
-        <path d="M3 5h18"/>
-      </svg>
-    </button>
-    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="m15 15 6 6"/>
-        <path d="m15 9 6-6"/>
-        <path d="M21 16v5h-5"/>
-        <path d="M21 8V3h-5"/>
-        <path d="M3 16v5h5"/>
-        <path d="m3 21 6-6"/>
-        <path d="M3 8V3h5"/>
-        <path d="M9 9 3 3"/>
-      </svg>
-    </button>
-  </div>
-  <pre><code class="hljs language-bash"><span class="hljs-built_in">mkdir</span> docs
-<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;# Hello World&quot;</span> &gt; docs/readme.md
-</code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>mkdir docs
-echo &quot;# Hello World&quot; &gt; docs/readme.md
-</code></pre>
-</div></pre>
-
-</li>
-<li>
-<p><strong>Start the server</strong></p>
-<pre class="code-block-wrapper"><div class="code-block-container">
-  <div class="code-block-toolbar">
-    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
-        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-      </svg>
-    </button>
-    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="m16 16-3 3 3 3"/>
-        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
-        <path d="M3 19h6"/>
-        <path d="M3 5h18"/>
-      </svg>
-    </button>
-    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="m15 15 6 6"/>
-        <path d="m15 9 6-6"/>
-        <path d="M21 16v5h-5"/>
-        <path d="M21 8V3h-5"/>
-        <path d="M3 16v5h5"/>
-        <path d="m3 21 6-6"/>
-        <path d="M3 8V3h5"/>
-        <path d="M9 9 3 3"/>
-      </svg>
-    </button>
-  </div>
-  <pre><code class="hljs language-bash">npx mdsvr ./docs --open
-</code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>npx mdsvr ./docs --open
-</code></pre>
-</div></pre>
-
-</li>
-</ol>
-<h2 id="key-features" tabindex="-1">Key Features</h2>
-<div class="table-wrapper"><table>
-<thead>
-<tr>
-<th>Feature</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>📝 <a href="/3.-features">Markdown &amp; MDX</a></td>
-<td>Render .md and .mdx files with built-in interactive components</td>
-</tr>
-<tr>
-<td>🎨 <a href="/3.-features/theming">Themes</a></td>
-<td>Dark/light mode with customizable accent colors</td>
-</tr>
-<tr>
-<td>🔍 <a href="/3.-features/search">Search</a></td>
-<td>Built-in full-text search with keyboard shortcut (⌘K)</td>
-</tr>
-<tr>
-<td>📑 <a href="/3.-features/navigation">Navigation</a></td>
-<td>Auto-generated sidebar and table of contents</td>
-</tr>
-<tr>
-<td>🔎 <a href="/3.-features/seo">SEO</a></td>
-<td>Sitemap, RSS feed, Open Graph, and Twitter Cards</td>
-</tr>
-<tr>
-<td>⚙️ <a href="/2.-settings">Settings</a></td>
-<td>Configure everything via settings.json</td>
-</tr>
-</tbody>
-</table></div>
-<h2 id="this-docs-structure-for-reference" tabindex="-1">This docs structure for reference</h2>
-<pre class="code-block-wrapper"><div class="code-block-container">
-  <div class="code-block-toolbar">
-    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
-        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-      </svg>
-    </button>
-    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="m16 16-3 3 3 3"/>
-        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
-        <path d="M3 19h6"/>
-        <path d="M3 5h18"/>
-      </svg>
-    </button>
-    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="m15 15 6 6"/>
-        <path d="m15 9 6-6"/>
-        <path d="M21 16v5h-5"/>
-        <path d="M21 8V3h-5"/>
-        <path d="M3 16v5h5"/>
-        <path d="m3 21 6-6"/>
-        <path d="M3 8V3h5"/>
-        <path d="M9 9 3 3"/>
-      </svg>
-    </button>
-  </div>
-  <pre><code class="hljs">docs/
-├── settings.json                # Site configuration (optional)
-├── README.md                    # Homepage (this file)
-├── 1.-getting-started/          # Getting started guides
-│   └── README.md              # Quick start &amp; installation
-├── 2.-settings/                 # Settings &amp; configuration
-│   └── README.md              # Configuration, writing &amp; deployment
-├── 3.-features/                 # Feature documentation
-│   ├── README.md             # Features overview
-│   ├── markdown.md           # Markdown support
-│   ├── mdx.mdx               # MDX components demo
-│   ├── theming.md            # Theme customization
-│   ├── search.md             # Search functionality
-│   ├── navigation.md         # Navigation features
-│   ├── seo.md                # SEO features
-│   └── mermaid.md            # Mermaid diagrams
-└── 4.-reference/                # API/Reference
-    └── README.md             # CLI reference
-</code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>docs/
-├── settings.json                # Site configuration (optional)
-├── README.md                    # Homepage (this file)
-├── 1.-getting-started/          # Getting started guides
-│   └── README.md              # Quick start &amp; installation
-├── 2.-settings/                 # Settings &amp; configuration
-│   └── README.md              # Configuration, writing &amp; deployment
-├── 3.-features/                 # Feature documentation
-│   ├── README.md             # Features overview
-│   ├── markdown.md           # Markdown support
-│   ├── mdx.mdx               # MDX components demo
-│   ├── theming.md            # Theme customization
-│   ├── search.md             # Search functionality
-│   ├── navigation.md         # Navigation features
-│   ├── seo.md                # SEO features
-│   └── mermaid.md            # Mermaid diagrams
-└── 4.-reference/                # API/Reference
-    └── README.md             # CLI reference
-</code></pre>
-</div></pre>
-
-<h2 id="next-steps" tabindex="-1">Next Steps</h2>
-<ul>
-<li><strong><a href="/1.-getting-started">Quick Start</a></strong> — Get running in 30 seconds</li>
-<li><strong><a href="/1.-getting-started">Installation</a></strong> — Install options</li>
-<li><strong><a href="/3.-features/mdx">MDX Components</a></strong> — Make your docs interactive</li>
-<li><strong><a href="/2.-settings">Configuration</a></strong> — Customize your site</li>
-<li><strong><a href="/2.-settings">Writing Content</a></strong> — Best practices</li>
-<li><strong><a href="/2.-settings">Deployment</a></strong> — Go live</li>
-<li><strong><a href="/3.-features">Features</a></strong> — See all features</li>
-<li><strong><a href="/4.-reference">CLI Reference</a></strong> — Command reference</li>
-</ul>
-<hr>
-<blockquote>
-<p>💡 <strong>Tip:</strong> Press <code>⌘+K</code> (or <code>Ctrl+K</code>) to open the search modal and find anything in this documentation!</p>
-</blockquote>
 
       </article>
       <nav class="prev-next-nav">
-        <span></span>
-        <a href="/docs/docs/01-getting-started/" class="prev-next-card next-card"><span class="prev-next-label">Next →</span><span class="prev-next-title">Getting Started</span></a>
+        <a href="/docs/docs/03-features/mdx" class="prev-next-card prev-card"><span class="prev-next-label">← Prev</span><span class="prev-next-title">MDX Components</span></a>
+        <a href="/docs/docs/03-features/navigation" class="prev-next-card next-card"><span class="prev-next-label">Next →</span><span class="prev-next-title">Navigation</span></a>
       </nav>
       <footer class="footer">
     <div class="footer-content">
@@ -1708,13 +2643,19 @@ echo &quot;# Hello World&quot; &gt; docs/readme.md
     <aside class="toc-sidebar"><nav class="toc">
   <h3>On this page</h3>
 <ul class="toc-list toc-level-1">
-<li class="toc-item"><a href="#welcome-to-mdsvr">Welcome to mdsvr</a></li>
+<li class="toc-item"><a href="#mermaid-chart">Mermaid Chart</a></li>
 <ul class="toc-list toc-level-2">
-<li class="toc-item"><a href="#what-is-mdsvr%3F">What is mdsvr?</a></li>
-<li class="toc-item"><a href="#quick-start">Quick Start</a></li>
-<li class="toc-item"><a href="#key-features">Key Features</a></li>
-<li class="toc-item"><a href="#this-docs-structure-for-reference">This docs structure for reference</a></li>
-<li class="toc-item"><a href="#next-steps">Next Steps</a></li>
+<li class="toc-item"><a href="#1.-flowchart">1. Flowchart</a></li>
+<li class="toc-item"><a href="#2.-sequence-diagram">2. Sequence Diagram</a></li>
+<li class="toc-item"><a href="#3.-state-diagram">3. State Diagram</a></li>
+<li class="toc-item"><a href="#4.-er-diagram">4. ER Diagram</a></li>
+<li class="toc-item"><a href="#5.-pie-chart">5. Pie Chart</a></li>
+<li class="toc-item"><a href="#7.-sequence-diagram">7. Sequence Diagram</a></li>
+<li class="toc-item"><a href="#8.-mindmap">8. Mindmap</a></li>
+<ul class="toc-list toc-level-3">
+<li class="toc-item"><a href="#9.-giant-e-commerce-database-schema">9. Giant E-Commerce Database Schema</a></li>
+</ul>
+<li class="toc-item"><a href="#mermaid-best-practices-prompts">Mermaid best practices prompts</a></li>
 </ul>
 </ul>
 </nav></aside>

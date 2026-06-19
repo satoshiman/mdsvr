@@ -13,16 +13,16 @@
   document.documentElement.setAttribute('data-theme', theme);
 })();
 </script>
-  <title>Welcome</title>
-    <meta name="description" content="Full-featured documentation website server with MDX support, site settings, SEO, and navigation">
-    <meta property="og:title" content="Welcome">
-    <meta property="og:description" content="Full-featured documentation website server with MDX support, site settings, SEO, and navigation">
+  <title>Getting Started</title>
+    <meta name="description" content="Get up and running with mdsvr - installation and quick start guide">
+    <meta property="og:title" content="Getting Started">
+    <meta property="og:description" content="Get up and running with mdsvr - installation and quick start guide">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="/docs/">
-    <meta property="og:image" content="/docs/public/og/index.jpg">
+    <meta property="og:url" content="/docs/01-getting-started/">
+    <meta property="og:image" content="/docs/public/og/01-getting-started/index.jpg">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Welcome">
-    <meta name="twitter:image" content="/docs/public/og/index.jpg">
+    <meta name="twitter:title" content="Getting Started">
+    <meta name="twitter:image" content="/docs/public/og/01-getting-started/index.jpg">
     <link rel="sitemap" type="application/xml" href="/docs/sitemap.xml">
   
   <style>
@@ -1360,11 +1360,11 @@ code.hljs {
 
   <div class="site-container has-toc">
     <aside class="sidebar" id="sidebar"><ul class="sidebar-nav" data-level="0">
-  <li class="nav-item active" data-type="file">
-    <a href="/docs/" class="nav-link active">Welcome</a>
+  <li class="nav-item" data-type="file">
+    <a href="/docs/" class="nav-link">Welcome</a>
   </li>
-  <li class="nav-item folder" data-type="dir">
-    <a href="/docs/01-getting-started/" class="nav-link">📁 Getting Started</a>
+  <li class="nav-item active folder" data-type="dir">
+    <a href="/docs/01-getting-started/" class="nav-link active">📁 Getting Started</a>
   </li>
   <li class="nav-item folder" data-type="dir">
     <a href="/docs/02-settings/" class="nav-link">📁 Guides</a>
@@ -1406,135 +1406,14 @@ code.hljs {
     <main class="content">
       <nav class="breadcrumbs">
     <a href="/docs/">Home</a>
-    <span class="breadcrumb-sep">/</span><span class="breadcrumb-current">Docs</span>
+    <span class="breadcrumb-sep">/</span><a href="/docs/docs">Docs</a><span class="breadcrumb-sep">/</span><span class="breadcrumb-current">01 getting started</span>
   </nav>
       <article class="markdown-body">
-        <h1 id="welcome-to-mdsvr" tabindex="-1">Welcome to mdsvr</h1>
-<p>Transform any folder of Markdown/Markdown files into a beautiful documentation website — zero config required.</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
-  <div class="code-block-toolbar">
-    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
-        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-      </svg>
-    </button>
-    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="m16 16-3 3 3 3"/>
-        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
-        <path d="M3 19h6"/>
-        <path d="M3 5h18"/>
-      </svg>
-    </button>
-    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="m15 15 6 6"/>
-        <path d="m15 9 6-6"/>
-        <path d="M21 16v5h-5"/>
-        <path d="M21 8V3h-5"/>
-        <path d="M3 16v5h5"/>
-        <path d="m3 21 6-6"/>
-        <path d="M3 8V3h5"/>
-        <path d="M9 9 3 3"/>
-      </svg>
-    </button>
-  </div>
-  <pre><code class="hljs language-bash">npx mdsvr ./docs
-</code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>npx mdsvr ./docs
-</code></pre>
-</div></pre>
-
-<blockquote>
-<p>ℹ️ <strong>Info:</strong> This documentation itself is served by <strong>mdsvr</strong>! Explore the files in this directory to see how everything works.</p>
-</blockquote>
-<h2 id="what-is-mdsvr%3F" tabindex="-1">What is mdsvr?</h2>
-<p><strong>mdsvr</strong> is a static file server that automatically renders Markdown and MDX files as beautiful HTML. It’s similar to Vercel’s <code>serve</code> but understands <code>.md</code> and <code>.mdx</code> files.</p>
+        <h1 id="getting-started" tabindex="-1">Getting Started</h1>
+<p>New to mdsvr? Start here to get up and running in minutes.</p>
 <h2 id="quick-start" tabindex="-1">Quick Start</h2>
-<ol>
-<li>
-<p><strong>Install</strong></p>
-<p>No installation needed! Just use <code>npx</code>:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
-  <div class="code-block-toolbar">
-    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
-        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-      </svg>
-    </button>
-    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="m16 16-3 3 3 3"/>
-        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
-        <path d="M3 19h6"/>
-        <path d="M3 5h18"/>
-      </svg>
-    </button>
-    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="m15 15 6 6"/>
-        <path d="m15 9 6-6"/>
-        <path d="M21 16v5h-5"/>
-        <path d="M21 8V3h-5"/>
-        <path d="M3 16v5h5"/>
-        <path d="m3 21 6-6"/>
-        <path d="M3 8V3h5"/>
-        <path d="M9 9 3 3"/>
-      </svg>
-    </button>
-  </div>
-  <pre><code class="hljs language-bash">npx mdsvr ./docs
-</code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>npx mdsvr ./docs
-</code></pre>
-</div></pre>
-
-</li>
-<li>
-<p><strong>Create your docs</strong></p>
-<p>Create a folder with some <code>.md</code> files:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
-  <div class="code-block-toolbar">
-    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
-        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-      </svg>
-    </button>
-    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="m16 16-3 3 3 3"/>
-        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
-        <path d="M3 19h6"/>
-        <path d="M3 5h18"/>
-      </svg>
-    </button>
-    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="m15 15 6 6"/>
-        <path d="m15 9 6-6"/>
-        <path d="M21 16v5h-5"/>
-        <path d="M21 8V3h-5"/>
-        <path d="M3 16v5h5"/>
-        <path d="m3 21 6-6"/>
-        <path d="M3 8V3h5"/>
-        <path d="M9 9 3 3"/>
-      </svg>
-    </button>
-  </div>
-  <pre><code class="hljs language-bash"><span class="hljs-built_in">mkdir</span> docs
-<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;# Hello World&quot;</span> &gt; docs/readme.md
-</code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>mkdir docs
-echo &quot;# Hello World&quot; &gt; docs/readme.md
-</code></pre>
-</div></pre>
-
-</li>
-<li>
-<p><strong>Start the server</strong></p>
+<p>Get your documentation site running in under 30 seconds.</p>
+<h3 id="one-command-setup" tabindex="-1">One-Command Setup</h3>
 <pre class="code-block-wrapper"><div class="code-block-container">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -1570,44 +1449,9 @@ echo &quot;# Hello World&quot; &gt; docs/readme.md
 </code></pre>
 </div></pre>
 
-</li>
-</ol>
-<h2 id="key-features" tabindex="-1">Key Features</h2>
-<div class="table-wrapper"><table>
-<thead>
-<tr>
-<th>Feature</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>📝 <a href="/3.-features">Markdown &amp; MDX</a></td>
-<td>Render .md and .mdx files with built-in interactive components</td>
-</tr>
-<tr>
-<td>🎨 <a href="/3.-features/theming">Themes</a></td>
-<td>Dark/light mode with customizable accent colors</td>
-</tr>
-<tr>
-<td>🔍 <a href="/3.-features/search">Search</a></td>
-<td>Built-in full-text search with keyboard shortcut (⌘K)</td>
-</tr>
-<tr>
-<td>📑 <a href="/3.-features/navigation">Navigation</a></td>
-<td>Auto-generated sidebar and table of contents</td>
-</tr>
-<tr>
-<td>🔎 <a href="/3.-features/seo">SEO</a></td>
-<td>Sitemap, RSS feed, Open Graph, and Twitter Cards</td>
-</tr>
-<tr>
-<td>⚙️ <a href="/2.-settings">Settings</a></td>
-<td>Configure everything via settings.json</td>
-</tr>
-</tbody>
-</table></div>
-<h2 id="this-docs-structure-for-reference" tabindex="-1">This docs structure for reference</h2>
+<p>That’s it! No configuration needed, no build step required.</p>
+<h3 id="step-by-step" tabindex="-1">Step-by-Step</h3>
+<h4 id="1.-create-a-docs-folder" tabindex="-1">1. Create a Docs Folder</h4>
 <pre class="code-block-wrapper"><div class="code-block-container">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -1637,66 +1481,378 @@ echo &quot;# Hello World&quot; &gt; docs/readme.md
       </svg>
     </button>
   </div>
-  <pre><code class="hljs">docs/
-├── settings.json                # Site configuration (optional)
-├── README.md                    # Homepage (this file)
-├── 1.-getting-started/          # Getting started guides
-│   └── README.md              # Quick start &amp; installation
-├── 2.-settings/                 # Settings &amp; configuration
-│   └── README.md              # Configuration, writing &amp; deployment
-├── 3.-features/                 # Feature documentation
-│   ├── README.md             # Features overview
-│   ├── markdown.md           # Markdown support
-│   ├── mdx.mdx               # MDX components demo
-│   ├── theming.md            # Theme customization
-│   ├── search.md             # Search functionality
-│   ├── navigation.md         # Navigation features
-│   ├── seo.md                # SEO features
-│   └── mermaid.md            # Mermaid diagrams
-└── 4.-reference/                # API/Reference
-    └── README.md             # CLI reference
+  <pre><code class="hljs language-bash"><span class="hljs-built_in">mkdir</span> docs
+<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;# Hello World&quot;</span> &gt; docs/README.md
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>docs/
-├── settings.json                # Site configuration (optional)
-├── README.md                    # Homepage (this file)
-├── 1.-getting-started/          # Getting started guides
-│   └── README.md              # Quick start &amp; installation
-├── 2.-settings/                 # Settings &amp; configuration
-│   └── README.md              # Configuration, writing &amp; deployment
-├── 3.-features/                 # Feature documentation
-│   ├── README.md             # Features overview
-│   ├── markdown.md           # Markdown support
-│   ├── mdx.mdx               # MDX components demo
-│   ├── theming.md            # Theme customization
-│   ├── search.md             # Search functionality
-│   ├── navigation.md         # Navigation features
-│   ├── seo.md                # SEO features
-│   └── mermaid.md            # Mermaid diagrams
-└── 4.-reference/                # API/Reference
-    └── README.md             # CLI reference
+  <pre class="code-block-raw" style="display:none;"><code>mkdir docs
+echo &quot;# Hello World&quot; &gt; docs/README.md
 </code></pre>
 </div></pre>
 
+<h4 id="2.-start-the-server" tabindex="-1">2. Start the Server</h4>
+<pre class="code-block-wrapper"><div class="code-block-container">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-bash">npx mdsvr ./docs --open
+</code></pre>
+  <pre class="code-block-raw" style="display:none;"><code>npx mdsvr ./docs --open
+</code></pre>
+</div></pre>
+
+<p>The <code>--open</code> flag automatically opens your browser to <code>http://localhost:1800</code>.</p>
+<h3 id="what-just-happened%3F" tabindex="-1">What Just Happened?</h3>
+<p>mdsvr:</p>
+<ol>
+<li>Scanned your <code>docs/</code> folder</li>
+<li>Found <code>README.md</code> and rendered it as your homepage</li>
+<li>Generated navigation from your folder structure (sorted alphabetically)</li>
+<li>Started a server on port 1800</li>
+</ol>
+<hr>
+<h2 id="installation" tabindex="-1">Installation</h2>
+<p>mdsvr requires <strong>Node.js 18+</strong>. Check your version:</p>
+<pre class="code-block-wrapper"><div class="code-block-container">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-bash">node --version
+</code></pre>
+  <pre class="code-block-raw" style="display:none;"><code>node --version
+</code></pre>
+</div></pre>
+
+<h3 id="option-1%3A-npx-(recommended)" tabindex="-1">Option 1: npx (Recommended)</h3>
+<p>No installation needed. Run directly:</p>
+<pre class="code-block-wrapper"><div class="code-block-container">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-bash">npx mdsvr ./docs
+</code></pre>
+  <pre class="code-block-raw" style="display:none;"><code>npx mdsvr ./docs
+</code></pre>
+</div></pre>
+
+<h3 id="option-2%3A-global-install" tabindex="-1">Option 2: Global Install</h3>
+<p>Install once, use anywhere:</p>
+<pre class="code-block-wrapper"><div class="code-block-container">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-bash">npm install -g mdsvr
+mdsvr ./docs
+</code></pre>
+  <pre class="code-block-raw" style="display:none;"><code>npm install -g mdsvr
+mdsvr ./docs
+</code></pre>
+</div></pre>
+
+<h3 id="option-3%3A-local-install" tabindex="-1">Option 3: Local Install</h3>
+<p>Add to a specific project:</p>
+<pre class="code-block-wrapper"><div class="code-block-container">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-bash">npm install --save-dev mdsvr
+</code></pre>
+  <pre class="code-block-raw" style="display:none;"><code>npm install --save-dev mdsvr
+</code></pre>
+</div></pre>
+
+<p>Then add to your <code>package.json</code>:</p>
+<pre class="code-block-wrapper"><div class="code-block-container">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;scripts&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;docs&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;mdsvr ./docs --open&quot;</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+  <pre class="code-block-raw" style="display:none;"><code>{
+  &quot;scripts&quot;: {
+    &quot;docs&quot;: &quot;mdsvr ./docs --open&quot;
+  }
+}
+</code></pre>
+</div></pre>
+
+<p>Run with:</p>
+<pre class="code-block-wrapper"><div class="code-block-container">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-bash">npm run docs
+</code></pre>
+  <pre class="code-block-raw" style="display:none;"><code>npm run docs
+</code></pre>
+</div></pre>
+
+<h3 id="verify-installation" tabindex="-1">Verify Installation</h3>
+<pre class="code-block-wrapper"><div class="code-block-container">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-bash">mdsvr --version
+</code></pre>
+  <pre class="code-block-raw" style="display:none;"><code>mdsvr --version
+</code></pre>
+</div></pre>
+
+<h3 id="docker" tabindex="-1">Docker</h3>
+<p>Pull and run:</p>
+<pre class="code-block-wrapper"><div class="code-block-container">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-bash">docker pull thedeployer/mdsvr:latest
+docker run -d -p 1800:1800 -v /path/to/docs:/app/docs thedeployer/mdsvr:latest
+</code></pre>
+  <pre class="code-block-raw" style="display:none;"><code>docker pull thedeployer/mdsvr:latest
+docker run -d -p 1800:1800 -v /path/to/docs:/app/docs thedeployer/mdsvr:latest
+</code></pre>
+</div></pre>
+
+<p>See <a href="../2.-settings/README.md#docker">Docker deployment</a> for more details.</p>
+<hr>
 <h2 id="next-steps" tabindex="-1">Next Steps</h2>
 <ul>
-<li><strong><a href="/1.-getting-started">Quick Start</a></strong> — Get running in 30 seconds</li>
-<li><strong><a href="/1.-getting-started">Installation</a></strong> — Install options</li>
-<li><strong><a href="/3.-features/mdx">MDX Components</a></strong> — Make your docs interactive</li>
-<li><strong><a href="/2.-settings">Configuration</a></strong> — Customize your site</li>
-<li><strong><a href="/2.-settings">Writing Content</a></strong> — Best practices</li>
-<li><strong><a href="/2.-settings">Deployment</a></strong> — Go live</li>
-<li><strong><a href="/3.-features">Features</a></strong> — See all features</li>
-<li><strong><a href="/4.-reference">CLI Reference</a></strong> — Command reference</li>
+<li>Learn about <a href="../3.-features/mdx.mdx">MDX components</a> for interactive docs</li>
+<li><a href="../2.-settings/README.md">Configure</a> your site with <code>settings.json</code></li>
+<li>See all <a href="../3.-features">features</a> mdsvr offers</li>
 </ul>
-<hr>
-<blockquote>
-<p>💡 <strong>Tip:</strong> Press <code>⌘+K</code> (or <code>Ctrl+K</code>) to open the search modal and find anything in this documentation!</p>
-</blockquote>
 
       </article>
       <nav class="prev-next-nav">
-        <span></span>
-        <a href="/docs/docs/01-getting-started/" class="prev-next-card next-card"><span class="prev-next-label">Next →</span><span class="prev-next-title">Getting Started</span></a>
+        <a href="/docs/docs/" class="prev-next-card prev-card"><span class="prev-next-label">← Prev</span><span class="prev-next-title">Welcome</span></a>
+        <a href="/docs/docs/02-settings/" class="prev-next-card next-card"><span class="prev-next-label">Next →</span><span class="prev-next-title">Guides</span></a>
       </nav>
       <footer class="footer">
     <div class="footer-content">
@@ -1708,12 +1864,22 @@ echo &quot;# Hello World&quot; &gt; docs/readme.md
     <aside class="toc-sidebar"><nav class="toc">
   <h3>On this page</h3>
 <ul class="toc-list toc-level-1">
-<li class="toc-item"><a href="#welcome-to-mdsvr">Welcome to mdsvr</a></li>
+<li class="toc-item"><a href="#getting-started">Getting Started</a></li>
 <ul class="toc-list toc-level-2">
-<li class="toc-item"><a href="#what-is-mdsvr%3F">What is mdsvr?</a></li>
 <li class="toc-item"><a href="#quick-start">Quick Start</a></li>
-<li class="toc-item"><a href="#key-features">Key Features</a></li>
-<li class="toc-item"><a href="#this-docs-structure-for-reference">This docs structure for reference</a></li>
+<ul class="toc-list toc-level-3">
+<li class="toc-item"><a href="#one-command-setup">One-Command Setup</a></li>
+<li class="toc-item"><a href="#step-by-step">Step-by-Step</a></li>
+<li class="toc-item"><a href="#what-just-happened%3F">What Just Happened?</a></li>
+</ul>
+<li class="toc-item"><a href="#installation">Installation</a></li>
+<ul class="toc-list toc-level-3">
+<li class="toc-item"><a href="#option-1%3A-npx-(recommended)">Option 1: npx (Recommended)</a></li>
+<li class="toc-item"><a href="#option-2%3A-global-install">Option 2: Global Install</a></li>
+<li class="toc-item"><a href="#option-3%3A-local-install">Option 3: Local Install</a></li>
+<li class="toc-item"><a href="#verify-installation">Verify Installation</a></li>
+<li class="toc-item"><a href="#docker">Docker</a></li>
+</ul>
 <li class="toc-item"><a href="#next-steps">Next Steps</a></li>
 </ul>
 </ul>

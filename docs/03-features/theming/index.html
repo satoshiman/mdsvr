@@ -13,16 +13,16 @@
   document.documentElement.setAttribute('data-theme', theme);
 })();
 </script>
-  <title>Welcome</title>
-    <meta name="description" content="Full-featured documentation website server with MDX support, site settings, SEO, and navigation">
-    <meta property="og:title" content="Welcome">
-    <meta property="og:description" content="Full-featured documentation website server with MDX support, site settings, SEO, and navigation">
+  <title>Theming</title>
+    <meta name="description" content="Customize the appearance of your documentation">
+    <meta property="og:title" content="Theming">
+    <meta property="og:description" content="Customize the appearance of your documentation">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="/docs/">
-    <meta property="og:image" content="/docs/public/og/index.jpg">
+    <meta property="og:url" content="/docs/03-features/theming">
+    <meta property="og:image" content="/docs/public/og/03-features/theming/index.jpg">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Welcome">
-    <meta name="twitter:image" content="/docs/public/og/index.jpg">
+    <meta name="twitter:title" content="Theming">
+    <meta name="twitter:image" content="/docs/public/og/03-features/theming/index.jpg">
     <link rel="sitemap" type="application/xml" href="/docs/sitemap.xml">
   
   <style>
@@ -1360,8 +1360,8 @@ code.hljs {
 
   <div class="site-container has-toc">
     <aside class="sidebar" id="sidebar"><ul class="sidebar-nav" data-level="0">
-  <li class="nav-item active" data-type="file">
-    <a href="/docs/" class="nav-link active">Welcome</a>
+  <li class="nav-item" data-type="file">
+    <a href="/docs/" class="nav-link">Welcome</a>
   </li>
   <li class="nav-item folder" data-type="dir">
     <a href="/docs/01-getting-started/" class="nav-link">📁 Getting Started</a>
@@ -1369,9 +1369,9 @@ code.hljs {
   <li class="nav-item folder" data-type="dir">
     <a href="/docs/02-settings/" class="nav-link">📁 Guides</a>
   </li>
-  <li class="nav-item folder" data-type="dir">
+  <li class="nav-item active folder" data-type="dir">
     <div class="nav-item-header" data-expanded="true">
-      <a href="/docs/03-features/" class="nav-link" data-folder-icon="open"><span class="folder-icon">📂</span> Features</a>
+      <a href="/docs/03-features/" class="nav-link active" data-folder-icon="open"><span class="folder-icon">📂</span> Features</a>
     </div>
     <div class="nav-children" data-expanded="true">
     <ul class="sidebar-nav" data-level="1">
@@ -1393,8 +1393,8 @@ code.hljs {
       <li class="nav-item" data-type="file">
         <a href="/docs/03-features/seo" class="nav-link">SEO</a>
       </li>
-      <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/theming" class="nav-link">Theming</a>
+      <li class="nav-item active" data-type="file">
+        <a href="/docs/03-features/theming" class="nav-link active">Theming</a>
       </li>
     </ul>
     </div>
@@ -1406,11 +1406,13 @@ code.hljs {
     <main class="content">
       <nav class="breadcrumbs">
     <a href="/docs/">Home</a>
-    <span class="breadcrumb-sep">/</span><span class="breadcrumb-current">Docs</span>
+    <span class="breadcrumb-sep">/</span><a href="/docs/docs">Docs</a><span class="breadcrumb-sep">/</span><a href="/docs/docs/03-features">03 features</a><span class="breadcrumb-sep">/</span><span class="breadcrumb-current">Theming</span>
   </nav>
       <article class="markdown-body">
-        <h1 id="welcome-to-mdsvr" tabindex="-1">Welcome to mdsvr</h1>
-<p>Transform any folder of Markdown/Markdown files into a beautiful documentation website — zero config required.</p>
+        <h1 id="theming" tabindex="-1">Theming</h1>
+<p>mdsvr supports <strong>dark mode</strong>, <strong>light mode</strong>, and <strong>automatic theme detection</strong> based on the user’s system preferences.</p>
+<h2 id="theme-modes" tabindex="-1">Theme Modes</h2>
+<p>Configure the default theme in <code>settings.json</code>:</p>
 <pre class="code-block-wrapper"><div class="code-block-container">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -1440,174 +1442,52 @@ code.hljs {
       </svg>
     </button>
   </div>
-  <pre><code class="hljs language-bash">npx mdsvr ./docs
+  <pre><code class="hljs language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;appearance&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;defaultTheme&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;system&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;allowThemeToggle&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>npx mdsvr ./docs
-</code></pre>
-</div></pre>
-
-<blockquote>
-<p>ℹ️ <strong>Info:</strong> This documentation itself is served by <strong>mdsvr</strong>! Explore the files in this directory to see how everything works.</p>
-</blockquote>
-<h2 id="what-is-mdsvr%3F" tabindex="-1">What is mdsvr?</h2>
-<p><strong>mdsvr</strong> is a static file server that automatically renders Markdown and MDX files as beautiful HTML. It’s similar to Vercel’s <code>serve</code> but understands <code>.md</code> and <code>.mdx</code> files.</p>
-<h2 id="quick-start" tabindex="-1">Quick Start</h2>
-<ol>
-<li>
-<p><strong>Install</strong></p>
-<p>No installation needed! Just use <code>npx</code>:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
-  <div class="code-block-toolbar">
-    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
-        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-      </svg>
-    </button>
-    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="m16 16-3 3 3 3"/>
-        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
-        <path d="M3 19h6"/>
-        <path d="M3 5h18"/>
-      </svg>
-    </button>
-    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="m15 15 6 6"/>
-        <path d="m15 9 6-6"/>
-        <path d="M21 16v5h-5"/>
-        <path d="M21 8V3h-5"/>
-        <path d="M3 16v5h5"/>
-        <path d="m3 21 6-6"/>
-        <path d="M3 8V3h5"/>
-        <path d="M9 9 3 3"/>
-      </svg>
-    </button>
-  </div>
-  <pre><code class="hljs language-bash">npx mdsvr ./docs
-</code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>npx mdsvr ./docs
+  <pre class="code-block-raw" style="display:none;"><code>{
+  &quot;appearance&quot;: {
+    &quot;defaultTheme&quot;: &quot;system&quot;,
+    &quot;allowThemeToggle&quot;: true
+  }
+}
 </code></pre>
 </div></pre>
 
-</li>
-<li>
-<p><strong>Create your docs</strong></p>
-<p>Create a folder with some <code>.md</code> files:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
-  <div class="code-block-toolbar">
-    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
-        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-      </svg>
-    </button>
-    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="m16 16-3 3 3 3"/>
-        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
-        <path d="M3 19h6"/>
-        <path d="M3 5h18"/>
-      </svg>
-    </button>
-    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="m15 15 6 6"/>
-        <path d="m15 9 6-6"/>
-        <path d="M21 16v5h-5"/>
-        <path d="M21 8V3h-5"/>
-        <path d="M3 16v5h5"/>
-        <path d="m3 21 6-6"/>
-        <path d="M3 8V3h5"/>
-        <path d="M9 9 3 3"/>
-      </svg>
-    </button>
-  </div>
-  <pre><code class="hljs language-bash"><span class="hljs-built_in">mkdir</span> docs
-<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;# Hello World&quot;</span> &gt; docs/readme.md
-</code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>mkdir docs
-echo &quot;# Hello World&quot; &gt; docs/readme.md
-</code></pre>
-</div></pre>
-
-</li>
-<li>
-<p><strong>Start the server</strong></p>
-<pre class="code-block-wrapper"><div class="code-block-container">
-  <div class="code-block-toolbar">
-    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
-        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-      </svg>
-    </button>
-    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="m16 16-3 3 3 3"/>
-        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
-        <path d="M3 19h6"/>
-        <path d="M3 5h18"/>
-      </svg>
-    </button>
-    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="m15 15 6 6"/>
-        <path d="m15 9 6-6"/>
-        <path d="M21 16v5h-5"/>
-        <path d="M21 8V3h-5"/>
-        <path d="M3 16v5h5"/>
-        <path d="m3 21 6-6"/>
-        <path d="M3 8V3h5"/>
-        <path d="M9 9 3 3"/>
-      </svg>
-    </button>
-  </div>
-  <pre><code class="hljs language-bash">npx mdsvr ./docs --open
-</code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>npx mdsvr ./docs --open
-</code></pre>
-</div></pre>
-
-</li>
-</ol>
-<h2 id="key-features" tabindex="-1">Key Features</h2>
+<h3 id="options" tabindex="-1">Options</h3>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
-<th>Feature</th>
-<th>Description</th>
+<th>Mode</th>
+<th>Behavior</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>📝 <a href="/3.-features">Markdown &amp; MDX</a></td>
-<td>Render .md and .mdx files with built-in interactive components</td>
+<td><code>system</code></td>
+<td>Follows the user’s OS preference</td>
 </tr>
 <tr>
-<td>🎨 <a href="/3.-features/theming">Themes</a></td>
-<td>Dark/light mode with customizable accent colors</td>
+<td><code>light</code></td>
+<td>Always uses light theme</td>
 </tr>
 <tr>
-<td>🔍 <a href="/3.-features/search">Search</a></td>
-<td>Built-in full-text search with keyboard shortcut (⌘K)</td>
-</tr>
-<tr>
-<td>📑 <a href="/3.-features/navigation">Navigation</a></td>
-<td>Auto-generated sidebar and table of contents</td>
-</tr>
-<tr>
-<td>🔎 <a href="/3.-features/seo">SEO</a></td>
-<td>Sitemap, RSS feed, Open Graph, and Twitter Cards</td>
-</tr>
-<tr>
-<td>⚙️ <a href="/2.-settings">Settings</a></td>
-<td>Configure everything via settings.json</td>
+<td><code>dark</code></td>
+<td>Always uses dark theme</td>
 </tr>
 </tbody>
 </table></div>
-<h2 id="this-docs-structure-for-reference" tabindex="-1">This docs structure for reference</h2>
+<h2 id="theme-toggle" tabindex="-1">Theme Toggle</h2>
+<p>When <code>allowThemeToggle</code> is enabled, users can switch themes using the button in the header:</p>
+<Callout type="tip">
+  The user's preference is saved to `localStorage` and persists across sessions.
+</Callout>
+<h2 id="accent-color" tabindex="-1">Accent Color</h2>
+<p>Customize the primary color used for links, buttons, and accents:</p>
 <pre class="code-block-wrapper"><div class="code-block-container">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -1637,66 +1517,304 @@ echo &quot;# Hello World&quot; &gt; docs/readme.md
       </svg>
     </button>
   </div>
-  <pre><code class="hljs">docs/
-├── settings.json                # Site configuration (optional)
-├── README.md                    # Homepage (this file)
-├── 1.-getting-started/          # Getting started guides
-│   └── README.md              # Quick start &amp; installation
-├── 2.-settings/                 # Settings &amp; configuration
-│   └── README.md              # Configuration, writing &amp; deployment
-├── 3.-features/                 # Feature documentation
-│   ├── README.md             # Features overview
-│   ├── markdown.md           # Markdown support
-│   ├── mdx.mdx               # MDX components demo
-│   ├── theming.md            # Theme customization
-│   ├── search.md             # Search functionality
-│   ├── navigation.md         # Navigation features
-│   ├── seo.md                # SEO features
-│   └── mermaid.md            # Mermaid diagrams
-└── 4.-reference/                # API/Reference
-    └── README.md             # CLI reference
+  <pre><code class="hljs language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;appearance&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;accentColor&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;#0969da&quot;</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>docs/
-├── settings.json                # Site configuration (optional)
-├── README.md                    # Homepage (this file)
-├── 1.-getting-started/          # Getting started guides
-│   └── README.md              # Quick start &amp; installation
-├── 2.-settings/                 # Settings &amp; configuration
-│   └── README.md              # Configuration, writing &amp; deployment
-├── 3.-features/                 # Feature documentation
-│   ├── README.md             # Features overview
-│   ├── markdown.md           # Markdown support
-│   ├── mdx.mdx               # MDX components demo
-│   ├── theming.md            # Theme customization
-│   ├── search.md             # Search functionality
-│   ├── navigation.md         # Navigation features
-│   ├── seo.md                # SEO features
-│   └── mermaid.md            # Mermaid diagrams
-└── 4.-reference/                # API/Reference
-    └── README.md             # CLI reference
+  <pre class="code-block-raw" style="display:none;"><code>{
+  &quot;appearance&quot;: {
+    &quot;accentColor&quot;: &quot;#0969da&quot;
+  }
+}
 </code></pre>
 </div></pre>
 
-<h2 id="next-steps" tabindex="-1">Next Steps</h2>
+<p>This affects:</p>
 <ul>
-<li><strong><a href="/1.-getting-started">Quick Start</a></strong> — Get running in 30 seconds</li>
-<li><strong><a href="/1.-getting-started">Installation</a></strong> — Install options</li>
-<li><strong><a href="/3.-features/mdx">MDX Components</a></strong> — Make your docs interactive</li>
-<li><strong><a href="/2.-settings">Configuration</a></strong> — Customize your site</li>
-<li><strong><a href="/2.-settings">Writing Content</a></strong> — Best practices</li>
-<li><strong><a href="/2.-settings">Deployment</a></strong> — Go live</li>
-<li><strong><a href="/3.-features">Features</a></strong> — See all features</li>
-<li><strong><a href="/4.-reference">CLI Reference</a></strong> — Command reference</li>
+<li>Links in content</li>
+<li>Sidebar active state</li>
+<li>Button hover states</li>
+<li>Search highlight</li>
+<li>Badges with accent color</li>
 </ul>
-<hr>
-<blockquote>
-<p>💡 <strong>Tip:</strong> Press <code>⌘+K</code> (or <code>Ctrl+K</code>) to open the search modal and find anything in this documentation!</p>
-</blockquote>
+<h3 id="recommended-colors" tabindex="-1">Recommended Colors</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>Color</th>
+<th>Hex Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GitHub Blue</td>
+<td><code>#0969da</code></td>
+</tr>
+<tr>
+<td>Purple</td>
+<td><code>#8250df</code></td>
+</tr>
+<tr>
+<td>Green</td>
+<td><code>#1a7f37</code></td>
+</tr>
+<tr>
+<td>Red</td>
+<td><code>#cf222e</code></td>
+</tr>
+<tr>
+<td>Orange</td>
+<td><code>#9a6700</code></td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="code-themes" tabindex="-1">Code Themes</h2>
+<p>Configure syntax highlighting themes for light and dark modes:</p>
+<pre class="code-block-wrapper"><div class="code-block-container">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;appearance&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;codeTheme&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">&quot;light&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;github&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;dark&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;github-dark&quot;</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+  <pre class="code-block-raw" style="display:none;"><code>{
+  &quot;appearance&quot;: {
+    &quot;codeTheme&quot;: {
+      &quot;light&quot;: &quot;github&quot;,
+      &quot;dark&quot;: &quot;github-dark&quot;
+    }
+  }
+}
+</code></pre>
+</div></pre>
+
+<p>Currently supported:</p>
+<ul>
+<li><code>github</code></li>
+<li><code>github-dark</code></li>
+</ul>
+<h2 id="css-variables" tabindex="-1">CSS Variables</h2>
+<p>The following CSS variables are available for custom styling:</p>
+<pre class="code-block-wrapper"><div class="code-block-container">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-css"><span class="hljs-selector-pseudo">:root</span><span class="hljs-selector-attr">[data-theme=<span class="hljs-string">&quot;light&quot;</span>]</span> {
+  <span class="hljs-attr">--bg</span>: <span class="hljs-number">#ffffff</span>;
+  <span class="hljs-attr">--bg-secondary</span>: <span class="hljs-number">#f6f8fa</span>;
+  <span class="hljs-attr">--border</span>: <span class="hljs-number">#d1d9e0</span>;
+  <span class="hljs-attr">--text</span>: <span class="hljs-number">#1f2328</span>;
+  <span class="hljs-attr">--text-muted</span>: <span class="hljs-number">#636c76</span>;
+  <span class="hljs-attr">--accent</span>: <span class="hljs-built_in">var</span>(--accent-color, <span class="hljs-number">#0969da</span>);
+  <span class="hljs-attr">--code-bg</span>: <span class="hljs-number">#f6f8fa</span>;
+}
+
+<span class="hljs-selector-pseudo">:root</span><span class="hljs-selector-attr">[data-theme=<span class="hljs-string">&quot;dark&quot;</span>]</span> {
+  <span class="hljs-attr">--bg</span>: <span class="hljs-number">#0d1117</span>;
+  <span class="hljs-attr">--bg-secondary</span>: <span class="hljs-number">#161b22</span>;
+  <span class="hljs-attr">--border</span>: <span class="hljs-number">#30363d</span>;
+  <span class="hljs-attr">--text</span>: <span class="hljs-number">#e6edf3</span>;
+  <span class="hljs-attr">--text-muted</span>: <span class="hljs-number">#8d96a0</span>;
+  <span class="hljs-attr">--accent</span>: <span class="hljs-built_in">var</span>(--accent-color, <span class="hljs-number">#58a6ff</span>);
+  <span class="hljs-attr">--code-bg</span>: <span class="hljs-number">#161b22</span>;
+}
+</code></pre>
+  <pre class="code-block-raw" style="display:none;"><code>:root[data-theme=&quot;light&quot;] {
+  --bg: #ffffff;
+  --bg-secondary: #f6f8fa;
+  --border: #d1d9e0;
+  --text: #1f2328;
+  --text-muted: #636c76;
+  --accent: var(--accent-color, #0969da);
+  --code-bg: #f6f8fa;
+}
+
+:root[data-theme=&quot;dark&quot;] {
+  --bg: #0d1117;
+  --bg-secondary: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --text-muted: #8d96a0;
+  --accent: var(--accent-color, #58a6ff);
+  --code-bg: #161b22;
+}
+</code></pre>
+</div></pre>
+
+<p>You can use these variables in custom CSS if needed (custom CSS injection coming in a future release).</p>
+<h2 id="system-preference-detection" tabindex="-1">System Preference Detection</h2>
+<p>When using <code>defaultTheme: &quot;system&quot;</code>, mdsvr automatically detects the user’s OS preference:</p>
+<pre class="code-block-wrapper"><div class="code-block-container">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-javascript"><span class="hljs-comment">// Runs before paint to prevent flash</span>
+<span class="hljs-keyword">const</span> theme =
+  <span class="hljs-variable language_">localStorage</span>.<span class="hljs-title function_">getItem</span>(<span class="hljs-string">&quot;theme&quot;</span>) ||
+  (<span class="hljs-title function_">matchMedia</span>(<span class="hljs-string">&quot;(prefers-color-scheme: dark)&quot;</span>).<span class="hljs-property">matches</span> ? <span class="hljs-string">&quot;dark&quot;</span> : <span class="hljs-string">&quot;light&quot;</span>);
+<span class="hljs-variable language_">document</span>.<span class="hljs-property">documentElement</span>.<span class="hljs-title function_">setAttribute</span>(<span class="hljs-string">&quot;data-theme&quot;</span>, theme);
+</code></pre>
+  <pre class="code-block-raw" style="display:none;"><code>// Runs before paint to prevent flash
+const theme =
+  localStorage.getItem(&quot;theme&quot;) ||
+  (matchMedia(&quot;(prefers-color-scheme: dark)&quot;).matches ? &quot;dark&quot; : &quot;light&quot;);
+document.documentElement.setAttribute(&quot;data-theme&quot;, theme);
+</code></pre>
+</div></pre>
+
+<p>The theme also updates automatically when the system preference changes (no page reload needed).</p>
+<h2 id="no-flash-theme-loading" tabindex="-1">No-Flash Theme Loading</h2>
+<p>To prevent a flash of unstyled content (FOUC) when the page loads, mdsvr injects a small script in the <code>&lt;head&gt;</code> that:</p>
+<ol>
+<li>Checks <code>localStorage</code> for a saved preference</li>
+<li>Falls back to system preference if no saved preference</li>
+<li>Sets the <code>data-theme</code> attribute before the page renders</li>
+</ol>
+<p>This ensures the correct theme is applied immediately without any visible flash.</p>
+<h2 id="example-configuration" tabindex="-1">Example Configuration</h2>
+<pre class="code-block-wrapper"><div class="code-block-container">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;appearance&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;defaultTheme&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;system&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;allowThemeToggle&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;accentColor&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;#8250df&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;codeTheme&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">&quot;light&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;github&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;dark&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;github-dark&quot;</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+  <pre class="code-block-raw" style="display:none;"><code>{
+  &quot;appearance&quot;: {
+    &quot;defaultTheme&quot;: &quot;system&quot;,
+    &quot;allowThemeToggle&quot;: true,
+    &quot;accentColor&quot;: &quot;#8250df&quot;,
+    &quot;codeTheme&quot;: {
+      &quot;light&quot;: &quot;github&quot;,
+      &quot;dark&quot;: &quot;github-dark&quot;
+    }
+  }
+}
+</code></pre>
+</div></pre>
+
 
       </article>
       <nav class="prev-next-nav">
-        <span></span>
-        <a href="/docs/docs/01-getting-started/" class="prev-next-card next-card"><span class="prev-next-label">Next →</span><span class="prev-next-title">Getting Started</span></a>
+        <a href="/docs/docs/03-features/seo" class="prev-next-card prev-card"><span class="prev-next-label">← Prev</span><span class="prev-next-title">SEO</span></a>
+        <a href="/docs/docs/04-reference/" class="prev-next-card next-card"><span class="prev-next-label">Next →</span><span class="prev-next-title">Reference</span></a>
       </nav>
       <footer class="footer">
     <div class="footer-content">
@@ -1708,13 +1826,22 @@ echo &quot;# Hello World&quot; &gt; docs/readme.md
     <aside class="toc-sidebar"><nav class="toc">
   <h3>On this page</h3>
 <ul class="toc-list toc-level-1">
-<li class="toc-item"><a href="#welcome-to-mdsvr">Welcome to mdsvr</a></li>
+<li class="toc-item"><a href="#theming">Theming</a></li>
 <ul class="toc-list toc-level-2">
-<li class="toc-item"><a href="#what-is-mdsvr%3F">What is mdsvr?</a></li>
-<li class="toc-item"><a href="#quick-start">Quick Start</a></li>
-<li class="toc-item"><a href="#key-features">Key Features</a></li>
-<li class="toc-item"><a href="#this-docs-structure-for-reference">This docs structure for reference</a></li>
-<li class="toc-item"><a href="#next-steps">Next Steps</a></li>
+<li class="toc-item"><a href="#theme-modes">Theme Modes</a></li>
+<ul class="toc-list toc-level-3">
+<li class="toc-item"><a href="#options">Options</a></li>
+</ul>
+<li class="toc-item"><a href="#theme-toggle">Theme Toggle</a></li>
+<li class="toc-item"><a href="#accent-color">Accent Color</a></li>
+<ul class="toc-list toc-level-3">
+<li class="toc-item"><a href="#recommended-colors">Recommended Colors</a></li>
+</ul>
+<li class="toc-item"><a href="#code-themes">Code Themes</a></li>
+<li class="toc-item"><a href="#css-variables">CSS Variables</a></li>
+<li class="toc-item"><a href="#system-preference-detection">System Preference Detection</a></li>
+<li class="toc-item"><a href="#no-flash-theme-loading">No-Flash Theme Loading</a></li>
+<li class="toc-item"><a href="#example-configuration">Example Configuration</a></li>
 </ul>
 </ul>
 </nav></aside>

@@ -13,16 +13,16 @@
   document.documentElement.setAttribute('data-theme', theme);
 })();
 </script>
-  <title>Welcome</title>
-    <meta name="description" content="Full-featured documentation website server with MDX support, site settings, SEO, and navigation">
-    <meta property="og:title" content="Welcome">
-    <meta property="og:description" content="Full-featured documentation website server with MDX support, site settings, SEO, and navigation">
+  <title>Markdown Formats</title>
+    <meta name="description" content="Test all supported Markdown formats">
+    <meta property="og:title" content="Markdown Formats">
+    <meta property="og:description" content="Test all supported Markdown formats">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="/docs/">
-    <meta property="og:image" content="/docs/public/og/index.jpg">
+    <meta property="og:url" content="/docs/03-features/markdown">
+    <meta property="og:image" content="/docs/public/og/03-features/markdown/index.jpg">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Welcome">
-    <meta name="twitter:image" content="/docs/public/og/index.jpg">
+    <meta name="twitter:title" content="Markdown Formats">
+    <meta name="twitter:image" content="/docs/public/og/03-features/markdown/index.jpg">
     <link rel="sitemap" type="application/xml" href="/docs/sitemap.xml">
   
   <style>
@@ -1360,8 +1360,8 @@ code.hljs {
 
   <div class="site-container has-toc">
     <aside class="sidebar" id="sidebar"><ul class="sidebar-nav" data-level="0">
-  <li class="nav-item active" data-type="file">
-    <a href="/docs/" class="nav-link active">Welcome</a>
+  <li class="nav-item" data-type="file">
+    <a href="/docs/" class="nav-link">Welcome</a>
   </li>
   <li class="nav-item folder" data-type="dir">
     <a href="/docs/01-getting-started/" class="nav-link">📁 Getting Started</a>
@@ -1369,14 +1369,14 @@ code.hljs {
   <li class="nav-item folder" data-type="dir">
     <a href="/docs/02-settings/" class="nav-link">📁 Guides</a>
   </li>
-  <li class="nav-item folder" data-type="dir">
+  <li class="nav-item active folder" data-type="dir">
     <div class="nav-item-header" data-expanded="true">
-      <a href="/docs/03-features/" class="nav-link" data-folder-icon="open"><span class="folder-icon">📂</span> Features</a>
+      <a href="/docs/03-features/" class="nav-link active" data-folder-icon="open"><span class="folder-icon">📂</span> Features</a>
     </div>
     <div class="nav-children" data-expanded="true">
     <ul class="sidebar-nav" data-level="1">
-      <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/markdown" class="nav-link">Markdown Formats</a>
+      <li class="nav-item active" data-type="file">
+        <a href="/docs/03-features/markdown" class="nav-link active">Markdown Formats</a>
       </li>
       <li class="nav-item" data-type="file">
         <a href="/docs/03-features/mdx" class="nav-link">MDX Components</a>
@@ -1406,297 +1406,411 @@ code.hljs {
     <main class="content">
       <nav class="breadcrumbs">
     <a href="/docs/">Home</a>
-    <span class="breadcrumb-sep">/</span><span class="breadcrumb-current">Docs</span>
+    <span class="breadcrumb-sep">/</span><a href="/docs/docs">Docs</a><span class="breadcrumb-sep">/</span><a href="/docs/docs/03-features">03 features</a><span class="breadcrumb-sep">/</span><span class="breadcrumb-current">Markdown</span>
   </nav>
       <article class="markdown-body">
-        <h1 id="welcome-to-mdsvr" tabindex="-1">Welcome to mdsvr</h1>
-<p>Transform any folder of Markdown/Markdown files into a beautiful documentation website — zero config required.</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
-  <div class="code-block-toolbar">
-    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
-        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-      </svg>
-    </button>
-    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="m16 16-3 3 3 3"/>
-        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
-        <path d="M3 19h6"/>
-        <path d="M3 5h18"/>
-      </svg>
-    </button>
-    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="m15 15 6 6"/>
-        <path d="m15 9 6-6"/>
-        <path d="M21 16v5h-5"/>
-        <path d="M21 8V3h-5"/>
-        <path d="M3 16v5h5"/>
-        <path d="m3 21 6-6"/>
-        <path d="M3 8V3h5"/>
-        <path d="M9 9 3 3"/>
-      </svg>
-    </button>
-  </div>
-  <pre><code class="hljs language-bash">npx mdsvr ./docs
-</code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>npx mdsvr ./docs
-</code></pre>
-</div></pre>
-
-<blockquote>
-<p>ℹ️ <strong>Info:</strong> This documentation itself is served by <strong>mdsvr</strong>! Explore the files in this directory to see how everything works.</p>
-</blockquote>
-<h2 id="what-is-mdsvr%3F" tabindex="-1">What is mdsvr?</h2>
-<p><strong>mdsvr</strong> is a static file server that automatically renders Markdown and MDX files as beautiful HTML. It’s similar to Vercel’s <code>serve</code> but understands <code>.md</code> and <code>.mdx</code> files.</p>
-<h2 id="quick-start" tabindex="-1">Quick Start</h2>
+        <h1 id="markdown-formats" tabindex="-1">Markdown Formats</h1>
+<p>This page demonstrates all supported Markdown formats.</p>
+<h2 id="headings" tabindex="-1">Headings</h2>
+<h1 id="heading-1" tabindex="-1">Heading 1</h1>
+<h2 id="heading-2" tabindex="-1">Heading 2</h2>
+<h3 id="heading-3" tabindex="-1">Heading 3</h3>
+<h4 id="heading-4" tabindex="-1">Heading 4</h4>
+<h5 id="heading-5" tabindex="-1">Heading 5</h5>
+<h6 id="heading-6" tabindex="-1">Heading 6</h6>
+<h2 id="text-formatting" tabindex="-1">Text Formatting</h2>
+<p><strong>Bold text</strong> using <code>**text**</code></p>
+<p><em>Italic text</em> using <code>*text*</code></p>
+<p><strong><em>Bold and italic</em></strong> using <code>***text***</code></p>
+<p><s>Strikethrough</s> using <code>~~text~~</code></p>
+<p><code>Inline code</code> using backticks</p>
+<h2 id="links" tabindex="-1">Links</h2>
+<p><a href="https://example.com">External link</a></p>
+<p><a href="https://example.com" title="Example Site">Link with title</a></p>
+<p><a href="/2.-settings">Relative link</a></p>
+<h2 id="images" tabindex="-1">Images</h2>
+<p><img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExbWZkcHFvMDc3YnVjZ3g2cjllMWFiZnZpODYzMjFraXNlZWJneHQxbSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/kd9BlRovbPOykLBMqX/giphy.gif" alt="Alt text"></p>
+<h2 id="lists" tabindex="-1">Lists</h2>
+<h3 id="unordered-lists" tabindex="-1">Unordered Lists</h3>
+<ul>
+<li>Item 1</li>
+<li>Item 2
+<ul>
+<li>Nested item 2.1</li>
+<li>Nested item 2.2</li>
+</ul>
+</li>
+<li>Item 3</li>
+</ul>
+<h3 id="ordered-lists" tabindex="-1">Ordered Lists</h3>
 <ol>
-<li>
-<p><strong>Install</strong></p>
-<p>No installation needed! Just use <code>npx</code>:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
-  <div class="code-block-toolbar">
-    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
-        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-      </svg>
-    </button>
-    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="m16 16-3 3 3 3"/>
-        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
-        <path d="M3 19h6"/>
-        <path d="M3 5h18"/>
-      </svg>
-    </button>
-    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="m15 15 6 6"/>
-        <path d="m15 9 6-6"/>
-        <path d="M21 16v5h-5"/>
-        <path d="M21 8V3h-5"/>
-        <path d="M3 16v5h5"/>
-        <path d="m3 21 6-6"/>
-        <path d="M3 8V3h5"/>
-        <path d="M9 9 3 3"/>
-      </svg>
-    </button>
-  </div>
-  <pre><code class="hljs language-bash">npx mdsvr ./docs
-</code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>npx mdsvr ./docs
-</code></pre>
-</div></pre>
-
-</li>
-<li>
-<p><strong>Create your docs</strong></p>
-<p>Create a folder with some <code>.md</code> files:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
-  <div class="code-block-toolbar">
-    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
-        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-      </svg>
-    </button>
-    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="m16 16-3 3 3 3"/>
-        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
-        <path d="M3 19h6"/>
-        <path d="M3 5h18"/>
-      </svg>
-    </button>
-    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="m15 15 6 6"/>
-        <path d="m15 9 6-6"/>
-        <path d="M21 16v5h-5"/>
-        <path d="M21 8V3h-5"/>
-        <path d="M3 16v5h5"/>
-        <path d="m3 21 6-6"/>
-        <path d="M3 8V3h5"/>
-        <path d="M9 9 3 3"/>
-      </svg>
-    </button>
-  </div>
-  <pre><code class="hljs language-bash"><span class="hljs-built_in">mkdir</span> docs
-<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;# Hello World&quot;</span> &gt; docs/readme.md
-</code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>mkdir docs
-echo &quot;# Hello World&quot; &gt; docs/readme.md
-</code></pre>
-</div></pre>
-
-</li>
-<li>
-<p><strong>Start the server</strong></p>
-<pre class="code-block-wrapper"><div class="code-block-container">
-  <div class="code-block-toolbar">
-    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
-        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-      </svg>
-    </button>
-    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="m16 16-3 3 3 3"/>
-        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
-        <path d="M3 19h6"/>
-        <path d="M3 5h18"/>
-      </svg>
-    </button>
-    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="m15 15 6 6"/>
-        <path d="m15 9 6-6"/>
-        <path d="M21 16v5h-5"/>
-        <path d="M21 8V3h-5"/>
-        <path d="M3 16v5h5"/>
-        <path d="m3 21 6-6"/>
-        <path d="M3 8V3h5"/>
-        <path d="M9 9 3 3"/>
-      </svg>
-    </button>
-  </div>
-  <pre><code class="hljs language-bash">npx mdsvr ./docs --open
-</code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>npx mdsvr ./docs --open
-</code></pre>
-</div></pre>
-
-</li>
+<li>First item</li>
+<li>Second item
+<ol>
+<li>Nested item 2.1</li>
+<li>Nested item 2.2</li>
 </ol>
-<h2 id="key-features" tabindex="-1">Key Features</h2>
+</li>
+<li>Third item</li>
+</ol>
+<h3 id="task-lists" tabindex="-1">Task Lists</h3>
+<ul>
+<li>[x] Completed task</li>
+<li>[ ] Incomplete task</li>
+<li>[ ] Another incomplete task</li>
+</ul>
+<h2 id="code-blocks" tabindex="-1">Code Blocks</h2>
+<h3 id="javascript" tabindex="-1">JavaScript</h3>
+<pre class="code-block-wrapper"><div class="code-block-container">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">greet</span>(<span class="hljs-params">name</span>) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`Hello, <span class="hljs-subst">${name}</span>!`</span>);
+}
+<span class="hljs-title function_">greet</span>(<span class="hljs-string">&quot;World&quot;</span>);
+</code></pre>
+  <pre class="code-block-raw" style="display:none;"><code>function greet(name) {
+  console.log(`Hello, ${name}!`);
+}
+greet(&quot;World&quot;);
+</code></pre>
+</div></pre>
+
+<h3 id="python" tabindex="-1">Python</h3>
+<pre class="code-block-wrapper"><div class="code-block-container">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">greet</span>(<span class="hljs-params">name</span>):
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;Hello, <span class="hljs-subst">{name}</span>!&quot;</span>)
+
+greet(<span class="hljs-string">&quot;World&quot;</span>)
+</code></pre>
+  <pre class="code-block-raw" style="display:none;"><code>def greet(name):
+    print(f&quot;Hello, {name}!&quot;)
+
+greet(&quot;World&quot;)
+</code></pre>
+</div></pre>
+
+<h3 id="shell" tabindex="-1">Shell</h3>
+<pre class="code-block-wrapper"><div class="code-block-container">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-bash">npm install
+npm run dev
+</code></pre>
+  <pre class="code-block-raw" style="display:none;"><code>npm install
+npm run dev
+</code></pre>
+</div></pre>
+
+<h3 id="without-syntax-highlighting" tabindex="-1">Without syntax highlighting</h3>
+<pre class="code-block-wrapper"><div class="code-block-container">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs">Plain code block
+without language
+</code></pre>
+  <pre class="code-block-raw" style="display:none;"><code>Plain code block
+without language
+</code></pre>
+</div></pre>
+
+<h2 id="blockquotes" tabindex="-1">Blockquotes</h2>
+<blockquote>
+<p>This is a blockquote.</p>
+<p>It can span multiple lines.</p>
+<blockquote>
+<p>Nested blockquote</p>
+</blockquote>
+<p>Back to first level</p>
+</blockquote>
+<h2 id="horizontal-rules" tabindex="-1">Horizontal Rules</h2>
+<hr>
+<hr>
+<hr>
+<h2 id="tables" tabindex="-1">Tables</h2>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
-<th>Feature</th>
-<th>Description</th>
+<th>Name</th>
+<th>Age</th>
+<th>Occupation</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>📝 <a href="/3.-features">Markdown &amp; MDX</a></td>
-<td>Render .md and .mdx files with built-in interactive components</td>
+<td>John</td>
+<td>30</td>
+<td>Engineer</td>
 </tr>
 <tr>
-<td>🎨 <a href="/3.-features/theming">Themes</a></td>
-<td>Dark/light mode with customizable accent colors</td>
+<td>Jane</td>
+<td>25</td>
+<td>Designer</td>
 </tr>
 <tr>
-<td>🔍 <a href="/3.-features/search">Search</a></td>
-<td>Built-in full-text search with keyboard shortcut (⌘K)</td>
-</tr>
-<tr>
-<td>📑 <a href="/3.-features/navigation">Navigation</a></td>
-<td>Auto-generated sidebar and table of contents</td>
-</tr>
-<tr>
-<td>🔎 <a href="/3.-features/seo">SEO</a></td>
-<td>Sitemap, RSS feed, Open Graph, and Twitter Cards</td>
-</tr>
-<tr>
-<td>⚙️ <a href="/2.-settings">Settings</a></td>
-<td>Configure everything via settings.json</td>
+<td>Bob</td>
+<td>35</td>
+<td>Manager</td>
 </tr>
 </tbody>
 </table></div>
-<h2 id="this-docs-structure-for-reference" tabindex="-1">This docs structure for reference</h2>
-<pre class="code-block-wrapper"><div class="code-block-container">
-  <div class="code-block-toolbar">
-    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
-        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-      </svg>
-    </button>
-    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="m16 16-3 3 3 3"/>
-        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
-        <path d="M3 19h6"/>
-        <path d="M3 5h18"/>
-      </svg>
-    </button>
-    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="m15 15 6 6"/>
-        <path d="m15 9 6-6"/>
-        <path d="M21 16v5h-5"/>
-        <path d="M21 8V3h-5"/>
-        <path d="M3 16v5h5"/>
-        <path d="m3 21 6-6"/>
-        <path d="M3 8V3h5"/>
-        <path d="M9 9 3 3"/>
-      </svg>
-    </button>
+<h3 id="table-with-alignment" tabindex="-1">Table with alignment</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th style="text-align:left">Left</th>
+<th style="text-align:center">Center</th>
+<th style="text-align:right">Right</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">L1</td>
+<td style="text-align:center">C1</td>
+<td style="text-align:right">R1</td>
+</tr>
+<tr>
+<td style="text-align:left">L2</td>
+<td style="text-align:center">C2</td>
+<td style="text-align:right">R2</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="html" tabindex="-1">HTML</h2>
+<p>You can use <strong>inline HTML</strong> within Markdown.</p>
+<div style="background: #f0f0f0; padding: 10px;">
+  This is a div with inline styles.
+</div>
+<h2 id="escaping-characters" tabindex="-1">Escaping Characters</h2>
+<p>Use backslash to escape special characters: *not italic*, `not code`</p>
+<h2 id="line-breaks" tabindex="-1">Line Breaks</h2>
+<p>Line break with two spaces at the end.<br>
+New line starts here.</p>
+<p>Or use double line break for new paragraph.</p>
+<h2 id="emojis" tabindex="-1">Emojis</h2>
+<p>:smile: :heart: :star: (if GFM is enabled)</p>
+<h2 id="automatic-links" tabindex="-1">Automatic Links</h2>
+<p><a href="https://example.com">https://example.com</a></p>
+<p><a href="mailto:user@example.com">user@example.com</a></p>
+<h2 id="definition-lists-(if-supported)" tabindex="-1">Definition Lists (if supported)</h2>
+<p>Term 1
+: Definition 1</p>
+<p>Term 2
+: Definition 2a
+: Definition 2b</p>
+<h2 id="footnotes-(if-supported)" tabindex="-1">Footnotes (if supported)</h2>
+<p>This is a reference[^1].</p>
+<p>[^1]: This is the footnote content.</p>
+<h2 id="admonitions-(if-supported-via-custom-syntax)" tabindex="-1">Admonitions (if supported via custom syntax)</h2>
+<blockquote>
+<p><strong>Note:</strong> This is a note block.</p>
+</blockquote>
+<blockquote>
+<p><strong>Warning:</strong> This is a warning block.</p>
+</blockquote>
+<blockquote>
+<p><strong>Tip:</strong> This is a tip block.</p>
+</blockquote>
+<h2 id="mermaid-diagrams" tabindex="-1">Mermaid Diagrams</h2>
+<p>mdsvr supports Mermaid diagrams via the <code>mermaid</code> code block:</p>
+<h3 id="database-schema-diagram" tabindex="-1">Database Schema Diagram</h3>
+<pre class="mermaid-wrapper"><div class="mermaid-container">
+  <div class="mermaid-toolbar">
+    <button class="mermaid-btn mermaid-btn-chart" title="Chart view"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z"/><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-code" title="Show code"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-fullscreen" title="Fullscreen"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 15 6 6"/><path d="m15 9 6-6"/><path d="M21 16v5h-5"/><path d="M21 8V3h-5"/><path d="M3 16v5h5"/><path d="m3 21 6-6"/><path d="M3 8V3h5"/><path d="M9 9 3 3"/></svg></button>
   </div>
-  <pre><code class="hljs">docs/
-├── settings.json                # Site configuration (optional)
-├── README.md                    # Homepage (this file)
-├── 1.-getting-started/          # Getting started guides
-│   └── README.md              # Quick start &amp; installation
-├── 2.-settings/                 # Settings &amp; configuration
-│   └── README.md              # Configuration, writing &amp; deployment
-├── 3.-features/                 # Feature documentation
-│   ├── README.md             # Features overview
-│   ├── markdown.md           # Markdown support
-│   ├── mdx.mdx               # MDX components demo
-│   ├── theming.md            # Theme customization
-│   ├── search.md             # Search functionality
-│   ├── navigation.md         # Navigation features
-│   ├── seo.md                # SEO features
-│   └── mermaid.md            # Mermaid diagrams
-└── 4.-reference/                # API/Reference
-    └── README.md             # CLI reference
-</code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>docs/
-├── settings.json                # Site configuration (optional)
-├── README.md                    # Homepage (this file)
-├── 1.-getting-started/          # Getting started guides
-│   └── README.md              # Quick start &amp; installation
-├── 2.-settings/                 # Settings &amp; configuration
-│   └── README.md              # Configuration, writing &amp; deployment
-├── 3.-features/                 # Feature documentation
-│   ├── README.md             # Features overview
-│   ├── markdown.md           # Markdown support
-│   ├── mdx.mdx               # MDX components demo
-│   ├── theming.md            # Theme customization
-│   ├── search.md             # Search functionality
-│   ├── navigation.md         # Navigation features
-│   ├── seo.md                # SEO features
-│   └── mermaid.md            # Mermaid diagrams
-└── 4.-reference/                # API/Reference
-    └── README.md             # CLI reference
-</code></pre>
+  <div class="mermaid-zoom-controls">
+    <button class="mermaid-btn mermaid-btn-zoom-in" title="Zoom in"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+  </div>
+  <div class="mermaid-chart">
+    <div class="mermaid">erDiagram
+    USER {
+        int id PK
+        string email
+        string username
+        datetime created_at
+    }
+    POST {
+        int id PK
+        string title
+        text content
+        int author_id FK
+        datetime published_at
+    }
+    COMMENT {
+        int id PK
+        text body
+        int post_id FK
+        int author_id FK
+        datetime created_at
+    }
+    TAG {
+        int id PK
+        string name
+        string slug
+    }
+    POST_TAG {
+        int post_id FK
+        int tag_id FK
+    }
+
+    USER ||--o{ POST : writes
+    USER ||--o{ COMMENT : writes
+    POST ||--o{ COMMENT : has
+    POST ||--o{ POST_TAG : tagged
+    TAG ||--o{ POST_TAG : assigned</div>
+  </div>
+  <pre class="mermaid-source"><code>erDiagram
+    USER {
+        int id PK
+        string email
+        string username
+        datetime created_at
+    }
+    POST {
+        int id PK
+        string title
+        text content
+        int author_id FK
+        datetime published_at
+    }
+    COMMENT {
+        int id PK
+        text body
+        int post_id FK
+        int author_id FK
+        datetime created_at
+    }
+    TAG {
+        int id PK
+        string name
+        string slug
+    }
+    POST_TAG {
+        int post_id FK
+        int tag_id FK
+    }
+
+    USER ||--o{ POST : writes
+    USER ||--o{ COMMENT : writes
+    POST ||--o{ COMMENT : has
+    POST ||--o{ POST_TAG : tagged
+    TAG ||--o{ POST_TAG : assigned</code></pre>
 </div></pre>
 
-<h2 id="next-steps" tabindex="-1">Next Steps</h2>
-<ul>
-<li><strong><a href="/1.-getting-started">Quick Start</a></strong> — Get running in 30 seconds</li>
-<li><strong><a href="/1.-getting-started">Installation</a></strong> — Install options</li>
-<li><strong><a href="/3.-features/mdx">MDX Components</a></strong> — Make your docs interactive</li>
-<li><strong><a href="/2.-settings">Configuration</a></strong> — Customize your site</li>
-<li><strong><a href="/2.-settings">Writing Content</a></strong> — Best practices</li>
-<li><strong><a href="/2.-settings">Deployment</a></strong> — Go live</li>
-<li><strong><a href="/3.-features">Features</a></strong> — See all features</li>
-<li><strong><a href="/4.-reference">CLI Reference</a></strong> — Command reference</li>
-</ul>
-<hr>
-<blockquote>
-<p>💡 <strong>Tip:</strong> Press <code>⌘+K</code> (or <code>Ctrl+K</code>) to open the search modal and find anything in this documentation!</p>
-</blockquote>
 
       </article>
       <nav class="prev-next-nav">
-        <span></span>
-        <a href="/docs/docs/01-getting-started/" class="prev-next-card next-card"><span class="prev-next-label">Next →</span><span class="prev-next-title">Getting Started</span></a>
+        <a href="/docs/docs/03-features/" class="prev-next-card prev-card"><span class="prev-next-label">← Prev</span><span class="prev-next-title">Features</span></a>
+        <a href="/docs/docs/03-features/mdx" class="prev-next-card next-card"><span class="prev-next-label">Next →</span><span class="prev-next-title">MDX Components</span></a>
       </nav>
       <footer class="footer">
     <div class="footer-content">
@@ -1708,13 +1822,50 @@ echo &quot;# Hello World&quot; &gt; docs/readme.md
     <aside class="toc-sidebar"><nav class="toc">
   <h3>On this page</h3>
 <ul class="toc-list toc-level-1">
-<li class="toc-item"><a href="#welcome-to-mdsvr">Welcome to mdsvr</a></li>
+<li class="toc-item"><a href="#markdown-formats">Markdown Formats</a></li>
 <ul class="toc-list toc-level-2">
-<li class="toc-item"><a href="#what-is-mdsvr%3F">What is mdsvr?</a></li>
-<li class="toc-item"><a href="#quick-start">Quick Start</a></li>
-<li class="toc-item"><a href="#key-features">Key Features</a></li>
-<li class="toc-item"><a href="#this-docs-structure-for-reference">This docs structure for reference</a></li>
-<li class="toc-item"><a href="#next-steps">Next Steps</a></li>
+<li class="toc-item"><a href="#headings">Headings</a></li>
+</ul>
+<li class="toc-item"><a href="#heading-1">Heading 1</a></li>
+<ul class="toc-list toc-level-2">
+<li class="toc-item"><a href="#heading-2">Heading 2</a></li>
+<ul class="toc-list toc-level-3">
+<li class="toc-item"><a href="#heading-3">Heading 3</a></li>
+</ul>
+<li class="toc-item"><a href="#text-formatting">Text Formatting</a></li>
+<li class="toc-item"><a href="#links">Links</a></li>
+<li class="toc-item"><a href="#images">Images</a></li>
+<li class="toc-item"><a href="#lists">Lists</a></li>
+<ul class="toc-list toc-level-3">
+<li class="toc-item"><a href="#unordered-lists">Unordered Lists</a></li>
+<li class="toc-item"><a href="#ordered-lists">Ordered Lists</a></li>
+<li class="toc-item"><a href="#task-lists">Task Lists</a></li>
+</ul>
+<li class="toc-item"><a href="#code-blocks">Code Blocks</a></li>
+<ul class="toc-list toc-level-3">
+<li class="toc-item"><a href="#javascript">JavaScript</a></li>
+<li class="toc-item"><a href="#python">Python</a></li>
+<li class="toc-item"><a href="#shell">Shell</a></li>
+<li class="toc-item"><a href="#without-syntax-highlighting">Without syntax highlighting</a></li>
+</ul>
+<li class="toc-item"><a href="#blockquotes">Blockquotes</a></li>
+<li class="toc-item"><a href="#horizontal-rules">Horizontal Rules</a></li>
+<li class="toc-item"><a href="#tables">Tables</a></li>
+<ul class="toc-list toc-level-3">
+<li class="toc-item"><a href="#table-with-alignment">Table with alignment</a></li>
+</ul>
+<li class="toc-item"><a href="#html">HTML</a></li>
+<li class="toc-item"><a href="#escaping-characters">Escaping Characters</a></li>
+<li class="toc-item"><a href="#line-breaks">Line Breaks</a></li>
+<li class="toc-item"><a href="#emojis">Emojis</a></li>
+<li class="toc-item"><a href="#automatic-links">Automatic Links</a></li>
+<li class="toc-item"><a href="#definition-lists-(if-supported)">Definition Lists (if supported)</a></li>
+<li class="toc-item"><a href="#footnotes-(if-supported)">Footnotes (if supported)</a></li>
+<li class="toc-item"><a href="#admonitions-(if-supported-via-custom-syntax)">Admonitions (if supported via custom syntax)</a></li>
+<li class="toc-item"><a href="#mermaid-diagrams">Mermaid Diagrams</a></li>
+<ul class="toc-list toc-level-3">
+<li class="toc-item"><a href="#database-schema-diagram">Database Schema Diagram</a></li>
+</ul>
 </ul>
 </ul>
 </nav></aside>
