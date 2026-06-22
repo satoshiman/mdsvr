@@ -42,15 +42,17 @@ npx mdsvr ./docs
 
 > mdsvr is **56× faster to start** than Docusaurus and requires **zero configuration**.
 
+> The measurement is based on MacBook with M1 chip, can be different on other devices.
+
 ## Features
 
 ### Markdown & MDX Rendering
 
 Serve `.md` and `.mdx` files as fully rendered HTML pages. MDX support enables interactive React components inline with your content — callouts, steps, tabs, code groups, and more — all processed server-side with zero client-side framework required.
 
-### Site Settings (`settings.json`)
+### Site Settings (`_mdsvr/settings.json`)
 
-Place a `settings.json` in your docs root to configure everything: site title, description, language, accent color, theme, navigation, search, SEO, and MDX. Validated against a JSON Schema. Hot-reloads automatically when changed — no server restart needed.
+Place a `_mdsvr/settings.json` in your docs root to configure everything: site title, description, language, accent color, theme, navigation, search, SEO, and MDX. Validated against a JSON Schema. Hot-reloads automatically when changed — no server restart needed.
 
 ### Dark / Light Mode
 
@@ -101,7 +103,7 @@ When navigating to a directory without a README, mdsvr renders a clean listing o
 # One-shot, no install
 npx mdsvr ./docs
 
-# Create a starter settings.json
+# Create a starter _mdsvr/settings.json
 npx mdsvr ./docs --init
 
 # With options
@@ -155,16 +157,16 @@ Options:
   -o, --open         Auto-open browser
   -s, --silent       Suppress console output
   -e, --export [PATH]  Export static HTML (default: _html/public)
-  --init             Create a starter settings.json in [dir]
-  --validate         Validate settings.json and exit
-  --no-watch         Disable settings.json hot-reload
+  --init             Create a starter _mdsvr/settings.json in [dir]
+  --validate         Validate _mdsvr/settings.json and exit
+  --no-watch         Disable _mdsvr/settings.json hot-reload
   -v, --version      Print version
   -h, --help         Print this help
 ```
 
-## Configuration (`settings.json`)
+## Configuration (`_mdsvr/settings.json`)
 
-Place `settings.json` in your docs root for full customization:
+Place `_mdsvr/settings.json` in your docs root for full customization:
 
 ```json
 {
@@ -254,7 +256,7 @@ const server = await createServer("./docs", {
   host: "localhost",
   open: true,
   silent: false,
-  watchSettings: true, // Auto-reload on settings.json changes
+  watchSettings: true, // Auto-reload on _mdsvr/settings.json changes
 });
 
 console.log(`Running at ${server.url}`);
@@ -275,7 +277,7 @@ import { loadSettings, validateSettingsFile } from "mdsvr";
 // Load settings from directory
 const settings = await loadSettings("./docs");
 
-// Validate settings.json
+// Validate _mdsvr/settings.json
 const result = await validateSettingsFile("./docs");
 if (!result.valid) {
   console.error(result.errors);
@@ -358,7 +360,7 @@ firebase deploy
 
 ## Generated Endpoints
 
-When enabled in `settings.json`:
+When enabled in `_mdsvr/settings.json`:
 
 | Endpoint             | Description                         |
 | -------------------- | ----------------------------------- |
@@ -370,7 +372,9 @@ When enabled in `settings.json`:
 
 ```
 docs/
-├── settings.json      # Site configuration (optional)
+├── _mdsvr/
+│   ├── settings.json  # Site configuration (optional)
+│   └── export-state.json  # Export state tracking (auto-generated)
 ├── README.md          # Homepage (auto-detected)
 ├── guide/
 │   ├── getting-started.md
@@ -384,7 +388,7 @@ docs/
 ## Security
 
 - **Path traversal**: Resolved paths are verified to be within root directory
-- **Hidden files**: Files starting with `_` or listed in `settings.json` are hidden
+- **Hidden files**: Files starting with `_` or listed in `_mdsvr/settings.json` are hidden
 - **Blocked extensions**: `.env`, `.key`, `.pem`, etc. are blocked by default
 - **Read-only**: Server only serves files, no write operations
 

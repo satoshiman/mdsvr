@@ -383,8 +383,8 @@ export function getOgImageUrl(
   const segments = normalized.split("/").filter(Boolean);
 
   if (segments.length === 0) {
-    return `${normalizedBase}/public/og/index.${format}`;
+    return `${normalizedBase}/public/assets/og/index.${format}`;
   }
 
-  return `${normalizedBase}/public/og/${segments.join("/")}/index.${format}`;
+  return `${normalizedBase}/public/assets/og/${segments.join("/")}/index.${format}`;
 }

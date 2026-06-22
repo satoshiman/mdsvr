@@ -1,0 +1,35 @@
+{
+  "$schema": "https://mdsvr.js.org/schema/v2.json",
+  "site": {
+    "title": "My Docs",
+    "description": "Project documentation",
+    "language": "en"
+  },
+  "appearance": {
+    "defaultTheme": "system",
+    "allowThemeToggle": true,
+    "accentColor": "#0969da",
+    "codeTheme": {
+      "light": "github",
+      "dark": "github-dark"
+    }
+  },
+  "navigation": {
+    "sidebar": {
+      "enabled": true,
+      "autoGenerate": true
+    },
+    "tocEnabled": true
+  },
+  "search": {
+    "enabled": true
+  },
+  "mdx": {
+    "enabled": true
+  },
+  "seo": {
+    "og": {
+      "enabled": true
+    }
+  }
+}

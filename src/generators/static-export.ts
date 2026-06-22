@@ -88,27 +88,33 @@ export async function exportStaticSite(options: ExportOptions): Promise<void> {
       console.log(`  To:   ${absOutputDir}\n`);
     }
 
-    // 1.5. Load and migrate old state if needed
-    let oldState: ExportState = await loadExportState(absRootDir);
+    // 1.5. Clean up old HTML files (always delete all HTML before re-export)
+    await cleanupOldHtml(absOutputDir, silent);
+
+    // 1.6. Load and migrate old OG state if needed
+    let oldOgState: Record<string, OgState> = {};
+    const oldState = await loadExportState(absRootDir);
     const migratedState = await migrateOldState(absRootDir, absOutputDir);
     if (migratedState) {
-      oldState = migratedState;
+      oldOgState = migratedState.og;
       if (!silent) {
         console.log(`  📦 Migrated old OG state to new format`);
       }
+    } else {
+      oldOgState = oldState.og;
     }
 
-    // 1.6. Check if settings changed - if so, force full export
+    // 1.7. Check if settings changed - if so, force full OG export
     const currentSettingsHash = await calculateSettingsHash(absRootDir);
     if (
       oldState.settingsHash &&
       oldState.settingsHash !== currentSettingsHash
     ) {
       if (!silent) {
-        console.log(`  ⚙️  Settings changed, forcing full export`);
+        console.log(`  ⚙️  Settings changed, forcing full OG export`);
       }
-      // Clear old state to force regeneration of all files
-      oldState = { settingsHash: "", html: {}, og: {} };
+      // Clear old OG state to force regeneration
+      oldOgState = {};
       forceOg = true;
     }
 
@@ -116,20 +122,16 @@ export async function exportStaticSite(options: ExportOptions): Promise<void> {
     let processedCount = 0;
     const dirMap = new Map<string, DirInfo>();
     const pageInfos: PageInfo[] = [];
-    const currentState: ExportState = {
-      settingsHash: currentSettingsHash,
-      html: {},
-      og: {},
-    };
+    const currentOgState: Record<string, OgState> = {};
     await processDirectory(
       absRootDir,
       absOutputDir,
       absRootDir,
+      absOutputDir,
       settings,
       silent,
       dirMap,
       pageInfos,
-      currentState,
       (count) => {
         processedCount = count;
       },
@@ -143,10 +145,6 @@ export async function exportStaticSite(options: ExportOptions): Promise<void> {
         autoIndexCount++;
 
         const autoIndexOutputPath = path.join(dirInfo.outputPath, "index.html");
-        const relativeOutputPath = path.relative(
-          absOutputDir,
-          autoIndexOutputPath,
-        );
 
         // Add to pageInfos so OG images are generated for auto-index pages
         pageInfos.push({
@@ -157,28 +155,62 @@ export async function exportStaticSite(options: ExportOptions): Promise<void> {
           description: settings.site.description,
         });
 
-        // Track auto-index page in current state
-        currentState.html[dirInfo.urlPath] = {
-          outputPath: relativeOutputPath,
-          sourcePath: "",
-          hash: "auto-index",
-        };
-
         if (!silent) {
+          const relativeOutputPath = path.relative(
+            absOutputDir,
+            autoIndexOutputPath,
+          );
           console.log(`  ✓ ${relativeOutputPath} (auto-generated)`);
         }
       }
     }
 
-    // 3.5. Cleanup orphaned files before generating new content
+    // 4. Generate OG images if enabled
+    if (settings.seo.og?.enabled) {
+      if (!silent) {
+        console.log(`\n  🖼️  Generating OG images...`);
+      }
+      const oldStateFull: ExportState = {
+        settingsHash: oldState.settingsHash,
+        html: {},
+        og: oldOgState,
+      };
+      const newStateFull: ExportState = {
+        settingsHash: currentSettingsHash,
+        html: {},
+        og: currentOgState,
+      };
+      await generateOgImages(
+        pageInfos,
+        absOutputDir,
+        absRootDir,
+        settings,
+        silent,
+        forceOg,
+        newStateFull,
+        oldStateFull,
+      );
+    }
+
+    // 5. Cleanup orphaned OG files after generating new content
+    const oldStateFull: ExportState = {
+      settingsHash: oldState.settingsHash,
+      html: {},
+      og: oldOgState,
+    };
+    const newStateFull: ExportState = {
+      settingsHash: currentSettingsHash,
+      html: {},
+      og: currentOgState,
+    };
     const cleanupResult = await cleanupOrphanedFiles(
       absOutputDir,
-      oldState,
-      currentState,
+      oldStateFull,
+      newStateFull,
     );
     if (cleanupResult.deleted.length > 0 && !silent) {
       console.log(
-        `  🧹 Cleaned up ${cleanupResult.deleted.length} orphaned files`,
+        `  🧹 Cleaned up ${cleanupResult.deleted.length} orphaned OG files`,
       );
     }
     if (cleanupResult.deletedDirs.length > 0 && !silent) {
@@ -187,24 +219,7 @@ export async function exportStaticSite(options: ExportOptions): Promise<void> {
       );
     }
 
-    // 4. Generate OG images if enabled
-    if (settings.seo.og?.enabled) {
-      if (!silent) {
-        console.log(`\n  🖼️  Generating OG images...`);
-      }
-      await generateOgImages(
-        pageInfos,
-        absOutputDir,
-        absRootDir,
-        settings,
-        silent,
-        forceOg,
-        currentState,
-        oldState,
-      );
-    }
-
-    // 5. Generate search-index.json if search is enabled
+    // 6. Generate search-index.json if search is enabled
     if (settings.search.enabled) {
       const searchIndex = await buildSearchIndex(absRootDir, settings);
       const searchIndexPath = path.join(absOutputDir, "search-index.json");
@@ -214,8 +229,13 @@ export async function exportStaticSite(options: ExportOptions): Promise<void> {
       }
     }
 
-    // 6. Save new export state
-    await saveExportState(absRootDir, currentState);
+    // 7. Save new export state (only OG state)
+    const finalState: ExportState = {
+      settingsHash: currentSettingsHash,
+      html: {},
+      og: currentOgState,
+    };
+    await saveExportState(absRootDir, finalState);
 
     if (!silent) {
       console.log(`\n  ✓ Export complete: ${processedCount} pages generated\n`);
@@ -230,11 +250,11 @@ async function processDirectory(
   dirPath: string,
   outputPath: string,
   rootDir: string,
+  outputDir: string,
   settings: Settings,
   silent: boolean,
   dirMap: Map<string, DirInfo>,
   pageInfos: PageInfo[],
-  currentState: ExportState,
   updateCount: (count: number) => void,
   count: number = 0,
 ): Promise<number> {
@@ -280,11 +300,11 @@ async function processDirectory(
           fullPath,
           outputFilePath,
           rootDir,
+          outputDir,
           settings,
           silent,
           dirMap,
           pageInfos,
-          currentState,
           updateCount,
           count,
         );
@@ -337,8 +357,8 @@ async function processDirectory(
           htmlOutputPath,
           urlPath,
           rootDir,
+          outputPath,
           settings,
-          currentState,
         );
         pageInfos.push(pageInfo);
 
@@ -371,8 +391,8 @@ async function renderMarkdownFile(
   outputPath: string,
   urlPath: string,
   rootDir: string,
+  outputDir: string,
   settings: Settings,
-  currentState: ExportState,
 ): Promise<PageInfo> {
   const content = await fs.readFile(filePath, "utf-8");
   const ext = path.extname(filePath).toLowerCase();
@@ -412,16 +432,6 @@ async function renderMarkdownFile(
   });
 
   await fs.writeFile(outputPath, html, "utf-8");
-
-  // Calculate hash and track in current state
-  const hash = await calculateFileHash(filePath);
-  const relativeOutputPath = path.relative(rootDir, outputPath);
-  const relativeSourcePath = path.relative(rootDir, filePath);
-  currentState.html[urlPath] = {
-    outputPath: relativeOutputPath,
-    sourcePath: relativeSourcePath,
-    hash,
-  };
 
   // Return page info for OG generation
   return {
@@ -547,8 +557,7 @@ async function generateOgImages(
   currentState: ExportState,
   oldState: ExportState,
 ): Promise<void> {
-  const publicDir = path.join(outputDir, "public");
-  const ogDir = path.join(publicDir, "og");
+  const ogDir = path.join(outputDir, "public", "assets", "og");
   const format = settings.seo.og?.imageFormat || "jpg";
   const ogSettings = settings.seo.og;
 
@@ -580,34 +589,39 @@ async function generateOgImages(
     let shouldGenerate = forceOg;
     let fileHash = "";
 
-    if (!forceOg) {
-      // Calculate hash for the source file
-      if (pageInfo.sourcePath) {
-        try {
-          fileHash = await calculateFileHash(pageInfo.sourcePath);
-          const relativeOgPath = path.relative(outputDir, ogImagePath);
-          currentState.og[pageInfo.urlPath] = {
-            outputPath: relativeOgPath,
-            hash: fileHash,
-          };
+    // Calculate hash for the source file and populate currentState.og
+    if (pageInfo.sourcePath) {
+      try {
+        fileHash = await calculateFileHash(pageInfo.sourcePath);
+      } catch {
+        fileHash = "";
+      }
+    }
 
-          // Check if hash changed by comparing with old state
-          const oldHash = oldState.html[pageInfo.urlPath]?.hash;
-          if (oldHash !== fileHash) {
-            shouldGenerate = true;
-          }
-        } catch {
-          // If we can't calculate hash, generate the image
+    const relativeOgPath = path.relative(outputDir, ogImagePath);
+    currentState.og[pageInfo.urlPath] = {
+      outputPath: relativeOgPath,
+      hash: fileHash || "auto-index",
+    };
+
+    // Check if hash changed by comparing with old state (only if not forcing)
+    if (!forceOg) {
+      // Check if OG image file exists
+      try {
+        await fs.access(ogImagePath);
+      } catch {
+        // File doesn't exist, must generate
+        shouldGenerate = true;
+      }
+
+      if (!shouldGenerate && pageInfo.sourcePath && fileHash) {
+        const oldHash = oldState.og[pageInfo.urlPath]?.hash;
+        if (oldHash !== fileHash) {
           shouldGenerate = true;
         }
-      } else {
+      } else if (!shouldGenerate) {
         // Auto-index pages have no source, always generate
         shouldGenerate = true;
-        const relativeOgPath = path.relative(outputDir, ogImagePath);
-        currentState.og[pageInfo.urlPath] = {
-          outputPath: relativeOgPath,
-          hash: "auto-index",
-        };
       }
     }
 
@@ -642,7 +656,6 @@ async function generateOgImages(
   }
 
   // Add empty index.html to prevent directory listing
-  await createEmptyIndexFile(publicDir);
   await createEmptyIndexFile(ogDir);
 
   if (!silent) {
@@ -734,4 +747,43 @@ async function generateAutoIndex(
 
   const indexPath = path.join(dirInfo.outputPath, "index.html");
   await fs.writeFile(indexPath, html, "utf-8");
+}
+
+/**
+ * Clean up old HTML files (delete all HTML files before re-export)
+ */
+async function cleanupOldHtml(
+  outputDir: string,
+  silent: boolean,
+): Promise<void> {
+  async function deleteHtmlFiles(dir: string) {
+    try {
+      const entries = await fs.readdir(dir, { withFileTypes: true });
+      for (const entry of entries) {
+        const fullPath = path.join(dir, entry.name);
+        if (entry.isDirectory()) {
+          // Skip og directory - it's handled separately
+          if (entry.name === "og") {
+            continue;
+          }
+          await deleteHtmlFiles(fullPath);
+          // Try to delete empty directory
+          try {
+            await fs.rmdir(fullPath);
+          } catch {
+            // Directory not empty, skip
+          }
+        } else if (entry.isFile() && entry.name === "index.html") {
+          await fs.unlink(fullPath);
+        }
+      }
+    } catch {
+      // Directory doesn't exist, skip
+    }
+  }
+
+  await deleteHtmlFiles(outputDir);
+  if (!silent) {
+    console.log(`  🧹 Cleaned up old HTML files`);
+  }
 }

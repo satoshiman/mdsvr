@@ -108,8 +108,8 @@ Set `enabled: false` to disable automatic OG image generation.
 
 OG images are generated at:
 
-- Static export: `_html/public/og/{path}/index.jpg`
-- Live server: `public/og/{path}/index.jpg`
+- Static export: `_html/public/assets/og/{path}/index.jpg`
+- Live server: `public/assets/og/{path}/index.jpg`
 
 ### Caching
 

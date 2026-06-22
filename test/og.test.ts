@@ -31,19 +31,22 @@ describe("og generator", () => {
   });
 
   describe("getOgImageUrl", () => {
-    it("returns /public/og/index.jpg for root", () => {
-      const result = getOgImageUrl("/", "", "jpg");
-      assert.strictEqual(result, "/public/og/index.jpg");
+    it("returns /public/assets/og/index.jpg for root", () => {
+      const result = getOgImageUrl("", "", "jpg");
+      assert.strictEqual(result, "/public/assets/og/index.jpg");
     });
 
-    it("returns basePath public/og/index.jpg for root with basePath", () => {
+    it("returns basePath public/assets/og/index.jpg for root with basePath", () => {
       const result = getOgImageUrl("/docs/", "/docs", "jpg");
-      assert.strictEqual(result, "/docs/public/og/index.jpg");
+      assert.strictEqual(result, "/docs/public/assets/og/index.jpg");
     });
 
-    it("returns nested public og url for subdirectory", () => {
+    it("returns nested public/assets/og url for subdirectory", () => {
       const result = getOgImageUrl("/docs/3.-features", "/docs", "jpg");
-      assert.strictEqual(result, "/docs/public/og/3.-features/index.jpg");
+      assert.strictEqual(
+        result,
+        "/docs/public/assets/og/3.-features/index.jpg",
+      );
     });
   });
 

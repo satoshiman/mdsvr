@@ -68,7 +68,7 @@ describe("static export", () => {
     );
     assert.ok(
       rootIndex.includes(
-        '<meta property="og:image" content="/public/og/index.jpg">',
+        '<meta property="og:image" content="/public/assets/og/index.jpg">',
       ),
       "root index should include generated OG image meta tag",
     );
@@ -79,17 +79,24 @@ describe("static export", () => {
     );
     assert.ok(
       autoIndex.includes(
-        '<meta property="og:image" content="/public/og/no-readme-dir/index.jpg">',
+        '<meta property="og:image" content="/public/assets/og/no-readme-dir/index.jpg">',
       ),
       "auto-generated directory index should include generated OG image meta tag",
     );
 
     await fs.access(
-      path.join(outputDir, "public", "og", "no-readme-dir", "index.jpg"),
+      path.join(
+        outputDir,
+        "public",
+        "assets",
+        "og",
+        "no-readme-dir",
+        "index.jpg",
+      ),
     );
 
     const vietnameseOg = await fs.stat(
-      path.join(outputDir, "public", "og", "vietnamese", "index.jpg"),
+      path.join(outputDir, "public", "assets", "og", "vietnamese", "index.jpg"),
     );
     assert.ok(
       vietnameseOg.size > 0,
@@ -120,7 +127,7 @@ describe("static export", () => {
     );
     assert.ok(
       rootIndex.includes(
-        '<meta property="og:image" content="/public/og/index.jpg">',
+        '<meta property="og:image" content="/public/assets/og/index.jpg">',
       ),
       "generated OG image should take precedence over defaultImage",
     );
@@ -206,7 +213,7 @@ describe("static export", () => {
     });
 
     // Check OG directory exists and has files
-    const ogDir = path.join(outputDir, "public", "og");
+    const ogDir = path.join(outputDir, "public", "assets", "og");
     const ogFiles = await fs.readdir(ogDir);
     assert.ok(ogFiles.length > 0, "OG directory should have files");
 
@@ -271,7 +278,7 @@ describe("static export", () => {
     const settings = await loadSettings(rootDir);
 
     // Create old state file
-    const oldOgDir = path.join(outputDir, "public", "og");
+    const oldOgDir = path.join(outputDir, "public", "assets", "og");
     await fs.mkdir(oldOgDir, { recursive: true });
     const oldState = {
       "/README.md": "abc123",

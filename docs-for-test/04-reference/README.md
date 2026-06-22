@@ -3,7 +3,7 @@ title: Reference
 description: API and CLI reference documentation for mdsvr
 ---
 
-# Reference HELLO HAHA
+# Reference for testing
 
 Technical reference documentation for mdsvr.
 
@@ -98,7 +98,7 @@ npx mdsvr ./docs --export ./dist
 npx mdsvr ./docs --init
 ```
 
-Creates `settings.json` with starter configuration.
+Creates `_mdsvr/settings.json` with starter configuration.
 
 #### Validate Settings
 
