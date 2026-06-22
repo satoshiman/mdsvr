@@ -19,6 +19,7 @@ export interface IncrementalExportResult {
 
 /**
  * Load the OG state file from the OG output directory
+ * @deprecated Use loadExportState from src/export-state.ts instead
  */
 export async function loadOgState(ogOutputDir: string): Promise<OgState> {
   const statePath = path.join(ogOutputDir, STATE_FILE_NAME);
@@ -33,6 +34,7 @@ export async function loadOgState(ogOutputDir: string): Promise<OgState> {
 
 /**
  * Save the OG state file to the OG output directory
+ * @deprecated Use saveExportState from src/export-state.ts instead
  */
 export async function saveOgState(
   ogOutputDir: string,
@@ -128,7 +130,12 @@ export async function calculateFileHash(
     for (const dep of dependencies) {
       // Resolve relative paths
       const depPath = path.resolve(path.dirname(filePath), dep);
-      const depHash = await calculateFileHash(depPath, rootDir, settings, visited);
+      const depHash = await calculateFileHash(
+        depPath,
+        rootDir,
+        settings,
+        visited,
+      );
       if (depHash) {
         depHashes.push(depHash);
       }
@@ -169,6 +176,7 @@ export function generateOgFilename(
 
 /**
  * Clean up orphaned OG files (files that exist but are not in current state)
+ * @deprecated Use cleanupOrphanedFiles from src/export-state.ts instead
  */
 export async function cleanupOrphanedOG(
   ogOutputDir: string,

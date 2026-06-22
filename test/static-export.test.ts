@@ -5,6 +5,11 @@ import path from "node:path";
 import os from "node:os";
 import { exportStaticSite } from "../src/generators/static-export.js";
 import { loadSettings } from "../src/settings/index.js";
+import {
+  loadExportState,
+  cleanupOrphanedFiles,
+  type ExportState,
+} from "../src/export-state.js";
 
 describe("static export", () => {
   let tempDir: string;
@@ -122,6 +127,188 @@ describe("static export", () => {
     assert.ok(
       !rootIndex.includes("https://example.com/default.jpg"),
       "defaultImage should not appear when generated OG is available",
+    );
+  });
+
+  it("cleans up orphaned HTML files when source is deleted", async () => {
+    const rootDir = path.join(tempDir, "docs");
+    const settings = await loadSettings(rootDir);
+
+    // Recreate the file if it was deleted in previous test
+    try {
+      await fs.access(path.join(rootDir, "vietnamese.md"));
+    } catch {
+      await fs.writeFile(
+        path.join(rootDir, "vietnamese.md"),
+        "# Tiếng Việt\n\nKý tự tiếng Việt.",
+      );
+    }
+
+    // First export
+    await exportStaticSite({
+      rootDir,
+      outputDir,
+      settings,
+      silent: true,
+    });
+
+    // Verify file exists
+    await fs.access(path.join(outputDir, "vietnamese", "index.html"));
+
+    // Delete source file
+    await fs.unlink(path.join(rootDir, "vietnamese.md"));
+
+    // Second export should clean up orphaned file
+    await exportStaticSite({
+      rootDir,
+      outputDir,
+      settings,
+      silent: true,
+    });
+
+    // Verify orphaned file was deleted
+    try {
+      await fs.access(path.join(outputDir, "vietnamese", "index.html"));
+      assert.fail("Orphaned HTML file should be deleted");
+    } catch (err) {
+      assert.ok((err as NodeJS.ErrnoException).code === "ENOENT");
+    }
+
+    // Verify empty directory was cleaned up
+    try {
+      await fs.access(path.join(outputDir, "vietnamese"));
+      assert.fail("Empty directory should be deleted");
+    } catch (err) {
+      assert.ok((err as NodeJS.ErrnoException).code === "ENOENT");
+    }
+  });
+
+  it("cleans up orphaned OG files when source is deleted", async () => {
+    const rootDir = path.join(tempDir, "docs");
+    const settings = await loadSettings(rootDir);
+
+    // Recreate the file if it was deleted in previous test
+    try {
+      await fs.access(path.join(rootDir, "vietnamese.md"));
+    } catch {
+      await fs.writeFile(
+        path.join(rootDir, "vietnamese.md"),
+        "# Tiếng Việt\n\nKý tự tiếng Việt.",
+      );
+    }
+
+    // First export
+    await exportStaticSite({
+      rootDir,
+      outputDir,
+      settings,
+      silent: true,
+    });
+
+    // Check OG directory exists and has files
+    const ogDir = path.join(outputDir, "public", "og");
+    const ogFiles = await fs.readdir(ogDir);
+    assert.ok(ogFiles.length > 0, "OG directory should have files");
+
+    // Delete source file
+    await fs.unlink(path.join(rootDir, "vietnamese.md"));
+
+    // Second export should clean up orphaned OG file
+    await exportStaticSite({
+      rootDir,
+      outputDir,
+      settings,
+      silent: true,
+    });
+
+    // Verify OG file for deleted source was cleaned up
+    const newOgFiles = await fs.readdir(ogDir);
+    assert.ok(
+      newOgFiles.length < ogFiles.length,
+      "OG file count should decrease after source deletion",
+    );
+  });
+
+  it("preserves unchanged files", async () => {
+    const rootDir = path.join(tempDir, "docs");
+    const settings = await loadSettings(rootDir);
+
+    // First export
+    await exportStaticSite({
+      rootDir,
+      outputDir,
+      settings,
+      silent: true,
+    });
+
+    const firstContent = await fs.readFile(
+      path.join(outputDir, "index.html"),
+      "utf-8",
+    );
+
+    // Second export without changes
+    await exportStaticSite({
+      rootDir,
+      outputDir,
+      settings,
+      silent: true,
+    });
+
+    const secondContent = await fs.readFile(
+      path.join(outputDir, "index.html"),
+      "utf-8",
+    );
+
+    assert.strictEqual(
+      firstContent,
+      secondContent,
+      "Unchanged files should be preserved",
+    );
+  });
+
+  it("migrates old state format", async () => {
+    const rootDir = path.join(tempDir, "docs");
+    const settings = await loadSettings(rootDir);
+
+    // Create old state file
+    const oldOgDir = path.join(outputDir, "public", "og");
+    await fs.mkdir(oldOgDir, { recursive: true });
+    const oldState = {
+      "/README.md": "abc123",
+      "/vietnamese.md": "def456",
+    };
+    await fs.writeFile(
+      path.join(oldOgDir, ".mdsvr-og-state.json"),
+      JSON.stringify(oldState),
+      "utf-8",
+    );
+
+    // Export should migrate old state
+    await exportStaticSite({
+      rootDir,
+      outputDir,
+      settings,
+      silent: true,
+    });
+
+    // Old state file should be deleted
+    try {
+      await fs.access(path.join(oldOgDir, ".mdsvr-og-state.json"));
+      assert.fail("Old state file should be deleted after migration");
+    } catch (err) {
+      assert.ok((err as NodeJS.ErrnoException).code === "ENOENT");
+    }
+
+    // New state file should exist
+    const newState = await loadExportState(outputDir);
+    assert.ok(newState, "New state should be loaded");
+    assert.ok(
+      Object.keys(newState.html).length > 0,
+      "New state should have HTML entries",
+    );
+    assert.ok(
+      Object.keys(newState.og).length > 0,
+      "New state should have OG entries",
     );
   });
 });
