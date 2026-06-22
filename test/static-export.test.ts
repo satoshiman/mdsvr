@@ -299,8 +299,8 @@ describe("static export", () => {
       assert.ok((err as NodeJS.ErrnoException).code === "ENOENT");
     }
 
-    // New state file should exist
-    const newState = await loadExportState(outputDir);
+    // New state file should exist in root directory
+    const newState = await loadExportState(rootDir);
     assert.ok(newState, "New state should be loaded");
     assert.ok(
       Object.keys(newState.html).length > 0,

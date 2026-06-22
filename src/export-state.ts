@@ -29,10 +29,10 @@ export interface CleanupResult {
 }
 
 /**
- * Load the export state file from the export directory
+ * Load the export state file from the root directory
  */
-export async function loadExportState(exportDir: string): Promise<ExportState> {
-  const statePath = path.join(exportDir, STATE_FILE_NAME);
+export async function loadExportState(rootDir: string): Promise<ExportState> {
+  const statePath = path.join(rootDir, STATE_FILE_NAME);
   try {
     const content = await fs.readFile(statePath, "utf-8");
     return JSON.parse(content) as ExportState;
@@ -43,14 +43,13 @@ export async function loadExportState(exportDir: string): Promise<ExportState> {
 }
 
 /**
- * Save the export state file to the export directory
+ * Save the export state file to the root directory
  */
 export async function saveExportState(
-  exportDir: string,
+  rootDir: string,
   state: ExportState,
 ): Promise<void> {
-  const statePath = path.join(exportDir, STATE_FILE_NAME);
-  await fs.mkdir(exportDir, { recursive: true });
+  const statePath = path.join(rootDir, STATE_FILE_NAME);
   await fs.writeFile(statePath, JSON.stringify(state, null, 2), "utf-8");
 }
 
@@ -58,6 +57,7 @@ export async function saveExportState(
  * Migrate old OG state format to new export state format
  */
 export async function migrateOldState(
+  rootDir: string,
   exportDir: string,
 ): Promise<ExportState | null> {
   const oldOgDir = path.join(exportDir, "public", "og");

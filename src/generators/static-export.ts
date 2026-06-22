@@ -88,8 +88,8 @@ export async function exportStaticSite(options: ExportOptions): Promise<void> {
     }
 
     // 1.5. Load and migrate old state if needed
-    let oldState: ExportState = await loadExportState(absOutputDir);
-    const migratedState = await migrateOldState(absOutputDir);
+    let oldState: ExportState = await loadExportState(absRootDir);
+    const migratedState = await migrateOldState(absRootDir, absOutputDir);
     if (migratedState) {
       oldState = migratedState;
       if (!silent) {
@@ -199,7 +199,7 @@ export async function exportStaticSite(options: ExportOptions): Promise<void> {
 
     // 6. Save new export state
     if (!forceOg) {
-      await saveExportState(absOutputDir, currentState);
+      await saveExportState(absRootDir, currentState);
     }
 
     if (!silent) {
