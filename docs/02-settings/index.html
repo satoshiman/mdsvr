@@ -2534,7 +2534,7 @@ noIndex: true # Exclude from search
 </code></pre>
 </div></pre>
 
-<h4 id="cross-reference-links" tabindex="-1">Cross-Reference Links</h4>
+<h3 id="cross-reference-links" tabindex="-1">Cross-Reference Links</h3>
 <p>Use relative paths:</p>
 <pre class="code-block-wrapper"><div class="code-block-container">
   <div class="code-block-toolbar">
@@ -2707,6 +2707,9 @@ Second step content
 </code></pre>
 </div></pre>
 
+<blockquote>
+<p>Note: The assets folder is optional - create it if you need to include images in your documentation.</p>
+</blockquote>
 <h3 id="best-practices" tabindex="-1">Best Practices</h3>
 <ol>
 <li><strong>Start with a <a href="http://README.md">README.md</a></strong> — Required for homepage</li>
@@ -2846,7 +2849,7 @@ npx mdsvr ./docs --export
 </div></pre>
 
 <p><strong>Note:</strong> Only delete <code>export-state.json</code>, not the entire <code>_mdsvr</code> directory, to preserve your settings.</p>
-<h3 id="firebase-hosting" tabindex="-1">Firebase Hosting</h3>
+<h2 id="firebase-hosting" tabindex="-1">Firebase Hosting</h2>
 <pre class="code-block-wrapper"><div class="code-block-container">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -2894,8 +2897,8 @@ firebase deploy
 </code></pre>
 </div></pre>
 
-<h3 id="netlify" tabindex="-1">Netlify</h3>
-<h4 id="via-cli" tabindex="-1">Via CLI</h4>
+<h2 id="netlify" tabindex="-1">Netlify</h2>
+<h3 id="via-cli" tabindex="-1">Via CLI</h3>
 <pre class="code-block-wrapper"><div class="code-block-container">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -2933,7 +2936,7 @@ netlify deploy --dir=_html/public --prod
 </code></pre>
 </div></pre>
 
-<h4 id="via-git" tabindex="-1">Via Git</h4>
+<h3 id="via-git" tabindex="-1">Via Git</h3>
 <ol>
 <li>Push docs to GitHub</li>
 <li>Connect repo to Netlify</li>
@@ -2984,7 +2987,7 @@ netlify deploy --dir=_html/public --prod
 </code></pre>
 </div></pre>
 
-<h3 id="github-pages" tabindex="-1">GitHub Pages</h3>
+<h2 id="github-pages" tabindex="-1">GitHub Pages</h2>
 <pre class="code-block-wrapper"><div class="code-block-container">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -3026,7 +3029,7 @@ npx mdsvr ./src --export ./docs
 </code></pre>
 </div></pre>
 
-<h4 id="github-actions-workflow" tabindex="-1">GitHub Actions Workflow</h4>
+<h2 id="github-actions-workflow" tabindex="-1">GitHub Actions Workflow</h2>
 <pre class="code-block-wrapper"><div class="code-block-container">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -3096,8 +3099,8 @@ jobs:
 </code></pre>
 </div></pre>
 
-<h3 id="docker" tabindex="-1">Docker</h3>
-<h4 id="using-pre-built-image" tabindex="-1">Using Pre-built Image</h4>
+<h2 id="docker" tabindex="-1">Docker</h2>
+<h3 id="using-pre-built-image" tabindex="-1">Using Pre-built Image</h3>
 <pre class="code-block-wrapper"><div class="code-block-container">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -3141,7 +3144,7 @@ docker run -d \
 </code></pre>
 </div></pre>
 
-<h4 id="build-your-own" tabindex="-1">Build Your Own</h4>
+<h3 id="build-your-own" tabindex="-1">Build Your Own</h3>
 <pre class="code-block-wrapper"><div class="code-block-container">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -3269,7 +3272,7 @@ server {
 </code></pre>
 </div></pre>
 
-<h3 id="clean-urls" tabindex="-1">Clean URLs</h3>
+<h2 id="clean-urls" tabindex="-1">Clean URLs</h2>
 <p>Exported sites use clean URLs:</p>
 <ul>
 <li><code>/guide/setup/</code> instead of <code>/guide/setup.html</code></li>
@@ -3321,6 +3324,7 @@ server {
 <li class="toc-item"><a href="#file-organization">File Organization</a></li>
 <li class="toc-item"><a href="#frontmatter">Frontmatter</a></li>
 <li class="toc-item"><a href="#markdown-tips">Markdown Tips</a></li>
+<li class="toc-item"><a href="#cross-reference-links">Cross-Reference Links</a></li>
 <li class="toc-item"><a href="#mdx-components">MDX Components</a></li>
 <li class="toc-item"><a href="#images-%26-assets">Images &amp;amp; Assets</a></li>
 <li class="toc-item"><a href="#best-practices">Best Practices</a></li>
@@ -3328,14 +3332,23 @@ server {
 <li class="toc-item"><a href="#deployment">Deployment</a></li>
 <ul class="toc-list toc-level-3">
 <li class="toc-item"><a href="#export-static-site">Export Static Site</a></li>
+</ul>
 <li class="toc-item"><a href="#firebase-hosting">Firebase Hosting</a></li>
 <li class="toc-item"><a href="#netlify">Netlify</a></li>
+<ul class="toc-list toc-level-3">
+<li class="toc-item"><a href="#via-cli">Via CLI</a></li>
+<li class="toc-item"><a href="#via-git">Via Git</a></li>
 <li class="toc-item"><a href="#vercel">Vercel</a></li>
-<li class="toc-item"><a href="#github-pages">GitHub Pages</a></li>
-<li class="toc-item"><a href="#docker">Docker</a></li>
-<li class="toc-item"><a href="#vps-%2F-self-hosted">VPS / Self-Hosted</a></li>
-<li class="toc-item"><a href="#clean-urls">Clean URLs</a></li>
 </ul>
+<li class="toc-item"><a href="#github-pages">GitHub Pages</a></li>
+<li class="toc-item"><a href="#github-actions-workflow">GitHub Actions Workflow</a></li>
+<li class="toc-item"><a href="#docker">Docker</a></li>
+<ul class="toc-list toc-level-3">
+<li class="toc-item"><a href="#using-pre-built-image">Using Pre-built Image</a></li>
+<li class="toc-item"><a href="#build-your-own">Build Your Own</a></li>
+<li class="toc-item"><a href="#vps-%2F-self-hosted">VPS / Self-Hosted</a></li>
+</ul>
+<li class="toc-item"><a href="#clean-urls">Clean URLs</a></li>
 <li class="toc-item"><a href="#related">Related</a></li>
 </ul>
 </ul>
