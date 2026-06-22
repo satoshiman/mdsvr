@@ -19,10 +19,10 @@
     <meta property="og:description" content="Customize the appearance of your documentation">
     <meta property="og:type" content="website">
     <meta property="og:url" content="/docs/03-features/theming">
-    <meta property="og:image" content="/docs/public/og/03-features/theming/index.jpg">
+    <meta property="og:image" content="/docs/public/assets/og/03-features/theming/index.jpg">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Theming">
-    <meta name="twitter:image" content="/docs/public/og/03-features/theming/index.jpg">
+    <meta name="twitter:image" content="/docs/public/assets/og/03-features/theming/index.jpg">
     <link rel="sitemap" type="application/xml" href="/docs/sitemap.xml">
   
   <style>
@@ -1412,7 +1412,7 @@ code.hljs {
         <h1 id="theming" tabindex="-1">Theming</h1>
 <p>mdsvr supports <strong>dark mode</strong>, <strong>light mode</strong>, and <strong>automatic theme detection</strong> based on the user’s system preferences.</p>
 <h2 id="theme-modes" tabindex="-1">Theme Modes</h2>
-<p>Configure the default theme in <code>settings.json</code>:</p>
+<p>Configure the default theme in <code>_mdsvr/settings.json</code>:</p>
 <pre class="code-block-wrapper"><div class="code-block-container">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -1626,6 +1626,66 @@ code.hljs {
 <li><code>github</code></li>
 <li><code>github-dark</code></li>
 </ul>
+<h2 id="font-family" tabindex="-1">Font Family</h2>
+<p>Customize fonts for different content types:</p>
+<pre class="code-block-wrapper"><div class="code-block-container">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;appearance&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;fontFamily&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">&quot;body&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Inter, system-ui, sans-serif&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;code&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Fira Code, monospace&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;heading&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Inter, system-ui, sans-serif&quot;</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+  <pre class="code-block-raw" style="display:none;"><code>{
+  &quot;appearance&quot;: {
+    &quot;fontFamily&quot;: {
+      &quot;body&quot;: &quot;Inter, system-ui, sans-serif&quot;,
+      &quot;code&quot;: &quot;Fira Code, monospace&quot;,
+      &quot;heading&quot;: &quot;Inter, system-ui, sans-serif&quot;
+    }
+  }
+}
+</code></pre>
+</div></pre>
+
+<p><strong>Options:</strong></p>
+<ul>
+<li><code>body</code>: Font for body text (optional)</li>
+<li><code>code</code>: Font for code blocks (optional)</li>
+<li><code>heading</code>: Font for headings (optional, defaults to body font)</li>
+</ul>
+<p>If not specified, the system default fonts are used.</p>
 <h2 id="css-variables" tabindex="-1">CSS Variables</h2>
 <p>The following CSS variables are available for custom styling:</p>
 <pre class="code-block-wrapper"><div class="code-block-container">
@@ -1792,6 +1852,10 @@ document.documentElement.setAttribute(&quot;data-theme&quot;, theme);
     <span class="hljs-attr">&quot;codeTheme&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
       <span class="hljs-attr">&quot;light&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;github&quot;</span><span class="hljs-punctuation">,</span>
       <span class="hljs-attr">&quot;dark&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;github-dark&quot;</span>
+    <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;fontFamily&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">&quot;body&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Inter, system-ui, sans-serif&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;code&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Fira Code, monospace&quot;</span>
     <span class="hljs-punctuation">}</span>
   <span class="hljs-punctuation">}</span>
 <span class="hljs-punctuation">}</span>
@@ -1804,6 +1868,10 @@ document.documentElement.setAttribute(&quot;data-theme&quot;, theme);
     &quot;codeTheme&quot;: {
       &quot;light&quot;: &quot;github&quot;,
       &quot;dark&quot;: &quot;github-dark&quot;
+    },
+    &quot;fontFamily&quot;: {
+      &quot;body&quot;: &quot;Inter, system-ui, sans-serif&quot;,
+      &quot;code&quot;: &quot;Fira Code, monospace&quot;
     }
   }
 }
@@ -1838,6 +1906,7 @@ document.documentElement.setAttribute(&quot;data-theme&quot;, theme);
 <li class="toc-item"><a href="#recommended-colors">Recommended Colors</a></li>
 </ul>
 <li class="toc-item"><a href="#code-themes">Code Themes</a></li>
+<li class="toc-item"><a href="#font-family">Font Family</a></li>
 <li class="toc-item"><a href="#css-variables">CSS Variables</a></li>
 <li class="toc-item"><a href="#system-preference-detection">System Preference Detection</a></li>
 <li class="toc-item"><a href="#no-flash-theme-loading">No-Flash Theme Loading</a></li>

@@ -19,10 +19,10 @@
     <meta property="og:description" content="API and CLI reference documentation for mdsvr">
     <meta property="og:type" content="website">
     <meta property="og:url" content="/docs/04-reference/">
-    <meta property="og:image" content="/docs/public/og/04-reference/index.jpg">
+    <meta property="og:image" content="/docs/public/assets/og/04-reference/index.jpg">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Reference">
-    <meta name="twitter:image" content="/docs/public/og/04-reference/index.jpg">
+    <meta name="twitter:image" content="/docs/public/assets/og/04-reference/index.jpg">
     <link rel="sitemap" type="application/xml" href="/docs/sitemap.xml">
   
   <style>
@@ -1537,9 +1537,24 @@ code.hljs {
 </tbody>
 </table></div>
 <h4 id="export-options" tabindex="-1">Export Options</h4>
-<p>| Option                | Description        |
-| --------------------- | ------------------ | ---------------------- |
-| <code>-e, --export [PATH]</code> | Export static HTML | <code>PATH</code>: <code>_html/public</code> |</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-e, --export [PATH]</code></td>
+<td>Export static HTML (default: <code>_html/public</code>)</td>
+</tr>
+<tr>
+<td><code>--force-og</code></td>
+<td>Force full OG image regeneration (skip cache)</td>
+</tr>
+</tbody>
+</table></div>
 <h4 id="utility-options" tabindex="-1">Utility Options</h4>
 <div class="table-wrapper"><table>
 <thead>
@@ -1699,12 +1714,18 @@ npx mdsvr ./docs --<span class="hljs-built_in">export</span>
 
 <span class="hljs-comment"># Custom output</span>
 npx mdsvr ./docs --<span class="hljs-built_in">export</span> ./dist
+
+<span class="hljs-comment"># Force full OG image regeneration</span>
+npx mdsvr ./docs --<span class="hljs-built_in">export</span> --force-og
 </code></pre>
   <pre class="code-block-raw" style="display:none;"><code># Default output (_html/public)
 npx mdsvr ./docs --export
 
 # Custom output
 npx mdsvr ./docs --export ./dist
+
+# Force full OG image regeneration
+npx mdsvr ./docs --export --force-og
 </code></pre>
 </div></pre>
 
@@ -1744,7 +1765,7 @@ npx mdsvr ./docs --export ./dist
 </code></pre>
 </div></pre>
 
-<p>Creates <code>settings.json</code> with starter configuration.</p>
+<p>Creates <code>_mdsvr/settings.json</code> with starter configuration.</p>
 <h4 id="validate-settings" tabindex="-1">Validate Settings</h4>
 <pre class="code-block-wrapper"><div class="code-block-container">
   <div class="code-block-toolbar">
@@ -1781,7 +1802,7 @@ npx mdsvr ./docs --export ./dist
 </code></pre>
 </div></pre>
 
-<p>Checks <code>settings.json</code> for errors without starting server.</p>
+<p>Checks <code>_mdsvr/settings.json</code> for errors without starting server.</p>
 <h3 id="environment-variables" tabindex="-1">Environment Variables</h3>
 <div class="table-wrapper"><table>
 <thead>

@@ -19,10 +19,10 @@
     <meta property="og:description" content="Search engine optimization features">
     <meta property="og:type" content="article">
     <meta property="og:url" content="/docs/03-features/seo">
-    <meta property="og:image" content="/docs/public/og/03-features/seo/index.jpg">
+    <meta property="og:image" content="/docs/public/assets/og/03-features/seo/index.jpg">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="SEO">
-    <meta name="twitter:image" content="/docs/public/og/03-features/seo/index.jpg">
+    <meta name="twitter:image" content="/docs/public/assets/og/03-features/seo/index.jpg">
     <meta property="article:published_time" content="Wed Jan 15 2025 07:00:00 GMT+0700 (Indochina Time)">
     <link rel="sitemap" type="application/xml" href="/docs/sitemap.xml">
   
@@ -1413,7 +1413,7 @@ code.hljs {
         <h1 id="seo-features" tabindex="-1">SEO Features</h1>
 <p>mdsvr includes built-in SEO features to help your documentation rank better in search engines and look great when shared on social media.</p>
 <h2 id="meta-tags" tabindex="-1">Meta Tags</h2>
-<p>Every page includes optimized meta tags based on your <code>settings.json</code> and page frontmatter.</p>
+<p>Every page includes optimized meta tags based on your <code>_mdsvr/settings.json</code> and page frontmatter.</p>
 <h3 id="title-template" tabindex="-1">Title Template</h3>
 <pre class="code-block-wrapper"><div class="code-block-container">
   <div class="code-block-toolbar">
@@ -1565,6 +1565,192 @@ Content...
 <li><code>og:type</code> — <code>website</code> or <code>article</code></li>
 <li><code>og:url</code> — Canonical URL</li>
 <li><code>og:image</code> — Featured image</li>
+</ul>
+<h2 id="og-image-generation" tabindex="-1">OG Image Generation</h2>
+<p>mdsvr can automatically generate beautiful OG images for every page. This feature is <strong>enabled by default</strong>.</p>
+<h3 id="enabling%2Fdisabling" tabindex="-1">Enabling/Disabling</h3>
+<pre class="code-block-wrapper"><div class="code-block-container">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;seo&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;og&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">&quot;enabled&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+  <pre class="code-block-raw" style="display:none;"><code>{
+  &quot;seo&quot;: {
+    &quot;og&quot;: {
+      &quot;enabled&quot;: true
+    }
+  }
+}
+</code></pre>
+</div></pre>
+
+<p>Set <code>enabled: false</code> to disable automatic OG image generation.</p>
+<h3 id="customization" tabindex="-1">Customization</h3>
+<pre class="code-block-wrapper"><div class="code-block-container">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;seo&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;og&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">&quot;enabled&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;template&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;default&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;imageFormat&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;jpg&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;generateOnServe&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;fontFamily&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Inter&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;colors&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+        <span class="hljs-attr">&quot;background&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;#0a0a0f&quot;</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">&quot;text&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;#ffffff&quot;</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">&quot;accent&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;#0969da&quot;</span>
+      <span class="hljs-punctuation">}</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+  <pre class="code-block-raw" style="display:none;"><code>{
+  &quot;seo&quot;: {
+    &quot;og&quot;: {
+      &quot;enabled&quot;: true,
+      &quot;template&quot;: &quot;default&quot;,
+      &quot;imageFormat&quot;: &quot;jpg&quot;,
+      &quot;generateOnServe&quot;: false,
+      &quot;fontFamily&quot;: &quot;Inter&quot;,
+      &quot;colors&quot;: {
+        &quot;background&quot;: &quot;#0a0a0f&quot;,
+        &quot;text&quot;: &quot;#ffffff&quot;,
+        &quot;accent&quot;: &quot;#0969da&quot;
+      }
+    }
+  }
+}
+</code></pre>
+</div></pre>
+
+<p><strong>Options:</strong></p>
+<ul>
+<li><code>enabled</code>: Enable/disable OG image generation (default: <code>true</code>)</li>
+<li><code>template</code>: OG image template to use (default: <code>&quot;default&quot;</code>)</li>
+<li><code>imageFormat</code>: Output format - <code>jpg</code> or <code>png</code> (default: <code>jpg</code>)</li>
+<li><code>generateOnServe</code>: Generate OG images on server requests (default: <code>false</code>)</li>
+<li><code>fontFamily</code>: Font family for text (default: <code>Inter</code>)</li>
+<li><code>colors.background</code>: Background color (default: <code>#0a0a0f</code>)</li>
+<li><code>colors.text</code>: Text color (default: <code>#ffffff</code>)</li>
+<li><code>colors.accent</code>: Accent color for highlights (default: <code>#0969da</code>)</li>
+</ul>
+<h3 id="output-location" tabindex="-1">Output Location</h3>
+<p>OG images are generated at:</p>
+<ul>
+<li>Static export: <code>_html/public/assets/og/{path}/index.jpg</code></li>
+<li>Live server: <code>public/assets/og/{path}/index.jpg</code></li>
+</ul>
+<h3 id="caching" tabindex="-1">Caching</h3>
+<p>OG images are cached and only regenerated when:</p>
+<ul>
+<li>The source markdown file changes</li>
+<li>Settings change (forcing full re-export)</li>
+<li>The export state is deleted</li>
+<li>Using <code>--force-og</code> flag during export</li>
+</ul>
+<p>See <a href="../2.-settings/README.md#export-caching">Export Caching</a> for details.</p>
+<h3 id="force-regeneration" tabindex="-1">Force Regeneration</h3>
+<p>To force regenerate all OG images during export:</p>
+<pre class="code-block-wrapper"><div class="code-block-container">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-bash">npx mdsvr ./docs --<span class="hljs-built_in">export</span> --force-og
+</code></pre>
+  <pre class="code-block-raw" style="display:none;"><code>npx mdsvr ./docs --export --force-og
+</code></pre>
+</div></pre>
+
+<p>This bypasses the cache and regenerates all OG images, useful when:</p>
+<ul>
+<li>OG image template changes</li>
+<li>Font files are updated</li>
+<li>You want to refresh all social media preview images</li>
 </ul>
 <h3 id="custom-images-per-page" tabindex="-1">Custom Images Per Page</h3>
 <pre class="code-block-wrapper"><div class="code-block-container">
@@ -2034,9 +2220,9 @@ Content...
       </svg>
     </button>
   </div>
-  <pre><code class="hljs language-html"><span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;canonical&quot;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;https://docs.example.com/page-path&quot;</span>&gt;</span>
+  <pre><code class="hljs language-html"><span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;canonical&quot;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;https://docs.example.com/page-path&quot;</span> /&gt;</span>
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>&lt;link rel=&quot;canonical&quot; href=&quot;https://docs.example.com/page-path&quot;&gt;
+  <pre class="code-block-raw" style="display:none;"><code>&lt;link rel=&quot;canonical&quot; href=&quot;https://docs.example.com/page-path&quot; /&gt;
 </code></pre>
 </div></pre>
 
@@ -2164,9 +2350,9 @@ This page won't be indexed by search engines.
       </svg>
     </button>
   </div>
-  <pre><code class="hljs language-html"><span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;robots&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;noindex&quot;</span>&gt;</span>
+  <pre><code class="hljs language-html"><span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;robots&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;noindex&quot;</span> /&gt;</span>
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>&lt;meta name=&quot;robots&quot; content=&quot;noindex&quot;&gt;
+  <pre class="code-block-raw" style="display:none;"><code>&lt;meta name=&quot;robots&quot; content=&quot;noindex&quot; /&gt;
 </code></pre>
 </div></pre>
 
@@ -2256,7 +2442,7 @@ Sitemap: https://docs.example.com/sitemap.xml
 <h2 id="social-sharing-preview" tabindex="-1">Social Sharing Preview</h2>
 <p>To get the best social sharing previews:</p>
 <ol>
-<li><strong>Set a default image</strong> in <code>settings.json</code></li>
+<li><strong>Set a default image</strong> in <code>_mdsvr/settings.json</code></li>
 <li><strong>Use custom images</strong> for important pages</li>
 <li><strong>Write good descriptions</strong> in frontmatter</li>
 <li><strong>Keep titles concise</strong> (under 60 characters)</li>
@@ -2375,7 +2561,13 @@ Sitemap: https://docs.example.com/sitemap.xml
 <li class="toc-item"><a href="#page-level-titles">Page-Level Titles</a></li>
 </ul>
 <li class="toc-item"><a href="#open-graph">Open Graph</a></li>
+<li class="toc-item"><a href="#og-image-generation">OG Image Generation</a></li>
 <ul class="toc-list toc-level-3">
+<li class="toc-item"><a href="#enabling%2Fdisabling">Enabling/Disabling</a></li>
+<li class="toc-item"><a href="#customization">Customization</a></li>
+<li class="toc-item"><a href="#output-location">Output Location</a></li>
+<li class="toc-item"><a href="#caching">Caching</a></li>
+<li class="toc-item"><a href="#force-regeneration">Force Regeneration</a></li>
 <li class="toc-item"><a href="#custom-images-per-page">Custom Images Per Page</a></li>
 </ul>
 <li class="toc-item"><a href="#twitter-cards">Twitter Cards</a></li>

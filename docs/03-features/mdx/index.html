@@ -19,10 +19,10 @@
     <meta property="og:description" content="Interactive components for your documentation">
     <meta property="og:type" content="website">
     <meta property="og:url" content="/docs/03-features/mdx">
-    <meta property="og:image" content="/docs/public/og/03-features/mdx/index.jpg">
+    <meta property="og:image" content="/docs/public/assets/og/03-features/mdx/index.jpg">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="MDX Components">
-    <meta name="twitter:image" content="/docs/public/og/03-features/mdx/index.jpg">
+    <meta name="twitter:image" content="/docs/public/assets/og/03-features/mdx/index.jpg">
     <link rel="sitemap" type="application/xml" href="/docs/sitemap.xml">
   
   <style>
@@ -1411,7 +1411,7 @@ code.hljs {
       <article class="markdown-body">
         <h1 id="mdx-components"><a aria-hidden="true" tabindex="-1" href="#mdx-components"><span class="icon icon-link"></span></a>MDX Components</h1>
 <p>mdsvr supports <strong>MDX</strong> — Markdown with JSX. This allows you to use interactive components directly in your documentation.</p>
-<div class="callout callout-info"><strong style="display:block;margin-bottom:8px">ℹ️ Info</strong><div><p>MDX must be enabled in <code>settings.json</code> with <code>&quot;mdx.enabled&quot;: true</code>.</p></div></div>
+<div class="callout callout-info"><strong style="display:block;margin-bottom:8px">ℹ️ Info</strong><div><p>MDX must be enabled in <code>_mdsvr/settings.json</code> with <code>&quot;mdx.enabled&quot;: true</code>.</p></div></div>
 <h2 id="callout"><a aria-hidden="true" tabindex="-1" href="#callout"><span class="icon icon-link"></span></a>Callout</h2>
 <p>Use callouts to highlight important information:</p>
 <pre><code class="language-mdx">&lt;Callout type=&quot;info&quot;&gt;This is an informational callout.&lt;/Callout&gt;
@@ -1434,7 +1434,7 @@ code.hljs {
 
 ### Step 2: Configure
 
-Create your `settings.json`
+Create your `_mdsvr/settings.json`
 
 ### Step 3: Launch
 
@@ -1537,6 +1537,30 @@ noIndex: false
 <li>RSS feed entries (when <code>date</code> is present)</li>
 <li>Search index weighting</li>
 </ul>
+<h2 id="mdx-plugins"><a aria-hidden="true" tabindex="-1" href="#mdx-plugins"><span class="icon icon-link"></span></a>MDX Plugins</h2>
+<p>You can add custom remark and rehype plugins to extend MDX functionality:</p>
+<pre><code class="language-json">{
+  &quot;mdx&quot;: {
+    &quot;enabled&quot;: true,
+    &quot;remarkPlugins&quot;: [&quot;remark-gfm&quot;],
+    &quot;rehypePlugins&quot;: [&quot;rehype-slug&quot;]
+  }
+}
+</code></pre>
+<p><strong>Options:</strong></p>
+<ul>
+<li><code>remarkPlugins</code>: Array of remark plugin names for markdown transformations</li>
+<li><code>rehypePlugins</code>: Array of rehype plugin names for HTML transformations</li>
+</ul>
+<p>Currently, mdsvr includes these built-in plugins by default:</p>
+<ul>
+<li><code>remark-frontmatter</code> - Parse YAML frontmatter</li>
+<li><code>remark-gfm</code> - GitHub Flavored Markdown support</li>
+<li><code>remark-mdx-frontmatter</code> - MDX frontmatter support</li>
+<li><code>rehype-slug</code> - Generate heading IDs for anchors</li>
+<li><code>rehype-autolink-headings</code> - Auto-link headings</li>
+</ul>
+<p>You can add additional plugins by installing them and adding their names to the arrays.</p>
       </article>
       <nav class="prev-next-nav">
         <a href="/docs/docs/03-features/markdown" class="prev-next-card prev-card"><span class="prev-next-label">← Prev</span><span class="prev-next-title">Markdown Formats</span></a>

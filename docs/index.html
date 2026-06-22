@@ -19,10 +19,10 @@
     <meta property="og:description" content="Full-featured documentation website server with MDX support, site settings, SEO, and navigation">
     <meta property="og:type" content="website">
     <meta property="og:url" content="/docs/">
-    <meta property="og:image" content="/docs/public/og/index.jpg">
+    <meta property="og:image" content="/docs/public/assets/og/index.jpg">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Welcome">
-    <meta name="twitter:image" content="/docs/public/og/index.jpg">
+    <meta name="twitter:image" content="/docs/public/assets/og/index.jpg">
     <link rel="sitemap" type="application/xml" href="/docs/sitemap.xml">
   
   <style>
@@ -1638,7 +1638,8 @@ echo &quot;# Hello World&quot; &gt; docs/readme.md
     </button>
   </div>
   <pre><code class="hljs">docs/
-├── settings.json                # Site configuration (optional)
+├── _mdsvr/
+│   └── settings.json            # Site configuration (optional)
 ├── README.md                    # Homepage (this file)
 ├── 1.-getting-started/          # Getting started guides
 │   └── README.md              # Quick start &amp; installation
@@ -1657,7 +1658,8 @@ echo &quot;# Hello World&quot; &gt; docs/readme.md
     └── README.md             # CLI reference
 </code></pre>
   <pre class="code-block-raw" style="display:none;"><code>docs/
-├── settings.json                # Site configuration (optional)
+├── _mdsvr/
+│   └── settings.json            # Site configuration (optional)
 ├── README.md                    # Homepage (this file)
 ├── 1.-getting-started/          # Getting started guides
 │   └── README.md              # Quick start &amp; installation

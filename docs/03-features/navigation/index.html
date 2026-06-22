@@ -19,10 +19,10 @@
     <meta property="og:description" content="Sidebar, breadcrumbs, and table of contents">
     <meta property="og:type" content="website">
     <meta property="og:url" content="/docs/03-features/navigation">
-    <meta property="og:image" content="/docs/public/og/03-features/navigation/index.jpg">
+    <meta property="og:image" content="/docs/public/assets/og/03-features/navigation/index.jpg">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Navigation">
-    <meta name="twitter:image" content="/docs/public/og/03-features/navigation/index.jpg">
+    <meta name="twitter:image" content="/docs/public/assets/og/03-features/navigation/index.jpg">
     <link rel="sitemap" type="application/xml" href="/docs/sitemap.xml">
   
   <style>
@@ -1467,6 +1467,82 @@ code.hljs {
 </code></pre>
 </div></pre>
 
+<h3 id="sidebar-options" tabindex="-1">Sidebar Options</h3>
+<pre class="code-block-wrapper"><div class="code-block-container">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;navigation&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;sidebar&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">&quot;enabled&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;autoGenerate&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;showFileCount&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;collapsible&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;defaultOpen&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;depth&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">2</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;docsOnly&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;orderBy&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;alphabetical&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;manualOrder&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+  <pre class="code-block-raw" style="display:none;"><code>{
+  &quot;navigation&quot;: {
+    &quot;sidebar&quot;: {
+      &quot;enabled&quot;: true,
+      &quot;autoGenerate&quot;: true,
+      &quot;showFileCount&quot;: false,
+      &quot;collapsible&quot;: true,
+      &quot;defaultOpen&quot;: true,
+      &quot;depth&quot;: 2,
+      &quot;docsOnly&quot;: false,
+      &quot;orderBy&quot;: &quot;alphabetical&quot;,
+      &quot;manualOrder&quot;: []
+    }
+  }
+}
+</code></pre>
+</div></pre>
+
+<p><strong>Options:</strong></p>
+<ul>
+<li><code>enabled</code>: Enable/disable sidebar (default: <code>true</code>)</li>
+<li><code>autoGenerate</code>: Auto-generate from file structure (default: <code>true</code>)</li>
+<li><code>showFileCount</code>: Show file count next to folders (default: <code>false</code>)</li>
+<li><code>collapsible</code>: Allow folders to collapse/expand (default: <code>true</code>)</li>
+<li><code>defaultOpen</code>: Folders open by default (default: <code>true</code>)</li>
+<li><code>depth</code>: Maximum nesting depth to show (default: <code>2</code>)</li>
+<li><code>docsOnly</code>: Show only markdown files, hide other types (default: <code>false</code>)</li>
+<li><code>orderBy</code>: Sort order - <code>alphabetical</code>, <code>prior-dir</code>, or <code>manual</code> (default: <code>alphabetical</code>)</li>
+<li><code>manualOrder</code>: Array of paths for manual ordering when <code>orderBy: &quot;manual&quot;</code></li>
+</ul>
 <h3 id="how-it-works" tabindex="-1">How It Works</h3>
 <ul>
 <li><strong>Folders</strong> become collapsible groups</li>
@@ -1790,7 +1866,7 @@ Content...
 <p>Hide files from the sidebar by:</p>
 <ol>
 <li><strong>Prefix with underscore</strong>: <code>_draft.md</code></li>
-<li><strong>Add to settings.json</strong>:<pre class="code-block-wrapper"><div class="code-block-container">
+<li><strong>Add to <code>_mdsvr/settings.json</code></strong>:<pre class="code-block-wrapper"><div class="code-block-container">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1847,7 +1923,72 @@ Content...
 <li>Directory listings</li>
 </ul>
 <h2 id="customizing-order" tabindex="-1">Customizing Order</h2>
-<p>Currently, files are sorted alphabetically. Manual ordering via <code>frontmatter.order</code> is planned for a future release.</p>
+<h3 id="alphabetical-(default)" tabindex="-1">Alphabetical (Default)</h3>
+<p>Files and folders are sorted alphabetically with folders first.</p>
+<h3 id="prior-dir" tabindex="-1">Prior-Dir</h3>
+<p>Sorts directories before files, maintaining directory priority.</p>
+<h3 id="manual" tabindex="-1">Manual</h3>
+<p>Use <code>manualOrder</code> to specify exact ordering:</p>
+<pre class="code-block-wrapper"><div class="code-block-container">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;navigation&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;sidebar&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">&quot;orderBy&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;manual&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;manualOrder&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+        <span class="hljs-string">&quot;README.md&quot;</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-string">&quot;getting-started&quot;</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-string">&quot;features&quot;</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-string">&quot;configuration&quot;</span>
+      <span class="hljs-punctuation">]</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+  <pre class="code-block-raw" style="display:none;"><code>{
+  &quot;navigation&quot;: {
+    &quot;sidebar&quot;: {
+      &quot;orderBy&quot;: &quot;manual&quot;,
+      &quot;manualOrder&quot;: [
+        &quot;README.md&quot;,
+        &quot;getting-started&quot;,
+        &quot;features&quot;,
+        &quot;configuration&quot;
+      ]
+    }
+  }
+}
+</code></pre>
+</div></pre>
+
+<p>Paths in <code>manualOrder</code> are relative to the docs root and can include both files and directories.</p>
 <h2 id="responsive-design" tabindex="-1">Responsive Design</h2>
 <p>Navigation adapts to different screen sizes:</p>
 <div class="table-wrapper"><table>
@@ -1991,6 +2132,7 @@ Content...
 <li class="toc-item"><a href="#sidebar-navigation">Sidebar Navigation</a></li>
 <ul class="toc-list toc-level-3">
 <li class="toc-item"><a href="#enabling-the-sidebar">Enabling the Sidebar</a></li>
+<li class="toc-item"><a href="#sidebar-options">Sidebar Options</a></li>
 <li class="toc-item"><a href="#how-it-works">How It Works</a></li>
 <li class="toc-item"><a href="#page-titles">Page Titles</a></li>
 <li class="toc-item"><a href="#active-state">Active State</a></li>
@@ -2005,6 +2147,11 @@ Content...
 <li class="toc-item"><a href="#file-structure-example">File Structure Example</a></li>
 <li class="toc-item"><a href="#hidden-files">Hidden Files</a></li>
 <li class="toc-item"><a href="#customizing-order">Customizing Order</a></li>
+<ul class="toc-list toc-level-3">
+<li class="toc-item"><a href="#alphabetical-(default)">Alphabetical (Default)</a></li>
+<li class="toc-item"><a href="#prior-dir">Prior-Dir</a></li>
+<li class="toc-item"><a href="#manual">Manual</a></li>
+</ul>
 <li class="toc-item"><a href="#responsive-design">Responsive Design</a></li>
 <ul class="toc-list toc-level-3">
 <li class="toc-item"><a href="#mobile-navigation">Mobile Navigation</a></li>
