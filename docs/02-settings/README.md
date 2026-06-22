@@ -126,6 +126,15 @@ Configure search engine optimization features:
     "twitterSite": "@myhandle",
     "generateSitemap": true,
     "generateRssFeed": true,
+    "og": {
+      "enabled": true,
+      "imageFormat": "jpg",
+      "fontFamily": "Inter",
+      "colors": {
+        "background": "#0a0a0f",
+        "text": "#ffffff"
+      }
+    },
     "rss": {
       "title": "My Docs Updates",
       "feedUrl": "/feed.xml",
@@ -203,7 +212,7 @@ Customize the site footer:
 
 ### Hot Reload
 
-Settings are automatically reloaded when `settings.json` changes (except when using `--no-watch` flag). You'll see a message in the console:
+Settings are automatically reloaded when `_mdsvr/settings.json` changes (except when using `--no-watch` flag). You'll see a message in the console:
 
 ```
 [mdsvr] Settings reloaded
@@ -265,7 +274,11 @@ Here's a complete `settings.json` with all available options:
     "defaultImage": "./assets/og-default.png",
     "twitterCard": "summary_large_image",
     "generateSitemap": true,
-    "generateRssFeed": false
+    "generateRssFeed": false,
+    "og": {
+      "enabled": true,
+      "imageFormat": "jpg"
+    }
   },
   "files": {
     "extensions": {
@@ -282,7 +295,7 @@ Here's a complete `settings.json` with all available options:
         ".json"
       ],
       "block": [".env", ".key", ".pem", ".p12"],
-      "hidden": ["settings.json", ".git", "node_modules", ".DS_Store"]
+      "hidden": ["_mdsvr", "settings.json", ".git", "node_modules", ".DS_Store"]
     },
     "indexFiles": ["README.md", "index.md", "INDEX.md"]
   },
@@ -438,6 +451,30 @@ This creates `_html/public/` with your static site.
 npx mdsvr ./docs --export ./dist
 ```
 
+#### Export Caching
+
+mdsvr uses intelligent caching to speed up exports:
+
+- **File-level caching**: Only re-renders pages whose source files changed
+- **OG image caching**: Only regenerates OG images when content changes
+- **Settings tracking**: Detects when `_mdsvr/settings.json` changes and forces full re-export
+
+The export state is stored in `_mdsvr/export-state.json`.
+
+#### Force Full Export
+
+To bypass cache and force a complete re-export:
+
+```bash
+# Delete export state only
+rm _mdsvr/export-state.json
+
+# Then export
+npx mdsvr ./docs --export
+```
+
+**Note:** Only delete `export-state.json`, not the entire `_mdsvr` directory, to preserve your settings.
+
 ### Firebase Hosting
 
 ```bash
@@ -445,7 +482,8 @@ npx mdsvr ./docs --export ./dist
 npx mdsvr ./docs --export
 
 # Deploy
-cd _html/public
+cd _html
+firebase init
 firebase deploy
 ```
 

@@ -22,6 +22,7 @@ import {
   migrateOldState,
   cleanupOrphanedFiles,
   calculateFileHash,
+  calculateSettingsHash,
   type ExportState,
   type PageState,
   type OgState,
@@ -59,7 +60,7 @@ function withBasePath(href: string, settings: Settings): string {
 }
 
 export async function exportStaticSite(options: ExportOptions): Promise<void> {
-  const {
+  let {
     rootDir,
     outputDir,
     settings,
@@ -97,11 +98,29 @@ export async function exportStaticSite(options: ExportOptions): Promise<void> {
       }
     }
 
+    // 1.6. Check if settings changed - if so, force full export
+    const currentSettingsHash = await calculateSettingsHash(absRootDir);
+    if (
+      oldState.settingsHash &&
+      oldState.settingsHash !== currentSettingsHash
+    ) {
+      if (!silent) {
+        console.log(`  ⚙️  Settings changed, forcing full export`);
+      }
+      // Clear old state to force regeneration of all files
+      oldState = { settingsHash: "", html: {}, og: {} };
+      forceOg = true;
+    }
+
     // 2. Process all markdown files
     let processedCount = 0;
     const dirMap = new Map<string, DirInfo>();
     const pageInfos: PageInfo[] = [];
-    const currentState: ExportState = { html: {}, og: {} };
+    const currentState: ExportState = {
+      settingsHash: currentSettingsHash,
+      html: {},
+      og: {},
+    };
     await processDirectory(
       absRootDir,
       absOutputDir,
@@ -152,22 +171,20 @@ export async function exportStaticSite(options: ExportOptions): Promise<void> {
     }
 
     // 3.5. Cleanup orphaned files before generating new content
-    if (!forceOg) {
-      const cleanupResult = await cleanupOrphanedFiles(
-        absOutputDir,
-        oldState,
-        currentState,
+    const cleanupResult = await cleanupOrphanedFiles(
+      absOutputDir,
+      oldState,
+      currentState,
+    );
+    if (cleanupResult.deleted.length > 0 && !silent) {
+      console.log(
+        `  🧹 Cleaned up ${cleanupResult.deleted.length} orphaned files`,
       );
-      if (cleanupResult.deleted.length > 0 && !silent) {
-        console.log(
-          `  🧹 Cleaned up ${cleanupResult.deleted.length} orphaned files`,
-        );
-      }
-      if (cleanupResult.deletedDirs.length > 0 && !silent) {
-        console.log(
-          `  🧹 Cleaned up ${cleanupResult.deletedDirs.length} empty directories`,
-        );
-      }
+    }
+    if (cleanupResult.deletedDirs.length > 0 && !silent) {
+      console.log(
+        `  🧹 Cleaned up ${cleanupResult.deletedDirs.length} empty directories`,
+      );
     }
 
     // 4. Generate OG images if enabled
@@ -198,9 +215,7 @@ export async function exportStaticSite(options: ExportOptions): Promise<void> {
     }
 
     // 6. Save new export state
-    if (!forceOg) {
-      await saveExportState(absRootDir, currentState);
-    }
+    await saveExportState(absRootDir, currentState);
 
     if (!silent) {
       console.log(`\n  ✓ Export complete: ${processedCount} pages generated\n`);

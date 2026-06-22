@@ -1,4 +1,5 @@
 {
+  "settingsHash": "0e9979049f2e19744c18b058630008bdf9418ddb8b2ad5d8b8875ffce576ea9f",
   "html": {
     "/01-getting-started/": {
       "outputPath": "_html/public/01-getting-started/index.html",
@@ -53,7 +54,7 @@
     "/04-reference/": {
       "outputPath": "_html/public/04-reference/index.html",
       "sourcePath": "04-reference/README.md",
-      "hash": "d4ba5e5ea0890b2fc2616d69523528005e643d227c9d2cc0d4d462e48914e861"
+      "hash": "20b66124c3a3291382caa19c02c7b19b4a0c396497646a6503ad504cf34778f3"
     },
     "/": {
       "outputPath": "_html/public/index.html",
@@ -104,7 +105,7 @@
     },
     "/04-reference/": {
       "outputPath": "public/og/04-reference/index.jpg",
-      "hash": "d4ba5e5ea0890b2fc2616d69523528005e643d227c9d2cc0d4d462e48914e861"
+      "hash": "20b66124c3a3291382caa19c02c7b19b4a0c396497646a6503ad504cf34778f3"
     },
     "/": {
       "outputPath": "public/og/index.jpg",

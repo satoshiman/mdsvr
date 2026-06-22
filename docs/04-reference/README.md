@@ -98,7 +98,7 @@ npx mdsvr ./docs --export ./dist
 npx mdsvr ./docs --init
 ```
 
-Creates `settings.json` with starter configuration.
+Creates `_mdsvr/settings.json` with starter configuration.
 
 #### Validate Settings
 

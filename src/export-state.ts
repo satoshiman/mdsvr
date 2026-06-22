@@ -3,11 +3,13 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import { createHash } from "node:crypto";
+import { generateDefaultSettings } from "./settings/index.js";
 
 const STATE_FILE_NAME = "_mdsvr/export-state.json";
 const OLD_STATE_FILE_NAME = ".mdsvr-og-state.json";
 
 export interface ExportState {
+  settingsHash: string; // sha256 of settings.json
   html: Record<string, PageState>;
   og: Record<string, OgState>;
 }
@@ -38,7 +40,7 @@ export async function loadExportState(rootDir: string): Promise<ExportState> {
     return JSON.parse(content) as ExportState;
   } catch {
     // File doesn't exist or is invalid, return empty state
-    return { html: {}, og: {} };
+    return { settingsHash: "", html: {}, og: {} };
   }
 }
 
@@ -70,6 +72,7 @@ export async function migrateOldState(
 
     // Convert old format to new format
     const newState: ExportState = {
+      settingsHash: "",
       html: {},
       og: {},
     };
@@ -117,6 +120,27 @@ export async function calculateFileHash(filePath: string): Promise<string> {
     return createHash("sha256").update(content).digest("hex");
   } catch {
     return "";
+  }
+}
+
+/**
+ * Calculate hash of settings file
+ * If settings file doesn't exist, use default settings hash
+ */
+export async function calculateSettingsHash(rootDir: string): Promise<string> {
+  const settingsPath = path.join(rootDir, "_mdsvr/settings.json");
+  try {
+    const content = await fs.readFile(settingsPath, "utf-8");
+    const parsed = JSON.parse(content);
+    delete parsed.$schema; // Exclude schema from hash
+    return createHash("sha256").update(JSON.stringify(parsed)).digest("hex");
+  } catch {
+    // No settings file, use hash of default settings
+    const defaultSettings = generateDefaultSettings();
+    const { $schema, ...settingsWithoutSchema } = defaultSettings as any;
+    return createHash("sha256")
+      .update(JSON.stringify(settingsWithoutSchema))
+      .digest("hex");
   }
 }
 
