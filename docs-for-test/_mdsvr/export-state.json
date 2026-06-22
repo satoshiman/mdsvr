@@ -1,0 +1,115 @@
+{
+  "settingsHash": "0e9979049f2e19744c18b058630008bdf9418ddb8b2ad5d8b8875ffce576ea9f",
+  "html": {
+    "/01-getting-started/": {
+      "outputPath": "_html/public/01-getting-started/index.html",
+      "sourcePath": "01-getting-started/README.md",
+      "hash": "467925de946f163e405effb2f5ce34a290d2711f6ccae03baaedfed89b038841"
+    },
+    "/02-settings/": {
+      "outputPath": "_html/public/02-settings/index.html",
+      "sourcePath": "02-settings/README.md",
+      "hash": "76182805379c2b13607140fa1a0d95d08b99da3d8fda1296c21d73ae7d0860d3"
+    },
+    "/03-features/": {
+      "outputPath": "_html/public/03-features/index.html",
+      "sourcePath": "03-features/README.md",
+      "hash": "fb6b6b5f81a845010e1b76ad2bd9dc5e260fe18eaf3875abe35a1dfe532e7d9b"
+    },
+    "/03-features/markdown": {
+      "outputPath": "_html/public/03-features/markdown/index.html",
+      "sourcePath": "03-features/markdown.md",
+      "hash": "cde2818d99c4bce8f292e00776a0fc1cc1b83b47962c2e000ce5957c2e7d75c7"
+    },
+    "/03-features/mdx": {
+      "outputPath": "_html/public/03-features/mdx/index.html",
+      "sourcePath": "03-features/mdx.mdx",
+      "hash": "4aecab460ec71a45dd21b131dd647b048ce56a36db19893e0162dc278634a3a4"
+    },
+    "/03-features/mermaid": {
+      "outputPath": "_html/public/03-features/mermaid/index.html",
+      "sourcePath": "03-features/mermaid.md",
+      "hash": "a7df39b798ae867ef56520f89b90a0f11e7f433f9c3cc6bb73ea3018367a103f"
+    },
+    "/03-features/navigation": {
+      "outputPath": "_html/public/03-features/navigation/index.html",
+      "sourcePath": "03-features/navigation.md",
+      "hash": "efcbef0fc83e67318636c4a5323149b0708fbe460226d599d48d191a814a4382"
+    },
+    "/03-features/search": {
+      "outputPath": "_html/public/03-features/search/index.html",
+      "sourcePath": "03-features/search.md",
+      "hash": "8d3cddff921439573ca5de715abfb6496bae67e523f576b0e7dd8a5eefacd0ca"
+    },
+    "/03-features/seo": {
+      "outputPath": "_html/public/03-features/seo/index.html",
+      "sourcePath": "03-features/seo.md",
+      "hash": "2b6d409f012d4e8e6131d567074a4cd584219f6d16dddec11cd7cd3a4ad2e699"
+    },
+    "/03-features/theming": {
+      "outputPath": "_html/public/03-features/theming/index.html",
+      "sourcePath": "03-features/theming.md",
+      "hash": "01d5fe98721d57f0786901bb7b41173e596fae8ed62456a03d6af2ed00fed14b"
+    },
+    "/04-reference/": {
+      "outputPath": "_html/public/04-reference/index.html",
+      "sourcePath": "04-reference/README.md",
+      "hash": "20b66124c3a3291382caa19c02c7b19b4a0c396497646a6503ad504cf34778f3"
+    },
+    "/": {
+      "outputPath": "_html/public/index.html",
+      "sourcePath": "README.md",
+      "hash": "fa0cf81e5b453599ae8e93cc8609f5134dcddbba5f4fd3e473784530f8c8f878"
+    }
+  },
+  "og": {
+    "/01-getting-started/": {
+      "outputPath": "public/og/01-getting-started/index.jpg",
+      "hash": "467925de946f163e405effb2f5ce34a290d2711f6ccae03baaedfed89b038841"
+    },
+    "/02-settings/": {
+      "outputPath": "public/og/02-settings/index.jpg",
+      "hash": "76182805379c2b13607140fa1a0d95d08b99da3d8fda1296c21d73ae7d0860d3"
+    },
+    "/03-features/": {
+      "outputPath": "public/og/03-features/index.jpg",
+      "hash": "fb6b6b5f81a845010e1b76ad2bd9dc5e260fe18eaf3875abe35a1dfe532e7d9b"
+    },
+    "/03-features/markdown": {
+      "outputPath": "public/og/03-features/markdown/index.jpg",
+      "hash": "cde2818d99c4bce8f292e00776a0fc1cc1b83b47962c2e000ce5957c2e7d75c7"
+    },
+    "/03-features/mdx": {
+      "outputPath": "public/og/03-features/mdx/index.jpg",
+      "hash": "4aecab460ec71a45dd21b131dd647b048ce56a36db19893e0162dc278634a3a4"
+    },
+    "/03-features/mermaid": {
+      "outputPath": "public/og/03-features/mermaid/index.jpg",
+      "hash": "a7df39b798ae867ef56520f89b90a0f11e7f433f9c3cc6bb73ea3018367a103f"
+    },
+    "/03-features/navigation": {
+      "outputPath": "public/og/03-features/navigation/index.jpg",
+      "hash": "efcbef0fc83e67318636c4a5323149b0708fbe460226d599d48d191a814a4382"
+    },
+    "/03-features/search": {
+      "outputPath": "public/og/03-features/search/index.jpg",
+      "hash": "8d3cddff921439573ca5de715abfb6496bae67e523f576b0e7dd8a5eefacd0ca"
+    },
+    "/03-features/seo": {
+      "outputPath": "public/og/03-features/seo/index.jpg",
+      "hash": "2b6d409f012d4e8e6131d567074a4cd584219f6d16dddec11cd7cd3a4ad2e699"
+    },
+    "/03-features/theming": {
+      "outputPath": "public/og/03-features/theming/index.jpg",
+      "hash": "01d5fe98721d57f0786901bb7b41173e596fae8ed62456a03d6af2ed00fed14b"
+    },
+    "/04-reference/": {
+      "outputPath": "public/og/04-reference/index.jpg",
+      "hash": "20b66124c3a3291382caa19c02c7b19b4a0c396497646a6503ad504cf34778f3"
+    },
+    "/": {
+      "outputPath": "public/og/index.jpg",
+      "hash": "fa0cf81e5b453599ae8e93cc8609f5134dcddbba5f4fd3e473784530f8c8f878"
+    }
+  }
+}

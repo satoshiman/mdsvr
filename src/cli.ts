@@ -2,7 +2,7 @@
 
 import { createServer, getNetworkAddress } from "./server.js";
 import path from "node:path";
-import { readFile, writeFile } from "node:fs/promises";
+import { readFile, writeFile, mkdir } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import {
   validateSettingsFile,
@@ -22,6 +22,7 @@ interface ParsedArgs {
   validate: boolean;
   watchSettings: boolean;
   export: string | null;
+  forceOg: boolean;
 }
 
 function parseArgs(argv: string[]): ParsedArgs {
@@ -38,6 +39,7 @@ function parseArgs(argv: string[]): ParsedArgs {
     validate: false,
     watchSettings: true,
     export: null,
+    forceOg: false,
   };
 
   for (let i = 0; i < argv.length; i++) {
@@ -72,6 +74,8 @@ function parseArgs(argv: string[]): ParsedArgs {
         if (val) i--; // Put back if it's a flag
         args.export = null; // Will use default _html folder
       }
+    } else if (arg === "--force-og") {
+      args.forceOg = true;
     } else if (!arg.startsWith("--") && !arg.startsWith("-")) {
       args.dir = arg;
       args.dirSpecified = true;
@@ -92,9 +96,10 @@ Options:
   -o, --open         Auto-open browser
   -s, --silent       Suppress console output
   -e, --export [PATH]  Export static HTML (default: _html/public in input dir)
-  --init             Create a starter settings.json in [dir]
-  --validate         Validate settings.json and exit
-  --no-watch         Disable settings.json hot-reload
+  --force-og         Force full OG image regeneration (skip incremental)
+  --init             Create a starter _mdsvr/settings.json in [dir]
+  --validate         Validate _mdsvr/settings.json and exit
+  --no-watch         Disable _mdsvr/settings.json hot-reload
   -v, --version      Print version
   -h, --help         Print this help
 
@@ -104,6 +109,7 @@ Examples:
   mdsvr . --host 0.0.0.0 --port 8080
   mdsvr ./docs --export       # Export to ./_html/public
   mdsvr ./docs -e ./output    # Export to custom directory
+  mdsvr ./docs --export --force-og  # Export with full OG regeneration
   mdsvr ./docs --init
   mdsvr ./docs --validate
 `);
@@ -133,8 +139,9 @@ async function openBrowser(url: string): Promise<void> {
 }
 
 async function initSettings(dir: string): Promise<void> {
-  const settingsPath = path.join(dir, "settings.json");
+  const settingsPath = path.join(dir, "_mdsvr/settings.json");
   const defaultSettings = generateDefaultSettings();
+  await mkdir(path.join(dir, "_mdsvr"), { recursive: true });
   await writeFile(
     settingsPath,
     JSON.stringify(defaultSettings, null, 2),
@@ -169,7 +176,9 @@ async function main(): Promise<void> {
   if (args.init) {
     try {
       await initSettings(absoluteDir);
-      console.log(`\n  ✔ Created ${args.dir}/settings.json with defaults`);
+      console.log(
+        `\n  ✔ Created ${args.dir}/_mdsvr/settings.json with defaults`,
+      );
       console.log(`  ✔ Run \`npx mdsvr ${args.dir}\` to start\n`);
       process.exit(0);
     } catch (err) {
@@ -183,10 +192,10 @@ async function main(): Promise<void> {
     try {
       const result = await validateSettingsFile(absoluteDir);
       if (result.valid) {
-        console.log(`\n  ✔ settings.json is valid\n`);
+        console.log(`\n  ✔ _mdsvr/settings.json is valid\n`);
         process.exit(0);
       } else {
-        console.log(`\n  ✖ settings.json has errors:`);
+        console.log(`\n  ✖ _mdsvr/settings.json has errors:`);
         result.errors?.forEach((e) => console.log(`    - ${e}`));
         console.log();
         process.exit(1);
@@ -217,6 +226,7 @@ async function main(): Promise<void> {
         outputDir,
         settings,
         silent: args.silent,
+        forceOg: args.forceOg,
       });
 
       if (!args.silent) {

@@ -53,73 +53,11 @@ Open Graph tags ensure your pages look great when shared on Facebook, LinkedIn, 
 ```
 
 Generated tags:
-
 - `og:title` — Page title
 - `og:description` — Page or site description
 - `og:type` — `website` or `article`
 - `og:url` — Canonical URL
 - `og:image` — Featured image
-
-## OG Image Generation
-
-mdsvr can automatically generate beautiful OG images for every page. This feature is **enabled by default**.
-
-### Enabling/Disabling
-
-```json
-{
-  "seo": {
-    "og": {
-      "enabled": true
-    }
-  }
-}
-```
-
-Set `enabled: false` to disable automatic OG image generation.
-
-### Customization
-
-```json
-{
-  "seo": {
-    "og": {
-      "enabled": true,
-      "imageFormat": "jpg",
-      "fontFamily": "Inter",
-      "colors": {
-        "background": "#0a0a0f",
-        "text": "#ffffff"
-      }
-    }
-  }
-}
-```
-
-**Options:**
-
-- `enabled`: Enable/disable OG image generation (default: `true`)
-- `imageFormat`: Output format - `jpg` or `png` (default: `jpg`)
-- `fontFamily`: Font family for text (default: `Inter`)
-- `colors.background`: Background color (default: `#0a0a0f`)
-- `colors.text`: Text color (default: `#ffffff`)
-
-### Output Location
-
-OG images are generated at:
-
-- Static export: `_html/public/og/{path}/index.jpg`
-- Live server: `public/og/{path}/index.jpg`
-
-### Caching
-
-OG images are cached and only regenerated when:
-
-- The source markdown file changes
-- Settings change (forcing full re-export)
-- The export state is deleted
-
-See [Export Caching](../2.-settings/README.md#export-caching) for details.
 
 ### Custom Images Per Page
 
@@ -174,7 +112,6 @@ https://yoursite.com/sitemap.xml
 ### Sitemap Contents
 
 The sitemap includes:
-
 - All `.md` and `.mdx` files
 - Last modified date (from file mtime or frontmatter `date`)
 - Change frequency (`weekly`)
@@ -257,7 +194,7 @@ Canonical URLs help search engines understand the primary version of a page.
 With `baseUrl` set, every page includes:
 
 ```html
-<link rel="canonical" href="https://docs.example.com/page-path" />
+<link rel="canonical" href="https://docs.example.com/page-path">
 ```
 
 ## No-Index
@@ -289,7 +226,7 @@ This page won't be indexed by search engines.
 This adds:
 
 ```html
-<meta name="robots" content="noindex" />
+<meta name="robots" content="noindex">
 ```
 
 ## robots.txt

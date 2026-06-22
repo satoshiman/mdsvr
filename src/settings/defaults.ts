@@ -39,6 +39,7 @@ export const DEFAULT_BLOCK_EXTENSIONS = [
 ];
 
 export const DEFAULT_HIDDEN_FILES = [
+  "_mdsvr",
   "settings.json",
   ".git",
   "node_modules",

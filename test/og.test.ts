@@ -1,6 +1,11 @@
 import { describe, it } from "node:test";
 import assert from "node:assert";
 import { getOgImagePath, getOgImageUrl } from "../src/og/generator.js";
+import {
+  extractDependencies,
+  generateOgFilename,
+  type OgState,
+} from "../src/og/incremental.js";
 
 describe("og generator", () => {
   describe("getOgImagePath", () => {
@@ -38,10 +43,60 @@ describe("og generator", () => {
 
     it("returns nested public og url for subdirectory", () => {
       const result = getOgImageUrl("/docs/3.-features", "/docs", "jpg");
-      assert.strictEqual(
-        result,
-        "/docs/public/og/3.-features/index.jpg",
-      );
+      assert.strictEqual(result, "/docs/public/og/3.-features/index.jpg");
+    });
+  });
+
+  describe("incremental OG export", () => {
+    describe("extractDependencies", () => {
+      it("extracts import statements", () => {
+        const content = `
+import { Component } from './component'
+import { helper } from '../utils/helper'
+`;
+        const deps = extractDependencies(content);
+        assert.deepStrictEqual(deps, ["./component", "../utils/helper"]);
+      });
+
+      it("extracts frontmatter includes", () => {
+        const content = `
+---
+include: './partial.md'
+reference: 'other.md'
+---
+# Content
+`;
+        const deps = extractDependencies(content);
+        assert.deepStrictEqual(deps, ["./partial.md", "other.md"]);
+      });
+
+      it("returns empty array for content without dependencies", () => {
+        const content = "# Just a heading\n\nSome content";
+        const deps = extractDependencies(content);
+        assert.deepStrictEqual(deps, []);
+      });
+    });
+
+    describe("generateOgFilename", () => {
+      it("generates filename for root README", () => {
+        const result = generateOgFilename("/docs/README.md", "jpg");
+        assert.strictEqual(result, "docs-readme-og.jpg");
+      });
+
+      it("generates filename for nested file", () => {
+        const result = generateOgFilename("/docs/guides/setup.md", "jpg");
+        assert.strictEqual(result, "docs-guides-setup-og.jpg");
+      });
+
+      it("generates filename for mdx file", () => {
+        const result = generateOgFilename("/docs/component.mdx", "png");
+        assert.strictEqual(result, "docs-component-og.png");
+      });
+
+      it("handles file without leading slash", () => {
+        const result = generateOgFilename("docs/README.md", "jpg");
+        assert.strictEqual(result, "docs-readme-og.jpg");
+      });
     });
   });
 });

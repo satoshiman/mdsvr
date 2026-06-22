@@ -16,12 +16,24 @@ import {
   getOgImagePath,
   type OgImageData,
 } from "../og/index.js";
+import {
+  loadExportState,
+  saveExportState,
+  migrateOldState,
+  cleanupOrphanedFiles,
+  calculateFileHash,
+  calculateSettingsHash,
+  type ExportState,
+  type PageState,
+  type OgState,
+} from "../export-state.js";
 
 export interface ExportOptions {
   rootDir: string;
   outputDir: string;
   settings: Settings;
   silent?: boolean;
+  forceOg?: boolean;
 }
 
 interface DirInfo {
@@ -33,6 +45,7 @@ interface DirInfo {
 interface PageInfo {
   urlPath: string;
   outputPath: string;
+  sourcePath: string;
   title: string;
   description?: string;
 }
@@ -47,7 +60,13 @@ function withBasePath(href: string, settings: Settings): string {
 }
 
 export async function exportStaticSite(options: ExportOptions): Promise<void> {
-  const { rootDir, outputDir, settings, silent = false } = options;
+  let {
+    rootDir,
+    outputDir,
+    settings,
+    silent = false,
+    forceOg = false,
+  } = options;
 
   try {
     // 1. Validate input/output directories
@@ -69,10 +88,39 @@ export async function exportStaticSite(options: ExportOptions): Promise<void> {
       console.log(`  To:   ${absOutputDir}\n`);
     }
 
+    // 1.5. Load and migrate old state if needed
+    let oldState: ExportState = await loadExportState(absRootDir);
+    const migratedState = await migrateOldState(absRootDir, absOutputDir);
+    if (migratedState) {
+      oldState = migratedState;
+      if (!silent) {
+        console.log(`  📦 Migrated old OG state to new format`);
+      }
+    }
+
+    // 1.6. Check if settings changed - if so, force full export
+    const currentSettingsHash = await calculateSettingsHash(absRootDir);
+    if (
+      oldState.settingsHash &&
+      oldState.settingsHash !== currentSettingsHash
+    ) {
+      if (!silent) {
+        console.log(`  ⚙️  Settings changed, forcing full export`);
+      }
+      // Clear old state to force regeneration of all files
+      oldState = { settingsHash: "", html: {}, og: {} };
+      forceOg = true;
+    }
+
     // 2. Process all markdown files
     let processedCount = 0;
     const dirMap = new Map<string, DirInfo>();
     const pageInfos: PageInfo[] = [];
+    const currentState: ExportState = {
+      settingsHash: currentSettingsHash,
+      html: {},
+      og: {},
+    };
     await processDirectory(
       absRootDir,
       absOutputDir,
@@ -81,6 +129,7 @@ export async function exportStaticSite(options: ExportOptions): Promise<void> {
       silent,
       dirMap,
       pageInfos,
+      currentState,
       (count) => {
         processedCount = count;
       },
@@ -93,20 +142,49 @@ export async function exportStaticSite(options: ExportOptions): Promise<void> {
         await generateAutoIndex(dirInfo, rootDir, settings);
         autoIndexCount++;
 
+        const autoIndexOutputPath = path.join(dirInfo.outputPath, "index.html");
+        const relativeOutputPath = path.relative(
+          absOutputDir,
+          autoIndexOutputPath,
+        );
+
         // Add to pageInfos so OG images are generated for auto-index pages
         pageInfos.push({
           urlPath: dirInfo.urlPath,
-          outputPath: path.join(dirInfo.outputPath, "index.html"),
+          outputPath: autoIndexOutputPath,
+          sourcePath: "", // Auto-index pages have no source file
           title: dirInfo.urlPath ? `Index of ${dirInfo.urlPath}` : "Index",
           description: settings.site.description,
         });
 
+        // Track auto-index page in current state
+        currentState.html[dirInfo.urlPath] = {
+          outputPath: relativeOutputPath,
+          sourcePath: "",
+          hash: "auto-index",
+        };
+
         if (!silent) {
-          console.log(
-            `  ✓ ${path.relative(absOutputDir, dirInfo.outputPath)}/index.html (auto-generated)`,
-          );
+          console.log(`  ✓ ${relativeOutputPath} (auto-generated)`);
         }
       }
+    }
+
+    // 3.5. Cleanup orphaned files before generating new content
+    const cleanupResult = await cleanupOrphanedFiles(
+      absOutputDir,
+      oldState,
+      currentState,
+    );
+    if (cleanupResult.deleted.length > 0 && !silent) {
+      console.log(
+        `  🧹 Cleaned up ${cleanupResult.deleted.length} orphaned files`,
+      );
+    }
+    if (cleanupResult.deletedDirs.length > 0 && !silent) {
+      console.log(
+        `  🧹 Cleaned up ${cleanupResult.deletedDirs.length} empty directories`,
+      );
     }
 
     // 4. Generate OG images if enabled
@@ -114,7 +192,16 @@ export async function exportStaticSite(options: ExportOptions): Promise<void> {
       if (!silent) {
         console.log(`\n  🖼️  Generating OG images...`);
       }
-      await generateOgImages(pageInfos, absOutputDir, settings, silent);
+      await generateOgImages(
+        pageInfos,
+        absOutputDir,
+        absRootDir,
+        settings,
+        silent,
+        forceOg,
+        currentState,
+        oldState,
+      );
     }
 
     // 5. Generate search-index.json if search is enabled
@@ -126,6 +213,9 @@ export async function exportStaticSite(options: ExportOptions): Promise<void> {
         console.log(`  ✓ search-index.json (${searchIndex.length} entries)`);
       }
     }
+
+    // 6. Save new export state
+    await saveExportState(absRootDir, currentState);
 
     if (!silent) {
       console.log(`\n  ✓ Export complete: ${processedCount} pages generated\n`);
@@ -144,6 +234,7 @@ async function processDirectory(
   silent: boolean,
   dirMap: Map<string, DirInfo>,
   pageInfos: PageInfo[],
+  currentState: ExportState,
   updateCount: (count: number) => void,
   count: number = 0,
 ): Promise<number> {
@@ -193,6 +284,7 @@ async function processDirectory(
           silent,
           dirMap,
           pageInfos,
+          currentState,
           updateCount,
           count,
         );
@@ -246,6 +338,7 @@ async function processDirectory(
           urlPath,
           rootDir,
           settings,
+          currentState,
         );
         pageInfos.push(pageInfo);
 
@@ -279,6 +372,7 @@ async function renderMarkdownFile(
   urlPath: string,
   rootDir: string,
   settings: Settings,
+  currentState: ExportState,
 ): Promise<PageInfo> {
   const content = await fs.readFile(filePath, "utf-8");
   const ext = path.extname(filePath).toLowerCase();
@@ -319,10 +413,21 @@ async function renderMarkdownFile(
 
   await fs.writeFile(outputPath, html, "utf-8");
 
+  // Calculate hash and track in current state
+  const hash = await calculateFileHash(filePath);
+  const relativeOutputPath = path.relative(rootDir, outputPath);
+  const relativeSourcePath = path.relative(rootDir, filePath);
+  currentState.html[urlPath] = {
+    outputPath: relativeOutputPath,
+    sourcePath: relativeSourcePath,
+    hash,
+  };
+
   // Return page info for OG generation
   return {
     urlPath,
     outputPath,
+    sourcePath: filePath,
     title,
     description: result.frontmatter.description as string | undefined,
   };
@@ -435,8 +540,12 @@ function humanizeFilename(filename: string): string {
 async function generateOgImages(
   pageInfos: PageInfo[],
   outputDir: string,
+  rootDir: string,
   settings: Settings,
   silent: boolean,
+  forceOg: boolean = false,
+  currentState: ExportState,
+  oldState: ExportState,
 ): Promise<void> {
   const publicDir = path.join(outputDir, "public");
   const ogDir = path.join(publicDir, "og");
@@ -445,11 +554,9 @@ async function generateOgImages(
 
   let generatedCount = 0;
   let failedCount = 0;
+  let skippedCount = 0;
 
   for (const pageInfo of pageInfos) {
-    // Skip if the page already has a custom image
-    // if (pageInfo.image) continue;
-
     const ogImagePath = getOgImagePath(
       pageInfo.urlPath,
       ogDir,
@@ -469,25 +576,67 @@ async function generateOgImages(
       textColor: ogSettings?.colors?.text || "#ffffff",
     };
 
-    // Generate the OG image
-    const result = await generateOgImage(ogData, {
-      outputPath: ogImagePath,
-      format,
-      quality: 85,
-    });
+    // For incremental export, check if file has changed
+    let shouldGenerate = forceOg;
+    let fileHash = "";
 
-    if (result.success) {
-      generatedCount++;
-      if (!silent) {
-        const displayPath = path.relative(outputDir, ogImagePath);
-        console.log(`  ✓ OG image: ${displayPath}`);
+    if (!forceOg) {
+      // Calculate hash for the source file
+      if (pageInfo.sourcePath) {
+        try {
+          fileHash = await calculateFileHash(pageInfo.sourcePath);
+          const relativeOgPath = path.relative(outputDir, ogImagePath);
+          currentState.og[pageInfo.urlPath] = {
+            outputPath: relativeOgPath,
+            hash: fileHash,
+          };
+
+          // Check if hash changed by comparing with old state
+          const oldHash = oldState.html[pageInfo.urlPath]?.hash;
+          if (oldHash !== fileHash) {
+            shouldGenerate = true;
+          }
+        } catch {
+          // If we can't calculate hash, generate the image
+          shouldGenerate = true;
+        }
+      } else {
+        // Auto-index pages have no source, always generate
+        shouldGenerate = true;
+        const relativeOgPath = path.relative(outputDir, ogImagePath);
+        currentState.og[pageInfo.urlPath] = {
+          outputPath: relativeOgPath,
+          hash: "auto-index",
+        };
+      }
+    }
+
+    if (shouldGenerate) {
+      // Generate the OG image
+      const result = await generateOgImage(ogData, {
+        outputPath: ogImagePath,
+        format,
+        quality: 85,
+      });
+
+      if (result.success) {
+        generatedCount++;
+        if (!silent) {
+          const displayPath = path.relative(outputDir, ogImagePath);
+          console.log(`  ✓ OG image: ${displayPath}`);
+        }
+      } else {
+        failedCount++;
+        if (!silent) {
+          console.log(
+            `  ✗ OG image failed: ${pageInfo.urlPath} (${result.error})`,
+          );
+        }
       }
     } else {
-      failedCount++;
+      skippedCount++;
       if (!silent) {
-        console.log(
-          `  ✗ OG image failed: ${pageInfo.urlPath} (${result.error})`,
-        );
+        console.log(`  ⊘ OG image skipped: ${pageInfo.urlPath} (unchanged)`);
       }
     }
   }
@@ -497,9 +646,15 @@ async function generateOgImages(
   await createEmptyIndexFile(ogDir);
 
   if (!silent) {
-    console.log(
-      `  ✓ OG images: ${generatedCount} generated, ${failedCount} failed`,
-    );
+    if (forceOg) {
+      console.log(
+        `  ✓ OG images: ${generatedCount} generated, ${failedCount} failed (forced)`,
+      );
+    } else {
+      console.log(
+        `  ✓ OG images: ${generatedCount} changed, ${skippedCount} skipped, ${failedCount} failed`,
+      );
+    }
   }
 }
 

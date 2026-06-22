@@ -4,21 +4,21 @@ import { promises as fs } from "node:fs";
 import { SettingsSchema, type Settings } from "./schema.js";
 
 export async function loadSettings(rootDir: string): Promise<Settings> {
-  const settingsPath = path.join(rootDir, "settings.json");
+  const settingsPath = path.join(rootDir, "_mdsvr/settings.json");
   try {
     const raw = await fs.readFile(settingsPath, "utf-8");
     const parsed = JSON.parse(raw);
     const result = SettingsSchema.safeParse(parsed);
     if (!result.success) {
       console.warn(
-        "[mdsvr] settings.json validation errors:",
+        "[mdsvr] _mdsvr/settings.json validation errors:",
         result.error.flatten(),
       );
       return SettingsSchema.parse({}); // fallback to defaults
     }
     return result.data;
   } catch {
-    return SettingsSchema.parse({}); // no settings.json → all defaults
+    return SettingsSchema.parse({}); // no _mdsvr/settings.json → all defaults
   }
 }
 
@@ -27,7 +27,7 @@ export function watchSettings(
   onChange: (s: Settings) => void,
 ): void {
   // Re-load on file change without restarting server
-  watch(path.join(rootDir, "settings.json"), async () => {
+  watch(path.join(rootDir, "_mdsvr/settings.json"), async () => {
     const newSettings = await loadSettings(rootDir);
     onChange(newSettings);
   });
@@ -36,7 +36,7 @@ export function watchSettings(
 export async function validateSettingsFile(
   rootDir: string,
 ): Promise<{ valid: boolean; errors?: string[] }> {
-  const settingsPath = path.join(rootDir, "settings.json");
+  const settingsPath = path.join(rootDir, "_mdsvr/settings.json");
   try {
     const raw = await fs.readFile(settingsPath, "utf-8");
     const parsed = JSON.parse(raw);
@@ -52,7 +52,9 @@ export async function validateSettingsFile(
     return {
       valid: false,
       errors: [
-        err instanceof Error ? err.message : "Failed to read settings.json",
+        err instanceof Error
+          ? err.message
+          : "Failed to read _mdsvr/settings.json",
       ],
     };
   }
@@ -87,6 +89,11 @@ export function generateDefaultSettings(): object {
     },
     mdx: {
       enabled: true,
+    },
+    seo: {
+      og: {
+        enabled: true,
+      },
     },
   };
 }

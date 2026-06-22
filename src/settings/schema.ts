@@ -78,7 +78,7 @@ export const SearchSchema = z.object({
 });
 
 export const OgSchema = z.object({
-  enabled: z.boolean().default(false),
+  enabled: z.boolean().default(true),
   template: z.string().default("default"),
   imageFormat: z.enum(["jpg", "png"]).default("jpg"),
   generateOnServe: z.boolean().default(false),
