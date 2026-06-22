@@ -63,7 +63,7 @@ export async function migrateOldState(
   rootDir: string,
   exportDir: string,
 ): Promise<ExportState | null> {
-  const oldOgDir = path.join(exportDir, "public", "og");
+  const oldOgDir = path.join(exportDir, "public", "assets", "og");
   const oldStatePath = path.join(oldOgDir, OLD_STATE_FILE_NAME);
 
   try {
@@ -81,7 +81,7 @@ export async function migrateOldState(
       // Generate OG filename from file path
       const ogFilename = generateOgFilename(filePath, "jpg");
       newState.og[filePath] = {
-        outputPath: path.join("public", "og", ogFilename),
+        outputPath: path.join("public", "assets", "og", ogFilename),
         hash,
       };
     }

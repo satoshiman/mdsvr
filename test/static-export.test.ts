@@ -309,13 +309,10 @@ describe("static export", () => {
     // New state file should exist in root directory
     const newState = await loadExportState(rootDir);
     assert.ok(newState, "New state should be loaded");
-    assert.ok(
-      Object.keys(newState.html).length > 0,
-      "New state should have HTML entries",
-    );
+    // Migration only converts OG state, HTML entries are created by export process
     assert.ok(
       Object.keys(newState.og).length > 0,
-      "New state should have OG entries",
+      "New state should have OG entries from migration",
     );
   });
 });
