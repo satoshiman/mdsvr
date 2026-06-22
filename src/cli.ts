@@ -22,6 +22,7 @@ interface ParsedArgs {
   validate: boolean;
   watchSettings: boolean;
   export: string | null;
+  forceOg: boolean;
 }
 
 function parseArgs(argv: string[]): ParsedArgs {
@@ -38,6 +39,7 @@ function parseArgs(argv: string[]): ParsedArgs {
     validate: false,
     watchSettings: true,
     export: null,
+    forceOg: false,
   };
 
   for (let i = 0; i < argv.length; i++) {
@@ -72,6 +74,8 @@ function parseArgs(argv: string[]): ParsedArgs {
         if (val) i--; // Put back if it's a flag
         args.export = null; // Will use default _html folder
       }
+    } else if (arg === "--force-og") {
+      args.forceOg = true;
     } else if (!arg.startsWith("--") && !arg.startsWith("-")) {
       args.dir = arg;
       args.dirSpecified = true;
@@ -92,6 +96,7 @@ Options:
   -o, --open         Auto-open browser
   -s, --silent       Suppress console output
   -e, --export [PATH]  Export static HTML (default: _html/public in input dir)
+  --force-og         Force full OG image regeneration (skip incremental)
   --init             Create a starter settings.json in [dir]
   --validate         Validate settings.json and exit
   --no-watch         Disable settings.json hot-reload
@@ -104,6 +109,7 @@ Examples:
   mdsvr . --host 0.0.0.0 --port 8080
   mdsvr ./docs --export       # Export to ./_html/public
   mdsvr ./docs -e ./output    # Export to custom directory
+  mdsvr ./docs --export --force-og  # Export with full OG regeneration
   mdsvr ./docs --init
   mdsvr ./docs --validate
 `);
@@ -217,6 +223,7 @@ async function main(): Promise<void> {
         outputDir,
         settings,
         silent: args.silent,
+        forceOg: args.forceOg,
       });
 
       if (!args.silent) {

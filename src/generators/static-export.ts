@@ -15,6 +15,12 @@ import {
   generateOgImage,
   getOgImagePath,
   type OgImageData,
+  loadOgState,
+  saveOgState,
+  calculateFileHash,
+  cleanupOrphanedOG,
+  type OgState,
+  type IncrementalExportResult,
 } from "../og/index.js";
 
 export interface ExportOptions {
@@ -22,6 +28,7 @@ export interface ExportOptions {
   outputDir: string;
   settings: Settings;
   silent?: boolean;
+  forceOg?: boolean;
 }
 
 interface DirInfo {
@@ -33,6 +40,7 @@ interface DirInfo {
 interface PageInfo {
   urlPath: string;
   outputPath: string;
+  sourcePath: string;
   title: string;
   description?: string;
 }
@@ -47,7 +55,13 @@ function withBasePath(href: string, settings: Settings): string {
 }
 
 export async function exportStaticSite(options: ExportOptions): Promise<void> {
-  const { rootDir, outputDir, settings, silent = false } = options;
+  const {
+    rootDir,
+    outputDir,
+    settings,
+    silent = false,
+    forceOg = false,
+  } = options;
 
   try {
     // 1. Validate input/output directories
@@ -97,6 +111,7 @@ export async function exportStaticSite(options: ExportOptions): Promise<void> {
         pageInfos.push({
           urlPath: dirInfo.urlPath,
           outputPath: path.join(dirInfo.outputPath, "index.html"),
+          sourcePath: "", // Auto-index pages have no source file
           title: dirInfo.urlPath ? `Index of ${dirInfo.urlPath}` : "Index",
           description: settings.site.description,
         });
@@ -114,7 +129,14 @@ export async function exportStaticSite(options: ExportOptions): Promise<void> {
       if (!silent) {
         console.log(`\n  🖼️  Generating OG images...`);
       }
-      await generateOgImages(pageInfos, absOutputDir, settings, silent);
+      await generateOgImages(
+        pageInfos,
+        absOutputDir,
+        absRootDir,
+        settings,
+        silent,
+        forceOg,
+      );
     }
 
     // 5. Generate search-index.json if search is enabled
@@ -323,6 +345,7 @@ async function renderMarkdownFile(
   return {
     urlPath,
     outputPath,
+    sourcePath: filePath,
     title,
     description: result.frontmatter.description as string | undefined,
   };
@@ -435,8 +458,10 @@ function humanizeFilename(filename: string): string {
 async function generateOgImages(
   pageInfos: PageInfo[],
   outputDir: string,
+  rootDir: string,
   settings: Settings,
   silent: boolean,
+  forceOg: boolean = false,
 ): Promise<void> {
   const publicDir = path.join(outputDir, "public");
   const ogDir = path.join(publicDir, "og");
@@ -445,6 +470,17 @@ async function generateOgImages(
 
   let generatedCount = 0;
   let failedCount = 0;
+  let skippedCount = 0;
+
+  // Incremental export logic
+  let prevState: OgState = {};
+  let currentState: OgState = {};
+  const changedFiles: string[] = [];
+
+  if (!forceOg) {
+    // Load previous state
+    prevState = await loadOgState(ogDir);
+  }
 
   for (const pageInfo of pageInfos) {
     // Skip if the page already has a custom image
@@ -469,27 +505,75 @@ async function generateOgImages(
       textColor: ogSettings?.colors?.text || "#ffffff",
     };
 
-    // Generate the OG image
-    const result = await generateOgImage(ogData, {
-      outputPath: ogImagePath,
-      format,
-      quality: 85,
-    });
+    // For incremental export, check if file has changed
+    let shouldGenerate = forceOg;
+    let fileHash = "";
 
-    if (result.success) {
-      generatedCount++;
-      if (!silent) {
-        const displayPath = path.relative(outputDir, ogImagePath);
-        console.log(`  ✓ OG image: ${displayPath}`);
-      }
-    } else {
-      failedCount++;
-      if (!silent) {
-        console.log(
-          `  ✗ OG image failed: ${pageInfo.urlPath} (${result.error})`,
-        );
+    if (!forceOg) {
+      // Calculate hash for the source file
+      if (pageInfo.sourcePath) {
+        try {
+          fileHash = await calculateFileHash(
+            pageInfo.sourcePath,
+            rootDir,
+            settings,
+          );
+          currentState[pageInfo.urlPath] = fileHash;
+
+          // Check if hash changed
+          if (prevState[pageInfo.urlPath] !== fileHash) {
+            shouldGenerate = true;
+            changedFiles.push(pageInfo.urlPath);
+          }
+        } catch {
+          // If we can't calculate hash, generate the image
+          shouldGenerate = true;
+        }
+      } else {
+        // Auto-index pages have no source, always generate
+        shouldGenerate = true;
       }
     }
+
+    if (shouldGenerate) {
+      // Generate the OG image
+      const result = await generateOgImage(ogData, {
+        outputPath: ogImagePath,
+        format,
+        quality: 85,
+      });
+
+      if (result.success) {
+        generatedCount++;
+        if (!silent) {
+          const displayPath = path.relative(outputDir, ogImagePath);
+          console.log(`  ✓ OG image: ${displayPath}`);
+        }
+      } else {
+        failedCount++;
+        if (!silent) {
+          console.log(
+            `  ✗ OG image failed: ${pageInfo.urlPath} (${result.error})`,
+          );
+        }
+      }
+    } else {
+      skippedCount++;
+      if (!silent) {
+        console.log(`  ⊘ OG image skipped: ${pageInfo.urlPath} (unchanged)`);
+      }
+    }
+  }
+
+  // Clean up orphaned OG files
+  if (!forceOg) {
+    const cleanedCount = await cleanupOrphanedOG(ogDir, currentState, format);
+    if (cleanedCount > 0 && !silent) {
+      console.log(`  🧹 Cleaned up ${cleanedCount} orphaned OG files`);
+    }
+
+    // Save new state
+    await saveOgState(ogDir, currentState);
   }
 
   // Add empty index.html to prevent directory listing
@@ -497,9 +581,15 @@ async function generateOgImages(
   await createEmptyIndexFile(ogDir);
 
   if (!silent) {
-    console.log(
-      `  ✓ OG images: ${generatedCount} generated, ${failedCount} failed`,
-    );
+    if (forceOg) {
+      console.log(
+        `  ✓ OG images: ${generatedCount} generated, ${failedCount} failed (forced)`,
+      );
+    } else {
+      console.log(
+        `  ✓ OG images: ${generatedCount} changed, ${skippedCount} skipped, ${failedCount} failed`,
+      );
+    }
   }
 }
 
