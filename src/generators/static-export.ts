@@ -1,5 +1,6 @@
 import { promises as fs, type Dirent } from "node:fs";
 import path from "node:path";
+import { createHash } from "node:crypto";
 import {
   renderMarkdown,
   type MarkdownResult,
@@ -545,6 +546,40 @@ function humanizeFilename(filename: string): string {
 }
 
 /**
+ * Calculate hash for a directory's contents (for auto-index pages)
+ * This ensures OG images for directories without README are only regenerated
+ * when the directory contents change
+ */
+async function calculateDirectoryHash(outputPath: string): Promise<string> {
+  try {
+    const entries = await fs.readdir(outputPath, { withFileTypes: true });
+
+    // Sort entries to ensure consistent hash
+    const sortedEntries = entries
+      .filter(
+        (entry) => !entry.name.startsWith(".") && !entry.name.startsWith("_"),
+      )
+      .sort((a, b) => a.name.localeCompare(b.name));
+
+    // Build hash from entry names and sizes
+    const hashData: string[] = [];
+    for (const entry of sortedEntries) {
+      const fullPath = path.join(outputPath, entry.name);
+      if (entry.isDirectory()) {
+        hashData.push(`DIR:${entry.name}`);
+      } else {
+        const stat = await fs.stat(fullPath);
+        hashData.push(`FILE:${entry.name}:${stat.size}`);
+      }
+    }
+
+    return createHash("sha256").update(hashData.join("|")).digest("hex");
+  } catch {
+    return "";
+  }
+}
+
+/**
  * Generate OG images for all pages
  */
 async function generateOgImages(
@@ -596,12 +631,21 @@ async function generateOgImages(
       } catch {
         fileHash = "";
       }
+    } else {
+      // Auto-index page: calculate hash from source directory contents
+      // Derive source directory path from urlPath
+      const relativePath = pageInfo.urlPath
+        .replace(settings.generate.basePath || "", "")
+        .replace(/^\//, "")
+        .replace(/\/$/, ""); // Remove trailing slash
+      const sourceDirPath = path.join(rootDir, relativePath);
+      fileHash = await calculateDirectoryHash(sourceDirPath);
     }
 
     const relativeOgPath = path.relative(outputDir, ogImagePath);
     currentState.og[pageInfo.urlPath] = {
       outputPath: relativeOgPath,
-      hash: fileHash || "auto-index",
+      hash: fileHash,
     };
 
     // Check if hash changed by comparing with old state (only if not forcing)
@@ -614,14 +658,11 @@ async function generateOgImages(
         shouldGenerate = true;
       }
 
-      if (!shouldGenerate && pageInfo.sourcePath && fileHash) {
+      if (!shouldGenerate && fileHash) {
         const oldHash = oldState.og[pageInfo.urlPath]?.hash;
         if (oldHash !== fileHash) {
           shouldGenerate = true;
         }
-      } else if (!shouldGenerate) {
-        // Auto-index pages have no source, always generate
-        shouldGenerate = true;
       }
     }
 

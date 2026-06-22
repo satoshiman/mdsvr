@@ -10,34 +10,6 @@
       "outputPath": "public/assets/og/02-settings/index.jpg",
       "hash": "76182805379c2b13607140fa1a0d95d08b99da3d8fda1296c21d73ae7d0860d3"
     },
-    "/03-features/": {
-      "outputPath": "public/assets/og/03-features/index.jpg",
-      "hash": "fb6b6b5f81a845010e1b76ad2bd9dc5e260fe18eaf3875abe35a1dfe532e7d9b"
-    },
-    "/03-features/markdown": {
-      "outputPath": "public/assets/og/03-features/markdown/index.jpg",
-      "hash": "cde2818d99c4bce8f292e00776a0fc1cc1b83b47962c2e000ce5957c2e7d75c7"
-    },
-    "/03-features/mdx": {
-      "outputPath": "public/assets/og/03-features/mdx/index.jpg",
-      "hash": "ba6df89f9acff43fc7ff04b548b2c1f027aa1dd46165bcc3d2640067879e33ab"
-    },
-    "/03-features/mermaid": {
-      "outputPath": "public/assets/og/03-features/mermaid/index.jpg",
-      "hash": "896fda066a19d2ed220d64b2afc7b0e9ea5859cdfd5f9bfa0cd85169a5d41d9a"
-    },
-    "/03-features/navigation": {
-      "outputPath": "public/assets/og/03-features/navigation/index.jpg",
-      "hash": "efcbef0fc83e67318636c4a5323149b0708fbe460226d599d48d191a814a4382"
-    },
-    "/03-features/search": {
-      "outputPath": "public/assets/og/03-features/search/index.jpg",
-      "hash": "8d3cddff921439573ca5de715abfb6496bae67e523f576b0e7dd8a5eefacd0ca"
-    },
-    "/03-features/theming": {
-      "outputPath": "public/assets/og/03-features/theming/index.jpg",
-      "hash": "01d5fe98721d57f0786901bb7b41173e596fae8ed62456a03d6af2ed00fed14b"
-    },
     "/04-reference/": {
       "outputPath": "public/assets/og/04-reference/index.jpg",
       "hash": "c635eae30f3458ee6e2795dea5501969be11bd0289f78f5664a770c7b40d4ec2"
@@ -45,6 +17,14 @@
     "/": {
       "outputPath": "public/assets/og/index.jpg",
       "hash": "fa0cf81e5b453599ae8e93cc8609f5134dcddbba5f4fd3e473784530f8c8f878"
+    },
+    "/no-readme-dir/search": {
+      "outputPath": "public/assets/og/no-readme-dir/search/index.jpg",
+      "hash": "634c69da6728e9906d84cc98a2ea309b56cee34440c9d60bf6cff392c8a19db6"
+    },
+    "/no-readme-dir/": {
+      "outputPath": "public/assets/og/no-readme-dir/index.jpg",
+      "hash": "43f1ade2ef48734f423a759955eb564f9f5e8ed6f4b7d27692280c8165e59312"
     }
   }
 }
