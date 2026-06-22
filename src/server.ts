@@ -104,7 +104,10 @@ export async function createServer(
             if (watchSettingsEnabled) {
               (async () => {
                 try {
-                  const settingsPath = path.join(absoluteRoot, "settings.json");
+                  const settingsPath = path.join(
+                    absoluteRoot,
+                    "_mdsvr/settings.json",
+                  );
                   await fs.access(settingsPath);
                   watchSettings(absoluteRoot, async (newSettings) => {
                     currentSettings = newSettings;
@@ -119,7 +122,7 @@ export async function createServer(
                     }
                   });
                 } catch {
-                  // No settings.json to watch, that's fine
+                  // No _mdsvr/settings.json to watch, that's fine
                 }
               })();
             }

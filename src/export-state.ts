@@ -4,7 +4,7 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 import { createHash } from "node:crypto";
 
-const STATE_FILE_NAME = ".mdsvr-export-state.json";
+const STATE_FILE_NAME = "_mdsvr/export-state.json";
 const OLD_STATE_FILE_NAME = ".mdsvr-og-state.json";
 
 export interface ExportState {
@@ -50,6 +50,7 @@ export async function saveExportState(
   state: ExportState,
 ): Promise<void> {
   const statePath = path.join(rootDir, STATE_FILE_NAME);
+  await fs.mkdir(path.join(rootDir, "_mdsvr"), { recursive: true });
   await fs.writeFile(statePath, JSON.stringify(state, null, 2), "utf-8");
 }
 

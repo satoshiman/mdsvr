@@ -76,7 +76,7 @@ export async function calculateSettingsHash(
   rootDir: string,
   settings: Settings,
 ): Promise<string> {
-  const settingsPath = path.join(rootDir, "settings.json");
+  const settingsPath = path.join(rootDir, "_mdsvr/settings.json");
   let settingsContent = "";
 
   try {
