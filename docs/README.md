@@ -44,20 +44,21 @@ npx mdsvr ./docs
 
 ## Key Features
 
-| Feature                                  | Description                                                    |
-| ---------------------------------------- | -------------------------------------------------------------- |
-| 📝 [Markdown & MDX](/3.-features)        | Render .md and .mdx files with built-in interactive components |
-| 🎨 [Themes](/3.-features/theming)        | Dark/light mode with customizable accent colors                |
-| 🔍 [Search](/3.-features/search)         | Built-in full-text search with keyboard shortcut (⌘K)          |
-| 📑 [Navigation](/3.-features/navigation) | Auto-generated sidebar and table of contents                   |
-| 🔎 [SEO](/3.-features/seo)               | Sitemap, RSS feed, Open Graph, and Twitter Cards               |
-| ⚙️ [Settings](/2.-settings)              | Configure everything via settings.json                         |
+| Feature                                   | Description                                                    |
+| ----------------------------------------- | -------------------------------------------------------------- |
+| 📝 [Markdown & MDX](./03-features)        | Render .md and .mdx files with built-in interactive components |
+| 🎨 [Themes](./03-features/theming)        | Dark/light mode with customizable accent colors                |
+| 🔍 [Search](./03-features/search)         | Built-in full-text search with keyboard shortcut (⌘K)          |
+| 📑 [Navigation](./03-features/navigation) | Auto-generated sidebar and table of contents                   |
+| 🔎 [SEO](./03-features/seo)               | Sitemap, RSS feed, Open Graph, and Twitter Cards               |
+| ⚙️ [Settings](./02-settings)              | Configure everything via settings.json                         |
 
 ## This docs structure for reference
 
 ```
 docs/
-├── settings.json                # Site configuration (optional)
+├── _mdsvr/
+│   └── settings.json            # Site configuration (optional)
 ├── README.md                    # Homepage (this file)
 ├── 1.-getting-started/          # Getting started guides
 │   └── README.md              # Quick start & installation
@@ -78,14 +79,14 @@ docs/
 
 ## Next Steps
 
-- **[Quick Start](/1.-getting-started)** — Get running in 30 seconds
-- **[Installation](/1.-getting-started)** — Install options
-- **[MDX Components](/3.-features/mdx)** — Make your docs interactive
-- **[Configuration](/2.-settings)** — Customize your site
-- **[Writing Content](/2.-settings)** — Best practices
-- **[Deployment](/2.-settings)** — Go live
-- **[Features](/3.-features)** — See all features
-- **[CLI Reference](/4.-reference)** — Command reference
+- **[Quick Start](./01-getting-started)** — Get running in 30 seconds
+- **[Installation](./01-getting-started)** — Install options
+- **[MDX Components](./03-features/mdx)** — Make your docs interactive
+- **[Configuration](./02-settings)** — Customize your site
+- **[Writing Content](./02-settings)** — Best practices
+- **[Deployment](./02-settings)** — Go live
+- **[Features](./03-features)** — See all features
+- **[CLI Reference](./04-reference)** — Command reference
 
 ---
 

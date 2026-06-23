@@ -9,25 +9,25 @@ mdsvr comes with everything you need for modern documentation sites:
 
 ## Core Features
 
-| Feature      | Description                           | Link                                           |
-| ------------ | ------------------------------------- | ---------------------------------------------- |
-| **Markdown** | Full GitHub-flavored Markdown support | [/3.-features/markdown](/3.-features/markdown) |
-| **MDX**      | React components in your docs         | [/3.-features/mdx](/3.-features/mdx)           |
-| **Mermaid**  | Diagrams and flowcharts               | [/3.-features/mermaid](/3.-features/mermaid)   |
+| Feature      | Description                           | Link                   |
+| ------------ | ------------------------------------- | ---------------------- |
+| **Markdown** | Full GitHub-flavored Markdown support | [markdown](./markdown) |
+| **MDX**      | React components in your docs         | [mdx](./mdx)           |
+| **Mermaid**  | Diagrams and flowcharts               | [mermaid](./mermaid)   |
 
 ## Navigation & UX
 
-| Feature        | Description                    | Link                                               |
-| -------------- | ------------------------------ | -------------------------------------------------- |
-| **Navigation** | Auto-generated sidebar and TOC | [/3.-features/navigation](/3.-features/navigation) |
-| **Search**     | Built-in full-text search      | [/3.-features/search](/3.-features/search)         |
-| **Theming**    | Dark/light mode                | [/3.-features/theming](/3.-features/theming)       |
+| Feature        | Description                    | Link                       |
+| -------------- | ------------------------------ | -------------------------- |
+| **Navigation** | Auto-generated sidebar and TOC | [navigation](./navigation) |
+| **Search**     | Built-in full-text search      | [search](./search)         |
+| **Theming**    | Dark/light mode                | [theming](./theming)       |
 
 ## SEO & Sharing
 
-| Feature | Description             | Link                                 |
-| ------- | ----------------------- | ------------------------------------ |
-| **SEO** | Meta tags, sitemap, RSS | [/3.-features/seo](/3.-features/seo) |
+| Feature | Description             | Link         |
+| ------- | ----------------------- | ------------ |
+| **SEO** | Meta tags, sitemap, RSS | [seo](./seo) |
 
 ## Why These Features?
 

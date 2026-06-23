@@ -159,6 +159,8 @@ Options:
   -e, --export [PATH]  Export static HTML (default: _html/public)
   --init             Create a starter _mdsvr/settings.json in [dir]
   --validate         Validate _mdsvr/settings.json and exit
+  --validate-md      Validate all markdown files and exit
+  --autofix          Auto-fix markdown validation errors (use with --validate-md)
   --no-watch         Disable _mdsvr/settings.json hot-reload
   -v, --version      Print version
   -h, --help         Print this help

@@ -20,6 +20,8 @@ interface ParsedArgs {
   help: boolean;
   init: boolean;
   validate: boolean;
+  validateMd: boolean;
+  autofix: boolean;
   watchSettings: boolean;
   export: string | null;
   forceOg: boolean;
@@ -37,6 +39,8 @@ function parseArgs(argv: string[]): ParsedArgs {
     help: false,
     init: false,
     validate: false,
+    validateMd: false,
+    autofix: false,
     watchSettings: true,
     export: null,
     forceOg: false,
@@ -63,6 +67,10 @@ function parseArgs(argv: string[]): ParsedArgs {
       args.init = true;
     } else if (arg === "--validate") {
       args.validate = true;
+    } else if (arg === "--validate-md") {
+      args.validateMd = true;
+    } else if (arg === "--autofix") {
+      args.autofix = true;
     } else if (arg === "--no-watch") {
       args.watchSettings = false;
     } else if (arg === "--export" || arg === "-e") {
@@ -99,6 +107,8 @@ Options:
   --force-og         Force full OG image regeneration (skip incremental)
   --init             Create a starter _mdsvr/settings.json in [dir]
   --validate         Validate _mdsvr/settings.json and exit
+  --validate-md      Validate all markdown files and exit
+  --autofix          Auto-fix markdown validation errors (use with --validate-md)
   --no-watch         Disable _mdsvr/settings.json hot-reload
   -v, --version      Print version
   -h, --help         Print this help
@@ -112,6 +122,8 @@ Examples:
   mdsvr ./docs --export --force-og  # Export with full OG regeneration
   mdsvr ./docs --init
   mdsvr ./docs --validate
+  mdsvr ./docs --validate-md
+  mdsvr ./docs --validate-md --autofix
 `);
 }
 
@@ -197,6 +209,67 @@ async function main(): Promise<void> {
       } else {
         console.log(`\n  ✖ _mdsvr/settings.json has errors:`);
         result.errors?.forEach((e) => console.log(`    - ${e}`));
+        console.log();
+        process.exit(1);
+      }
+    } catch (err) {
+      console.error("Error:", err instanceof Error ? err.message : err);
+      process.exit(1);
+    }
+  }
+
+  // Handle --validate-md
+  if (args.validateMd) {
+    try {
+      const { validateMarkdown } = await import("./validator/index.js");
+      const result = await validateMarkdown({
+        rootDir: absoluteDir,
+        autofix: args.autofix,
+        checkLinks: true,
+        checkStructure: true,
+        checkAssets: true,
+      });
+
+      if (result.valid) {
+        console.log(`\n  ✅ All markdown files are valid\n`);
+        process.exit(0);
+      } else {
+        console.log(
+          `\n  ❌ Found ${result.errors.length} validation error(s):`,
+        );
+
+        // Group errors by file
+        const errorsByFile = new Map();
+        result.errors.forEach((e) => {
+          if (!errorsByFile.has(e.file)) {
+            errorsByFile.set(e.file, []);
+          }
+          errorsByFile.get(e.file).push(e);
+        });
+
+        let errorIndex = 1;
+        errorsByFile.forEach((errors: any[], file: string) => {
+          console.log(`\n  📄 ${file}`);
+          errors.forEach((e: any) => {
+            const icon = e.icon || "⚠️";
+            console.log(`    ${errorIndex}. ${icon} Line ${e.line}: ${e.type}`);
+            if (e.type === "broken-link") {
+              console.log(
+                `       ${e.message.split(": ")[1].replace(" -> ", " ➝ ")}`,
+              );
+            } else {
+              console.log(`       ${e.message}`);
+            }
+            if (e.suggestion) {
+              console.log(`       ➤ ${e.suggestion}`);
+            }
+            errorIndex++;
+          });
+        });
+
+        if (args.autofix && result.fixed > 0) {
+          console.log(`\n  ✨ Auto-fixed ${result.fixed} error(s)\n`);
+        }
         console.log();
         process.exit(1);
       }

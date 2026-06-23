@@ -26,6 +26,38 @@ The sidebar is automatically generated from your file structure.
 }
 ```
 
+### Sidebar Options
+
+```json
+{
+  "navigation": {
+    "sidebar": {
+      "enabled": true,
+      "autoGenerate": true,
+      "showFileCount": false,
+      "collapsible": true,
+      "defaultOpen": true,
+      "depth": 2,
+      "docsOnly": false,
+      "orderBy": "alphabetical",
+      "manualOrder": []
+    }
+  }
+}
+```
+
+**Options:**
+
+- `enabled`: Enable/disable sidebar (default: `true`)
+- `autoGenerate`: Auto-generate from file structure (default: `true`)
+- `showFileCount`: Show file count next to folders (default: `false`)
+- `collapsible`: Allow folders to collapse/expand (default: `true`)
+- `defaultOpen`: Folders open by default (default: `true`)
+- `depth`: Maximum nesting depth to show (default: `2`)
+- `docsOnly`: Show only markdown files, hide other types (default: `false`)
+- `orderBy`: Sort order - `alphabetical`, `prior-dir`, or `manual` (default: `alphabetical`)
+- `manualOrder`: Array of paths for manual ordering when `orderBy: "manual"`
+
 ### How It Works
 
 - **Folders** become collapsible groups
@@ -51,7 +83,7 @@ title: Custom Page Title
 Content...
 ```
 
-### Active State
+## Active State
 
 The current page is highlighted in the sidebar. Parent folders are also marked as active when viewing nested pages.
 
@@ -68,6 +100,7 @@ Breadcrumbs show the current location in the documentation hierarchy.
 ```
 
 Example breadcrumb:
+
 ```
 Home / Features / Navigation
 ```
@@ -88,6 +121,7 @@ The TOC (right sidebar) shows headings from the current page.
 ### Max Depth
 
 Control how many heading levels to show:
+
 - `tocMaxDepth: 2` — Show H2 only
 - `tocMaxDepth: 3` — Show H2 and H3 (default)
 - `tocMaxDepth: 6` — Show all headings
@@ -144,7 +178,7 @@ The sidebar will show:
 Hide files from the sidebar by:
 
 1. **Prefix with underscore**: `_draft.md`
-2. **Add to settings.json**:
+2. **Add to `_mdsvr/settings.json`**:
    ```json
    {
      "files": {
@@ -156,6 +190,7 @@ Hide files from the sidebar by:
    ```
 
 Hidden files are also excluded from:
+
 - Search index
 - Sitemap
 - RSS feed
@@ -163,21 +198,50 @@ Hidden files are also excluded from:
 
 ## Customizing Order
 
-Currently, files are sorted alphabetically. Manual ordering via `frontmatter.order` is planned for a future release.
+### Alphabetical (Default)
+
+Files and folders are sorted alphabetically with folders first.
+
+### Prior-Dir
+
+Sorts directories before files, maintaining directory priority.
+
+### Manual
+
+Use `manualOrder` to specify exact ordering:
+
+```json
+{
+  "navigation": {
+    "sidebar": {
+      "orderBy": "manual",
+      "manualOrder": [
+        "README.md",
+        "getting-started",
+        "features",
+        "configuration"
+      ]
+    }
+  }
+}
+```
+
+Paths in `manualOrder` are relative to the docs root and can include both files and directories.
 
 ## Responsive Design
 
 Navigation adapts to different screen sizes:
 
-| Breakpoint | Behavior |
-|------------|----------|
-| Desktop (>1024px) | Sidebar + TOC visible |
-| Tablet (768-1024px) | Sidebar visible, TOC hidden |
-| Mobile (<768px) | Sidebar becomes overlay menu |
+| Breakpoint          | Behavior                     |
+| ------------------- | ---------------------------- |
+| Desktop (>1024px)   | Sidebar + TOC visible        |
+| Tablet (768-1024px) | Sidebar visible, TOC hidden  |
+| Mobile (<768px)     | Sidebar becomes overlay menu |
 
 ### Mobile Navigation
 
 On mobile devices:
+
 - The sidebar is hidden by default
 - A hamburger menu button appears in the header
 - Clicking the menu opens the sidebar as an overlay
@@ -193,6 +257,7 @@ All navigation features are keyboard accessible:
 - **Escape**: Close mobile sidebar or search modal
 
 ARIA labels are included for screen readers:
+
 - `aria-current="page"` on active links
 - `aria-expanded` on collapsible sections
 - `aria-label` on navigation landmarks

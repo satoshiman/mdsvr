@@ -1,0 +1,54 @@
+{
+  "settingsHash": "83a01418aebc6b542415926f853c6aeacda489504756d734c07ad8da4651d886",
+  "html": {},
+  "og": {
+    "/docs/01-getting-started/": {
+      "outputPath": "public/assets/og/01-getting-started/index.jpg",
+      "hash": "f8e61fc79f3cfab84eb3edcac573a7a4a20bad3419433547bc0f328b664fd93c"
+    },
+    "/docs/02-settings/": {
+      "outputPath": "public/assets/og/02-settings/index.jpg",
+      "hash": "4c9756d42be9e00c2dc14878d43c45c2cd0e22b0d42b0eb2577604eee0d87ba6"
+    },
+    "/docs/03-features/": {
+      "outputPath": "public/assets/og/03-features/index.jpg",
+      "hash": "d46effcd57b04bd6869c51b710f7e0c080c3568bd7b2c6858511dc6f33e95c50"
+    },
+    "/docs/03-features/markdown": {
+      "outputPath": "public/assets/og/03-features/markdown/index.jpg",
+      "hash": "f2e04b669897da2f065e7ec33b6b5cd4beb7b8a959f2b9906acc68765b9f91ec"
+    },
+    "/docs/03-features/mdx": {
+      "outputPath": "public/assets/og/03-features/mdx/index.jpg",
+      "hash": "80713ae1adb8d30a743c8450c8b8561bf2a451c94bdfe5ce025b01c67d8b34c9"
+    },
+    "/docs/03-features/mermaid": {
+      "outputPath": "public/assets/og/03-features/mermaid/index.jpg",
+      "hash": "a7df39b798ae867ef56520f89b90a0f11e7f433f9c3cc6bb73ea3018367a103f"
+    },
+    "/docs/03-features/navigation": {
+      "outputPath": "public/assets/og/03-features/navigation/index.jpg",
+      "hash": "973b1962e6ac72626fc54cee568dce33fa89926238d2dba60d49e95628573e5c"
+    },
+    "/docs/03-features/search": {
+      "outputPath": "public/assets/og/03-features/search/index.jpg",
+      "hash": "fb613d14ce0746dc8784f2274010fb30d1501c1d78b5967dfa5dbeb737c33191"
+    },
+    "/docs/03-features/seo": {
+      "outputPath": "public/assets/og/03-features/seo/index.jpg",
+      "hash": "e9faa2ebf4cc504edae869311f01b32731207d0b6966b8728c99079de45bdb3d"
+    },
+    "/docs/03-features/theming": {
+      "outputPath": "public/assets/og/03-features/theming/index.jpg",
+      "hash": "6a721abeaef249a7c245cb9688afd24fa8f6f7b40883648e0206bd0e39e5d0ec"
+    },
+    "/docs/04-reference/": {
+      "outputPath": "public/assets/og/04-reference/index.jpg",
+      "hash": "4d65cb00d72f0479a578ca1e686f4db2f1876ee74373338927079f81cca1472f"
+    },
+    "/docs/": {
+      "outputPath": "public/assets/og/index.jpg",
+      "hash": "c7340f715c1a213029bf1469eec6533d10f305f76293174a32f174d3d3132d98"
+    }
+  }
+}

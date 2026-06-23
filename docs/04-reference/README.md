@@ -44,19 +44,22 @@ mdsvr [dir] [options]
 
 #### Export Options
 
-| Option                | Description        |
-| --------------------- | ------------------ | ---------------------- |
-| `-e, --export [PATH]` | Export static HTML | `PATH`: `_html/public` |
+| Option                | Description                                   |
+| --------------------- | --------------------------------------------- |
+| `-e, --export [PATH]` | Export static HTML (default: `_html/public`)  |
+| `--force-og`          | Force full OG image regeneration (skip cache) |
 
 #### Utility Options
 
-| Option          | Description                        |
-| --------------- | ---------------------------------- |
-| `--init`        | Create starter `settings.json`     |
-| `--validate`    | Validate `settings.json` and exit  |
-| `--no-watch`    | Disable `settings.json` hot-reload |
-| `-v, --version` | Print version                      |
-| `-h, --help`    | Print help                         |
+| Option          | Description                                                  |
+| --------------- | ------------------------------------------------------------ |
+| `--init`        | Create starter `settings.json`                               |
+| `--validate`    | Validate `settings.json` and exit                            |
+| `--validate-md` | Validate all markdown files and exit                         |
+| `--autofix`     | Auto-fix markdown validation errors (use with --validate-md) |
+| `--no-watch`    | Disable `settings.json` hot-reload                           |
+| `-v, --version` | Print version                                                |
+| `-h, --help`    | Print help                                                   |
 
 ### Examples
 
@@ -76,13 +79,13 @@ npx mdsvr ./docs --port 3000
 npx mdsvr ./docs --host 0.0.0.0 --port 1800
 ```
 
-#### With Auto-Open
+## With Auto-Open
 
 ```bash
 npx mdsvr ./docs --open
 ```
 
-#### Export Static Site
+## Export Static Site
 
 ```bash
 # Default output (_html/public)
@@ -90,9 +93,12 @@ npx mdsvr ./docs --export
 
 # Custom output
 npx mdsvr ./docs --export ./dist
+
+# Force full OG image regeneration
+npx mdsvr ./docs --export --force-og
 ```
 
-#### Initialize Config
+## Initialize Config
 
 ```bash
 npx mdsvr ./docs --init
@@ -100,15 +106,34 @@ npx mdsvr ./docs --init
 
 Creates `_mdsvr/settings.json` with starter configuration.
 
-#### Validate Settings
+## Validate Settings
 
 ```bash
 npx mdsvr ./docs --validate
 ```
 
-Checks `settings.json` for errors without starting server.
+Checks `_mdsvr/settings.json` for errors without starting server.
 
-### Environment Variables
+## Validate Markdown Files
+
+```bash
+# Validate all markdown files
+npx mdsvr ./docs --validate-md
+
+# Validate with auto-fix
+npx mdsvr ./docs --validate-md --autofix
+```
+
+Checks all markdown files for:
+
+- 🔗 Broken internal links (with fuzzy matching suggestions)
+- 📝 Heading hierarchy issues
+- 📌 Missing H1 headings
+- 🖼️ Missing assets (images, fonts, etc.)
+
+The `--autofix` flag automatically fixes broken links using fuzzy matching (e.g., `traget.md` → `target.md`).
+
+## Environment Variables
 
 | Variable | Description                                   |
 | -------- | --------------------------------------------- |
@@ -136,6 +161,6 @@ Checks `settings.json` for errors without starting server.
 
 ## Related
 
-- [Configuration](../2.-settings/README.md) — Practical configuration guide
-- [Features](../3.-features/README.md) — Feature documentation
-- [Getting Started](../1.-getting-started/README.md) — Quick start guides
+- [Configuration](../02-settings/README.md) — Practical configuration guide
+- [Features](../03-features/README.md) — Feature documentation
+- [Getting Started](../01-getting-started/README.md) — Quick start guides

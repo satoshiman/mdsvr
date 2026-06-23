@@ -21,7 +21,7 @@
     "start": "node bin/mdsvr.js",
     "build:start": "npm run build && node bin/mdsvr.js",
     "test": "npm run build && npm run build:test && node --test dist-test/test/*.test.js",
-    "docs:generate": "rm -rf ./gh-pages/docs && npm run start -- ./docs -e ./gh-pages/docs",
+    "docs:generate": "npm run start -- ./docs -e ./gh-pages/docs",
     "docs:deploy": "npm run docs:generate && gh-pages -d gh-pages",
     "prepublishOnly": "npm run build && npm test",
     "version:patch": "npm version patch",

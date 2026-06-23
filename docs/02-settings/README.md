@@ -11,7 +11,7 @@ In-depth guides for configuring, writing, and deploying your documentation.
 
 ## Configuration
 
-mdsvr can be configured via a `settings.json` file in your docs root directory. All settings are optional — the server works out of the box with sensible defaults.
+mdsvr can be configured via a `settings.json` file in the `_mdsvr/` directory in your docs root. All settings are optional — the server works out of the box with sensible defaults.
 
 ### Creating settings.json
 
@@ -185,7 +185,8 @@ Control which files are served, blocked, or hidden:
       "hidden": ["settings.json", ".git", "node_modules"]
     },
     "indexFiles": ["README.md", "index.md", "index.html"],
-    "ignorePatterns": ["**/node_modules/**", "**/.git/**"]
+    "ignorePatterns": ["**/node_modules/**", "**/.git/**"],
+    "staticFolders": ["assets", "public", "images"]
   }
 }
 ```
@@ -193,6 +194,7 @@ Control which files are served, blocked, or hidden:
 - Files starting with `_` are automatically hidden
 - Blocked extensions return 403 Forbidden
 - Hidden files return 404 Not Found (as if they don't exist)
+- `staticFolders`: Array of folder names to serve as static assets (all files in these folders are served directly)
 
 ### Footer
 
@@ -228,9 +230,29 @@ npx mdsvr . --validate
 
 This will check your configuration and report any errors.
 
+### Generate Settings
+
+Configure static export generation options:
+
+```json
+{
+  "generate": {
+    "basePath": "/docs",
+    "outputDir": "dist"
+  }
+}
+```
+
+**Options:**
+
+- `basePath`: Base path for generated URLs (default: `""`). Useful when deploying to a subdirectory (e.g., `/docs`)
+- `outputDir`: Default output directory for static exports (default: `"dist"`)
+
+These settings are used during static export with the `--export` flag.
+
 ### Complete Example
 
-Here's a complete `settings.json` with all available options:
+Here's a complete `_mdsvr/settings.json` with all available options:
 
 ```json
 {
@@ -375,12 +397,12 @@ noIndex: true # Exclude from search
 ## Installation
 ```
 
-#### Cross-Reference Links
+### Cross-Reference Links
 
 Use relative paths:
 
 ```markdown
-See [configuration guide](/2.-settings/README.md)
+See [configuration guide](./README.md)
 ```
 
 #### Code Blocks
@@ -411,15 +433,17 @@ Second step content
 </Steps>
 ```
 
-See [MDX Components](../3.-features/mdx.mdx) for all available components.
+See [MDX Components](../03-features/mdx.mdx) for all available components.
 
 ### Images & Assets
 
 Place assets in `docs/assets/`:
 
 ```markdown
-![Alt text](/assets/screenshot.png)
+![Alt text](../assets/screenshot.png)
 ```
+
+> Note: The assets folder is optional - create it if you need to include images in your documentation.
 
 ### Best Practices
 
@@ -475,7 +499,7 @@ npx mdsvr ./docs --export
 
 **Note:** Only delete `export-state.json`, not the entire `_mdsvr` directory, to preserve your settings.
 
-### Firebase Hosting
+## Firebase Hosting
 
 ```bash
 # Export
@@ -487,16 +511,16 @@ firebase init
 firebase deploy
 ```
 
-### Netlify
+## Netlify
 
-#### Via CLI
+### Via CLI
 
 ```bash
 npx mdsvr ./docs --export
 netlify deploy --dir=_html/public --prod
 ```
 
-#### Via Git
+### Via Git
 
 1. Push docs to GitHub
 2. Connect repo to Netlify
@@ -513,7 +537,7 @@ netlify deploy --dir=_html/public --prod
 }
 ```
 
-### GitHub Pages
+## GitHub Pages
 
 ```bash
 # Export to docs folder
@@ -522,7 +546,7 @@ npx mdsvr ./src --export ./docs
 # Or use GitHub Actions
 ```
 
-#### GitHub Actions Workflow
+## GitHub Actions Workflow
 
 ```yaml
 # .github/workflows/deploy.yml
@@ -545,9 +569,9 @@ jobs:
           publish_dir: ./_html/public
 ```
 
-### Docker
+## Docker
 
-#### Using Pre-built Image
+### Using Pre-built Image
 
 ```bash
 docker pull thedeployer/mdsvr:latest
@@ -557,7 +581,7 @@ docker run -d \
   thedeployer/mdsvr:latest
 ```
 
-#### Build Your Own
+### Build Your Own
 
 ```dockerfile
 FROM thedeployer/mdsvr:latest
@@ -585,7 +609,7 @@ server {
 }
 ```
 
-### Clean URLs
+## Clean URLs
 
 Exported sites use clean URLs:
 
@@ -596,6 +620,6 @@ Exported sites use clean URLs:
 
 ## Related
 
-- [Getting Started](../1.-getting-started/README.md) — If you're new to mdsvr
-- [Features](../3.-features/README.md) — Learn about specific features
-- [CLI Reference](../4.-reference/README.md) — Command-line documentation
+- [Getting Started](../01-getting-started/README.md) — If you're new to mdsvr
+- [Features](../03-features/README.md) — Learn about specific features
+- [CLI Reference](../04-reference/README.md) — Command-line documentation

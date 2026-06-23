@@ -8,7 +8,7 @@ description: Interactive components for your documentation
 mdsvr supports **MDX** — Markdown with JSX. This allows you to use interactive components directly in your documentation.
 
 <Callout type="info">
-  MDX must be enabled in `settings.json` with `"mdx.enabled": true`.
+  MDX must be enabled in `_mdsvr/settings.json` with `"mdx.enabled": true`.
 </Callout>
 
 ## Callout
@@ -50,7 +50,7 @@ Create step-by-step guides:
 
 ### Step 2: Configure
 
-Create your `settings.json`
+Create your `_mdsvr/settings.json`
 
 ### Step 3: Launch
 
@@ -230,3 +230,32 @@ This metadata is used for:
 - Open Graph / Twitter Cards
 - RSS feed entries (when `date` is present)
 - Search index weighting
+
+## MDX Plugins
+
+You can add custom remark and rehype plugins to extend MDX functionality:
+
+```json
+{
+  "mdx": {
+    "enabled": true,
+    "remarkPlugins": ["remark-gfm"],
+    "rehypePlugins": ["rehype-slug"]
+  }
+}
+```
+
+**Options:**
+
+- `remarkPlugins`: Array of remark plugin names for markdown transformations
+- `rehypePlugins`: Array of rehype plugin names for HTML transformations
+
+Currently, mdsvr includes these built-in plugins by default:
+
+- `remark-frontmatter` - Parse YAML frontmatter
+- `remark-gfm` - GitHub Flavored Markdown support
+- `remark-mdx-frontmatter` - MDX frontmatter support
+- `rehype-slug` - Generate heading IDs for anchors
+- `rehype-autolink-headings` - Auto-link headings
+
+You can add additional plugins by installing them and adding their names to the arrays.

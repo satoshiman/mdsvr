@@ -10,7 +10,7 @@ mdsvr includes built-in SEO features to help your documentation rank better in s
 
 ## Meta Tags
 
-Every page includes optimized meta tags based on your `settings.json` and page frontmatter.
+Every page includes optimized meta tags based on your `_mdsvr/settings.json` and page frontmatter.
 
 ### Title Template
 
@@ -85,11 +85,14 @@ Set `enabled: false` to disable automatic OG image generation.
   "seo": {
     "og": {
       "enabled": true,
+      "template": "default",
       "imageFormat": "jpg",
+      "generateOnServe": false,
       "fontFamily": "Inter",
       "colors": {
         "background": "#0a0a0f",
-        "text": "#ffffff"
+        "text": "#ffffff",
+        "accent": "#0969da"
       }
     }
   }
@@ -99,10 +102,13 @@ Set `enabled: false` to disable automatic OG image generation.
 **Options:**
 
 - `enabled`: Enable/disable OG image generation (default: `true`)
+- `template`: OG image template to use (default: `"default"`)
 - `imageFormat`: Output format - `jpg` or `png` (default: `jpg`)
+- `generateOnServe`: Generate OG images on server requests (default: `false`)
 - `fontFamily`: Font family for text (default: `Inter`)
 - `colors.background`: Background color (default: `#0a0a0f`)
 - `colors.text`: Text color (default: `#ffffff`)
+- `colors.accent`: Accent color for highlights (default: `#0969da`)
 
 ### Output Location
 
@@ -118,8 +124,23 @@ OG images are cached and only regenerated when:
 - The source markdown file changes
 - Settings change (forcing full re-export)
 - The export state is deleted
+- Using `--force-og` flag during export
 
-See [Export Caching](../2.-settings/README.md#export-caching) for details.
+See [Export Caching](../02-settings/README.md#export-caching) for details.
+
+### Force Regeneration
+
+To force regenerate all OG images during export:
+
+```bash
+npx mdsvr ./docs --export --force-og
+```
+
+This bypasses the cache and regenerates all OG images, useful when:
+
+- OG image template changes
+- Font files are updated
+- You want to refresh all social media preview images
 
 ### Custom Images Per Page
 
@@ -315,7 +336,7 @@ Sitemap: https://docs.example.com/sitemap.xml
 
 To get the best social sharing previews:
 
-1. **Set a default image** in `settings.json`
+1. **Set a default image** in `_mdsvr/settings.json`
 2. **Use custom images** for important pages
 3. **Write good descriptions** in frontmatter
 4. **Keep titles concise** (under 60 characters)

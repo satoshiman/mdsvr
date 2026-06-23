@@ -9,7 +9,7 @@ mdsvr includes a **built-in full-text search** that works entirely client-side. 
 
 ## Enabling Search
 
-Search is enabled by default. Configure it in `settings.json`:
+Search is enabled by default. Configure it in `_mdsvr/settings.json`:
 
 ```json
 {
@@ -34,6 +34,7 @@ Click the search icon in the header to open the search modal.
 ### Search Modal
 
 The search modal includes:
+
 - **Instant results** as you type
 - **Fuzzy matching** for typo tolerance
 - **Result highlighting** with matching terms marked
@@ -50,6 +51,7 @@ The search modal includes:
 ## Search Index
 
 The search index includes:
+
 - **Title** — Page titles (highest weight)
 - **Headings** — All H1-H6 headings
 - **Content** — Full text content (stripped of markdown)
@@ -59,13 +61,13 @@ The search index includes:
 
 Results are ranked by relevance:
 
-| Match Type | Score |
-|------------|-------|
-| Exact title match | +100 |
-| Title starts with query | +50 |
-| Title contains query | +25 |
-| Heading contains query | +15 |
-| Content contains query | +10 |
+| Match Type              | Score |
+| ----------------------- | ----- |
+| Exact title match       | +100  |
+| Title starts with query | +50   |
+| Title contains query    | +25   |
+| Heading contains query  | +15   |
+| Content contains query  | +10   |
 
 ## Disabling Search
 
@@ -80,6 +82,7 @@ To disable search entirely:
 ```
 
 This will:
+
 - Hide the search trigger in the header
 - Remove the ⌘K keyboard shortcut
 - Skip building the search index at startup
@@ -106,6 +109,7 @@ Each entry in the search index:
 3. **Frontmatter title** — Set `title:` in frontmatter for better control
 
 Example:
+
 ```mdx
 ---
 title: Authentication Guide
@@ -125,6 +129,7 @@ Setting up OAuth providers...
 ## Accessibility
 
 The search modal is fully accessible:
+
 - Keyboard navigation (Tab, Arrow keys, Enter, Escape)
 - ARIA labels for screen readers
 - Focus trap while modal is open

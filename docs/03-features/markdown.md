@@ -39,7 +39,7 @@ _Italic text_ using `*text*`
 
 [Link with title](https://example.com "Example Site")
 
-[Relative link](/2.-settings)
+[Relative link](../02-settings)
 
 ## Images
 

@@ -19,10 +19,10 @@
     <meta property="og:description" content="Detailed guides for configuring, writing, and deploying your mdsvr documentation">
     <meta property="og:type" content="website">
     <meta property="og:url" content="/docs/02-settings/">
-    <meta property="og:image" content="/docs/public/og/02-settings/index.jpg">
+    <meta property="og:image" content="/docs/public/assets/og/02-settings/index.jpg">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Guides">
-    <meta name="twitter:image" content="/docs/public/og/02-settings/index.jpg">
+    <meta name="twitter:image" content="/docs/public/assets/og/02-settings/index.jpg">
     <link rel="sitemap" type="application/xml" href="/docs/sitemap.xml">
   
   <style>
@@ -1413,7 +1413,7 @@ code.hljs {
 <p>In-depth guides for configuring, writing, and deploying your documentation.</p>
 <hr>
 <h2 id="configuration" tabindex="-1">Configuration</h2>
-<p>mdsvr can be configured via a <code>settings.json</code> file in your docs root directory. All settings are optional — the server works out of the box with sensible defaults.</p>
+<p>mdsvr can be configured via a <code>settings.json</code> file in the <code>_mdsvr/</code> directory in your docs root. All settings are optional — the server works out of the box with sensible defaults.</p>
 <h3 id="creating-settings.json" tabindex="-1">Creating settings.json</h3>
 <p>Use the CLI to create a starter configuration:</p>
 <pre class="code-block-wrapper"><div class="code-block-container">
@@ -1776,6 +1776,15 @@ code.hljs {
     <span class="hljs-attr">&quot;twitterSite&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;@myhandle&quot;</span><span class="hljs-punctuation">,</span>
     <span class="hljs-attr">&quot;generateSitemap&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
     <span class="hljs-attr">&quot;generateRssFeed&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;og&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">&quot;enabled&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;imageFormat&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;jpg&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;fontFamily&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Inter&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;colors&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+        <span class="hljs-attr">&quot;background&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;#0a0a0f&quot;</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">&quot;text&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;#ffffff&quot;</span>
+      <span class="hljs-punctuation">}</span>
+    <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
     <span class="hljs-attr">&quot;rss&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
       <span class="hljs-attr">&quot;title&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;My Docs Updates&quot;</span><span class="hljs-punctuation">,</span>
       <span class="hljs-attr">&quot;feedUrl&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;/feed.xml&quot;</span><span class="hljs-punctuation">,</span>
@@ -1792,6 +1801,15 @@ code.hljs {
     &quot;twitterSite&quot;: &quot;@myhandle&quot;,
     &quot;generateSitemap&quot;: true,
     &quot;generateRssFeed&quot;: true,
+    &quot;og&quot;: {
+      &quot;enabled&quot;: true,
+      &quot;imageFormat&quot;: &quot;jpg&quot;,
+      &quot;fontFamily&quot;: &quot;Inter&quot;,
+      &quot;colors&quot;: {
+        &quot;background&quot;: &quot;#0a0a0f&quot;,
+        &quot;text&quot;: &quot;#ffffff&quot;
+      }
+    },
     &quot;rss&quot;: {
       &quot;title&quot;: &quot;My Docs Updates&quot;,
       &quot;feedUrl&quot;: &quot;/feed.xml&quot;,
@@ -1913,7 +1931,8 @@ code.hljs {
       <span class="hljs-attr">&quot;hidden&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;settings.json&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;.git&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;node_modules&quot;</span><span class="hljs-punctuation">]</span>
     <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
     <span class="hljs-attr">&quot;indexFiles&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;README.md&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;index.md&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;index.html&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
-    <span class="hljs-attr">&quot;ignorePatterns&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;**/node_modules/**&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;**/.git/**&quot;</span><span class="hljs-punctuation">]</span>
+    <span class="hljs-attr">&quot;ignorePatterns&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;**/node_modules/**&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;**/.git/**&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;staticFolders&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;assets&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;public&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;images&quot;</span><span class="hljs-punctuation">]</span>
   <span class="hljs-punctuation">}</span>
 <span class="hljs-punctuation">}</span>
 </code></pre>
@@ -1925,7 +1944,8 @@ code.hljs {
       &quot;hidden&quot;: [&quot;settings.json&quot;, &quot;.git&quot;, &quot;node_modules&quot;]
     },
     &quot;indexFiles&quot;: [&quot;README.md&quot;, &quot;index.md&quot;, &quot;index.html&quot;],
-    &quot;ignorePatterns&quot;: [&quot;**/node_modules/**&quot;, &quot;**/.git/**&quot;]
+    &quot;ignorePatterns&quot;: [&quot;**/node_modules/**&quot;, &quot;**/.git/**&quot;],
+    &quot;staticFolders&quot;: [&quot;assets&quot;, &quot;public&quot;, &quot;images&quot;]
   }
 }
 </code></pre>
@@ -1935,6 +1955,7 @@ code.hljs {
 <li>Files starting with <code>_</code> are automatically hidden</li>
 <li>Blocked extensions return 403 Forbidden</li>
 <li>Hidden files return 404 Not Found (as if they don’t exist)</li>
+<li><code>staticFolders</code>: Array of folder names to serve as static assets (all files in these folders are served directly)</li>
 </ul>
 <h3 id="footer" tabindex="-1">Footer</h3>
 <p>Customize the site footer:</p>
@@ -1990,7 +2011,7 @@ code.hljs {
 </div></pre>
 
 <h3 id="hot-reload" tabindex="-1">Hot Reload</h3>
-<p>Settings are automatically reloaded when <code>settings.json</code> changes (except when using <code>--no-watch</code> flag). You’ll see a message in the console:</p>
+<p>Settings are automatically reloaded when <code>_mdsvr/settings.json</code> changes (except when using <code>--no-watch</code> flag). You’ll see a message in the console:</p>
 <pre class="code-block-wrapper"><div class="code-block-container">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -2064,8 +2085,61 @@ code.hljs {
 </div></pre>
 
 <p>This will check your configuration and report any errors.</p>
+<h3 id="generate-settings" tabindex="-1">Generate Settings</h3>
+<p>Configure static export generation options:</p>
+<pre class="code-block-wrapper"><div class="code-block-container">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;generate&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;basePath&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;/docs&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;outputDir&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;dist&quot;</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+  <pre class="code-block-raw" style="display:none;"><code>{
+  &quot;generate&quot;: {
+    &quot;basePath&quot;: &quot;/docs&quot;,
+    &quot;outputDir&quot;: &quot;dist&quot;
+  }
+}
+</code></pre>
+</div></pre>
+
+<p><strong>Options:</strong></p>
+<ul>
+<li><code>basePath</code>: Base path for generated URLs (default: <code>&quot;&quot;</code>). Useful when deploying to a subdirectory (e.g., <code>/docs</code>)</li>
+<li><code>outputDir</code>: Default output directory for static exports (default: <code>&quot;dist&quot;</code>)</li>
+</ul>
+<p>These settings are used during static export with the <code>--export</code> flag.</p>
 <h3 id="complete-example" tabindex="-1">Complete Example</h3>
-<p>Here’s a complete <code>settings.json</code> with all available options:</p>
+<p>Here’s a complete <code>_mdsvr/settings.json</code> with all available options:</p>
 <pre class="code-block-wrapper"><div class="code-block-container">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -2136,7 +2210,11 @@ code.hljs {
     <span class="hljs-attr">&quot;defaultImage&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;./assets/og-default.png&quot;</span><span class="hljs-punctuation">,</span>
     <span class="hljs-attr">&quot;twitterCard&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;summary_large_image&quot;</span><span class="hljs-punctuation">,</span>
     <span class="hljs-attr">&quot;generateSitemap&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
-    <span class="hljs-attr">&quot;generateRssFeed&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span>
+    <span class="hljs-attr">&quot;generateRssFeed&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;og&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">&quot;enabled&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;imageFormat&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;jpg&quot;</span>
+    <span class="hljs-punctuation">}</span>
   <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
   <span class="hljs-attr">&quot;files&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
     <span class="hljs-attr">&quot;extensions&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
@@ -2153,7 +2231,7 @@ code.hljs {
         <span class="hljs-string">&quot;.json&quot;</span>
       <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
       <span class="hljs-attr">&quot;block&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;.env&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;.key&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;.pem&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;.p12&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
-      <span class="hljs-attr">&quot;hidden&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;settings.json&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;.git&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;node_modules&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;.DS_Store&quot;</span><span class="hljs-punctuation">]</span>
+      <span class="hljs-attr">&quot;hidden&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;_mdsvr&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;settings.json&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;.git&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;node_modules&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;.DS_Store&quot;</span><span class="hljs-punctuation">]</span>
     <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
     <span class="hljs-attr">&quot;indexFiles&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;README.md&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;index.md&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;INDEX.md&quot;</span><span class="hljs-punctuation">]</span>
   <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
@@ -2218,7 +2296,11 @@ code.hljs {
     &quot;defaultImage&quot;: &quot;./assets/og-default.png&quot;,
     &quot;twitterCard&quot;: &quot;summary_large_image&quot;,
     &quot;generateSitemap&quot;: true,
-    &quot;generateRssFeed&quot;: false
+    &quot;generateRssFeed&quot;: false,
+    &quot;og&quot;: {
+      &quot;enabled&quot;: true,
+      &quot;imageFormat&quot;: &quot;jpg&quot;
+    }
   },
   &quot;files&quot;: {
     &quot;extensions&quot;: {
@@ -2235,7 +2317,7 @@ code.hljs {
         &quot;.json&quot;
       ],
       &quot;block&quot;: [&quot;.env&quot;, &quot;.key&quot;, &quot;.pem&quot;, &quot;.p12&quot;],
-      &quot;hidden&quot;: [&quot;settings.json&quot;, &quot;.git&quot;, &quot;node_modules&quot;, &quot;.DS_Store&quot;]
+      &quot;hidden&quot;: [&quot;_mdsvr&quot;, &quot;settings.json&quot;, &quot;.git&quot;, &quot;node_modules&quot;, &quot;.DS_Store&quot;]
     },
     &quot;indexFiles&quot;: [&quot;README.md&quot;, &quot;index.md&quot;, &quot;INDEX.md&quot;]
   },
@@ -2452,7 +2534,7 @@ noIndex: true # Exclude from search
 </code></pre>
 </div></pre>
 
-<h4 id="cross-reference-links" tabindex="-1">Cross-Reference Links</h4>
+<h3 id="cross-reference-links" tabindex="-1">Cross-Reference Links</h3>
 <p>Use relative paths:</p>
 <pre class="code-block-wrapper"><div class="code-block-container">
   <div class="code-block-toolbar">
@@ -2483,9 +2565,9 @@ noIndex: true # Exclude from search
       </svg>
     </button>
   </div>
-  <pre><code class="hljs language-markdown">See [<span class="hljs-string">configuration guide</span>](<span class="hljs-link">/2.-settings/README.md</span>)
+  <pre><code class="hljs language-markdown">See [<span class="hljs-string">configuration guide</span>](<span class="hljs-link">./README.md</span>)
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>See [configuration guide](/2.-settings/README.md)
+  <pre class="code-block-raw" style="display:none;"><code>See [configuration guide](./README.md)
 </code></pre>
 </div></pre>
 
@@ -2587,7 +2669,7 @@ Second step content
 </code></pre>
 </div></pre>
 
-<p>See <a href="../3.-features/mdx.mdx">MDX Components</a> for all available components.</p>
+<p>See <a href="../03-features/mdx.mdx">MDX Components</a> for all available components.</p>
 <h3 id="images-%26-assets" tabindex="-1">Images &amp; Assets</h3>
 <p>Place assets in <code>docs/assets/</code>:</p>
 <pre class="code-block-wrapper"><div class="code-block-container">
@@ -2619,12 +2701,15 @@ Second step content
       </svg>
     </button>
   </div>
-  <pre><code class="hljs language-markdown">![<span class="hljs-string">Alt text</span>](<span class="hljs-link">/assets/screenshot.png</span>)
+  <pre><code class="hljs language-markdown">![<span class="hljs-string">Alt text</span>](<span class="hljs-link">../assets/screenshot.png</span>)
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>![Alt text](/assets/screenshot.png)
+  <pre class="code-block-raw" style="display:none;"><code>![Alt text](../assets/screenshot.png)
 </code></pre>
 </div></pre>
 
+<blockquote>
+<p>Note: The assets folder is optional - create it if you need to include images in your documentation.</p>
+</blockquote>
 <h3 id="best-practices" tabindex="-1">Best Practices</h3>
 <ol>
 <li><strong>Start with a <a href="http://README.md">README.md</a></strong> — Required for homepage</li>
@@ -2710,7 +2795,61 @@ Second step content
 </code></pre>
 </div></pre>
 
-<h3 id="firebase-hosting" tabindex="-1">Firebase Hosting</h3>
+<h4 id="export-caching" tabindex="-1">Export Caching</h4>
+<p>mdsvr uses intelligent caching to speed up exports:</p>
+<ul>
+<li><strong>File-level caching</strong>: Only re-renders pages whose source files changed</li>
+<li><strong>OG image caching</strong>: Only regenerates OG images when content changes</li>
+<li><strong>Settings tracking</strong>: Detects when <code>_mdsvr/settings.json</code> changes and forces full re-export</li>
+</ul>
+<p>The export state is stored in <code>_mdsvr/export-state.json</code>.</p>
+<h4 id="force-full-export" tabindex="-1">Force Full Export</h4>
+<p>To bypass cache and force a complete re-export:</p>
+<pre class="code-block-wrapper"><div class="code-block-container">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-bash"><span class="hljs-comment"># Delete export state only</span>
+<span class="hljs-built_in">rm</span> _mdsvr/export-state.json
+
+<span class="hljs-comment"># Then export</span>
+npx mdsvr ./docs --<span class="hljs-built_in">export</span>
+</code></pre>
+  <pre class="code-block-raw" style="display:none;"><code># Delete export state only
+rm _mdsvr/export-state.json
+
+# Then export
+npx mdsvr ./docs --export
+</code></pre>
+</div></pre>
+
+<p><strong>Note:</strong> Only delete <code>export-state.json</code>, not the entire <code>_mdsvr</code> directory, to preserve your settings.</p>
+<h2 id="firebase-hosting" tabindex="-1">Firebase Hosting</h2>
 <pre class="code-block-wrapper"><div class="code-block-container">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -2744,20 +2883,22 @@ Second step content
 npx mdsvr ./docs --<span class="hljs-built_in">export</span>
 
 <span class="hljs-comment"># Deploy</span>
-<span class="hljs-built_in">cd</span> _html/public
+<span class="hljs-built_in">cd</span> _html
+firebase init
 firebase deploy
 </code></pre>
   <pre class="code-block-raw" style="display:none;"><code># Export
 npx mdsvr ./docs --export
 
 # Deploy
-cd _html/public
+cd _html
+firebase init
 firebase deploy
 </code></pre>
 </div></pre>
 
-<h3 id="netlify" tabindex="-1">Netlify</h3>
-<h4 id="via-cli" tabindex="-1">Via CLI</h4>
+<h2 id="netlify" tabindex="-1">Netlify</h2>
+<h3 id="via-cli" tabindex="-1">Via CLI</h3>
 <pre class="code-block-wrapper"><div class="code-block-container">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -2795,7 +2936,7 @@ netlify deploy --dir=_html/public --prod
 </code></pre>
 </div></pre>
 
-<h4 id="via-git" tabindex="-1">Via Git</h4>
+<h3 id="via-git" tabindex="-1">Via Git</h3>
 <ol>
 <li>Push docs to GitHub</li>
 <li>Connect repo to Netlify</li>
@@ -2846,7 +2987,7 @@ netlify deploy --dir=_html/public --prod
 </code></pre>
 </div></pre>
 
-<h3 id="github-pages" tabindex="-1">GitHub Pages</h3>
+<h2 id="github-pages" tabindex="-1">GitHub Pages</h2>
 <pre class="code-block-wrapper"><div class="code-block-container">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -2888,7 +3029,7 @@ npx mdsvr ./src --export ./docs
 </code></pre>
 </div></pre>
 
-<h4 id="github-actions-workflow" tabindex="-1">GitHub Actions Workflow</h4>
+<h2 id="github-actions-workflow" tabindex="-1">GitHub Actions Workflow</h2>
 <pre class="code-block-wrapper"><div class="code-block-container">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -2958,8 +3099,8 @@ jobs:
 </code></pre>
 </div></pre>
 
-<h3 id="docker" tabindex="-1">Docker</h3>
-<h4 id="using-pre-built-image" tabindex="-1">Using Pre-built Image</h4>
+<h2 id="docker" tabindex="-1">Docker</h2>
+<h3 id="using-pre-built-image" tabindex="-1">Using Pre-built Image</h3>
 <pre class="code-block-wrapper"><div class="code-block-container">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -3003,7 +3144,7 @@ docker run -d \
 </code></pre>
 </div></pre>
 
-<h4 id="build-your-own" tabindex="-1">Build Your Own</h4>
+<h3 id="build-your-own" tabindex="-1">Build Your Own</h3>
 <pre class="code-block-wrapper"><div class="code-block-container">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -3131,7 +3272,7 @@ server {
 </code></pre>
 </div></pre>
 
-<h3 id="clean-urls" tabindex="-1">Clean URLs</h3>
+<h2 id="clean-urls" tabindex="-1">Clean URLs</h2>
 <p>Exported sites use clean URLs:</p>
 <ul>
 <li><code>/guide/setup/</code> instead of <code>/guide/setup.html</code></li>
@@ -3140,9 +3281,9 @@ server {
 <hr>
 <h2 id="related" tabindex="-1">Related</h2>
 <ul>
-<li><a href="../1.-getting-started/README.md">Getting Started</a> — If you’re new to mdsvr</li>
-<li><a href="../3.-features/README.md">Features</a> — Learn about specific features</li>
-<li><a href="../4.-reference/README.md">CLI Reference</a> — Command-line documentation</li>
+<li><a href="../01-getting-started/README.md">Getting Started</a> — If you’re new to mdsvr</li>
+<li><a href="../03-features/README.md">Features</a> — Learn about specific features</li>
+<li><a href="../04-reference/README.md">CLI Reference</a> — Command-line documentation</li>
 </ul>
 
       </article>
@@ -3175,6 +3316,7 @@ server {
 <li class="toc-item"><a href="#footer">Footer</a></li>
 <li class="toc-item"><a href="#hot-reload">Hot Reload</a></li>
 <li class="toc-item"><a href="#validation">Validation</a></li>
+<li class="toc-item"><a href="#generate-settings">Generate Settings</a></li>
 <li class="toc-item"><a href="#complete-example">Complete Example</a></li>
 </ul>
 <li class="toc-item"><a href="#writing-content">Writing Content</a></li>
@@ -3182,6 +3324,7 @@ server {
 <li class="toc-item"><a href="#file-organization">File Organization</a></li>
 <li class="toc-item"><a href="#frontmatter">Frontmatter</a></li>
 <li class="toc-item"><a href="#markdown-tips">Markdown Tips</a></li>
+<li class="toc-item"><a href="#cross-reference-links">Cross-Reference Links</a></li>
 <li class="toc-item"><a href="#mdx-components">MDX Components</a></li>
 <li class="toc-item"><a href="#images-%26-assets">Images &amp;amp; Assets</a></li>
 <li class="toc-item"><a href="#best-practices">Best Practices</a></li>
@@ -3189,14 +3332,23 @@ server {
 <li class="toc-item"><a href="#deployment">Deployment</a></li>
 <ul class="toc-list toc-level-3">
 <li class="toc-item"><a href="#export-static-site">Export Static Site</a></li>
+</ul>
 <li class="toc-item"><a href="#firebase-hosting">Firebase Hosting</a></li>
 <li class="toc-item"><a href="#netlify">Netlify</a></li>
+<ul class="toc-list toc-level-3">
+<li class="toc-item"><a href="#via-cli">Via CLI</a></li>
+<li class="toc-item"><a href="#via-git">Via Git</a></li>
 <li class="toc-item"><a href="#vercel">Vercel</a></li>
-<li class="toc-item"><a href="#github-pages">GitHub Pages</a></li>
-<li class="toc-item"><a href="#docker">Docker</a></li>
-<li class="toc-item"><a href="#vps-%2F-self-hosted">VPS / Self-Hosted</a></li>
-<li class="toc-item"><a href="#clean-urls">Clean URLs</a></li>
 </ul>
+<li class="toc-item"><a href="#github-pages">GitHub Pages</a></li>
+<li class="toc-item"><a href="#github-actions-workflow">GitHub Actions Workflow</a></li>
+<li class="toc-item"><a href="#docker">Docker</a></li>
+<ul class="toc-list toc-level-3">
+<li class="toc-item"><a href="#using-pre-built-image">Using Pre-built Image</a></li>
+<li class="toc-item"><a href="#build-your-own">Build Your Own</a></li>
+<li class="toc-item"><a href="#vps-%2F-self-hosted">VPS / Self-Hosted</a></li>
+</ul>
+<li class="toc-item"><a href="#clean-urls">Clean URLs</a></li>
 <li class="toc-item"><a href="#related">Related</a></li>
 </ul>
 </ul>

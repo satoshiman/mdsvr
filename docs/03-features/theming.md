@@ -9,7 +9,7 @@ mdsvr supports **dark mode**, **light mode**, and **automatic theme detection** 
 
 ## Theme Modes
 
-Configure the default theme in `settings.json`:
+Configure the default theme in `_mdsvr/settings.json`:
 
 ```json
 {
@@ -86,6 +86,30 @@ Currently supported:
 - `github`
 - `github-dark`
 
+## Font Family
+
+Customize fonts for different content types:
+
+```json
+{
+  "appearance": {
+    "fontFamily": {
+      "body": "Inter, system-ui, sans-serif",
+      "code": "Fira Code, monospace",
+      "heading": "Inter, system-ui, sans-serif"
+    }
+  }
+}
+```
+
+**Options:**
+
+- `body`: Font for body text (optional)
+- `code`: Font for code blocks (optional)
+- `heading`: Font for headings (optional, defaults to body font)
+
+If not specified, the system default fonts are used.
+
 ## CSS Variables
 
 The following CSS variables are available for custom styling:
@@ -149,6 +173,10 @@ This ensures the correct theme is applied immediately without any visible flash.
     "codeTheme": {
       "light": "github",
       "dark": "github-dark"
+    },
+    "fontFamily": {
+      "body": "Inter, system-ui, sans-serif",
+      "code": "Fira Code, monospace"
     }
   }
 }

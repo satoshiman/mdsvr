@@ -19,10 +19,10 @@
     <meta property="og:description" content="API and CLI reference documentation for mdsvr">
     <meta property="og:type" content="website">
     <meta property="og:url" content="/docs/04-reference/">
-    <meta property="og:image" content="/docs/public/og/04-reference/index.jpg">
+    <meta property="og:image" content="/docs/public/assets/og/04-reference/index.jpg">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Reference">
-    <meta name="twitter:image" content="/docs/public/og/04-reference/index.jpg">
+    <meta name="twitter:image" content="/docs/public/assets/og/04-reference/index.jpg">
     <link rel="sitemap" type="application/xml" href="/docs/sitemap.xml">
   
   <style>
@@ -1537,9 +1537,24 @@ code.hljs {
 </tbody>
 </table></div>
 <h4 id="export-options" tabindex="-1">Export Options</h4>
-<p>| Option                | Description        |
-| --------------------- | ------------------ | ---------------------- |
-| <code>-e, --export [PATH]</code> | Export static HTML | <code>PATH</code>: <code>_html/public</code> |</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-e, --export [PATH]</code></td>
+<td>Export static HTML (default: <code>_html/public</code>)</td>
+</tr>
+<tr>
+<td><code>--force-og</code></td>
+<td>Force full OG image regeneration (skip cache)</td>
+</tr>
+</tbody>
+</table></div>
 <h4 id="utility-options" tabindex="-1">Utility Options</h4>
 <div class="table-wrapper"><table>
 <thead>
@@ -1556,6 +1571,14 @@ code.hljs {
 <tr>
 <td><code>--validate</code></td>
 <td>Validate <code>settings.json</code> and exit</td>
+</tr>
+<tr>
+<td><code>--validate-md</code></td>
+<td>Validate all markdown files and exit</td>
+</tr>
+<tr>
+<td><code>--autofix</code></td>
+<td>Auto-fix markdown validation errors (use with --validate-md)</td>
 </tr>
 <tr>
 <td><code>--no-watch</code></td>
@@ -1628,7 +1651,7 @@ npx mdsvr ./docs --host 0.0.0.0 --port 1800
 </code></pre>
 </div></pre>
 
-<h4 id="with-auto-open" tabindex="-1">With Auto-Open</h4>
+<h2 id="with-auto-open" tabindex="-1">With Auto-Open</h2>
 <pre class="code-block-wrapper"><div class="code-block-container">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -1664,7 +1687,7 @@ npx mdsvr ./docs --host 0.0.0.0 --port 1800
 </code></pre>
 </div></pre>
 
-<h4 id="export-static-site" tabindex="-1">Export Static Site</h4>
+<h2 id="export-static-site" tabindex="-1">Export Static Site</h2>
 <pre class="code-block-wrapper"><div class="code-block-container">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -1699,16 +1722,22 @@ npx mdsvr ./docs --<span class="hljs-built_in">export</span>
 
 <span class="hljs-comment"># Custom output</span>
 npx mdsvr ./docs --<span class="hljs-built_in">export</span> ./dist
+
+<span class="hljs-comment"># Force full OG image regeneration</span>
+npx mdsvr ./docs --<span class="hljs-built_in">export</span> --force-og
 </code></pre>
   <pre class="code-block-raw" style="display:none;"><code># Default output (_html/public)
 npx mdsvr ./docs --export
 
 # Custom output
 npx mdsvr ./docs --export ./dist
+
+# Force full OG image regeneration
+npx mdsvr ./docs --export --force-og
 </code></pre>
 </div></pre>
 
-<h4 id="initialize-config" tabindex="-1">Initialize Config</h4>
+<h2 id="initialize-config" tabindex="-1">Initialize Config</h2>
 <pre class="code-block-wrapper"><div class="code-block-container">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -1744,8 +1773,8 @@ npx mdsvr ./docs --export ./dist
 </code></pre>
 </div></pre>
 
-<p>Creates <code>settings.json</code> with starter configuration.</p>
-<h4 id="validate-settings" tabindex="-1">Validate Settings</h4>
+<p>Creates <code>_mdsvr/settings.json</code> with starter configuration.</p>
+<h2 id="validate-settings" tabindex="-1">Validate Settings</h2>
 <pre class="code-block-wrapper"><div class="code-block-container">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -1781,8 +1810,60 @@ npx mdsvr ./docs --export ./dist
 </code></pre>
 </div></pre>
 
-<p>Checks <code>settings.json</code> for errors without starting server.</p>
-<h3 id="environment-variables" tabindex="-1">Environment Variables</h3>
+<p>Checks <code>_mdsvr/settings.json</code> for errors without starting server.</p>
+<h2 id="validate-markdown-files" tabindex="-1">Validate Markdown Files</h2>
+<pre class="code-block-wrapper"><div class="code-block-container">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-bash"><span class="hljs-comment"># Validate all markdown files</span>
+npx mdsvr ./docs --validate-md
+
+<span class="hljs-comment"># Validate with auto-fix</span>
+npx mdsvr ./docs --validate-md --autofix
+</code></pre>
+  <pre class="code-block-raw" style="display:none;"><code># Validate all markdown files
+npx mdsvr ./docs --validate-md
+
+# Validate with auto-fix
+npx mdsvr ./docs --validate-md --autofix
+</code></pre>
+</div></pre>
+
+<p>Checks all markdown files for:</p>
+<ul>
+<li>🔗 Broken internal links (with fuzzy matching suggestions)</li>
+<li>📝 Heading hierarchy issues</li>
+<li>📌 Missing H1 headings</li>
+<li>🖼️ Missing assets (images, fonts, etc.)</li>
+</ul>
+<p>The <code>--autofix</code> flag automatically fixes broken links using fuzzy matching (e.g., <code>traget.md</code> → <code>target.md</code>).</p>
+<h2 id="environment-variables" tabindex="-1">Environment Variables</h2>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1838,9 +1919,9 @@ npx mdsvr ./docs --export ./dist
 <hr>
 <h2 id="related" tabindex="-1">Related</h2>
 <ul>
-<li><a href="../2.-settings/README.md">Configuration</a> — Practical configuration guide</li>
-<li><a href="../3.-features/README.md">Features</a> — Feature documentation</li>
-<li><a href="../1.-getting-started/README.md">Getting Started</a> — Quick start guides</li>
+<li><a href="../02-settings/README.md">Configuration</a> — Practical configuration guide</li>
+<li><a href="../03-features/README.md">Features</a> — Feature documentation</li>
+<li><a href="../01-getting-started/README.md">Getting Started</a> — Quick start guides</li>
 </ul>
 
       </article>
@@ -1866,7 +1947,14 @@ npx mdsvr ./docs --export ./dist
 <li class="toc-item"><a href="#arguments">Arguments</a></li>
 <li class="toc-item"><a href="#options">Options</a></li>
 <li class="toc-item"><a href="#examples">Examples</a></li>
+</ul>
+<li class="toc-item"><a href="#with-auto-open">With Auto-Open</a></li>
+<li class="toc-item"><a href="#export-static-site">Export Static Site</a></li>
+<li class="toc-item"><a href="#initialize-config">Initialize Config</a></li>
+<li class="toc-item"><a href="#validate-settings">Validate Settings</a></li>
+<li class="toc-item"><a href="#validate-markdown-files">Validate Markdown Files</a></li>
 <li class="toc-item"><a href="#environment-variables">Environment Variables</a></li>
+<ul class="toc-list toc-level-3">
 <li class="toc-item"><a href="#exit-codes">Exit Codes</a></li>
 </ul>
 <li class="toc-item"><a href="#coming-soon">Coming Soon</a></li>
