@@ -1,6 +1,6 @@
 {
   "name": "mdsvr",
-  "version": "2.2.24",
+  "version": "2.2.25",
   "description": "Full-featured documentation website server with MDX support, site settings, SEO, and navigation",
   "type": "module",
   "main": "./dist/index.js",
