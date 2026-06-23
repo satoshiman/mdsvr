@@ -420,9 +420,12 @@ async function renderMarkdownFile(
   // Fix asset paths for subdirectories
   const fixedHtml = fixAssetPaths(result.html, urlPath);
 
+  // Convert .md/.mdx links to .html for static export
+  const fixedLinksHtml = fixMarkdownLinks(fixedHtml, urlPath, settings);
+
   const html = renderPage({
     title,
-    body: fixedHtml,
+    body: fixedLinksHtml,
     filePath: urlPath,
     settings,
     frontmatter: result.frontmatter,
@@ -538,6 +541,30 @@ function fixAssetPaths(html: string, urlPath: string): string {
   return html.replace(
     /(src|href|data-src|poster|content)="assets\//g,
     `$1="${absoluteAssetsPath}`,
+  );
+}
+
+function fixMarkdownLinks(
+  html: string,
+  urlPath: string,
+  settings: Settings,
+): string {
+  // Convert .md and .mdx links to .html for static export
+  // Handle both href and src attributes
+  return html.replace(
+    /(href|src)="([^"]+\.(md|mdx)(#[^"]*)?)"/g,
+    (match, attr, link, ext, anchor) => {
+      // Remove .md or .mdx extension
+      const withoutExt = link.replace(/\.(md|mdx)$/, "");
+
+      // Add anchor back if present
+      const finalLink = withoutExt + (anchor || "");
+
+      // Apply base path if configured
+      const withBase = withBasePath(finalLink, settings);
+
+      return `${attr}="${withBase}"`;
+    },
   );
 }
 
