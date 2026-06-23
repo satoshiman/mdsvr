@@ -15,7 +15,8 @@ export interface ValidationError {
     | "missing-asset"
     | "absolute-path"
     | "broken-anchor"
-    | "index-files";
+    | "index-files"
+    | "link-with-extension";
   message: string;
   suggestion?: string;
   autofix?: string;
@@ -333,8 +334,26 @@ async function validateInternalLinks(
       continue;
     }
 
-    // Check for index file links (will break on export)
+    // Check for links with .md or .mdx extensions (will break on export)
     const linkWithoutAnchorForCheck = link.split("#")[0];
+    if (/\.(md|mdx)$/i.test(linkWithoutAnchorForCheck)) {
+      const withoutExt = linkWithoutAnchorForCheck.replace(/\.(md|mdx)$/i, "");
+      const anchorPart = link.includes("#") ? "#" + link.split("#")[1] : "";
+      const fixedLink = withoutExt + anchorPart;
+      errors.push({
+        file: path.relative(rootDir, filePath),
+        line,
+        type: "link-with-extension",
+        message: `Link with extension will break on export: ${link}`,
+        suggestion: `Remove extension: ${fixedLink}`,
+        autofix: original.replace(link, fixedLink),
+        original,
+        icon: "⚠️",
+      });
+      continue;
+    }
+
+    // Check for index file links (will break on export)
     const indexFilePatterns = [
       // README variants
       /README\.md$/i,
@@ -750,39 +769,51 @@ export async function validateMarkdown(
     if (autofix) {
       let newContent = content;
       let hasFixes = false;
-      const lines = newContent.split("\n");
 
       // Fix link errors
       for (const error of linkErrors) {
         if (error.autofix) {
-          newContent = newContent.replace(error.original!, error.autofix);
+          // Use regex with global flag to replace all occurrences
+          const escapedOriginal = error.original!.replace(
+            /[.*+?^${}()|[\]\\]/g,
+            "\\$&",
+          );
+          newContent = newContent.replace(
+            new RegExp(escapedOriginal, "g"),
+            error.autofix,
+          );
           hasFixes = true;
           fixed++;
         }
       }
 
       // Fix structure errors (by line index for accuracy)
-      for (const error of structureErrors) {
-        if (error.autofix) {
-          if (error.type === "missing-h1" && error.original === "") {
-            // Insert H1 at the beginning
-            lines.splice(error.line - 1, 0, error.autofix);
-            hasFixes = true;
-            fixed++;
-          } else if (error.original && error.line > 0) {
-            // Replace specific line
-            const lineIndex = error.line - 1;
-            if (lineIndex < lines.length) {
-              lines[lineIndex] = error.autofix;
+      if (structureErrors.length > 0) {
+        const lines = newContent.split("\n");
+        for (const error of structureErrors) {
+          if (error.autofix) {
+            if (error.type === "missing-h1" && error.original === "") {
+              // Insert H1 at the beginning
+              lines.splice(error.line - 1, 0, error.autofix);
               hasFixes = true;
               fixed++;
+            } else if (error.original && error.line > 0) {
+              // Replace specific line
+              const lineIndex = error.line - 1;
+              if (lineIndex < lines.length) {
+                lines[lineIndex] = error.autofix;
+                hasFixes = true;
+                fixed++;
+              }
             }
           }
+        }
+        if (hasFixes) {
+          newContent = lines.join("\n");
         }
       }
 
       if (hasFixes) {
-        newContent = lines.join("\n");
         await fs.writeFile(filePath, newContent, "utf-8");
       }
     }
