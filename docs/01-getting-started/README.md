@@ -1,5 +1,5 @@
 ---
-title: Getting Started with mdsvr
+title: Getting Started
 description: Get up and running with mdsvr - installation and quick start guide
 ---
 
