@@ -41,7 +41,7 @@ The `--open` flag automatically opens your browser to `http://localhost:1800`.
 mdsvr:
 
 1. Scanned your `docs/` folder
-2. Found `README.md` and rendered it as your homepage
+2. Found `README.md`, and all your other markdown files, and rendered them as individual pages
 3. Generated navigation from your folder structure (sorted alphabetically)
 4. Started a server on port 1800
 
