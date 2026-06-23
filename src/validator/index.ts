@@ -764,16 +764,24 @@ function validateStructure(
   if (!hasH1) {
     // Find the first non-empty, non-frontmatter line to insert H1 before
     let insertLine = 0;
+    let inFrontmatter = false;
+
     for (let i = 0; i < lines.length; i++) {
       const trimmed = lines[i].trim();
-      if (trimmed === "---" && i === 0) {
-        // Skip frontmatter
+      if (trimmed === "---") {
+        if (i === 0) {
+          // Start of frontmatter
+          inFrontmatter = true;
+        } else if (inFrontmatter) {
+          // End of frontmatter, insert after this line
+          insertLine = i + 1;
+          break;
+        }
         continue;
       }
-      if (trimmed === "---" && i > 0) {
-        // End of frontmatter, insert after this line
-        insertLine = i + 1;
-        break;
+      if (inFrontmatter) {
+        // Skip lines inside frontmatter
+        continue;
       }
       if (trimmed && !trimmed.startsWith("#")) {
         // First content line
