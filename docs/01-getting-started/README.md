@@ -111,12 +111,12 @@ docker pull thedeployer/mdsvr:latest
 docker run -d -p 1800:1800 -v /path/to/docs:/app/docs thedeployer/mdsvr:latest
 ```
 
-See [Docker deployment](../02-settings/README.md#docker) for more details.
+See [Docker deployment](../02-settings#docker) for more details.
 
 ---
 
 ## Next Steps
 
 - Learn about [MDX components](../03-features/mdx.mdx) for interactive docs
-- [Configure](../02-settings/README.md) your site with `_mdsvr/settings.json`
+- [Configure](../02-settings) your site with `_mdsvr/settings.json`
 - See all [features](../03-features) mdsvr offers

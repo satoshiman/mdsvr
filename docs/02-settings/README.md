@@ -620,6 +620,6 @@ Exported sites use clean URLs:
 
 ## Related
 
-- [Getting Started](../01-getting-started/README.md) — If you're new to mdsvr
-- [Features](../03-features/README.md) — Learn about specific features
-- [CLI Reference](../04-reference/README.md) — Command-line documentation
+- [Getting Started](../01-getting-started) — If you're new to mdsvr
+- [Features](../03-features) — Learn about specific features
+- [CLI Reference](../04-reference) — Command-line documentation

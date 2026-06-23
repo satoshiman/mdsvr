@@ -126,7 +126,7 @@ OG images are cached and only regenerated when:
 - The export state is deleted
 - Using `--force-og` flag during export
 
-See [Export Caching](../02-settings/README.md#export-caching) for details.
+See [Export Caching](../02-settings#export-caching) for details.
 
 ### Force Regeneration
 

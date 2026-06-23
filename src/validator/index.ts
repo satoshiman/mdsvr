@@ -13,7 +13,8 @@ export interface ValidationError {
     | "missing-h1"
     | "missing-asset"
     | "absolute-path"
-    | "broken-anchor";
+    | "broken-anchor"
+    | "index-files";
   message: string;
   suggestion?: string;
   autofix?: string;
@@ -334,6 +335,48 @@ async function validateInternalLinks(
         type: "absolute-path",
         message: `Absolute path detected: ${link}`,
         suggestion: "Use relative paths instead (e.g., ./path or ../path)",
+        original,
+        icon: "⚠️",
+      });
+      continue;
+    }
+
+    // Check for index file links (will break on export)
+    const linkWithoutAnchorForCheck = link.split("#")[0];
+    const indexFilePatterns = [
+      // README variants
+      /README\.md$/i,
+      /readme\.md$/i,
+      /README\.mdx$/i,
+      /readme\.mdx$/i,
+      /\/README$/i,
+      /\/readme$/i,
+      // index variants
+      /index\.md$/i,
+      /INDEX\.md$/i,
+      /index\.mdx$/i,
+      /INDEX\.mdx$/i,
+      /index\.html$/i,
+      /index\.htm$/i,
+      /\/index$/i,
+      /\/INDEX$/i,
+    ];
+
+    if (
+      indexFilePatterns.some((pattern) =>
+        pattern.test(linkWithoutAnchorForCheck),
+      )
+    ) {
+      const dirPath = linkWithoutAnchorForCheck.replace(
+        /\/?(README|readme|index|INDEX)(\.(md|mdx|html|htm))?$/i,
+        "",
+      );
+      errors.push({
+        file: path.relative(rootDir, filePath),
+        line,
+        type: "index-files",
+        message: `Link to index file will break on export: ${link}`,
+        suggestion: `Use directory path instead: ${dirPath || "./"}`,
         original,
         icon: "⚠️",
       });

@@ -161,6 +161,6 @@ The `--autofix` flag automatically fixes broken links using fuzzy matching (e.g.
 
 ## Related
 
-- [Configuration](../02-settings/README.md) — Practical configuration guide
-- [Features](../03-features/README.md) — Feature documentation
-- [Getting Started](../01-getting-started/README.md) — Quick start guides
+- [Configuration](../02-settings) — Practical configuration guide
+- [Features](../03-features) — Feature documentation
+- [Getting Started](../01-getting-started) — Quick start guides
