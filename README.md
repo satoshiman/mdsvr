@@ -299,6 +299,27 @@ await exportStaticSite({
 });
 ```
 
+## CLI: Validate Markdown
+
+Check your markdown files for common issues like broken links, missing front matter, inconsistent heading levels, and more:
+
+```bash
+# Validate all markdown files
+npx mdsvr ./docs --validate-md
+
+# Validate and auto-fix common errors
+npx mdsvr ./docs --validate-md --autofix
+```
+
+**Validation checks:**
+
+- Broken internal and external links
+- Missing or invalid front matter
+- Inconsistent heading hierarchy
+- Empty sections or orphaned headings
+- Duplicate anchors
+- Malformed markdown syntax
+
 ## CLI: Export Static Site
 
 Generate a static HTML site for any static hosting (Firebase, Netlify, GitHub Pages, etc.):
