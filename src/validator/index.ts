@@ -627,12 +627,17 @@ function validateStructure(
       }
 
       if (level > lastLevel + 1 && lastLevel > 0) {
+        const correctLevel = lastLevel + 1;
+        const originalHeading = line;
+        const newHeading = "#".repeat(correctLevel) + line.slice(level);
         errors.push({
           file: path.relative(rootDir, filePath),
           line: index + 1,
           type: "heading-hierarchy",
           message: `Heading level jumped from H${lastLevel} to H${level}`,
-          suggestion: `Use H${lastLevel + 1} instead of H${level}`,
+          suggestion: `Use H${correctLevel} instead of H${level}`,
+          autofix: newHeading,
+          original: originalHeading,
           icon: "📝",
         });
       }
@@ -641,12 +646,35 @@ function validateStructure(
   });
 
   if (!hasH1) {
+    // Find the first non-empty, non-frontmatter line to insert H1 before
+    let insertLine = 0;
+    for (let i = 0; i < lines.length; i++) {
+      const trimmed = lines[i].trim();
+      if (trimmed === "---" && i === 0) {
+        // Skip frontmatter
+        continue;
+      }
+      if (trimmed === "---" && i > 0) {
+        // End of frontmatter, insert after this line
+        insertLine = i + 1;
+        break;
+      }
+      if (trimmed && !trimmed.startsWith("#")) {
+        // First content line
+        insertLine = i;
+        break;
+      }
+    }
+
+    const h1Autofix = "# " + (path.basename(filePath, ".md") || "Title");
     errors.push({
       file: path.relative(rootDir, filePath),
-      line: 1,
+      line: insertLine + 1,
       type: "missing-h1",
       message: "Missing H1 heading",
       suggestion: "Add a top-level heading: # Your Title",
+      autofix: h1Autofix,
+      original: "",
       icon: "📌",
     });
   }
@@ -712,41 +740,57 @@ export async function validateMarkdown(
   for (const filePath of markdownFiles) {
     const content = await fs.readFile(filePath, "utf-8");
 
-    if (checkLinks) {
-      const linkErrors = await validateInternalLinks(
-        content,
-        filePath,
-        rootDir,
-      );
-      errors.push(...linkErrors);
+    const linkErrors = checkLinks
+      ? await validateInternalLinks(content, filePath, rootDir)
+      : [];
+    const assetErrors = checkAssets
+      ? await validateAssetLinks(content, filePath, rootDir)
+      : [];
+    const structureErrors = checkStructure
+      ? validateStructure(content, filePath, rootDir)
+      : [];
 
-      // Apply autofix if enabled
-      if (autofix) {
-        let newContent = content;
-        let hasFixes = false;
+    errors.push(...linkErrors, ...assetErrors, ...structureErrors);
 
-        for (const error of linkErrors) {
-          if (error.autofix) {
-            newContent = newContent.replace(error.original!, error.autofix);
-            hasFixes = true;
-            fixed++;
-          }
-        }
+    // Apply autofix if enabled
+    if (autofix) {
+      let newContent = content;
+      let hasFixes = false;
+      const lines = newContent.split("\n");
 
-        if (hasFixes) {
-          await fs.writeFile(filePath, newContent, "utf-8");
+      // Fix link errors
+      for (const error of linkErrors) {
+        if (error.autofix) {
+          newContent = newContent.replace(error.original!, error.autofix);
+          hasFixes = true;
+          fixed++;
         }
       }
-    }
 
-    if (checkAssets) {
-      const assetErrors = await validateAssetLinks(content, filePath, rootDir);
-      errors.push(...assetErrors);
-    }
+      // Fix structure errors (by line index for accuracy)
+      for (const error of structureErrors) {
+        if (error.autofix) {
+          if (error.type === "missing-h1" && error.original === "") {
+            // Insert H1 at the beginning
+            lines.splice(error.line - 1, 0, error.autofix);
+            hasFixes = true;
+            fixed++;
+          } else if (error.original && error.line > 0) {
+            // Replace specific line
+            const lineIndex = error.line - 1;
+            if (lineIndex < lines.length) {
+              lines[lineIndex] = error.autofix;
+              hasFixes = true;
+              fixed++;
+            }
+          }
+        }
+      }
 
-    if (checkStructure) {
-      const structureErrors = validateStructure(content, filePath, rootDir);
-      errors.push(...structureErrors);
+      if (hasFixes) {
+        newContent = lines.join("\n");
+        await fs.writeFile(filePath, newContent, "utf-8");
+      }
     }
   }
 

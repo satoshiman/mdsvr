@@ -362,7 +362,7 @@ noIndex: true # Exclude from search
 ## Installation
 ```
 
-#### Cross-Reference Links
+### Cross-Reference Links
 
 Use relative paths:
 
@@ -449,9 +449,9 @@ cd _html/public
 firebase deploy
 ```
 
-### Netlify
+## Netlify
 
-#### Via CLI
+### Via CLI
 
 ```bash
 npx mdsvr ./docs --export
@@ -475,7 +475,7 @@ netlify deploy --dir=_html/public --prod
 }
 ```
 
-### GitHub Pages
+## GitHub Pages
 
 ```bash
 # Export to docs folder
@@ -484,7 +484,7 @@ npx mdsvr ./src --export ./docs
 # Or use GitHub Actions
 ```
 
-#### GitHub Actions Workflow
+## GitHub Actions Workflow
 
 ```yaml
 # .github/workflows/deploy.yml
@@ -507,9 +507,9 @@ jobs:
           publish_dir: ./_html/public
 ```
 
-### Docker
+## Docker
 
-#### Using Pre-built Image
+### Using Pre-built Image
 
 ```bash
 docker pull thedeployer/mdsvr:latest
@@ -547,7 +547,7 @@ server {
 }
 ```
 
-### Clean URLs
+## Clean URLs
 
 Exported sites use clean URLs:
 

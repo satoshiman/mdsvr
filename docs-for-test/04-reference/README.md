@@ -76,13 +76,13 @@ npx mdsvr ./docs --port 3000
 npx mdsvr ./docs --host 0.0.0.0 --port 1800
 ```
 
-#### With Auto-Open
+## With Auto-Open
 
 ```bash
 npx mdsvr ./docs --open
 ```
 
-#### Export Static Site
+### Export Static Site
 
 ```bash
 # Default output (_html/public)
@@ -92,7 +92,7 @@ npx mdsvr ./docs --export
 npx mdsvr ./docs --export ./dist
 ```
 
-#### Initialize Config
+## Initialize Config
 
 ```bash
 npx mdsvr ./docs --init
@@ -100,7 +100,7 @@ npx mdsvr ./docs --init
 
 Creates `_mdsvr/settings.json` with starter configuration.
 
-#### Validate Settings
+### Validate Settings
 
 ```bash
 npx mdsvr ./docs --validate
