@@ -51,15 +51,6 @@ interface PageInfo {
   description?: string;
 }
 
-function withBasePath(href: string, settings: Settings): string {
-  const basePath = settings.generate.basePath || "";
-  if (!basePath) return href;
-  const normalizedBase = basePath.endsWith("/")
-    ? basePath.slice(0, -1)
-    : basePath;
-  return normalizedBase + href;
-}
-
 export async function exportStaticSite(options: ExportOptions): Promise<void> {
   let {
     rootDir,
@@ -268,7 +259,7 @@ async function processDirectory(
   const finalUrlPath = urlPath === "//" ? "/" : urlPath;
   dirMap.set(dirPath, {
     outputPath,
-    urlPath: withBasePath(finalUrlPath, settings),
+    urlPath: finalUrlPath,
     hasIndex: false,
   });
 
@@ -333,7 +324,7 @@ async function processDirectory(
           if (rawUrlPath !== "/") {
             rawUrlPath += "/";
           }
-          urlPath = withBasePath(rawUrlPath, settings);
+          urlPath = rawUrlPath;
           // Mark directory as having index
           const dirInfo = dirMap.get(dirPath);
           if (dirInfo) {
@@ -350,7 +341,7 @@ async function processDirectory(
               .relative(rootDir, fullPath)
               .replace(/\\/g, "/")
               .replace(/\.(md|mdx)$/, "");
-          urlPath = withBasePath(rawUrlPath, settings);
+          urlPath = rawUrlPath;
         }
 
         const pageInfo = await renderMarkdownFile(

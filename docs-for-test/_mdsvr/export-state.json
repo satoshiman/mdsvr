@@ -8,11 +8,11 @@
     },
     "/02-settings/": {
       "outputPath": "public/assets/og/02-settings/index.jpg",
-      "hash": "76182805379c2b13607140fa1a0d95d08b99da3d8fda1296c21d73ae7d0860d3"
+      "hash": "b969379b7853ad3fccd16a1179cf7ef72394e973a950acfe7fa2c1d491c8eaef"
     },
     "/04-reference/": {
       "outputPath": "public/assets/og/04-reference/index.jpg",
-      "hash": "c635eae30f3458ee6e2795dea5501969be11bd0289f78f5664a770c7b40d4ec2"
+      "hash": "1c0d3d932da0562c62f084269f9ca2acb502736202b5d772c1295f6fcfedb83f"
     },
     "/": {
       "outputPath": "public/assets/og/index.jpg",
@@ -22,9 +22,57 @@
       "outputPath": "public/assets/og/no-readme-dir/search/index.jpg",
       "hash": "634c69da6728e9906d84cc98a2ea309b56cee34440c9d60bf6cff392c8a19db6"
     },
+    "/validate-checker/absolute-path": {
+      "outputPath": "public/assets/og/validate-checker/absolute-path/index.jpg",
+      "hash": "073a5a478af8348c0e7af75eb14062cad150c86e648896047dc658b3b6557e75"
+    },
+    "/validate-checker/broken-anchor": {
+      "outputPath": "public/assets/og/validate-checker/broken-anchor/index.jpg",
+      "hash": "b3588f6c0e70c4cdabdfdfe7b0ebcc553d5f7d994655545ff13dd13d620d1226"
+    },
+    "/validate-checker/broken-link": {
+      "outputPath": "public/assets/og/validate-checker/broken-link/index.jpg",
+      "hash": "c1c5c90f047173bdb9098a1e49b660ee2d6da58b8ecae0a7cc12220217572911"
+    },
+    "/validate-checker/heading-hierarchy": {
+      "outputPath": "public/assets/og/validate-checker/heading-hierarchy/index.jpg",
+      "hash": "38d0e07e2428d708c7c4edac2d4fd3f49057ec004872bba77a794123f1d97027"
+    },
+    "/validate-checker/index-link": {
+      "outputPath": "public/assets/og/validate-checker/index-link/index.jpg",
+      "hash": "2f0050cf31ec16108dc0fe348f3cc9e75172fde49412768efce164bc3e737d16"
+    },
+    "/validate-checker/missing-asset": {
+      "outputPath": "public/assets/og/validate-checker/missing-asset/index.jpg",
+      "hash": "7b08e39648d81d9f36d9481d1738ceffed5d5788684ae6b78a638d2db9cb52e0"
+    },
+    "/validate-checker/missing-h1": {
+      "outputPath": "public/assets/og/validate-checker/missing-h1/index.jpg",
+      "hash": "9d4133ad2e6c0e54db11019142b76544e6b0c5741094810d153fdceb6739278b"
+    },
+    "/validate-checker/readme-link": {
+      "outputPath": "public/assets/og/validate-checker/readme-link/index.jpg",
+      "hash": "79014e7e458d4492b91a7eb5627db74f726fde495423a2f5af738a8d7639ffc6"
+    },
+    "/validate-checker/valid": {
+      "outputPath": "public/assets/og/validate-checker/valid/index.jpg",
+      "hash": "0adf4c30b8243cefe5d02a41ec37c7da2b044cbdb2902609f5ba8bfc353af0d5"
+    },
+    "/vietnamese-slugingfy-test/solo-dev-operating-guide": {
+      "outputPath": "public/assets/og/vietnamese-slugingfy-test/solo-dev-operating-guide/index.jpg",
+      "hash": "fe7c23dfcb400d1b25ec72092321b20fe651bf77becf9073616426b1c745bb26"
+    },
     "/no-readme-dir/": {
       "outputPath": "public/assets/og/no-readme-dir/index.jpg",
       "hash": "43f1ade2ef48734f423a759955eb564f9f5e8ed6f4b7d27692280c8165e59312"
+    },
+    "/validate-checker/": {
+      "outputPath": "public/assets/og/validate-checker/index.jpg",
+      "hash": "de09a26e0ae9e61966f979e6ee91b06f033fd58c3adebffe1157b828ea59fcc5"
+    },
+    "/vietnamese-slugingfy-test/": {
+      "outputPath": "public/assets/og/vietnamese-slugingfy-test/index.jpg",
+      "hash": "72f626df68dbe6b78bf02c084e33dbb6d40563e98845d60efbb180a43c7e09c7"
     }
   }
 }
