@@ -82,6 +82,10 @@ Render ` ```mermaid ``` ` code blocks as interactive diagrams. Supports fullscre
 
 Code blocks are highlighted using highlight.js with support for dozens of languages. The highlight style adapts to the current dark/light theme.
 
+### Markdown Validation
+
+Validate all markdown files for common issues like broken links, missing front matter, inconsistent heading levels, and more. Use `--validate-md` to check your docs and `--autofix` to automatically fix common errors.
+
 ### Static HTML Export
 
 Export your entire docs site to clean static HTML files suitable for hosting on Firebase, Netlify, GitHub Pages, or any static host. Generates clean URLs (`/guide/setup/` instead of `/guide/setup.html`) and auto-creates index pages for directories without a README.
