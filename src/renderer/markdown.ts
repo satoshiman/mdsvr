@@ -3,6 +3,7 @@ import markdownItAnchor from "markdown-it-anchor";
 import hljs from "highlight.js";
 import matter from "gray-matter";
 import type { Settings } from "../settings/index.js";
+import { slugify } from "./slugify.js";
 
 export interface TocItem {
   level: number;
@@ -110,8 +111,7 @@ function createMarkdownIt(settings: Settings): MarkdownIt {
 
   md.use(markdownItAnchor, {
     permalink: false,
-    slugify: (s: string) =>
-      encodeURIComponent(String(s).trim().toLowerCase().replace(/\s+/g, "-")),
+    slugify,
   });
 
   // Wrap tables in a scrollable container for mobile responsiveness
@@ -275,8 +275,7 @@ export function renderMarkdownSimple(content: string): string {
 
   md.use(markdownItAnchor, {
     permalink: false,
-    slugify: (s: string) =>
-      encodeURIComponent(String(s).trim().toLowerCase().replace(/\s+/g, "-")),
+    slugify,
   });
 
   md.renderer.rules.table_open = () => '<div class="table-wrapper"><table>\n';
