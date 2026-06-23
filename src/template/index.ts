@@ -78,6 +78,7 @@ export function renderPage(params: TemplateParams): string {
     toc = [],
     sidebar = [],
     urlPath = "/",
+    isStaticExport = false,
   } = params;
 
   // Determine theme
@@ -145,7 +146,7 @@ export function renderPage(params: TemplateParams): string {
   // Render sidebar if enabled
   const hasSidebar = settings.navigation.sidebar.enabled && sidebar.length > 0;
   const sidebarHtml = hasSidebar
-    ? `<aside class="sidebar" id="sidebar">${renderSidebar(sidebar, settings)}</aside>`
+    ? `<aside class="sidebar" id="sidebar">${renderSidebar(sidebar, settings, 0, isStaticExport)}</aside>`
     : "";
 
   // Sidebar toggle buttons
@@ -169,8 +170,6 @@ export function renderPage(params: TemplateParams): string {
         <span class="theme-icon-dark">🌙</span>
        </button>`
     : "";
-
-  const { isStaticExport } = params;
 
   // Logo/header
   const logoHref = settings.site.logo

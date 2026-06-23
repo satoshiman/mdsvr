@@ -142,11 +142,9 @@ function withBasePath(
   if (!isStaticExport) return href;
   const basePath = settings.generate.basePath || "";
   if (!basePath) return href;
-  // Ensure basePath starts with / but doesn't end with /
   const normalizedBase = basePath.endsWith("/")
     ? basePath.slice(0, -1)
     : basePath;
-  // href always starts with /, so we combine them
   return normalizedBase + href;
 }
 
@@ -210,7 +208,7 @@ async function readDirRecursive(
         );
         items.push({
           title: dirTitle,
-          href: withBasePath(relativePath + "/", settings, isStaticExport),
+          href: relativePath + "/",
           children,
           type: "dir",
           sortBy: entry.name.toLowerCase(),
@@ -225,11 +223,7 @@ async function readDirRecursive(
       if (baseName === "readme") continue;
 
       const title = await extractTitle(fullPath, settings);
-      const href = withBasePath(
-        relativePath.replace(/\.(md|mdx)$/, ""),
-        settings,
-        isStaticExport,
-      );
+      const href = relativePath.replace(/\.(md|mdx)$/, "");
       items.push({
         title,
         href,
@@ -299,7 +293,7 @@ export async function buildSidebar(
     // Insert Home at the beginning
     items.unshift({
       title: title || "Home",
-      href: withBasePath("/", settings, isStaticExport),
+      href: "/",
       type: "file",
       sortBy: "",
     });
@@ -373,6 +367,7 @@ export function renderSidebar(
   items: NavItem[],
   settings: Settings,
   level = 0,
+  isStaticExport = false,
 ): string {
   if (items.length === 0) return "";
 
@@ -410,12 +405,12 @@ export function renderSidebar(
         `${indent}    <div class="nav-item-header" data-expanded="${shouldExpand}">`,
       );
       lines.push(
-        `${indent}      <a href="${item.href}" class="nav-link${activeClass}" data-folder-icon="${shouldExpand ? "open" : "closed"}"><span class="folder-icon">${icon}</span> ${escapeHtml(item.title)}</a>`,
+        `${indent}      <a href="${withBasePath(item.href, settings, isStaticExport)}" class="nav-link${activeClass}" data-folder-icon="${shouldExpand ? "open" : "closed"}"><span class="folder-icon">${icon}</span> ${escapeHtml(item.title)}</a>`,
       );
       lines.push(`${indent}    </div>`);
     } else {
       lines.push(
-        `${indent}    <a href="${item.href}" class="nav-link${activeClass}">${icon ? icon + " " : ""}${escapeHtml(item.title)}</a>`,
+        `${indent}    <a href="${withBasePath(item.href, settings, isStaticExport)}" class="nav-link${activeClass}">${icon ? icon + " " : ""}${escapeHtml(item.title)}</a>`,
       );
     }
 
@@ -423,7 +418,9 @@ export function renderSidebar(
       lines.push(
         `${indent}    <div class="nav-children" data-expanded="${shouldExpand}">`,
       );
-      lines.push(renderSidebar(item.children!, settings, level + 1));
+      lines.push(
+        renderSidebar(item.children!, settings, level + 1, isStaticExport),
+      );
       lines.push(`${indent}    </div>`);
     }
 
