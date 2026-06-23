@@ -154,7 +154,7 @@ This is a valid markdown file with proper structure.
 
 Proper heading hierarchy.
 
-[Internal Link](valid.md)
+[Internal Link](valid)
 `,
       "utf-8",
     );

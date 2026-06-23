@@ -352,11 +352,11 @@ Tips and best practices for creating great documentation.
 
 ```
 docs/
-├── README.md              # Homepage (required)
-├── 1.-getting-started/    # Getting started guides
-├── 2.-settings/           # Settings & configuration
-├── 3.-features/           # Feature documentation
-└── 4.-reference/          # API/reference docs
+├── README.md              # Homepage
+├── 01-getting-started/    # Getting started guides
+├── 02-settings/           # Settings & configuration
+├── 03-features/           # Feature documentation
+└── 04-reference/          # API/reference docs
 ```
 
 ### Frontmatter
@@ -447,11 +447,80 @@ Place assets in `docs/assets/`:
 
 ### Best Practices
 
+Follow these guidelines to ensure your documentation passes validation and works correctly in both server mode and static export.
+
+#### File Naming
+
+- **Avoid dots in filenames** — Don't use dots in the middle of filenames (except for the extension)
+  - ❌ `0.1.quickstart.md` or `config.v2.md`
+  - ✅ `01-quickstart.md` or `config-v2.md`
+- **Use descriptive names** — `quickstart.md` not `page1.md`
+- **Use kebab-case** — Separate words with hyphens for clean URLs
+- **Numbered prefixes** — Use `01-`, `02-` for ordering in sidebar
+
+#### Link Structure
+
+- **Use relative paths** — Never use absolute paths starting with `/`
+  - ❌ `[Guide](/docs/guide)`
+  - ✅ `[Guide](./guide)` or `[Guide](../guide)`
+- **Remove file extensions** — Links without `.md`/`.mdx` work in both modes
+  - ❌ `[Setup](./setup.md)`
+  - ✅ `[Setup](./setup)`
+- **Link to directories, not index files** — Use directory paths instead of README/index
+  - ❌ `[Getting Started](./01-getting-started/README.md)`
+  - ✅ `[Getting Started](./01-getting-started)`
+- **Validate anchors** — Ensure `#section` links match actual headings
+
+#### Heading Structure
+
+- **Always include an H1** — Every page must have a top-level heading (`# Title`)
+- **Maintain hierarchy** — Don't skip heading levels
+  - ❌ H1 → H3 (skips H2)
+  - ✅ H1 → H2 → H3
+- **Use descriptive headings** — Make them searchable and meaningful
+
+#### Assets & Images
+
+- **Use relative paths for assets** — Same rules as links
+  - ❌ `![Screenshot](/assets/screenshot.png)`
+  - ✅ `![Screenshot](../assets/screenshot.png)`
+- **Ensure files exist** — Validator checks for missing images and assets
+- **Use supported formats** — PNG, JPG, SVG, WebP, GIF, ICO
+
+#### General Guidelines
+
 1. **Start with a README.md** — Required for homepage
-2. **Use descriptive filenames** — `quickstart.md` not `page1.md`
-3. **Keep pages focused** — One topic per page
-4. **Link liberally** — Help users navigate
-5. **Use components** — Callouts for warnings, Steps for procedures
+2. **Keep pages focused** — One topic per page
+3. **Link liberally** — Help users navigate between related topics
+4. **Use MDX components** — Callouts for warnings, Steps for procedures
+5. **Add frontmatter** — Include title and description for SEO
+6. **Test with validator** — Run `npx mdsvr . --validate` to check your docs
+
+#### Validation
+
+Run the validator to check your documentation:
+
+```bash
+npx mdsvr ./docs --validate
+```
+
+The validator checks for:
+
+- 🔗 Broken internal links
+- ⚠️ Absolute paths (should use relative)
+- ⚠️ Links with .md/.mdx extensions
+- ⚠️ Links to index files (use directory paths)
+- 🔗 Broken anchor links
+- 🖼️ Missing assets
+- 📁 Filenames with dots in the middle
+- 📌 Missing H1 headings
+- 📝 Heading hierarchy violations
+
+Use `--autofix` to automatically fix some issues:
+
+```bash
+npx mdsvr ./docs --validate --autofix
+```
 
 ---
 

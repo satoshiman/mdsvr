@@ -16,7 +16,8 @@ export interface ValidationError {
     | "absolute-path"
     | "broken-anchor"
     | "index-files"
-    | "link-with-extension";
+    | "link-with-extension"
+    | "filename-with-dots";
   message: string;
   suggestion?: string;
   autofix?: string;
@@ -335,25 +336,37 @@ async function validateInternalLinks(
     }
 
     // Check for links with .md or .mdx extensions (will break on export)
+    // Only flag this if the file EXISTS - if it doesn't exist, it's a broken link, not an extension issue
     const linkWithoutAnchorForCheck = link.split("#")[0];
     if (/\.(md|mdx)$/i.test(linkWithoutAnchorForCheck)) {
-      const withoutExt = linkWithoutAnchorForCheck.replace(/\.(md|mdx)$/i, "");
-      const anchorPart = link.includes("#") ? "#" + link.split("#")[1] : "";
-      const fixedLink = withoutExt + anchorPart;
-      errors.push({
-        file: path.relative(rootDir, filePath),
-        line,
-        type: "link-with-extension",
-        message: `Link with extension will break on export: ${link}`,
-        suggestion: `Remove extension: ${fixedLink}`,
-        autofix: original.replace(link, fixedLink),
-        original,
-        icon: "⚠️",
-      });
-      continue;
+      const resolvedPath = await resolveLink(link, filePath, rootDir);
+      const exists = await fileExists(resolvedPath);
+
+      if (exists) {
+        // File exists but has extension - warn about it
+        const withoutExt = linkWithoutAnchorForCheck.replace(
+          /\.(md|mdx)$/i,
+          "",
+        );
+        const anchorPart = link.includes("#") ? "#" + link.split("#")[1] : "";
+        const fixedLink = withoutExt + anchorPart;
+        errors.push({
+          file: path.relative(rootDir, filePath),
+          line,
+          type: "link-with-extension",
+          message: `Link with extension will break on export: ${link}`,
+          suggestion: `Remove extension: ${fixedLink}`,
+          autofix: original.replace(link, fixedLink),
+          original,
+          icon: "⚠️",
+        });
+        continue;
+      }
+      // If file doesn't exist, fall through to broken-link check below
     }
 
-    // Check for index file links (will break on export)
+    // For links without extension, they should resolve via resolveLink
+    // Don't add extension check errors - clean URLs are valid
     const indexFilePatterns = [
       // README variants
       /README\.md$/i,
@@ -413,6 +426,38 @@ async function validateInternalLinks(
           original,
           icon: "🔗",
         });
+      }
+      continue;
+    }
+
+    // Skip file existence check for clean URLs (no .md/.mdx extension)
+    // Clean URLs are valid in server mode and will be handled by static export
+    // Check if link ends with .md or .mdx (case-insensitive)
+    if (!/\.(md|mdx)$/i.test(linkWithoutAnchor)) {
+      // Still validate anchors for clean URLs
+      if (anchor) {
+        const resolvedPath = await resolveLink(
+          linkWithoutAnchor,
+          filePath,
+          rootDir,
+        );
+        const slugifiedAnchor = slugify(anchor);
+        // If link points to same file, check if anchor exists
+        if (resolvedPath === filePath) {
+          if (!headingIds.has(slugifiedAnchor)) {
+            errors.push({
+              file: path.relative(rootDir, filePath),
+              line,
+              type: "broken-anchor",
+              message: `Broken anchor: #${anchor}`,
+              suggestion: `Check if heading exists. Available headings: ${Array.from(headingIds).slice(0, 5).join(", ")}${headingIds.size > 5 ? "..." : ""}`,
+              original,
+              icon: "🔗",
+            });
+          }
+        }
+        // For cross-file anchors with clean URLs, skip validation
+        // as it would require loading all linked files
       }
       continue;
     }
@@ -614,6 +659,60 @@ function levenshteinDistance(a: string, b: string): number {
 }
 
 /**
+ * Suggest a clean slug by using slugify on the current filename
+ * This replaces dots with dashes and creates URL-friendly slugs
+ * Examples:
+ * - 0.CKA-cheat-sheet.md -> 0-cka-cheat-sheet
+ * - 1. advanced-kubernetes.md -> 1-advanced-kubernetes
+ * - 0.1.easy.md -> 0-1-easy
+ * - 1.4-loai-de-nham-lan.md -> 1-4-loai-de-nham-lan
+ * - 09.checklist.md -> 09-checklist
+ */
+function suggestCleanSlug(filename: string): string {
+  // Remove .md or .mdx extension
+  const withoutExt = filename.replace(/\.(md|mdx)$/i, "");
+
+  // Replace dots with dashes before slugify
+  const withDashes = withoutExt.replace(/\./g, "-");
+
+  // Use slugify to create URL-friendly slug
+  const slug = slugify(withDashes);
+
+  return slug;
+}
+
+/**
+ * Validate filename for problematic patterns
+ */
+function validateFilename(
+  filePath: string,
+  rootDir: string,
+): ValidationError[] {
+  const errors: ValidationError[] = [];
+  const filename = path.basename(filePath);
+  const relativePath = path.relative(rootDir, filePath);
+
+  // Check if filename has dots in the middle (not just extension)
+  // Pattern: filename contains a dot that's not at the start or end
+  const withoutExt = filename.replace(/\.(md|mdx)$/i, "");
+  const hasDotInMiddle = /\.[^./]/.test(withoutExt);
+
+  if (hasDotInMiddle) {
+    const cleanSlug = suggestCleanSlug(filename);
+    errors.push({
+      file: relativePath,
+      line: 0, // Filename error doesn't have a line number
+      type: "filename-with-dots",
+      message: `Filename contains dots in the middle: ${filename}`,
+      suggestion: `Consider renaming to: ${cleanSlug}.md for cleaner URLs`,
+      icon: "📁",
+    });
+  }
+
+  return errors;
+}
+
+/**
  * Validate markdown structure
  */
 function validateStructure(
@@ -623,6 +722,10 @@ function validateStructure(
 ): ValidationError[] {
   const errors: ValidationError[] = [];
   const lines = content.split("\n");
+
+  // Validate filename
+  const filenameErrors = validateFilename(filePath, rootDir);
+  errors.push(...filenameErrors);
 
   // Check for frontmatter (optional - just skip check)
   // Frontmatter is optional, so we don't add errors for missing it

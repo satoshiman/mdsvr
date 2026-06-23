@@ -4,11 +4,11 @@
   "og": {
     "/docs/01-getting-started/": {
       "outputPath": "public/assets/og/01-getting-started/index.jpg",
-      "hash": "f8e61fc79f3cfab84eb3edcac573a7a4a20bad3419433547bc0f328b664fd93c"
+      "hash": "2e2142230425cf4b76171b25bc13f17ccdab514cedb54a21819f797f6fb8f398"
     },
     "/docs/02-settings/": {
       "outputPath": "public/assets/og/02-settings/index.jpg",
-      "hash": "4c9756d42be9e00c2dc14878d43c45c2cd0e22b0d42b0eb2577604eee0d87ba6"
+      "hash": "d93c9f70ccf673702f9c78610be24b68606144f684c84a2d8bdb2b6942c659cc"
     },
     "/docs/03-features/": {
       "outputPath": "public/assets/og/03-features/index.jpg",
@@ -36,7 +36,7 @@
     },
     "/docs/03-features/seo": {
       "outputPath": "public/assets/og/03-features/seo/index.jpg",
-      "hash": "e9faa2ebf4cc504edae869311f01b32731207d0b6966b8728c99079de45bdb3d"
+      "hash": "e7b2530e42f7c71963aa44aa374ffb79cb78c63f16505d96e1a921c9e6b79f26"
     },
     "/docs/03-features/theming": {
       "outputPath": "public/assets/og/03-features/theming/index.jpg",
@@ -44,11 +44,11 @@
     },
     "/docs/04-reference/": {
       "outputPath": "public/assets/og/04-reference/index.jpg",
-      "hash": "4d65cb00d72f0479a578ca1e686f4db2f1876ee74373338927079f81cca1472f"
+      "hash": "0682ea546e789bd2e01f579a7e59cd8c5f31249ae77b039082f5f31e807d8683"
     },
     "/docs/": {
       "outputPath": "public/assets/og/index.jpg",
-      "hash": "c7340f715c1a213029bf1469eec6533d10f305f76293174a32f174d3d3132d98"
+      "hash": "50bf3660026766512fc9134bf9e132f9f091692ecdd6b382d1037cf2e03d53cf"
     }
   }
 }

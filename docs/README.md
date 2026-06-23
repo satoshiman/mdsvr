@@ -60,11 +60,11 @@ docs/
 ├── _mdsvr/
 │   └── settings.json            # Site configuration (optional)
 ├── README.md                    # Homepage (this file)
-├── 1.-getting-started/          # Getting started guides
+├── 01-getting-started/          # Getting started guides
 │   └── README.md              # Quick start & installation
-├── 2.-settings/                 # Settings & configuration
+├── 02-settings/                 # Settings & configuration
 │   └── README.md              # Configuration, writing & deployment
-├── 3.-features/                 # Feature documentation
+├── 03-features/                 # Feature documentation
 │   ├── README.md             # Features overview
 │   ├── markdown.md           # Markdown support
 │   ├── mdx.mdx               # MDX components demo
@@ -73,7 +73,7 @@ docs/
 │   ├── navigation.md         # Navigation features
 │   ├── seo.md                # SEO features
 │   └── mermaid.md            # Mermaid diagrams
-└── 4.-reference/                # API/Reference
+└── 04-reference/                # API/Reference
     └── README.md             # CLI reference
 ```
 
