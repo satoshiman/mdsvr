@@ -1414,7 +1414,7 @@ code.hljs {
 <hr>
 <h2 id="configuration" tabindex="-1">Configuration</h2>
 <p>mdsvr can be configured via a <code>settings.json</code> file in the <code>_mdsvr/</code> directory in your docs root. All settings are optional — the server works out of the box with sensible defaults.</p>
-<h3 id="creating-settings.json" tabindex="-1">Creating settings.json</h3>
+<h3 id="creating-settingsjson" tabindex="-1">Creating settings.json</h3>
 <p>Use the CLI to create a starter configuration:</p>
 <pre class="code-block-wrapper"><div class="code-block-container">
   <div class="code-block-toolbar">
@@ -2377,18 +2377,18 @@ code.hljs {
     </button>
   </div>
   <pre><code class="hljs">docs/
-├── README.md              # Homepage (required)
-├── 1.-getting-started/    # Getting started guides
-├── 2.-settings/           # Settings &amp; configuration
-├── 3.-features/           # Feature documentation
-└── 4.-reference/          # API/reference docs
+├── README.md              # Homepage
+├── 01-getting-started/    # Getting started guides
+├── 02-settings/           # Settings &amp; configuration
+├── 03-features/           # Feature documentation
+└── 04-reference/          # API/reference docs
 </code></pre>
   <pre class="code-block-raw" style="display:none;"><code>docs/
-├── README.md              # Homepage (required)
-├── 1.-getting-started/    # Getting started guides
-├── 2.-settings/           # Settings &amp; configuration
-├── 3.-features/           # Feature documentation
-└── 4.-reference/          # API/reference docs
+├── README.md              # Homepage
+├── 01-getting-started/    # Getting started guides
+├── 02-settings/           # Settings &amp; configuration
+├── 03-features/           # Feature documentation
+└── 04-reference/          # API/reference docs
 </code></pre>
 </div></pre>
 
@@ -2567,7 +2567,7 @@ noIndex: true # Exclude from search
   </div>
   <pre><code class="hljs language-markdown">See [<span class="hljs-string">configuration guide</span>](<span class="hljs-link">./README.md</span>)
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>See [configuration guide](./README.md)
+  <pre class="code-block-raw" style="display:none;"><code>See [configuration guide](./README)
 </code></pre>
 </div></pre>
 
@@ -2670,7 +2670,7 @@ Second step content
 </div></pre>
 
 <p>See <a href="../03-features/mdx.mdx">MDX Components</a> for all available components.</p>
-<h3 id="images-%26-assets" tabindex="-1">Images &amp; Assets</h3>
+<h3 id="images-assets" tabindex="-1">Images &amp; Assets</h3>
 <p>Place assets in <code>docs/assets/</code>:</p>
 <pre class="code-block-wrapper"><div class="code-block-container">
   <div class="code-block-toolbar">
@@ -2711,13 +2711,157 @@ Second step content
 <p>Note: The assets folder is optional - create it if you need to include images in your documentation.</p>
 </blockquote>
 <h3 id="best-practices" tabindex="-1">Best Practices</h3>
+<p>Follow these guidelines to ensure your documentation passes validation and works correctly in both server mode and static export.</p>
+<h4 id="file-naming" tabindex="-1">File Naming</h4>
+<ul>
+<li><strong>Avoid dots in filenames</strong> — Don’t use dots in the middle of filenames (except for the extension)
+<ul>
+<li>❌ <code>0.1.quickstart.md</code> or <code>config.v2.md</code></li>
+<li>✅ <code>01-quickstart.md</code> or <code>config-v2.md</code></li>
+</ul>
+</li>
+<li><strong>Use descriptive names</strong> — <code>quickstart.md</code> not <code>page1.md</code></li>
+<li><strong>Use kebab-case</strong> — Separate words with hyphens for clean URLs</li>
+<li><strong>Numbered prefixes</strong> — Use <code>01-</code>, <code>02-</code> for ordering in sidebar</li>
+</ul>
+<h4 id="link-structure" tabindex="-1">Link Structure</h4>
+<ul>
+<li><strong>Use relative paths</strong> — Never use absolute paths starting with <code>/</code>
+<ul>
+<li>❌ <code>[Guide](/docs/guide)</code></li>
+<li>✅ <code>[Guide](./guide)</code> or <code>[Guide](../guide)</code></li>
+</ul>
+</li>
+<li><strong>Remove file extensions</strong> — Links without <code>.md</code>/<code>.mdx</code> work in both modes
+<ul>
+<li>❌ <code>[Setup](./setup)</code></li>
+<li>✅ <code>[Setup](./setup)</code></li>
+</ul>
+</li>
+<li><strong>Link to directories, not index files</strong> — Use directory paths instead of README/index
+<ul>
+<li>❌ <code>[Getting Started](./01-getting-started/README)</code></li>
+<li>✅ <code>[Getting Started](./01-getting-started)</code></li>
+</ul>
+</li>
+<li><strong>Validate anchors</strong> — Ensure <code>#section</code> links match actual headings</li>
+</ul>
+<h4 id="heading-structure" tabindex="-1">Heading Structure</h4>
+<ul>
+<li><strong>Always include an H1</strong> — Every page must have a top-level heading (<code># Title</code>)</li>
+<li><strong>Maintain hierarchy</strong> — Don’t skip heading levels
+<ul>
+<li>❌ H1 → H3 (skips H2)</li>
+<li>✅ H1 → H2 → H3</li>
+</ul>
+</li>
+<li><strong>Use descriptive headings</strong> — Make them searchable and meaningful</li>
+</ul>
+<h4 id="assets-images" tabindex="-1">Assets &amp; Images</h4>
+<ul>
+<li><strong>Use relative paths for assets</strong> — Same rules as links
+<ul>
+<li>❌ <code>![Screenshot](/assets/screenshot.png)</code></li>
+<li>✅ <code>![Screenshot](../assets/screenshot.png)</code></li>
+</ul>
+</li>
+<li><strong>Ensure files exist</strong> — Validator checks for missing images and assets</li>
+<li><strong>Use supported formats</strong> — PNG, JPG, SVG, WebP, GIF, ICO</li>
+</ul>
+<h4 id="general-guidelines" tabindex="-1">General Guidelines</h4>
 <ol>
 <li><strong>Start with a <a href="http://README.md">README.md</a></strong> — Required for homepage</li>
-<li><strong>Use descriptive filenames</strong> — <code>quickstart.md</code> not <code>page1.md</code></li>
 <li><strong>Keep pages focused</strong> — One topic per page</li>
-<li><strong>Link liberally</strong> — Help users navigate</li>
-<li><strong>Use components</strong> — Callouts for warnings, Steps for procedures</li>
+<li><strong>Link liberally</strong> — Help users navigate between related topics</li>
+<li><strong>Use MDX components</strong> — Callouts for warnings, Steps for procedures</li>
+<li><strong>Add frontmatter</strong> — Include title and description for SEO</li>
+<li><strong>Test with validator</strong> — Run <code>npx mdsvr . --validate</code> to check your docs</li>
 </ol>
+<h4 id="validation-1" tabindex="-1">Validation</h4>
+<p>Run the validator to check your documentation:</p>
+<pre class="code-block-wrapper"><div class="code-block-container">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-bash">npx mdsvr ./docs --validate
+</code></pre>
+  <pre class="code-block-raw" style="display:none;"><code>npx mdsvr ./docs --validate
+</code></pre>
+</div></pre>
+
+<p>The validator checks for:</p>
+<ul>
+<li>🔗 Broken internal links</li>
+<li>⚠️ Absolute paths (should use relative)</li>
+<li>⚠️ Links with .md/.mdx extensions</li>
+<li>⚠️ Links to index files (use directory paths)</li>
+<li>🔗 Broken anchor links</li>
+<li>🖼️ Missing assets</li>
+<li>📁 Filenames with dots in the middle</li>
+<li>📌 Missing H1 headings</li>
+<li>📝 Heading hierarchy violations</li>
+</ul>
+<p>Use <code>--autofix</code> to automatically fix some issues:</p>
+<pre class="code-block-wrapper"><div class="code-block-container">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-bash">npx mdsvr ./docs --validate --autofix
+</code></pre>
+  <pre class="code-block-raw" style="display:none;"><code>npx mdsvr ./docs --validate --autofix
+</code></pre>
+</div></pre>
+
 <hr>
 <h2 id="deployment" tabindex="-1">Deployment</h2>
 <p>Deploy your documentation to any static hosting platform.</p>
@@ -3219,7 +3363,7 @@ docker run -d -p 1800:1800 my-docs
 </code></pre>
 </div></pre>
 
-<h3 id="vps-%2F-self-hosted" tabindex="-1">VPS / Self-Hosted</h3>
+<h3 id="vps-self-hosted" tabindex="-1">VPS / Self-Hosted</h3>
 <p>Export and serve with any web server:</p>
 <pre class="code-block-wrapper"><div class="code-block-container">
   <div class="code-block-toolbar">
@@ -3281,9 +3425,9 @@ server {
 <hr>
 <h2 id="related" tabindex="-1">Related</h2>
 <ul>
-<li><a href="../01-getting-started/README.md">Getting Started</a> — If you’re new to mdsvr</li>
-<li><a href="../03-features/README.md">Features</a> — Learn about specific features</li>
-<li><a href="../04-reference/README.md">CLI Reference</a> — Command-line documentation</li>
+<li><a href="../01-getting-started">Getting Started</a> — If you’re new to mdsvr</li>
+<li><a href="../03-features">Features</a> — Learn about specific features</li>
+<li><a href="../04-reference">CLI Reference</a> — Command-line documentation</li>
 </ul>
 
       </article>
@@ -3305,7 +3449,7 @@ server {
 <ul class="toc-list toc-level-2">
 <li class="toc-item"><a href="#configuration">Configuration</a></li>
 <ul class="toc-list toc-level-3">
-<li class="toc-item"><a href="#creating-settings.json">Creating settings.json</a></li>
+<li class="toc-item"><a href="#creating-settingsjson">Creating settings.json</a></li>
 <li class="toc-item"><a href="#site-settings">Site Settings</a></li>
 <li class="toc-item"><a href="#appearance">Appearance</a></li>
 <li class="toc-item"><a href="#navigation">Navigation</a></li>
@@ -3326,7 +3470,7 @@ server {
 <li class="toc-item"><a href="#markdown-tips">Markdown Tips</a></li>
 <li class="toc-item"><a href="#cross-reference-links">Cross-Reference Links</a></li>
 <li class="toc-item"><a href="#mdx-components">MDX Components</a></li>
-<li class="toc-item"><a href="#images-%26-assets">Images &amp;amp; Assets</a></li>
+<li class="toc-item"><a href="#images-assets">Images &amp;amp; Assets</a></li>
 <li class="toc-item"><a href="#best-practices">Best Practices</a></li>
 </ul>
 <li class="toc-item"><a href="#deployment">Deployment</a></li>
@@ -3346,7 +3490,7 @@ server {
 <ul class="toc-list toc-level-3">
 <li class="toc-item"><a href="#using-pre-built-image">Using Pre-built Image</a></li>
 <li class="toc-item"><a href="#build-your-own">Build Your Own</a></li>
-<li class="toc-item"><a href="#vps-%2F-self-hosted">VPS / Self-Hosted</a></li>
+<li class="toc-item"><a href="#vps-self-hosted">VPS / Self-Hosted</a></li>
 </ul>
 <li class="toc-item"><a href="#clean-urls">Clean URLs</a></li>
 <li class="toc-item"><a href="#related">Related</a></li>

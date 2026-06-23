@@ -420,9 +420,12 @@ async function renderMarkdownFile(
   // Fix asset paths for subdirectories
   const fixedHtml = fixAssetPaths(result.html, urlPath);
 
+  // Convert .md/.mdx links to clean URLs for static export
+  const cleanUrlHtml = convertMarkdownLinks(fixedHtml);
+
   const html = renderPage({
     title,
-    body: fixedHtml,
+    body: cleanUrlHtml,
     filePath: urlPath,
     settings,
     frontmatter: result.frontmatter,
@@ -539,6 +542,41 @@ function fixAssetPaths(html: string, urlPath: string): string {
     /(src|href|data-src|poster|content)="assets\//g,
     `$1="${absoluteAssetsPath}`,
   );
+}
+
+/**
+ * Convert .md/.mdx links to clean URLs for static export
+ * This ensures links work in static HTML where clean URLs are used
+ */
+function convertMarkdownLinks(html: string): string {
+  // Match markdown links: [text](path) and [text](path#anchor)
+  // Also match image links: ![text](path) - but we skip those
+  return html.replace(/(?<!\!)\[([^\]]+)\]\(([^)]+)\)/g, (match, text, url) => {
+    // Skip external links
+    if (
+      url.startsWith("http://") ||
+      url.startsWith("https://") ||
+      url.startsWith("//")
+    ) {
+      return match;
+    }
+
+    // Skip mailto, tel, and other protocols
+    if (/^[a-z]+:/i.test(url) && !url.startsWith("#")) {
+      return match;
+    }
+
+    // Remove .md or .mdx extension from the URL
+    const cleanUrl = url.replace(
+      /\.(md|mdx)(#|$)/i,
+      (_m: string, _ext: string, suffix: string) => {
+        // If there's an anchor, preserve it
+        return suffix === "#" ? "#" : "";
+      },
+    );
+
+    return `[${text}](${cleanUrl})`;
+  });
 }
 
 function humanizeFilename(filename: string): string {
