@@ -7,6 +7,7 @@ description: >
   a knowledge base, or produce any set of .md files that will be served or exported
   by mdsvr. Always trigger for: "generate documentation", "create doc site", "write guides", "create wiki", or any request involving multiple
   markdown files intended for a documentation server or static export.
+license: MIT
 ---
 
 # Markdown for mdsvr Skill
