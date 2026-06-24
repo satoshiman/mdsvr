@@ -13,16 +13,16 @@
   document.documentElement.setAttribute('data-theme', theme);
 })();
 </script>
-  <title>MDX Components</title>
-    <meta name="description" content="Interactive components for your documentation">
-    <meta property="og:title" content="MDX Components">
-    <meta property="og:description" content="Interactive components for your documentation">
+  <title>Architecture</title>
+    <meta name="description" content="Full-featured documentation website server with MDX support, site settings, SEO, and navigation">
+    <meta property="og:title" content="Architecture">
+    <meta property="og:description" content="Full-featured documentation website server with MDX support, site settings, SEO, and navigation">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="/03-features/mdx">
-    <meta property="og:image" content="/docs/public/assets/og/03-features/mdx/index.jpg">
+    <meta property="og:url" content="/09-architecture/architecture">
+    <meta property="og:image" content="/docs/public/assets/og/09-architecture/architecture/index.jpg">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="MDX Components">
-    <meta name="twitter:image" content="/docs/public/assets/og/03-features/mdx/index.jpg">
+    <meta name="twitter:title" content="Architecture">
+    <meta name="twitter:image" content="/docs/public/assets/og/09-architecture/architecture/index.jpg">
     <link rel="sitemap" type="application/xml" href="/docs/sitemap.xml">
   
   <style>
@@ -1358,7 +1358,7 @@ code.hljs {
     </div>
   </header>
 
-  <div class="site-container">
+  <div class="site-container has-toc">
     <aside class="sidebar" id="sidebar"><ul class="sidebar-nav" data-level="0">
   <li class="nav-item" data-type="file">
     <a href="/docs/" class="nav-link">Welcome</a>
@@ -1369,17 +1369,17 @@ code.hljs {
   <li class="nav-item folder" data-type="dir">
     <a href="/docs/02-settings/" class="nav-link">📁 Guides</a>
   </li>
-  <li class="nav-item active folder" data-type="dir">
+  <li class="nav-item folder" data-type="dir">
     <div class="nav-item-header" data-expanded="true">
-      <a href="/docs/03-features/" class="nav-link active" data-folder-icon="open"><span class="folder-icon">📂</span> Features</a>
+      <a href="/docs/03-features/" class="nav-link" data-folder-icon="open"><span class="folder-icon">📂</span> Features</a>
     </div>
     <div class="nav-children" data-expanded="true">
     <ul class="sidebar-nav" data-level="1">
       <li class="nav-item" data-type="file">
         <a href="/docs/03-features/markdown" class="nav-link">Markdown Formats</a>
       </li>
-      <li class="nav-item active" data-type="file">
-        <a href="/docs/03-features/mdx" class="nav-link active">MDX Components</a>
+      <li class="nav-item" data-type="file">
+        <a href="/docs/03-features/mdx" class="nav-link">MDX Components</a>
       </li>
       <li class="nav-item" data-type="file">
         <a href="/docs/03-features/mermaid" class="nav-link">Mermaid Chart</a>
@@ -1402,9 +1402,9 @@ code.hljs {
   <li class="nav-item folder" data-type="dir">
     <a href="/docs/04-reference/" class="nav-link">📁 Reference</a>
   </li>
-  <li class="nav-item folder" data-type="dir">
+  <li class="nav-item active folder" data-type="dir">
     <div class="nav-item-header" data-expanded="true">
-      <a href="/docs/09-architecture/" class="nav-link" data-folder-icon="open"><span class="folder-icon">📂</span> 09 architecture</a>
+      <a href="/docs/09-architecture/" class="nav-link active" data-folder-icon="open"><span class="folder-icon">📂</span> 09 architecture</a>
     </div>
     <div class="nav-children" data-expanded="true">
     <ul class="sidebar-nav" data-level="1">
@@ -1435,8 +1435,8 @@ code.hljs {
         </ul>
         </div>
       </li>
-      <li class="nav-item" data-type="file">
-        <a href="/docs/09-architecture/architecture" class="nav-link">Architecture</a>
+      <li class="nav-item active" data-type="file">
+        <a href="/docs/09-architecture/architecture" class="nav-link active">Architecture</a>
       </li>
     </ul>
     </div>
@@ -1445,165 +1445,284 @@ code.hljs {
     <main class="content">
       <nav class="breadcrumbs">
     <a href="/docs/">Home</a>
-    <span class="breadcrumb-sep">/</span><a href="/docs/03-features">03 features</a><span class="breadcrumb-sep">/</span><span class="breadcrumb-current">Mdx</span>
+    <span class="breadcrumb-sep">/</span><a href="/docs/09-architecture">09 architecture</a><span class="breadcrumb-sep">/</span><span class="breadcrumb-current">Architecture</span>
   </nav>
       <article class="markdown-body">
-        <h1 id="mdx-components"><a aria-hidden="true" tabindex="-1" href="#mdx-components"><span class="icon icon-link"></span></a>MDX Components</h1>
-<p>mdsvr supports <strong>MDX</strong> — Markdown with JSX. This allows you to use interactive components directly in your documentation.</p>
-<div class="callout callout-info"><strong style="display:block;margin-bottom:8px">ℹ️ Info</strong><div><p>MDX must be enabled in <code>_mdsvr/settings.json</code> with <code>&quot;mdx.enabled&quot;: true</code>.</p></div></div>
-<h2 id="callout"><a aria-hidden="true" tabindex="-1" href="#callout"><span class="icon icon-link"></span></a>Callout</h2>
-<p>Use callouts to highlight important information:</p>
-<pre><code class="language-mdx">&lt;Callout type=&quot;info&quot;&gt;This is an informational callout.&lt;/Callout&gt;
+        <h1 id="architecture" tabindex="-1">Architecture</h1>
+<blockquote>
+<p><strong>Note</strong>: This documentation is intended for contributors to mdsvr, not for end users. If you’re looking for user documentation, see the <a href="./docs">main docs</a>.</p>
+</blockquote>
+<h2 id="overview" tabindex="-1">Overview</h2>
+<p>mdsvr is a zero-configuration documentation server built with Node.js and TypeScript. It transforms a directory of Markdown/MDX files into a full-featured documentation website with no build step required.</p>
+<h2 id="core-principles" tabindex="-1">Core Principles</h2>
+<ol>
+<li><strong>File-based content storage</strong> - No database, all content stored as files</li>
+<li><strong>Server-side rendering</strong> - MDX processed server-side, no client-side framework</li>
+<li><strong>Zero configuration</strong> - Sensible defaults, optional settings via JSON</li>
+<li><strong>Incremental exports</strong> - Smart caching for static HTML generation</li>
+<li><strong>Security-first</strong> - Path traversal protection, blocked extensions, read-only</li>
+</ol>
+<h2 id="system-architecture" tabindex="-1">System Architecture</h2>
+<pre class="mermaid-wrapper"><div class="mermaid-container">
+  <div class="mermaid-toolbar">
+    <button class="mermaid-btn mermaid-btn-chart" title="Chart view"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z"/><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-code" title="Show code"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-fullscreen" title="Fullscreen"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 15 6 6"/><path d="m15 9 6-6"/><path d="M21 16v5h-5"/><path d="M21 8V3h-5"/><path d="M3 16v5h5"/><path d="m3 21 6-6"/><path d="M3 8V3h5"/><path d="M9 9 3 3"/></svg></button>
+  </div>
+  <div class="mermaid-zoom-controls">
+    <button class="mermaid-btn mermaid-btn-zoom-in" title="Zoom in"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+  </div>
+  <div class="mermaid-chart">
+    <div class="mermaid">graph TD
+    A[HTTP Server<br/>Node.js http] --> B[Router<br/>Path resolution & validation<br/>Security checks<br/>Route dispatching]
+    B --> C[Markdown Renderer]
+    B --> D[MDX Renderer]
+    B --> E[Static Files]
+    B --> F[Directory Listing]
+    B --> G[Special Routes]
+    C --> H[Template Engine<br/>HTML page rendering<br/>Sidebar navigation<br/>Table of contents<br/>SEO meta tags]
+    D --> H
+    E --> H
+    F --> H
+    G --> H</div>
+  </div>
+  <pre class="mermaid-source"><code>graph TD
+    A[HTTP Server&lt;br/&gt;Node.js http] --&gt; B[Router&lt;br/&gt;Path resolution & validation&lt;br/&gt;Security checks&lt;br/&gt;Route dispatching]
+    B --&gt; C[Markdown Renderer]
+    B --&gt; D[MDX Renderer]
+    B --&gt; E[Static Files]
+    B --&gt; F[Directory Listing]
+    B --&gt; G[Special Routes]
+    C --&gt; H[Template Engine&lt;br/&gt;HTML page rendering&lt;br/&gt;Sidebar navigation&lt;br/&gt;Table of contents&lt;br/&gt;SEO meta tags]
+    D --&gt; H
+    E --&gt; H
+    F --&gt; H
+    G --&gt; H</code></pre>
+</div></pre>
 
-&lt;Callout type=&quot;warning&quot; title=&quot;Important&quot;&gt;
-  This will delete all your data.
-&lt;/Callout&gt;
-</code></pre>
-<h3 id="types"><a aria-hidden="true" tabindex="-1" href="#types"><span class="icon icon-link"></span></a>Types</h3>
-<div class="callout callout-info"><strong style="display:block;margin-bottom:8px">ℹ️ Info</strong><div><strong>Info</strong> — General information and tips</div></div>
-<div class="callout callout-warning"><strong style="display:block;margin-bottom:8px">⚠️ Warning</strong><div><strong>Warning</strong> — Caution about potential issues</div></div>
-<div class="callout callout-danger"><strong style="display:block;margin-bottom:8px">🚫 Danger</strong><div><p><strong>Danger</strong> — Critical warnings about destructive actions</p></div></div>
-<div class="callout callout-success"><strong style="display:block;margin-bottom:8px">✅ Success</strong><div><p><strong>Success</strong> — Positive confirmation or success states</p></div></div>
-<div class="callout callout-tip"><strong style="display:block;margin-bottom:8px">💡 Tip</strong><div><strong>Tip</strong> — Helpful suggestions and best practices</div></div>
-<h2 id="steps"><a aria-hidden="true" tabindex="-1" href="#steps"><span class="icon icon-link"></span></a>Steps</h2>
-<p>Create step-by-step guides:</p>
-<pre><code class="language-mdx">&lt;Steps&gt;
-  ### Step 1: Install
-  Run `npm install mdsvr`
+<h2 id="module-structure" tabindex="-1">Module Structure</h2>
+<h3 id="core-modules" tabindex="-1">Core Modules</h3>
+<ul>
+<li><strong><code>server.ts</code></strong> - HTTP server creation, port management, settings hot-reload</li>
+<li><strong><code>router.ts</code></strong> - Request routing, path validation, security checks</li>
+<li><strong><code>cli.ts</code></strong> - Command-line interface, argument parsing</li>
+</ul>
+<h3 id="rendering-pipeline" tabindex="-1">Rendering Pipeline</h3>
+<ul>
+<li><strong><code>renderer/markdown.ts</code></strong> - Markdown to HTML conversion with frontmatter parsing</li>
+<li><strong><code>renderer/mdx.ts</code></strong> - MDX to HTML conversion with React component rendering</li>
+<li><strong><code>template/index.ts</code></strong> - Full HTML page rendering with layout</li>
+<li><strong><code>template/sidebar.ts</code></strong> - Auto-generated sidebar navigation</li>
+<li><strong><code>template/seo.ts</code></strong> - Open Graph and Twitter Card meta tags</li>
+<li><strong><code>template/search.ts</code></strong> - Client-side search UI</li>
+</ul>
+<h3 id="configuration" tabindex="-1">Configuration</h3>
+<ul>
+<li><strong><code>settings/schema.ts</code></strong> - Zod schema for settings validation</li>
+<li><strong><code>settings/index.ts</code></strong> - Settings loading, validation, and hot-reload</li>
+<li><strong><code>settings/defaults.ts</code></strong> - Default configuration values</li>
+</ul>
+<h3 id="generators" tabindex="-1">Generators</h3>
+<ul>
+<li><strong><code>generators/sitemap.ts</code></strong> - XML sitemap generation</li>
+<li><strong><code>generators/feed.ts</code></strong> - RSS feed generation</li>
+<li><strong><code>generators/search-index.ts</code></strong> - Client-side search index builder</li>
+<li><strong><code>generators/static-export.ts</code></strong> - Static HTML export with incremental caching</li>
+</ul>
+<h3 id="open-graph-images" tabindex="-1">Open Graph Images</h3>
+<ul>
+<li><strong><code>og/generator.ts</code></strong> - OG image generation using Satori and Resvg</li>
+<li><strong><code>og/incremental.ts</code></strong> - Incremental OG image generation with hash-based caching</li>
+<li><strong><code>og/types.ts</code></strong> - OG image data types</li>
+</ul>
+<h3 id="utilities" tabindex="-1">Utilities</h3>
+<ul>
+<li><strong><code>directory.ts</code></strong> - Directory listing rendering</li>
+<li><strong><code>export-state.ts</code></strong> - Export state management for incremental builds</li>
+<li><strong><code>validator/index.ts</code></strong> - Markdown validation and auto-fixing</li>
+</ul>
+<h2 id="data-flow" tabindex="-1">Data Flow</h2>
+<h3 id="request-flow-dynamic-server" tabindex="-1">Request Flow (Dynamic Server)</h3>
+<pre class="mermaid-wrapper"><div class="mermaid-container">
+  <div class="mermaid-toolbar">
+    <button class="mermaid-btn mermaid-btn-chart" title="Chart view"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z"/><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-code" title="Show code"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-fullscreen" title="Fullscreen"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 15 6 6"/><path d="m15 9 6-6"/><path d="M21 16v5h-5"/><path d="M21 8V3h-5"/><path d="M3 16v5h5"/><path d="m3 21 6-6"/><path d="M3 8V3h5"/><path d="M9 9 3 3"/></svg></button>
+  </div>
+  <div class="mermaid-zoom-controls">
+    <button class="mermaid-btn mermaid-btn-zoom-in" title="Zoom in"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+  </div>
+  <div class="mermaid-chart">
+    <div class="mermaid">graph LR
+    A[HTTP Request] --> B[Router<br/>Path validation<br/>Security checks]
+    B --> C{File Type Detection}
+    C -->|md/mdx| D[Renderers]
+    C -->|Directory| E[Directory Listing]
+    C -->|Static files| F[Direct Serve]
+    C -->|Special routes| G[Generators]
+    D --> H[Template Engine<br/>Layout, Sidebar, TOC, SEO]
+    E --> H
+    F --> H
+    G --> H
+    H --> I[HTML Response]</div>
+  </div>
+  <pre class="mermaid-source"><code>graph LR
+    A[HTTP Request] --&gt; B[Router&lt;br/&gt;Path validation&lt;br/&gt;Security checks]
+    B --&gt; C{File Type Detection}
+    C --&gt;|md/mdx| D[Renderers]
+    C --&gt;|Directory| E[Directory Listing]
+    C --&gt;|Static files| F[Direct Serve]
+    C --&gt;|Special routes| G[Generators]
+    D --&gt; H[Template Engine&lt;br/&gt;Layout, Sidebar, TOC, SEO]
+    E --&gt; H
+    F --&gt; H
+    G --&gt; H
+    H --&gt; I[HTML Response]</code></pre>
+</div></pre>
 
-### Step 2: Configure
+<h3 id="static-export-flow" tabindex="-1">Static Export Flow</h3>
+<pre class="mermaid-wrapper"><div class="mermaid-container">
+  <div class="mermaid-toolbar">
+    <button class="mermaid-btn mermaid-btn-chart" title="Chart view"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z"/><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-code" title="Show code"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-fullscreen" title="Fullscreen"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 15 6 6"/><path d="m15 9 6-6"/><path d="M21 16v5h-5"/><path d="M21 8V3h-5"/><path d="M3 16v5h5"/><path d="m3 21 6-6"/><path d="M3 8V3h5"/><path d="M9 9 3 3"/></svg></button>
+  </div>
+  <div class="mermaid-zoom-controls">
+    <button class="mermaid-btn mermaid-btn-zoom-in" title="Zoom in"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+  </div>
+  <div class="mermaid-chart">
+    <div class="mermaid">graph TD
+    A[Export Command] --> B[Scan directory tree]
+    B --> C[Process markdown/MDX files]
+    C --> D[Generate HTML with clean URLs]
+    D --> E[Generate auto-index for directories without README]
+    E --> F[Generate OG images<br/>Incremental]
+    F --> G[Generate search-index.json]
+    G --> H[Generate sitemap.xml & feed.xml]
+    H --> I[Save export state<br/>For incremental builds]</div>
+  </div>
+  <pre class="mermaid-source"><code>graph TD
+    A[Export Command] --&gt; B[Scan directory tree]
+    B --&gt; C[Process markdown/MDX files]
+    C --&gt; D[Generate HTML with clean URLs]
+    D --&gt; E[Generate auto-index for directories without README]
+    E --&gt; F[Generate OG images&lt;br/&gt;Incremental]
+    F --&gt; G[Generate search-index.json]
+    G --&gt; H[Generate sitemap.xml & feed.xml]
+    H --&gt; I[Save export state&lt;br/&gt;For incremental builds]</code></pre>
+</div></pre>
 
-Create your `_mdsvr/settings.json`
-
-### Step 3: Launch
-
-Run `npx mdsvr ./docs`
-
-&lt;/Steps&gt;
-</code></pre>
-<div class="steps"><div class="step-item"><h3 id="install-the-package"><a aria-hidden="true" tabindex="-1" href="#install-the-package"><span class="icon icon-link"></span></a>Install the package</h3></div><div class="step-item"><p>Run <code>npm install mdsvr</code></p></div><div class="step-item"><h3 id="create-your-docs-folder"><a aria-hidden="true" tabindex="-1" href="#create-your-docs-folder"><span class="icon icon-link"></span></a>Create your docs folder</h3></div><div class="step-item"><p>Create a <code>./docs</code> directory with some <code>.md</code> files</p></div><div class="step-item"><h3 id="start-the-server"><a aria-hidden="true" tabindex="-1" href="#start-the-server"><span class="icon icon-link"></span></a>Start the server</h3></div><div class="step-item"><p>Run <code>npx mdsvr ./docs --open</code></p></div></div>
-<h2 id="cards"><a aria-hidden="true" tabindex="-1" href="#cards"><span class="icon icon-link"></span></a>Cards</h2>
-<p>Display links as beautiful cards:</p>
-<pre><code class="language-mdx">&lt;Card title=&quot;Quick Start&quot; icon=&quot;⚡&quot; href=&quot;#&quot;&gt;
-  Get up and running in 5 minutes
-&lt;/Card&gt;
-</code></pre>
-<a href="#" class="card"><div class="card-title"><span>⚙️</span><span>Configuration</span></div><div class="card-description"><p>Full settings reference</p></div></a>
-<h3 id="card-groups"><a aria-hidden="true" tabindex="-1" href="#card-groups"><span class="icon icon-link"></span></a>Card Groups</h3>
-<div class="card-group" style="grid-template-columns:repeat(2, 1fr)"><a href="#" class="card"><div class="card-title"><span>📝</span><span>Markdown</span></div><div class="card-description"><p>Standard Markdown support</p></div></a><a href="#" class="card"><div class="card-title"><span>⚛️</span><span>MDX</span></div><div class="card-description"><p>React components in docs</p></div></a><a href="#" class="card"><div class="card-title"><span>🎨</span><span>Themes</span></div><div class="card-description"><p>Dark and light mode</p></div></a><a href="#" class="card"><div class="card-title"><span>🔍</span><span>Search</span></div><div class="card-description"><p>Full-text search</p></div></a></div>
-<h2 id="tabs"><a aria-hidden="true" tabindex="-1" href="#tabs"><span class="icon icon-link"></span></a>Tabs</h2>
-<p>Organize content in tabs:</p>
-<pre><code class="language-mdx">&lt;Tabs items={[&quot;npm&quot;, &quot;yarn&quot;, &quot;pnpm&quot;]}&gt;
-  &lt;Tab&gt;```bash npm install mdsvr ```&lt;/Tab&gt;
-  &lt;Tab&gt;```bash yarn add mdsvr ```&lt;/Tab&gt;
-  &lt;Tab&gt;```bash pnpm add mdsvr ```&lt;/Tab&gt;
-&lt;/Tabs&gt;
-</code></pre>
-<h2 id="code-groups"><a aria-hidden="true" tabindex="-1" href="#code-groups"><span class="icon icon-link"></span></a>Code Groups</h2>
-<p>Group related code blocks:</p>
-<pre><code class="language-mdx">&lt;CodeGroup title=&quot;Installation&quot;&gt;
-  ```bash npm npm install mdsvr ``` ```bash yarn yarn add mdsvr ``` ```bash pnpm
-  pnpm add mdsvr ```
-&lt;/CodeGroup&gt;
-</code></pre>
-<div class="code-group"><div class="code-group-title">Configuration</div><div style="margin:0"><pre><code class="language-json">{
-  &quot;site&quot;: {
-    &quot;title&quot;: &quot;My Docs&quot;
-  }
+<h2 id="key-design-decisions" tabindex="-1">Key Design Decisions</h2>
+<h3 id="file-based-content-storage" tabindex="-1">File-Based Content Storage</h3>
+<p>Content is stored as plain Markdown/MDX files in the filesystem. No database is used, making the system:</p>
+<ul>
+<li>Simple to deploy (no database setup)</li>
+<li>Easy to version control (Git-friendly)</li>
+<li>Portable (just copy the directory)</li>
+<li>Fast (no database queries)</li>
+</ul>
+<h3 id="server-side-mdx-rendering" tabindex="-1">Server-Side MDX Rendering</h3>
+<p>MDX is processed server-side using <code>@mdx-js/mdx</code> and React. This means:</p>
+<ul>
+<li>No client-side framework required</li>
+<li>Faster initial page load</li>
+<li>Better SEO (content in HTML)</li>
+<li>Interactive components work without JavaScript</li>
+</ul>
+<h3 id="zero-configuration" tabindex="-1">Zero Configuration</h3>
+<p>The system works without any configuration file. When <code>_mdsvr/settings.json</code> is present:</p>
+<ul>
+<li>Validated against JSON Schema</li>
+<li>Hot-reloaded on changes (no server restart)</li>
+<li>Merges with defaults</li>
+</ul>
+<h3 id="client-side-search" tabindex="-1">Client-Side Search</h3>
+<p>Search is implemented client-side using a pre-built <code>/search-index.json</code>:</p>
+<ul>
+<li>No external service (Algolia, etc.)</li>
+<li>Fast (pre-indexed)</li>
+<li>Works offline</li>
+<li>Triggered by ⌘K / Ctrl+K</li>
+</ul>
+<h3 id="incremental-static-export" tabindex="-1">Incremental Static Export</h3>
+<p>Static export uses hash-based caching:</p>
+<ul>
+<li>Only regenerates files that changed</li>
+<li>OG images regenerated only when source changes</li>
+<li>Settings changes trigger full rebuild</li>
+<li>State stored in <code>_mdsvr/export-state.json</code></li>
+</ul>
+<h2 id="security-model" tabindex="-1">Security Model</h2>
+<h3 id="path-traversal-protection" tabindex="-1">Path Traversal Protection</h3>
+<p>All resolved paths are verified to stay within the root directory:</p>
+<pre class="code-block-wrapper"><div class="code-block-container">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-typescript"><span class="hljs-keyword">if</span> (!resolvedPath.<span class="hljs-title function_">startsWith</span>(rootDir)) {
+  <span class="hljs-keyword">return</span> <span class="hljs-number">403</span> <span class="hljs-title class_">Forbidden</span>;
 }
-</code></pre><pre><code class="language-js">module.exports = {
-  site: {
-    title: &quot;My Docs&quot;,
-  },
-};
-</code></pre></div></div>
-<h2 id="accordion"><a aria-hidden="true" tabindex="-1" href="#accordion"><span class="icon icon-link"></span></a>Accordion</h2>
-<p>Create collapsible sections:</p>
-<pre><code class="language-mdx">&lt;Accordion title=&quot;Is this free?&quot;&gt;
-  Yes, mdsvr is open source under MIT license.
-&lt;/Accordion&gt;
 </code></pre>
-<div class="accordion"><button class="accordion-summary">What are the system requirements?<span class="accordion-icon ">▼</span></button></div>
-<div class="accordion"><button class="accordion-summary">Can I use custom components?<span class="accordion-icon ">▼</span></button></div>
-<h2 id="badge"><a aria-hidden="true" tabindex="-1" href="#badge"><span class="icon icon-link"></span></a>Badge</h2>
-<p>Add status badges inline:</p>
-<pre><code class="language-mdx">New feature &lt;Badge color=&quot;green&quot;&gt;New&lt;/Badge&gt;
-
-Beta feature &lt;Badge color=&quot;orange&quot;&gt;Beta&lt;/Badge&gt;
-
-Deprecated &lt;Badge color=&quot;red&quot;&gt;Deprecated&lt;/Badge&gt;
-</code></pre>
-<p>Available colors: <code>green</code>, <code>orange</code>, <code>red</code>, <code>blue</code>, <code>purple</code>, <code>gray</code></p>
-<ul>
-<li><span class="badge badge-green">New</span> — New features</li>
-<li><span class="badge badge-orange">Beta</span> — Beta features</li>
-<li><span class="badge badge-red">Deprecated</span> — Deprecated features</li>
-<li><span class="badge badge-blue">Info</span> — Informational</li>
-<li><span class="badge badge-purple">Tip</span> — Tips and tricks</li>
-<li><span class="badge badge-gray">Note</span> — General notes</li>
-</ul>
-<h2 id="mermaid"><a aria-hidden="true" tabindex="-1" href="#mermaid"><span class="icon icon-link"></span></a>Mermaid</h2>
-<p>Create diagrams with Mermaid syntax:</p>
-<pre><code class="language-mdx">&lt;Mermaid&gt;
-  graph TD
-    A[Start] --&gt; B{Is it working?}
-    B --&gt;|Yes| C[Great!]
-    B --&gt;|No| D[Debug]
-    D --&gt; E[Fix Issues]
-    E --&gt; B
-&lt;/Mermaid&gt;
-</code></pre>
-<div class="callout callout-tip"><strong style="display:block;margin-bottom:8px">💡 Tip</strong><div><p>Mermaid diagrams are rendered client-side, so they work without any
-server-side dependencies.</p></div></div>
-<h2 id="frontmatter"><a aria-hidden="true" tabindex="-1" href="#frontmatter"><span class="icon icon-link"></span></a>Frontmatter</h2>
-<p>All MDX files support YAML frontmatter for metadata:</p>
-<pre><code class="language-mdx">---
-title: Page Title
-description: Page description for SEO
-image: ./assets/og-image.png
-date: 2025-01-15
-author: John Doe
-tags: [setup, quickstart]
-noIndex: false
----
-
-# Your Content
-</code></pre>
-<p>This metadata is used for:</p>
-<ul>
-<li>SEO <code>&lt;title&gt;</code> and meta tags</li>
-<li>Open Graph / Twitter Cards</li>
-<li>RSS feed entries (when <code>date</code> is present)</li>
-<li>Search index weighting</li>
-</ul>
-<h2 id="mdx-plugins"><a aria-hidden="true" tabindex="-1" href="#mdx-plugins"><span class="icon icon-link"></span></a>MDX Plugins</h2>
-<p>You can add custom remark and rehype plugins to extend MDX functionality:</p>
-<pre><code class="language-json">{
-  &quot;mdx&quot;: {
-    &quot;enabled&quot;: true,
-    &quot;remarkPlugins&quot;: [&quot;remark-gfm&quot;],
-    &quot;rehypePlugins&quot;: [&quot;rehype-slug&quot;]
-  }
+  <pre class="code-block-raw" style="display:none;"><code>if (!resolvedPath.startsWith(rootDir)) {
+  return 403 Forbidden;
 }
 </code></pre>
-<p><strong>Options:</strong></p>
+</div></pre>
+
+<h3 id="hidden-files" tabindex="-1">Hidden Files</h3>
+<p>Files starting with <code>_</code> or matching patterns in <code>settings.files.extensions.hidden</code> are not served.</p>
+<h3 id="blocked-extensions" tabindex="-1">Blocked Extensions</h3>
+<p>Sensitive extensions (<code>.env</code>, <code>.key</code>, <code>.pem</code>, etc.) are blocked by default via <code>settings.files.extensions.block</code>.</p>
+<h3 id="read-only-operation" tabindex="-1">Read-Only Operation</h3>
+<p>The server only reads files - no write operations are exposed through the HTTP API.</p>
+<h2 id="performance-characteristics" tabindex="-1">Performance Characteristics</h2>
 <ul>
-<li><code>remarkPlugins</code>: Array of remark plugin names for markdown transformations</li>
-<li><code>rehypePlugins</code>: Array of rehype plugin names for HTML transformations</li>
+<li><strong>Startup time</strong>: ~150ms (no build step)</li>
+<li><strong>Memory usage</strong>: Low (content loaded on-demand)</li>
+<li><strong>Static export</strong>: Incremental (only changed files)</li>
+<li><strong>Search</strong>: Client-side with pre-built index</li>
 </ul>
-<p>Currently, mdsvr includes these built-in plugins by default:</p>
+<h2 id="extension-points" tabindex="-1">Extension Points</h2>
+<p>The system can be extended through:</p>
 <ul>
-<li><code>remark-frontmatter</code> - Parse YAML frontmatter</li>
-<li><code>remark-gfm</code> - GitHub Flavored Markdown support</li>
-<li><code>remark-mdx-frontmatter</code> - MDX frontmatter support</li>
-<li><code>rehype-slug</code> - Generate heading IDs for anchors</li>
-<li><code>rehype-autolink-headings</code> - Auto-link headings</li>
+<li>Custom MDX components (via settings)</li>
+<li>Custom themes (via CSS variables)</li>
+<li>Custom static folders (via <code>settings.files.staticFolders</code>)</li>
+<li>Custom index files (via <code>settings.files.indexFiles</code>)</li>
 </ul>
-<p>You can add additional plugins by installing them and adding their names to the arrays.</p>
+
       </article>
       <nav class="prev-next-nav">
-        <a href="/docs/03-features/markdown" class="prev-next-card prev-card"><span class="prev-next-label">← Prev</span><span class="prev-next-title">Markdown Formats</span></a>
-        <a href="/docs/03-features/mermaid" class="prev-next-card next-card"><span class="prev-next-label">Next →</span><span class="prev-next-title">Mermaid Chart</span></a>
+        <a href="/docs/09-architecture/adr/006-markdown-validation-and-autofix" class="prev-next-card prev-card"><span class="prev-next-label">← Prev</span><span class="prev-next-title">ADR-006: Markdown validation and auto-fixing</span></a>
+        <span></span>
       </nav>
       <footer class="footer">
     <div class="footer-content">
@@ -1612,7 +1731,48 @@ noIndex: false
     </div>
   </footer>
     </main>
-    
+    <aside class="toc-sidebar"><nav class="toc">
+  <h3>On this page</h3>
+<ul class="toc-list toc-level-1">
+<li class="toc-item"><a href="#architecture">Architecture</a></li>
+<ul class="toc-list toc-level-2">
+<li class="toc-item"><a href="#overview">Overview</a></li>
+<li class="toc-item"><a href="#core-principles">Core Principles</a></li>
+<li class="toc-item"><a href="#system-architecture">System Architecture</a></li>
+<li class="toc-item"><a href="#module-structure">Module Structure</a></li>
+<ul class="toc-list toc-level-3">
+<li class="toc-item"><a href="#core-modules">Core Modules</a></li>
+<li class="toc-item"><a href="#rendering-pipeline">Rendering Pipeline</a></li>
+<li class="toc-item"><a href="#configuration">Configuration</a></li>
+<li class="toc-item"><a href="#generators">Generators</a></li>
+<li class="toc-item"><a href="#open-graph-images">Open Graph Images</a></li>
+<li class="toc-item"><a href="#utilities">Utilities</a></li>
+</ul>
+<li class="toc-item"><a href="#data-flow">Data Flow</a></li>
+<ul class="toc-list toc-level-3">
+<li class="toc-item"><a href="#request-flow-dynamic-server">Request Flow (Dynamic Server)</a></li>
+<li class="toc-item"><a href="#static-export-flow">Static Export Flow</a></li>
+</ul>
+<li class="toc-item"><a href="#key-design-decisions">Key Design Decisions</a></li>
+<ul class="toc-list toc-level-3">
+<li class="toc-item"><a href="#file-based-content-storage">File-Based Content Storage</a></li>
+<li class="toc-item"><a href="#server-side-mdx-rendering">Server-Side MDX Rendering</a></li>
+<li class="toc-item"><a href="#zero-configuration">Zero Configuration</a></li>
+<li class="toc-item"><a href="#client-side-search">Client-Side Search</a></li>
+<li class="toc-item"><a href="#incremental-static-export">Incremental Static Export</a></li>
+</ul>
+<li class="toc-item"><a href="#security-model">Security Model</a></li>
+<ul class="toc-list toc-level-3">
+<li class="toc-item"><a href="#path-traversal-protection">Path Traversal Protection</a></li>
+<li class="toc-item"><a href="#hidden-files">Hidden Files</a></li>
+<li class="toc-item"><a href="#blocked-extensions">Blocked Extensions</a></li>
+<li class="toc-item"><a href="#read-only-operation">Read-Only Operation</a></li>
+</ul>
+<li class="toc-item"><a href="#performance-characteristics">Performance Characteristics</a></li>
+<li class="toc-item"><a href="#extension-points">Extension Points</a></li>
+</ul>
+</ul>
+</nav></aside>
   </div>
 
   

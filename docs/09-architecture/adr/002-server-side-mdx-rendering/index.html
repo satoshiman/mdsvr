@@ -13,16 +13,16 @@
   document.documentElement.setAttribute('data-theme', theme);
 })();
 </script>
-  <title>MDX Components</title>
-    <meta name="description" content="Interactive components for your documentation">
-    <meta property="og:title" content="MDX Components">
-    <meta property="og:description" content="Interactive components for your documentation">
+  <title>ADR-002: Server-side MDX rendering instead of client-side</title>
+    <meta name="description" content="Full-featured documentation website server with MDX support, site settings, SEO, and navigation">
+    <meta property="og:title" content="ADR-002: Server-side MDX rendering instead of client-side">
+    <meta property="og:description" content="Full-featured documentation website server with MDX support, site settings, SEO, and navigation">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="/03-features/mdx">
-    <meta property="og:image" content="/docs/public/assets/og/03-features/mdx/index.jpg">
+    <meta property="og:url" content="/09-architecture/adr/002-server-side-mdx-rendering">
+    <meta property="og:image" content="/docs/public/assets/og/09-architecture/adr/002-server-side-mdx-rendering/index.jpg">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="MDX Components">
-    <meta name="twitter:image" content="/docs/public/assets/og/03-features/mdx/index.jpg">
+    <meta name="twitter:title" content="ADR-002: Server-side MDX rendering instead of client-side">
+    <meta name="twitter:image" content="/docs/public/assets/og/09-architecture/adr/002-server-side-mdx-rendering/index.jpg">
     <link rel="sitemap" type="application/xml" href="/docs/sitemap.xml">
   
   <style>
@@ -1358,7 +1358,7 @@ code.hljs {
     </div>
   </header>
 
-  <div class="site-container">
+  <div class="site-container has-toc">
     <aside class="sidebar" id="sidebar"><ul class="sidebar-nav" data-level="0">
   <li class="nav-item" data-type="file">
     <a href="/docs/" class="nav-link">Welcome</a>
@@ -1369,17 +1369,17 @@ code.hljs {
   <li class="nav-item folder" data-type="dir">
     <a href="/docs/02-settings/" class="nav-link">📁 Guides</a>
   </li>
-  <li class="nav-item active folder" data-type="dir">
+  <li class="nav-item folder" data-type="dir">
     <div class="nav-item-header" data-expanded="true">
-      <a href="/docs/03-features/" class="nav-link active" data-folder-icon="open"><span class="folder-icon">📂</span> Features</a>
+      <a href="/docs/03-features/" class="nav-link" data-folder-icon="open"><span class="folder-icon">📂</span> Features</a>
     </div>
     <div class="nav-children" data-expanded="true">
     <ul class="sidebar-nav" data-level="1">
       <li class="nav-item" data-type="file">
         <a href="/docs/03-features/markdown" class="nav-link">Markdown Formats</a>
       </li>
-      <li class="nav-item active" data-type="file">
-        <a href="/docs/03-features/mdx" class="nav-link active">MDX Components</a>
+      <li class="nav-item" data-type="file">
+        <a href="/docs/03-features/mdx" class="nav-link">MDX Components</a>
       </li>
       <li class="nav-item" data-type="file">
         <a href="/docs/03-features/mermaid" class="nav-link">Mermaid Chart</a>
@@ -1402,23 +1402,23 @@ code.hljs {
   <li class="nav-item folder" data-type="dir">
     <a href="/docs/04-reference/" class="nav-link">📁 Reference</a>
   </li>
-  <li class="nav-item folder" data-type="dir">
+  <li class="nav-item active folder" data-type="dir">
     <div class="nav-item-header" data-expanded="true">
-      <a href="/docs/09-architecture/" class="nav-link" data-folder-icon="open"><span class="folder-icon">📂</span> 09 architecture</a>
+      <a href="/docs/09-architecture/" class="nav-link active" data-folder-icon="open"><span class="folder-icon">📂</span> 09 architecture</a>
     </div>
     <div class="nav-children" data-expanded="true">
     <ul class="sidebar-nav" data-level="1">
-      <li class="nav-item folder" data-type="dir">
+      <li class="nav-item active folder" data-type="dir">
         <div class="nav-item-header" data-expanded="true">
-          <a href="/docs/09-architecture/adr/" class="nav-link" data-folder-icon="open"><span class="folder-icon">📂</span> Adr</a>
+          <a href="/docs/09-architecture/adr/" class="nav-link active" data-folder-icon="open"><span class="folder-icon">📂</span> Adr</a>
         </div>
         <div class="nav-children" data-expanded="true">
         <ul class="sidebar-nav" data-level="2">
           <li class="nav-item" data-type="file">
             <a href="/docs/09-architecture/adr/001-file-based-content-storage" class="nav-link">ADR-001: File-based content storage instead of database</a>
           </li>
-          <li class="nav-item" data-type="file">
-            <a href="/docs/09-architecture/adr/002-server-side-mdx-rendering" class="nav-link">ADR-002: Server-side MDX rendering instead of client-side</a>
+          <li class="nav-item active" data-type="file">
+            <a href="/docs/09-architecture/adr/002-server-side-mdx-rendering" class="nav-link active">ADR-002: Server-side MDX rendering instead of client-side</a>
           </li>
           <li class="nav-item" data-type="file">
             <a href="/docs/09-architecture/adr/003-zero-configuration-with-defaults" class="nav-link">ADR-003: Zero configuration with sensible defaults</a>
@@ -1445,165 +1445,67 @@ code.hljs {
     <main class="content">
       <nav class="breadcrumbs">
     <a href="/docs/">Home</a>
-    <span class="breadcrumb-sep">/</span><a href="/docs/03-features">03 features</a><span class="breadcrumb-sep">/</span><span class="breadcrumb-current">Mdx</span>
+    <span class="breadcrumb-sep">/</span><a href="/docs/09-architecture">09 architecture</a><span class="breadcrumb-sep">/</span><a href="/docs/09-architecture/adr">Adr</a><span class="breadcrumb-sep">/</span><span class="breadcrumb-current">002 server side mdx rendering</span>
   </nav>
       <article class="markdown-body">
-        <h1 id="mdx-components"><a aria-hidden="true" tabindex="-1" href="#mdx-components"><span class="icon icon-link"></span></a>MDX Components</h1>
-<p>mdsvr supports <strong>MDX</strong> — Markdown with JSX. This allows you to use interactive components directly in your documentation.</p>
-<div class="callout callout-info"><strong style="display:block;margin-bottom:8px">ℹ️ Info</strong><div><p>MDX must be enabled in <code>_mdsvr/settings.json</code> with <code>&quot;mdx.enabled&quot;: true</code>.</p></div></div>
-<h2 id="callout"><a aria-hidden="true" tabindex="-1" href="#callout"><span class="icon icon-link"></span></a>Callout</h2>
-<p>Use callouts to highlight important information:</p>
-<pre><code class="language-mdx">&lt;Callout type=&quot;info&quot;&gt;This is an informational callout.&lt;/Callout&gt;
-
-&lt;Callout type=&quot;warning&quot; title=&quot;Important&quot;&gt;
-  This will delete all your data.
-&lt;/Callout&gt;
-</code></pre>
-<h3 id="types"><a aria-hidden="true" tabindex="-1" href="#types"><span class="icon icon-link"></span></a>Types</h3>
-<div class="callout callout-info"><strong style="display:block;margin-bottom:8px">ℹ️ Info</strong><div><strong>Info</strong> — General information and tips</div></div>
-<div class="callout callout-warning"><strong style="display:block;margin-bottom:8px">⚠️ Warning</strong><div><strong>Warning</strong> — Caution about potential issues</div></div>
-<div class="callout callout-danger"><strong style="display:block;margin-bottom:8px">🚫 Danger</strong><div><p><strong>Danger</strong> — Critical warnings about destructive actions</p></div></div>
-<div class="callout callout-success"><strong style="display:block;margin-bottom:8px">✅ Success</strong><div><p><strong>Success</strong> — Positive confirmation or success states</p></div></div>
-<div class="callout callout-tip"><strong style="display:block;margin-bottom:8px">💡 Tip</strong><div><strong>Tip</strong> — Helpful suggestions and best practices</div></div>
-<h2 id="steps"><a aria-hidden="true" tabindex="-1" href="#steps"><span class="icon icon-link"></span></a>Steps</h2>
-<p>Create step-by-step guides:</p>
-<pre><code class="language-mdx">&lt;Steps&gt;
-  ### Step 1: Install
-  Run `npm install mdsvr`
-
-### Step 2: Configure
-
-Create your `_mdsvr/settings.json`
-
-### Step 3: Launch
-
-Run `npx mdsvr ./docs`
-
-&lt;/Steps&gt;
-</code></pre>
-<div class="steps"><div class="step-item"><h3 id="install-the-package"><a aria-hidden="true" tabindex="-1" href="#install-the-package"><span class="icon icon-link"></span></a>Install the package</h3></div><div class="step-item"><p>Run <code>npm install mdsvr</code></p></div><div class="step-item"><h3 id="create-your-docs-folder"><a aria-hidden="true" tabindex="-1" href="#create-your-docs-folder"><span class="icon icon-link"></span></a>Create your docs folder</h3></div><div class="step-item"><p>Create a <code>./docs</code> directory with some <code>.md</code> files</p></div><div class="step-item"><h3 id="start-the-server"><a aria-hidden="true" tabindex="-1" href="#start-the-server"><span class="icon icon-link"></span></a>Start the server</h3></div><div class="step-item"><p>Run <code>npx mdsvr ./docs --open</code></p></div></div>
-<h2 id="cards"><a aria-hidden="true" tabindex="-1" href="#cards"><span class="icon icon-link"></span></a>Cards</h2>
-<p>Display links as beautiful cards:</p>
-<pre><code class="language-mdx">&lt;Card title=&quot;Quick Start&quot; icon=&quot;⚡&quot; href=&quot;#&quot;&gt;
-  Get up and running in 5 minutes
-&lt;/Card&gt;
-</code></pre>
-<a href="#" class="card"><div class="card-title"><span>⚙️</span><span>Configuration</span></div><div class="card-description"><p>Full settings reference</p></div></a>
-<h3 id="card-groups"><a aria-hidden="true" tabindex="-1" href="#card-groups"><span class="icon icon-link"></span></a>Card Groups</h3>
-<div class="card-group" style="grid-template-columns:repeat(2, 1fr)"><a href="#" class="card"><div class="card-title"><span>📝</span><span>Markdown</span></div><div class="card-description"><p>Standard Markdown support</p></div></a><a href="#" class="card"><div class="card-title"><span>⚛️</span><span>MDX</span></div><div class="card-description"><p>React components in docs</p></div></a><a href="#" class="card"><div class="card-title"><span>🎨</span><span>Themes</span></div><div class="card-description"><p>Dark and light mode</p></div></a><a href="#" class="card"><div class="card-title"><span>🔍</span><span>Search</span></div><div class="card-description"><p>Full-text search</p></div></a></div>
-<h2 id="tabs"><a aria-hidden="true" tabindex="-1" href="#tabs"><span class="icon icon-link"></span></a>Tabs</h2>
-<p>Organize content in tabs:</p>
-<pre><code class="language-mdx">&lt;Tabs items={[&quot;npm&quot;, &quot;yarn&quot;, &quot;pnpm&quot;]}&gt;
-  &lt;Tab&gt;```bash npm install mdsvr ```&lt;/Tab&gt;
-  &lt;Tab&gt;```bash yarn add mdsvr ```&lt;/Tab&gt;
-  &lt;Tab&gt;```bash pnpm add mdsvr ```&lt;/Tab&gt;
-&lt;/Tabs&gt;
-</code></pre>
-<h2 id="code-groups"><a aria-hidden="true" tabindex="-1" href="#code-groups"><span class="icon icon-link"></span></a>Code Groups</h2>
-<p>Group related code blocks:</p>
-<pre><code class="language-mdx">&lt;CodeGroup title=&quot;Installation&quot;&gt;
-  ```bash npm npm install mdsvr ``` ```bash yarn yarn add mdsvr ``` ```bash pnpm
-  pnpm add mdsvr ```
-&lt;/CodeGroup&gt;
-</code></pre>
-<div class="code-group"><div class="code-group-title">Configuration</div><div style="margin:0"><pre><code class="language-json">{
-  &quot;site&quot;: {
-    &quot;title&quot;: &quot;My Docs&quot;
-  }
-}
-</code></pre><pre><code class="language-js">module.exports = {
-  site: {
-    title: &quot;My Docs&quot;,
-  },
-};
-</code></pre></div></div>
-<h2 id="accordion"><a aria-hidden="true" tabindex="-1" href="#accordion"><span class="icon icon-link"></span></a>Accordion</h2>
-<p>Create collapsible sections:</p>
-<pre><code class="language-mdx">&lt;Accordion title=&quot;Is this free?&quot;&gt;
-  Yes, mdsvr is open source under MIT license.
-&lt;/Accordion&gt;
-</code></pre>
-<div class="accordion"><button class="accordion-summary">What are the system requirements?<span class="accordion-icon ">▼</span></button></div>
-<div class="accordion"><button class="accordion-summary">Can I use custom components?<span class="accordion-icon ">▼</span></button></div>
-<h2 id="badge"><a aria-hidden="true" tabindex="-1" href="#badge"><span class="icon icon-link"></span></a>Badge</h2>
-<p>Add status badges inline:</p>
-<pre><code class="language-mdx">New feature &lt;Badge color=&quot;green&quot;&gt;New&lt;/Badge&gt;
-
-Beta feature &lt;Badge color=&quot;orange&quot;&gt;Beta&lt;/Badge&gt;
-
-Deprecated &lt;Badge color=&quot;red&quot;&gt;Deprecated&lt;/Badge&gt;
-</code></pre>
-<p>Available colors: <code>green</code>, <code>orange</code>, <code>red</code>, <code>blue</code>, <code>purple</code>, <code>gray</code></p>
+        <h1 id="adr-002-server-side-mdx-rendering-instead-of-client-side" tabindex="-1">ADR-002: Server-side MDX rendering instead of client-side</h1>
+<h2 id="status-accepted" tabindex="-1">Status: Accepted</h2>
+<h2 id="context" tabindex="-1">Context</h2>
+<p>MDX (Markdown + JSX) enables interactive components in documentation. Common rendering approaches:</p>
 <ul>
-<li><span class="badge badge-green">New</span> — New features</li>
-<li><span class="badge badge-orange">Beta</span> — Beta features</li>
-<li><span class="badge badge-red">Deprecated</span> — Deprecated features</li>
-<li><span class="badge badge-blue">Info</span> — Informational</li>
-<li><span class="badge badge-purple">Tip</span> — Tips and tricks</li>
-<li><span class="badge badge-gray">Note</span> — General notes</li>
+<li><strong>Client-side rendering</strong>: Browser processes MDX with React/Next.js</li>
+<li><strong>Server-side rendering</strong>: Server processes MDX to HTML before sending to client</li>
 </ul>
-<h2 id="mermaid"><a aria-hidden="true" tabindex="-1" href="#mermaid"><span class="icon icon-link"></span></a>Mermaid</h2>
-<p>Create diagrams with Mermaid syntax:</p>
-<pre><code class="language-mdx">&lt;Mermaid&gt;
-  graph TD
-    A[Start] --&gt; B{Is it working?}
-    B --&gt;|Yes| C[Great!]
-    B --&gt;|No| D[Debug]
-    D --&gt; E[Fix Issues]
-    E --&gt; B
-&lt;/Mermaid&gt;
-</code></pre>
-<div class="callout callout-tip"><strong style="display:block;margin-bottom:8px">💡 Tip</strong><div><p>Mermaid diagrams are rendered client-side, so they work without any
-server-side dependencies.</p></div></div>
-<h2 id="frontmatter"><a aria-hidden="true" tabindex="-1" href="#frontmatter"><span class="icon icon-link"></span></a>Frontmatter</h2>
-<p>All MDX files support YAML frontmatter for metadata:</p>
-<pre><code class="language-mdx">---
-title: Page Title
-description: Page description for SEO
-image: ./assets/og-image.png
-date: 2025-01-15
-author: John Doe
-tags: [setup, quickstart]
-noIndex: false
----
+<p>Client-side MDX requires:</p>
+<ul>
+<li>JavaScript framework in the browser (React, Vue, etc.)</li>
+<li>Bundle size increase (MDX runtime, React, components)</li>
+<li>Initial page load delay (hydration)</li>
+<li>Client-side processing power</li>
+<li>Potential SEO issues (content not in initial HTML)</li>
+</ul>
+<h2 id="decision" tabindex="-1">Decision</h2>
+<p>Process MDX server-side using <code>@mdx-js/mdx</code> and React. Send fully rendered HTML to the client.</p>
+<h3 id="implementation" tabindex="-1">Implementation</h3>
+<ul>
+<li>MDX files processed by <code>renderer/mdx.ts</code> using <code>@mdx-js/mdx</code></li>
+<li>React components rendered server-side to HTML</li>
+<li>Built-in components (Callout, Steps, Tabs, etc.) defined in renderer</li>
+<li>Resulting HTML embedded in page template</li>
+<li>No client-side framework required for basic functionality</li>
+</ul>
+<h2 id="consequences" tabindex="-1">Consequences</h2>
+<h3 id="positive" tabindex="-1">Positive</h3>
+<ul>
+<li><strong>No client-side framework</strong>: Pages work without JavaScript</li>
+<li><strong>Faster initial load</strong>: No hydration delay, content in HTML</li>
+<li><strong>Better SEO</strong>: Search engines see full content immediately</li>
+<li><strong>Smaller bundles</strong>: No React/MDX runtime sent to client</li>
+<li><strong>Simpler deployment</strong>: No build step for client-side code</li>
+<li><strong>Works offline</strong>: Once loaded, no additional processing needed</li>
+<li><strong>Better performance</strong>: Server handles rendering, client just displays</li>
+</ul>
+<h3 id="negative" tabindex="-1">Negative</h3>
+<ul>
+<li><strong>Server load</strong>: Rendering happens on server, not distributed to clients</li>
+<li><strong>No interactivity</strong>: Components are static HTML after rendering</li>
+<li><strong>Hot reload complexity</strong>: MDX changes require server re-processing</li>
+<li><strong>Limited dynamic behavior</strong>: Cannot use React hooks or state</li>
+<li><strong>Component limitations</strong>: Only server-safe components allowed</li>
+</ul>
+<h3 id="mitigations" tabindex="-1">Mitigations</h3>
+<ul>
+<li>Server is lightweight (Node.js), rendering is fast</li>
+<li>Interactive features (search, theme toggle) use vanilla JS</li>
+<li>Settings hot-reload handles configuration changes</li>
+<li>Static export pre-renders all content for CDN deployment</li>
+<li>Components designed for static output (no state/hooks)</li>
+</ul>
 
-# Your Content
-</code></pre>
-<p>This metadata is used for:</p>
-<ul>
-<li>SEO <code>&lt;title&gt;</code> and meta tags</li>
-<li>Open Graph / Twitter Cards</li>
-<li>RSS feed entries (when <code>date</code> is present)</li>
-<li>Search index weighting</li>
-</ul>
-<h2 id="mdx-plugins"><a aria-hidden="true" tabindex="-1" href="#mdx-plugins"><span class="icon icon-link"></span></a>MDX Plugins</h2>
-<p>You can add custom remark and rehype plugins to extend MDX functionality:</p>
-<pre><code class="language-json">{
-  &quot;mdx&quot;: {
-    &quot;enabled&quot;: true,
-    &quot;remarkPlugins&quot;: [&quot;remark-gfm&quot;],
-    &quot;rehypePlugins&quot;: [&quot;rehype-slug&quot;]
-  }
-}
-</code></pre>
-<p><strong>Options:</strong></p>
-<ul>
-<li><code>remarkPlugins</code>: Array of remark plugin names for markdown transformations</li>
-<li><code>rehypePlugins</code>: Array of rehype plugin names for HTML transformations</li>
-</ul>
-<p>Currently, mdsvr includes these built-in plugins by default:</p>
-<ul>
-<li><code>remark-frontmatter</code> - Parse YAML frontmatter</li>
-<li><code>remark-gfm</code> - GitHub Flavored Markdown support</li>
-<li><code>remark-mdx-frontmatter</code> - MDX frontmatter support</li>
-<li><code>rehype-slug</code> - Generate heading IDs for anchors</li>
-<li><code>rehype-autolink-headings</code> - Auto-link headings</li>
-</ul>
-<p>You can add additional plugins by installing them and adding their names to the arrays.</p>
       </article>
       <nav class="prev-next-nav">
-        <a href="/docs/03-features/markdown" class="prev-next-card prev-card"><span class="prev-next-label">← Prev</span><span class="prev-next-title">Markdown Formats</span></a>
-        <a href="/docs/03-features/mermaid" class="prev-next-card next-card"><span class="prev-next-label">Next →</span><span class="prev-next-title">Mermaid Chart</span></a>
+        <a href="/docs/09-architecture/adr/001-file-based-content-storage" class="prev-next-card prev-card"><span class="prev-next-label">← Prev</span><span class="prev-next-title">ADR-001: File-based content storage instead of database</span></a>
+        <a href="/docs/09-architecture/adr/003-zero-configuration-with-defaults" class="prev-next-card next-card"><span class="prev-next-label">Next →</span><span class="prev-next-title">ADR-003: Zero configuration with sensible defaults</span></a>
       </nav>
       <footer class="footer">
     <div class="footer-content">
@@ -1612,7 +1514,26 @@ noIndex: false
     </div>
   </footer>
     </main>
-    
+    <aside class="toc-sidebar"><nav class="toc">
+  <h3>On this page</h3>
+<ul class="toc-list toc-level-1">
+<li class="toc-item"><a href="#adr-002-server-side-mdx-rendering-instead-of-client-side">ADR-002: Server-side MDX rendering instead of client-side</a></li>
+<ul class="toc-list toc-level-2">
+<li class="toc-item"><a href="#status-accepted">Status: Accepted</a></li>
+<li class="toc-item"><a href="#context">Context</a></li>
+<li class="toc-item"><a href="#decision">Decision</a></li>
+<ul class="toc-list toc-level-3">
+<li class="toc-item"><a href="#implementation">Implementation</a></li>
+</ul>
+<li class="toc-item"><a href="#consequences">Consequences</a></li>
+<ul class="toc-list toc-level-3">
+<li class="toc-item"><a href="#positive">Positive</a></li>
+<li class="toc-item"><a href="#negative">Negative</a></li>
+<li class="toc-item"><a href="#mitigations">Mitigations</a></li>
+</ul>
+</ul>
+</ul>
+</nav></aside>
   </div>
 
   

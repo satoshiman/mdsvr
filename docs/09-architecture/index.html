@@ -13,16 +13,16 @@
   document.documentElement.setAttribute('data-theme', theme);
 })();
 </script>
-  <title>MDX Components</title>
-    <meta name="description" content="Interactive components for your documentation">
-    <meta property="og:title" content="MDX Components">
-    <meta property="og:description" content="Interactive components for your documentation">
+  <title>Index of /09-architecture/</title>
+    <meta name="description" content="Full-featured documentation website server with MDX support, site settings, SEO, and navigation">
+    <meta property="og:title" content="Index of /09-architecture/">
+    <meta property="og:description" content="Full-featured documentation website server with MDX support, site settings, SEO, and navigation">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="/03-features/mdx">
-    <meta property="og:image" content="/docs/public/assets/og/03-features/mdx/index.jpg">
+    <meta property="og:url" content="/09-architecture/">
+    <meta property="og:image" content="/docs/public/assets/og/09-architecture/index.jpg">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="MDX Components">
-    <meta name="twitter:image" content="/docs/public/assets/og/03-features/mdx/index.jpg">
+    <meta name="twitter:title" content="Index of /09-architecture/">
+    <meta name="twitter:image" content="/docs/public/assets/og/09-architecture/index.jpg">
     <link rel="sitemap" type="application/xml" href="/docs/sitemap.xml">
   
   <style>
@@ -1369,17 +1369,17 @@ code.hljs {
   <li class="nav-item folder" data-type="dir">
     <a href="/docs/02-settings/" class="nav-link">📁 Guides</a>
   </li>
-  <li class="nav-item active folder" data-type="dir">
+  <li class="nav-item folder" data-type="dir">
     <div class="nav-item-header" data-expanded="true">
-      <a href="/docs/03-features/" class="nav-link active" data-folder-icon="open"><span class="folder-icon">📂</span> Features</a>
+      <a href="/docs/03-features/" class="nav-link" data-folder-icon="open"><span class="folder-icon">📂</span> Features</a>
     </div>
     <div class="nav-children" data-expanded="true">
     <ul class="sidebar-nav" data-level="1">
       <li class="nav-item" data-type="file">
         <a href="/docs/03-features/markdown" class="nav-link">Markdown Formats</a>
       </li>
-      <li class="nav-item active" data-type="file">
-        <a href="/docs/03-features/mdx" class="nav-link active">MDX Components</a>
+      <li class="nav-item" data-type="file">
+        <a href="/docs/03-features/mdx" class="nav-link">MDX Components</a>
       </li>
       <li class="nav-item" data-type="file">
         <a href="/docs/03-features/mermaid" class="nav-link">Mermaid Chart</a>
@@ -1402,9 +1402,9 @@ code.hljs {
   <li class="nav-item folder" data-type="dir">
     <a href="/docs/04-reference/" class="nav-link">📁 Reference</a>
   </li>
-  <li class="nav-item folder" data-type="dir">
+  <li class="nav-item active folder" data-type="dir">
     <div class="nav-item-header" data-expanded="true">
-      <a href="/docs/09-architecture/" class="nav-link" data-folder-icon="open"><span class="folder-icon">📂</span> 09 architecture</a>
+      <a href="/docs/09-architecture/" class="nav-link active" data-folder-icon="open"><span class="folder-icon">📂</span> 09 architecture</a>
     </div>
     <div class="nav-children" data-expanded="true">
     <ul class="sidebar-nav" data-level="1">
@@ -1445,165 +1445,123 @@ code.hljs {
     <main class="content">
       <nav class="breadcrumbs">
     <a href="/docs/">Home</a>
-    <span class="breadcrumb-sep">/</span><a href="/docs/03-features">03 features</a><span class="breadcrumb-sep">/</span><span class="breadcrumb-current">Mdx</span>
+    <span class="breadcrumb-sep">/</span><span class="breadcrumb-current">09 architecture</span>
   </nav>
       <article class="markdown-body">
-        <h1 id="mdx-components"><a aria-hidden="true" tabindex="-1" href="#mdx-components"><span class="icon icon-link"></span></a>MDX Components</h1>
-<p>mdsvr supports <strong>MDX</strong> — Markdown with JSX. This allows you to use interactive components directly in your documentation.</p>
-<div class="callout callout-info"><strong style="display:block;margin-bottom:8px">ℹ️ Info</strong><div><p>MDX must be enabled in <code>_mdsvr/settings.json</code> with <code>&quot;mdx.enabled&quot;: true</code>.</p></div></div>
-<h2 id="callout"><a aria-hidden="true" tabindex="-1" href="#callout"><span class="icon icon-link"></span></a>Callout</h2>
-<p>Use callouts to highlight important information:</p>
-<pre><code class="language-mdx">&lt;Callout type=&quot;info&quot;&gt;This is an informational callout.&lt;/Callout&gt;
-
-&lt;Callout type=&quot;warning&quot; title=&quot;Important&quot;&gt;
-  This will delete all your data.
-&lt;/Callout&gt;
-</code></pre>
-<h3 id="types"><a aria-hidden="true" tabindex="-1" href="#types"><span class="icon icon-link"></span></a>Types</h3>
-<div class="callout callout-info"><strong style="display:block;margin-bottom:8px">ℹ️ Info</strong><div><strong>Info</strong> — General information and tips</div></div>
-<div class="callout callout-warning"><strong style="display:block;margin-bottom:8px">⚠️ Warning</strong><div><strong>Warning</strong> — Caution about potential issues</div></div>
-<div class="callout callout-danger"><strong style="display:block;margin-bottom:8px">🚫 Danger</strong><div><p><strong>Danger</strong> — Critical warnings about destructive actions</p></div></div>
-<div class="callout callout-success"><strong style="display:block;margin-bottom:8px">✅ Success</strong><div><p><strong>Success</strong> — Positive confirmation or success states</p></div></div>
-<div class="callout callout-tip"><strong style="display:block;margin-bottom:8px">💡 Tip</strong><div><strong>Tip</strong> — Helpful suggestions and best practices</div></div>
-<h2 id="steps"><a aria-hidden="true" tabindex="-1" href="#steps"><span class="icon icon-link"></span></a>Steps</h2>
-<p>Create step-by-step guides:</p>
-<pre><code class="language-mdx">&lt;Steps&gt;
-  ### Step 1: Install
-  Run `npm install mdsvr`
-
-### Step 2: Configure
-
-Create your `_mdsvr/settings.json`
-
-### Step 3: Launch
-
-Run `npx mdsvr ./docs`
-
-&lt;/Steps&gt;
-</code></pre>
-<div class="steps"><div class="step-item"><h3 id="install-the-package"><a aria-hidden="true" tabindex="-1" href="#install-the-package"><span class="icon icon-link"></span></a>Install the package</h3></div><div class="step-item"><p>Run <code>npm install mdsvr</code></p></div><div class="step-item"><h3 id="create-your-docs-folder"><a aria-hidden="true" tabindex="-1" href="#create-your-docs-folder"><span class="icon icon-link"></span></a>Create your docs folder</h3></div><div class="step-item"><p>Create a <code>./docs</code> directory with some <code>.md</code> files</p></div><div class="step-item"><h3 id="start-the-server"><a aria-hidden="true" tabindex="-1" href="#start-the-server"><span class="icon icon-link"></span></a>Start the server</h3></div><div class="step-item"><p>Run <code>npx mdsvr ./docs --open</code></p></div></div>
-<h2 id="cards"><a aria-hidden="true" tabindex="-1" href="#cards"><span class="icon icon-link"></span></a>Cards</h2>
-<p>Display links as beautiful cards:</p>
-<pre><code class="language-mdx">&lt;Card title=&quot;Quick Start&quot; icon=&quot;⚡&quot; href=&quot;#&quot;&gt;
-  Get up and running in 5 minutes
-&lt;/Card&gt;
-</code></pre>
-<a href="#" class="card"><div class="card-title"><span>⚙️</span><span>Configuration</span></div><div class="card-description"><p>Full settings reference</p></div></a>
-<h3 id="card-groups"><a aria-hidden="true" tabindex="-1" href="#card-groups"><span class="icon icon-link"></span></a>Card Groups</h3>
-<div class="card-group" style="grid-template-columns:repeat(2, 1fr)"><a href="#" class="card"><div class="card-title"><span>📝</span><span>Markdown</span></div><div class="card-description"><p>Standard Markdown support</p></div></a><a href="#" class="card"><div class="card-title"><span>⚛️</span><span>MDX</span></div><div class="card-description"><p>React components in docs</p></div></a><a href="#" class="card"><div class="card-title"><span>🎨</span><span>Themes</span></div><div class="card-description"><p>Dark and light mode</p></div></a><a href="#" class="card"><div class="card-title"><span>🔍</span><span>Search</span></div><div class="card-description"><p>Full-text search</p></div></a></div>
-<h2 id="tabs"><a aria-hidden="true" tabindex="-1" href="#tabs"><span class="icon icon-link"></span></a>Tabs</h2>
-<p>Organize content in tabs:</p>
-<pre><code class="language-mdx">&lt;Tabs items={[&quot;npm&quot;, &quot;yarn&quot;, &quot;pnpm&quot;]}&gt;
-  &lt;Tab&gt;```bash npm install mdsvr ```&lt;/Tab&gt;
-  &lt;Tab&gt;```bash yarn add mdsvr ```&lt;/Tab&gt;
-  &lt;Tab&gt;```bash pnpm add mdsvr ```&lt;/Tab&gt;
-&lt;/Tabs&gt;
-</code></pre>
-<h2 id="code-groups"><a aria-hidden="true" tabindex="-1" href="#code-groups"><span class="icon icon-link"></span></a>Code Groups</h2>
-<p>Group related code blocks:</p>
-<pre><code class="language-mdx">&lt;CodeGroup title=&quot;Installation&quot;&gt;
-  ```bash npm npm install mdsvr ``` ```bash yarn yarn add mdsvr ``` ```bash pnpm
-  pnpm add mdsvr ```
-&lt;/CodeGroup&gt;
-</code></pre>
-<div class="code-group"><div class="code-group-title">Configuration</div><div style="margin:0"><pre><code class="language-json">{
-  &quot;site&quot;: {
-    &quot;title&quot;: &quot;My Docs&quot;
+        <!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Index of /09-architecture/</title>
+  
+<script>
+(function() {
+  var theme = localStorage.getItem('theme') || 'system';
+  if (theme === 'system') {
+    theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   }
-}
-</code></pre><pre><code class="language-js">module.exports = {
-  site: {
-    title: &quot;My Docs&quot;,
-  },
-};
-</code></pre></div></div>
-<h2 id="accordion"><a aria-hidden="true" tabindex="-1" href="#accordion"><span class="icon icon-link"></span></a>Accordion</h2>
-<p>Create collapsible sections:</p>
-<pre><code class="language-mdx">&lt;Accordion title=&quot;Is this free?&quot;&gt;
-  Yes, mdsvr is open source under MIT license.
-&lt;/Accordion&gt;
-</code></pre>
-<div class="accordion"><button class="accordion-summary">What are the system requirements?<span class="accordion-icon ">▼</span></button></div>
-<div class="accordion"><button class="accordion-summary">Can I use custom components?<span class="accordion-icon ">▼</span></button></div>
-<h2 id="badge"><a aria-hidden="true" tabindex="-1" href="#badge"><span class="icon icon-link"></span></a>Badge</h2>
-<p>Add status badges inline:</p>
-<pre><code class="language-mdx">New feature &lt;Badge color=&quot;green&quot;&gt;New&lt;/Badge&gt;
-
-Beta feature &lt;Badge color=&quot;orange&quot;&gt;Beta&lt;/Badge&gt;
-
-Deprecated &lt;Badge color=&quot;red&quot;&gt;Deprecated&lt;/Badge&gt;
-</code></pre>
-<p>Available colors: <code>green</code>, <code>orange</code>, <code>red</code>, <code>blue</code>, <code>purple</code>, <code>gray</code></p>
-<ul>
-<li><span class="badge badge-green">New</span> — New features</li>
-<li><span class="badge badge-orange">Beta</span> — Beta features</li>
-<li><span class="badge badge-red">Deprecated</span> — Deprecated features</li>
-<li><span class="badge badge-blue">Info</span> — Informational</li>
-<li><span class="badge badge-purple">Tip</span> — Tips and tricks</li>
-<li><span class="badge badge-gray">Note</span> — General notes</li>
-</ul>
-<h2 id="mermaid"><a aria-hidden="true" tabindex="-1" href="#mermaid"><span class="icon icon-link"></span></a>Mermaid</h2>
-<p>Create diagrams with Mermaid syntax:</p>
-<pre><code class="language-mdx">&lt;Mermaid&gt;
-  graph TD
-    A[Start] --&gt; B{Is it working?}
-    B --&gt;|Yes| C[Great!]
-    B --&gt;|No| D[Debug]
-    D --&gt; E[Fix Issues]
-    E --&gt; B
-&lt;/Mermaid&gt;
-</code></pre>
-<div class="callout callout-tip"><strong style="display:block;margin-bottom:8px">💡 Tip</strong><div><p>Mermaid diagrams are rendered client-side, so they work without any
-server-side dependencies.</p></div></div>
-<h2 id="frontmatter"><a aria-hidden="true" tabindex="-1" href="#frontmatter"><span class="icon icon-link"></span></a>Frontmatter</h2>
-<p>All MDX files support YAML frontmatter for metadata:</p>
-<pre><code class="language-mdx">---
-title: Page Title
-description: Page description for SEO
-image: ./assets/og-image.png
-date: 2025-01-15
-author: John Doe
-tags: [setup, quickstart]
-noIndex: false
----
-
-# Your Content
-</code></pre>
-<p>This metadata is used for:</p>
-<ul>
-<li>SEO <code>&lt;title&gt;</code> and meta tags</li>
-<li>Open Graph / Twitter Cards</li>
-<li>RSS feed entries (when <code>date</code> is present)</li>
-<li>Search index weighting</li>
-</ul>
-<h2 id="mdx-plugins"><a aria-hidden="true" tabindex="-1" href="#mdx-plugins"><span class="icon icon-link"></span></a>MDX Plugins</h2>
-<p>You can add custom remark and rehype plugins to extend MDX functionality:</p>
-<pre><code class="language-json">{
-  &quot;mdx&quot;: {
-    &quot;enabled&quot;: true,
-    &quot;remarkPlugins&quot;: [&quot;remark-gfm&quot;],
-    &quot;rehypePlugins&quot;: [&quot;rehype-slug&quot;]
-  }
-}
-</code></pre>
-<p><strong>Options:</strong></p>
-<ul>
-<li><code>remarkPlugins</code>: Array of remark plugin names for markdown transformations</li>
-<li><code>rehypePlugins</code>: Array of rehype plugin names for HTML transformations</li>
-</ul>
-<p>Currently, mdsvr includes these built-in plugins by default:</p>
-<ul>
-<li><code>remark-frontmatter</code> - Parse YAML frontmatter</li>
-<li><code>remark-gfm</code> - GitHub Flavored Markdown support</li>
-<li><code>remark-mdx-frontmatter</code> - MDX frontmatter support</li>
-<li><code>rehype-slug</code> - Generate heading IDs for anchors</li>
-<li><code>rehype-autolink-headings</code> - Auto-link headings</li>
-</ul>
-<p>You can add additional plugins by installing them and adding their names to the arrays.</p>
+  document.documentElement.setAttribute('data-theme', theme);
+})();
+</script>
+  <style>
+    :root {
+      --bg: #f6f8fa;
+      --bg-secondary: #ffffff;
+      --text: #24292f;
+      --text-muted: #656d76;
+      --border: #d0d7de;
+      --accent: #0969da;
+      --header-bg: #0d1117;
+      --header-text: #f0f6fc;
+      --header-border: #30363d;
+    }
+    :root[data-theme="dark"] {
+      --bg: #0d1117;
+      --bg-secondary: #161b22;
+      --text: #e6edf3;
+      --text-muted: #8d96a0;
+      --border: #30363d;
+      --accent: #58a6ff;
+      --header-bg: #161b22;
+      --header-text: #e6edf3;
+      --header-border: #30363d;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--text);
+      background: var(--bg);
+    }
+    .header {
+      background: var(--header-bg);
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--header-border);
+    }
+    .header-logo {
+      color: var(--header-text);
+      font-weight: 600;
+      font-size: 14px;
+      text-decoration: none;
+    }
+    .container {
+      max-width: 860px;
+      margin: 32px auto;
+      padding: 32px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+    }
+    h1 { font-size: 20px; font-weight: 600; margin: 0 0 16px; color: var(--text); }
+    .breadcrumb { font-size: 14px; color: var(--text-muted); margin-bottom: 20px; }
+    .breadcrumb a { color: var(--accent); text-decoration: none; }
+    .breadcrumb a:hover { text-decoration: underline; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 8px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+    th { font-weight: 600; color: var(--text-muted); font-size: 14px; }
+    td { font-size: 14px; }
+    td a { color: var(--accent); text-decoration: none; }
+    td a:hover { text-decoration: underline; }
+    .size { color: var(--text-muted); text-align: right; width: 100px; }
+    .empty { color: var(--text-muted); font-style: italic; padding: 24px 0; }
+    @media (max-width: 900px) {
+      .container { margin: 16px; padding: 20px; }
+      .header { padding: 12px 16px; }
+    }
+    @media (max-width: 480px) {
+      .container { margin: 8px; padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+    <table>
+      <thead>
+        <tr><th>Name</th><th class="size">Size</th></tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>📁 <a href="../">../</a></td>
+        <td class="size">-</td>
+      </tr>
+      <tr>
+        <td>📁 <a href="/09-architecture/adr/">adr/</a></td>
+        <td class="size">-</td>
+      </tr>
+      <tr>
+        <td>📁 <a href="/09-architecture/architecture/">architecture/</a></td>
+        <td class="size">-</td>
+      </tr>
+      </tbody>
+    </table>
+</body>
+</html>
       </article>
       <nav class="prev-next-nav">
-        <a href="/docs/03-features/markdown" class="prev-next-card prev-card"><span class="prev-next-label">← Prev</span><span class="prev-next-title">Markdown Formats</span></a>
-        <a href="/docs/03-features/mermaid" class="prev-next-card next-card"><span class="prev-next-label">Next →</span><span class="prev-next-title">Mermaid Chart</span></a>
+        <a href="/docs/04-reference/" class="prev-next-card prev-card"><span class="prev-next-label">← Prev</span><span class="prev-next-title">Reference</span></a>
+        <a href="/docs/09-architecture/adr/" class="prev-next-card next-card"><span class="prev-next-label">Next →</span><span class="prev-next-title">Adr</span></a>
       </nav>
       <footer class="footer">
     <div class="footer-content">
