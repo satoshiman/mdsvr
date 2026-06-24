@@ -2,26 +2,34 @@ name: PR Check
 
 on:
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   pr-check:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    - name: Use Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20'
-        cache: 'npm'
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
 
-    - name: Install dependencies
-      run: npm ci
+      - name: Install dependencies
+        run: npm ci
 
-    - name: Run tests
-      run: npm test
+      - name: Run tests
+        run: npm test
 
-    - name: Build
-      run: npm run build
+      - name: Build
+        run: npm run build
+
+      - name: Lint commit messages
+        run: |
+          if [ -n "${{ github.event.pull_request.base.sha }}" ]; then
+            npx commitlint --from ${{ github.event.pull_request.base.sha }} --to HEAD --verbose
+          else
+            npx commitlint --from HEAD~1 --to HEAD --verbose
+          fi
