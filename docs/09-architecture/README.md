@@ -1,6 +1,6 @@
 # Architecture
 
-> **Note**: This documentation is intended for contributors to mdsvr, not for end users. If you're looking for user documentation, see the [main docs](./docs).
+> **Note**: This documentation is intended for contributors to mdsvr, not for end users. If you're looking for user documentation, see the [main docs](..).
 
 ## Overview
 
