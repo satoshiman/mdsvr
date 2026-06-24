@@ -21,10 +21,10 @@
     "sidebar": {
       "enabled": true,
       "autoGenerate": true,
-      "depth": 3,
+      "depth": 2,
       "docsOnly": true,
       "collapsible": true,
-      "defaultOpen": true
+      "defaultOpen": false
     },
     "tocEnabled": true
   },
