@@ -4,7 +4,7 @@
   "og": {
     "/01-getting-started/": {
       "outputPath": "public/assets/og/01-getting-started/index.jpg",
-      "hash": "2e2142230425cf4b76171b25bc13f17ccdab514cedb54a21819f797f6fb8f398"
+      "hash": "9c249aac986f121a58fd67db8f643b40de1168fbf5f058638ccb4e5f4ba14277"
     },
     "/02-settings/": {
       "outputPath": "public/assets/og/02-settings/index.jpg",
@@ -46,9 +46,41 @@
       "outputPath": "public/assets/og/04-reference/index.jpg",
       "hash": "0682ea546e789bd2e01f579a7e59cd8c5f31249ae77b039082f5f31e807d8683"
     },
+    "/09-architecture/": {
+      "outputPath": "public/assets/og/09-architecture/index.jpg",
+      "hash": "16c1764a920e06179539dc288ef5e4963243e6bab861ebc6f7e4ee5d7e318a92"
+    },
+    "/09-architecture/adr/001-file-based-content-storage": {
+      "outputPath": "public/assets/og/09-architecture/adr/001-file-based-content-storage/index.jpg",
+      "hash": "d6b13cf37f2796a66f447661da41941d61cc4863bbfc19f3ee36e3a57c17b704"
+    },
+    "/09-architecture/adr/002-server-side-mdx-rendering": {
+      "outputPath": "public/assets/og/09-architecture/adr/002-server-side-mdx-rendering/index.jpg",
+      "hash": "7b785f26cc071cb6c828ebd88541f076f994a75cd622527b06f8e13bcbee6e57"
+    },
+    "/09-architecture/adr/003-zero-configuration-with-defaults": {
+      "outputPath": "public/assets/og/09-architecture/adr/003-zero-configuration-with-defaults/index.jpg",
+      "hash": "4b0b777c1c2473146a127ce6930b74221a64b3dbb8c0656193e3afb25d664657"
+    },
+    "/09-architecture/adr/004-client-side-search-with-pre-built-index": {
+      "outputPath": "public/assets/og/09-architecture/adr/004-client-side-search-with-pre-built-index/index.jpg",
+      "hash": "dcdf6a5aa0eb49997f9c04c4c717ab6f3c1a7c919333345962d3d9c23d153f97"
+    },
+    "/09-architecture/adr/005-incremental-static-export": {
+      "outputPath": "public/assets/og/09-architecture/adr/005-incremental-static-export/index.jpg",
+      "hash": "eeabc7c8397dfcc171cc981eb6898a478a653dc3cd335b97fc94220bf0dd5a8c"
+    },
+    "/09-architecture/adr/006-markdown-validation-and-autofix": {
+      "outputPath": "public/assets/og/09-architecture/adr/006-markdown-validation-and-autofix/index.jpg",
+      "hash": "3a49bd00dc4488a788513dac4addd47ff0e13bbd7b1cb04717c5eb268a21acef"
+    },
     "/": {
       "outputPath": "public/assets/og/index.jpg",
       "hash": "50bf3660026766512fc9134bf9e132f9f091692ecdd6b382d1037cf2e03d53cf"
+    },
+    "/09-architecture/adr/": {
+      "outputPath": "public/assets/og/09-architecture/adr/index.jpg",
+      "hash": "c54a4320522517ebf3a4dc21356712d81cf972b5b8a82625e1baba4c0c4d8dca"
     }
   }
 }
