@@ -9,6 +9,39 @@ import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import type { Settings } from "../settings/index.js";
 import { builtinComponents } from "./components.js";
 
+// Convert triple-colon callouts in HTML to callout divs
+function convertTripleColonCallouts(html: string): string {
+  const typeMap: Record<string, string> = {
+    NOTE: "info",
+    TIP: "tip",
+    IMPORTANT: "info",
+    WARNING: "warning",
+    CAUTION: "danger",
+    INFO: "info",
+    DANGER: "danger",
+  };
+
+  const titles: Record<string, string> = {
+    NOTE: "ℹ️ Info",
+    TIP: "💡 Tip",
+    IMPORTANT: "ℹ️ Info",
+    WARNING: "⚠️ Warning",
+    CAUTION: "🚫 Danger",
+    INFO: "ℹ️ Info",
+    DANGER: "🚫 Danger",
+  };
+
+  // Match triple-colon syntax: :::type content :::
+  return html.replace(
+    /<p>\s*:::(note|tip|warning|danger|info|important|caution)\s*(.*?)\s*:::\s*<\/p>/gis,
+    (match, type, content) => {
+      const calloutType = typeMap[type.toUpperCase()] || "info";
+      const calloutTitle = titles[type.toUpperCase()] || "ℹ️ Info";
+      return `<div class="callout callout-${calloutType}"><strong style="display: block; margin-bottom: 8px;">${calloutTitle}</strong><div>${content}</div></div>`;
+    },
+  );
+}
+
 export interface TocItem {
   level: number;
   text: string;
@@ -56,10 +89,13 @@ export async function renderMdx(
   }
 
   // Render to static HTML with built-in components injected
-  const html = renderToStaticMarkup(
+  let html = renderToStaticMarkup(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (MDXContent as any)({ components: enabledComponents }),
   );
+
+  // Convert triple-colon callouts
+  html = convertTripleColonCallouts(html);
 
   const toc = extractToc(html);
 
