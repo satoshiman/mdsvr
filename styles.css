@@ -610,6 +610,59 @@ kbd {
   color: var(--yellow);
 }
 
+/* Callout styles for markdown content */
+.callout {
+  border-left: 3px solid;
+  padding: 12px 16px;
+  border-radius: 6px;
+  margin: 16px 0;
+}
+
+.callout-info {
+  border-color: var(--accent);
+  background: rgba(79,142,247,0.08);
+}
+
+.callout-info strong {
+  color: var(--accent);
+}
+
+.callout-tip {
+  border-color: var(--green);
+  background: rgba(52,211,153,0.08);
+}
+
+.callout-tip strong {
+  color: var(--green);
+}
+
+.callout-warning {
+  border-color: var(--yellow);
+  background: rgba(251,191,36,0.08);
+}
+
+.callout-warning strong {
+  color: var(--yellow);
+}
+
+.callout-danger {
+  border-color: var(--red);
+  background: rgba(248,113,113,0.08);
+}
+
+.callout-danger strong {
+  color: var(--red);
+}
+
+.callout-success {
+  border-color: var(--green);
+  background: rgba(52,211,153,0.08);
+}
+
+.callout-success strong {
+  color: var(--green);
+}
+
 /* Steps */
 .mdx-steps {
   width: 100%;

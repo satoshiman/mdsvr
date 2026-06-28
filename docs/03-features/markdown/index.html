@@ -1743,16 +1743,161 @@ New line starts here.</p>
 <h2 id="footnotes-if-supported" tabindex="-1">Footnotes (if supported)</h2>
 <p>This is a reference[^1].</p>
 <p>[^1]: This is the footnote content.</p>
-<h2 id="admonitions-if-supported-via-custom-syntax" tabindex="-1">Admonitions (if supported via custom syntax)</h2>
-<blockquote>
-<p><strong>Note:</strong> This is a note block.</p>
-</blockquote>
-<blockquote>
-<p><strong>Warning:</strong> This is a warning block.</p>
-</blockquote>
-<blockquote>
-<p><strong>Tip:</strong> This is a tip block.</p>
-</blockquote>
+<h2 id="callouts" tabindex="-1">Callouts</h2>
+<p>mdsvr supports two callout syntaxes:</p>
+<h3 id="github-style-callouts" tabindex="-1">GitHub-style Callouts</h3>
+<p>Use <code>[!TYPE]</code> in blockquotes:</p>
+<p>example:</p>
+<pre class="code-block-wrapper"><div class="code-block-container">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-markdown"><span class="hljs-quote">&gt; [!NOTE]</span>
+<span class="hljs-quote">&gt; This is a note callout.</span>
+
+<span class="hljs-quote">&gt; [!TIP]</span>
+<span class="hljs-quote">&gt; This is a tip callout.</span>
+
+<span class="hljs-quote">&gt; [!WARNING]</span>
+<span class="hljs-quote">&gt; This is a warning callout.</span>
+
+<span class="hljs-quote">&gt; [!CAUTION]</span>
+<span class="hljs-quote">&gt; This is a caution callout.</span>
+
+<span class="hljs-quote">&gt; [!IMPORTANT]</span>
+<span class="hljs-quote">&gt; This is an important callout.</span>
+
+<span class="hljs-quote">&gt; [!SUCCESS]</span>
+<span class="hljs-quote">&gt; This is a success callout.</span>
+</code></pre>
+  <pre class="code-block-raw" style="display:none;"><code>&gt; [!NOTE]
+&gt; This is a note callout.
+
+&gt; [!TIP]
+&gt; This is a tip callout.
+
+&gt; [!WARNING]
+&gt; This is a warning callout.
+
+&gt; [!CAUTION]
+&gt; This is a caution callout.
+
+&gt; [!IMPORTANT]
+&gt; This is an important callout.
+
+&gt; [!SUCCESS]
+&gt; This is a success callout.
+</code></pre>
+</div></pre>
+
+<p>renders as:</p>
+<div class="callout callout-info"><strong style="display: block; margin-bottom: 8px;">📝 Note</strong><div>This is a note callout.</div></div>
+<div class="callout callout-tip"><strong style="display: block; margin-bottom: 8px;">💡 Tip</strong><div>This is a tip callout.</div></div>
+<div class="callout callout-warning"><strong style="display: block; margin-bottom: 8px;">⚠️ Warning</strong><div>This is a warning callout.</div></div>
+<div class="callout callout-danger"><strong style="display: block; margin-bottom: 8px;">🚫 Caution</strong><div>This is a caution callout.</div></div>
+<div class="callout callout-info"><strong style="display: block; margin-bottom: 8px;">⭐ Important</strong><div>This is an important callout.</div></div>
+<div class="callout callout-success"><strong style="display: block; margin-bottom: 8px;">✅ Success</strong><div>This is a success callout.</div></div>
+<h3 id="triple-colon-callouts" tabindex="-1">Triple-colon Callouts</h3>
+<p>Use <code>:::type content :::</code> syntax:</p>
+<p>example:</p>
+<pre class="code-block-wrapper"><div class="code-block-container">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-markdown">:::note This is a note callout using triple-colon syntax. :::
+
+:::tip This is a tip callout using triple-colon syntax. :::
+
+:::warning This is a warning callout using triple-colon syntax. :::
+
+:::danger This is a danger callout using triple-colon syntax. :::
+
+:::info This is an info callout using triple-colon syntax. :::
+
+:::success This is a success callout using triple-colon syntax. :::
+</code></pre>
+  <pre class="code-block-raw" style="display:none;"><code>:::note This is a note callout using triple-colon syntax. :::
+
+:::tip This is a tip callout using triple-colon syntax. :::
+
+:::warning This is a warning callout using triple-colon syntax. :::
+
+:::danger This is a danger callout using triple-colon syntax. :::
+
+:::info This is an info callout using triple-colon syntax. :::
+
+:::success This is a success callout using triple-colon syntax. :::
+</code></pre>
+</div></pre>
+
+<p>renders as:</p>
+<div class="callout callout-info"><strong style="display: block; margin-bottom: 8px;">📝 Note</strong><div>This is a note callout using triple-colon syntax.</div></div>
+<div class="callout callout-tip"><strong style="display: block; margin-bottom: 8px;">💡 Tip</strong><div>This is a tip callout using triple-colon syntax.</div></div>
+<div class="callout callout-warning"><strong style="display: block; margin-bottom: 8px;">⚠️ Warning</strong><div>This is a warning callout using triple-colon syntax.</div></div>
+<div class="callout callout-danger"><strong style="display: block; margin-bottom: 8px;">🚫 Danger</strong><div>This is a danger callout using triple-colon syntax.</div></div>
+<div class="callout callout-info"><strong style="display: block; margin-bottom: 8px;">ℹ️ Info</strong><div>This is an info callout using triple-colon syntax.</div></div>
+<div class="callout callout-success"><strong style="display: block; margin-bottom: 8px;">✅ Success</strong><div>This is a success callout using triple-colon syntax.</div></div>
+<h3 id="supported-types" tabindex="-1">Supported Types</h3>
+<ul>
+<li><code>note</code> / <code>NOTE</code> → Info (ℹ️)</li>
+<li><code>tip</code> / <code>TIP</code> → Tip (💡)</li>
+<li><code>warning</code> / <code>WARNING</code> → Warning (⚠️)</li>
+<li><code>caution</code> / <code>CAUTION</code> → Danger (🚫)</li>
+<li><code>important</code> / <code>IMPORTANT</code> → Info (ℹ️)</li>
+<li><code>info</code> / <code>INFO</code> → Info (ℹ️)</li>
+<li><code>danger</code> / <code>DANGER</code> → Danger (🚫)</li>
+<li><code>success</code> / <code>SUCCESS</code> → Success (✅)</li>
+</ul>
 <h2 id="mermaid-diagrams" tabindex="-1">Mermaid Diagrams</h2>
 <p>mdsvr supports Mermaid diagrams via the <code>mermaid</code> code block:</p>
 <h3 id="database-schema-diagram" tabindex="-1">Database Schema Diagram</h3>
@@ -1897,7 +2042,12 @@ New line starts here.</p>
 <li class="toc-item"><a href="#automatic-links">Automatic Links</a></li>
 <li class="toc-item"><a href="#definition-lists-if-supported">Definition Lists (if supported)</a></li>
 <li class="toc-item"><a href="#footnotes-if-supported">Footnotes (if supported)</a></li>
-<li class="toc-item"><a href="#admonitions-if-supported-via-custom-syntax">Admonitions (if supported via custom syntax)</a></li>
+<li class="toc-item"><a href="#callouts">Callouts</a></li>
+<ul class="toc-list toc-level-3">
+<li class="toc-item"><a href="#github-style-callouts">GitHub-style Callouts</a></li>
+<li class="toc-item"><a href="#triple-colon-callouts">Triple-colon Callouts</a></li>
+<li class="toc-item"><a href="#supported-types">Supported Types</a></li>
+</ul>
 <li class="toc-item"><a href="#mermaid-diagrams">Mermaid Diagrams</a></li>
 <ul class="toc-list toc-level-3">
 <li class="toc-item"><a href="#database-schema-diagram">Database Schema Diagram</a></li>
