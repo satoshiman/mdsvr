@@ -5,6 +5,48 @@ import matter from "gray-matter";
 import type { Settings } from "../settings/index.js";
 import { slugify } from "./slugify.js";
 
+// Convert GitHub-style callouts and triple-colon callouts in HTML to callout divs
+function convertGithubCallouts(html: string): string {
+  const typeMap: Record<string, string> = {
+    NOTE: "info",
+    TIP: "tip",
+    IMPORTANT: "info",
+    WARNING: "warning",
+    CAUTION: "danger",
+  };
+
+  const titles: Record<string, string> = {
+    NOTE: "ℹ️ Info",
+    TIP: "💡 Tip",
+    IMPORTANT: "ℹ️ Info",
+    WARNING: "⚠️ Warning",
+    CAUTION: "🚫 Danger",
+  };
+
+  // Match blockquotes starting with [!TYPE]
+  html = html.replace(
+    /<blockquote>\s*<p>\s*\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s*(.*?)<\/p>\s*(.*?)<\/blockquote>/gis,
+    (match, type, firstLine, rest) => {
+      const calloutType = typeMap[type.toUpperCase()] || "info";
+      const calloutTitle = titles[type.toUpperCase()] || "ℹ️ Info";
+      const content = (firstLine + (rest || "")).trim();
+      return `<div class="callout callout-${calloutType}"><strong style="display: block; margin-bottom: 8px;">${calloutTitle}</strong><div>${content}</div></div>`;
+    },
+  );
+
+  // Match triple-colon syntax: :::type content :::
+  html = html.replace(
+    /<p>\s*:::(note|tip|warning|danger|info|important|caution)\s*(.*?)\s*:::\s*<\/p>/gis,
+    (match, type, content) => {
+      const calloutType = typeMap[type.toUpperCase()] || "info";
+      const calloutTitle = titles[type.toUpperCase()] || "ℹ️ Info";
+      return `<div class="callout callout-${calloutType}"><strong style="display: block; margin-bottom: 8px;">${calloutTitle}</strong><div>${content}</div></div>`;
+    },
+  );
+
+  return html;
+}
+
 export interface TocItem {
   level: number;
   text: string;
@@ -131,7 +173,10 @@ export function renderMarkdown(
 
   // Render markdown
   const md = createMarkdownIt(settings);
-  const html = md.render(parsed.content);
+  let html = md.render(parsed.content);
+
+  // Convert GitHub-style callouts
+  html = convertGithubCallouts(html);
 
   // Extract TOC from rendered HTML
   const toc = extractToc(html);
@@ -281,5 +326,10 @@ export function renderMarkdownSimple(content: string): string {
   md.renderer.rules.table_open = () => '<div class="table-wrapper"><table>\n';
   md.renderer.rules.table_close = () => "</table></div>\n";
 
-  return md.render(content);
+  let html = md.render(content);
+
+  // Convert GitHub-style callouts
+  html = convertGithubCallouts(html);
+
+  return html;
 }

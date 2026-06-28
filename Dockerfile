@@ -23,8 +23,8 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Install only production dependencies
-RUN npm ci --omit=dev
+# Install only production dependencies (skip prepare script since husky not needed in production)
+RUN npm ci --omit=dev --ignore-scripts
 
 # Copy built files from builder
 COPY --from=builder /app/dist ./dist
