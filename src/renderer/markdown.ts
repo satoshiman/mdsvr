@@ -13,19 +13,25 @@ function convertGithubCallouts(html: string): string {
     IMPORTANT: "info",
     WARNING: "warning",
     CAUTION: "danger",
+    SUCCESS: "success",
+    INFO: "info",
+    DANGER: "danger",
   };
 
   const titles: Record<string, string> = {
-    NOTE: "ℹ️ Info",
+    NOTE: "📝 Note",
     TIP: "💡 Tip",
-    IMPORTANT: "ℹ️ Info",
+    IMPORTANT: "⭐ Important",
     WARNING: "⚠️ Warning",
-    CAUTION: "🚫 Danger",
+    CAUTION: "🚫 Caution",
+    SUCCESS: "✅ Success",
+    INFO: "ℹ️ Info",
+    DANGER: "🚫 Danger",
   };
 
   // Match blockquotes starting with [!TYPE]
   html = html.replace(
-    /<blockquote>\s*<p>\s*\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s*(.*?)<\/p>\s*(.*?)<\/blockquote>/gis,
+    /<blockquote>\s*<p>\s*\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION|SUCCESS|INFO|DANGER)\]\s*(.*?)<\/p>\s*(.*?)<\/blockquote>/gis,
     (match, type, firstLine, rest) => {
       const calloutType = typeMap[type.toUpperCase()] || "info";
       const calloutTitle = titles[type.toUpperCase()] || "ℹ️ Info";
@@ -36,7 +42,7 @@ function convertGithubCallouts(html: string): string {
 
   // Match triple-colon syntax: :::type content :::
   html = html.replace(
-    /<p>\s*:::(note|tip|warning|danger|info|important|caution)\s*(.*?)\s*:::\s*<\/p>/gis,
+    /<p>\s*:::(note|tip|warning|danger|info|important|caution|success)\s*(.*?)\s*:::\s*<\/p>/gis,
     (match, type, content) => {
       const calloutType = typeMap[type.toUpperCase()] || "info";
       const calloutTitle = titles[type.toUpperCase()] || "ℹ️ Info";

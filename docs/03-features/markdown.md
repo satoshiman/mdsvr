@@ -180,13 +180,100 @@ This is a reference[^1].
 
 [^1]: This is the footnote content.
 
-## Admonitions (if supported via custom syntax)
+## Callouts
 
-> **Note:** This is a note block.
+mdsvr supports two callout syntaxes:
 
-> **Warning:** This is a warning block.
+### GitHub-style Callouts
 
-> **Tip:** This is a tip block.
+Use `[!TYPE]` in blockquotes:
+
+example:
+
+```markdown
+> [!NOTE]
+> This is a note callout.
+
+> [!TIP]
+> This is a tip callout.
+
+> [!WARNING]
+> This is a warning callout.
+
+> [!CAUTION]
+> This is a caution callout.
+
+> [!IMPORTANT]
+> This is an important callout.
+
+> [!SUCCESS]
+> This is a success callout.
+```
+
+renders as:
+
+> [!NOTE]
+> This is a note callout.
+
+> [!TIP]
+> This is a tip callout.
+
+> [!WARNING]
+> This is a warning callout.
+
+> [!CAUTION]
+> This is a caution callout.
+
+> [!IMPORTANT]
+> This is an important callout.
+
+> [!SUCCESS]
+> This is a success callout.
+
+### Triple-colon Callouts
+
+Use `:::type content :::` syntax:
+
+example:
+
+```markdown
+:::note This is a note callout using triple-colon syntax. :::
+
+:::tip This is a tip callout using triple-colon syntax. :::
+
+:::warning This is a warning callout using triple-colon syntax. :::
+
+:::danger This is a danger callout using triple-colon syntax. :::
+
+:::info This is an info callout using triple-colon syntax. :::
+
+:::success This is a success callout using triple-colon syntax. :::
+```
+
+renders as:
+
+:::note This is a note callout using triple-colon syntax. :::
+
+:::tip This is a tip callout using triple-colon syntax. :::
+
+:::warning This is a warning callout using triple-colon syntax. :::
+
+:::danger This is a danger callout using triple-colon syntax. :::
+
+:::info This is an info callout using triple-colon syntax. :::
+
+:::success This is a success callout using triple-colon syntax. :::
+
+### Supported Types
+
+- `note` / `NOTE` → Info (ℹ️)
+- `tip` / `TIP` → Tip (💡)
+- `warning` / `WARNING` → Warning (⚠️)
+- `caution` / `CAUTION` → Danger (🚫)
+- `important` / `IMPORTANT` → Info (ℹ️)
+- `info` / `INFO` → Info (ℹ️)
+- `danger` / `DANGER` → Danger (🚫)
+- `success` / `SUCCESS` → Success (✅)
 
 ## Mermaid Diagrams
 
