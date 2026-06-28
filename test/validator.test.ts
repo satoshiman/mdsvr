@@ -85,7 +85,7 @@ title: Bad Headings
       (e) => e.type === "heading-hierarchy",
     );
     assert.ok(headingError);
-    assert.strictEqual(headingError.message.includes("H1 to H3"), true);
+    assert.strictEqual(headingError.message.includes("H2 instead of H3"), true);
 
     // Cleanup
     await fs.rm(testDir, { recursive: true, force: true });

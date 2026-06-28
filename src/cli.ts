@@ -253,13 +253,7 @@ async function main(): Promise<void> {
           errors.forEach((e: any) => {
             const icon = e.icon || "⚠️";
             console.log(`    ${errorIndex}. ${icon} Line ${e.line}: ${e.type}`);
-            if (e.type === "broken-link") {
-              console.log(
-                `       ${e.message.split(": ")[1].replace(" -> ", " ➝ ")}`,
-              );
-            } else {
-              console.log(`       ${e.message}`);
-            }
+            console.log(`       ${e.message}`);
             if (e.suggestion) {
               console.log(`       ➤ ${e.suggestion}`);
             }
