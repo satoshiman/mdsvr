@@ -335,38 +335,8 @@ async function validateInternalLinks(
       continue;
     }
 
-    // Check for links with .md or .mdx extensions (will break on export)
-    // Only flag this if the file EXISTS - if it doesn't exist, it's a broken link, not an extension issue
+    // Check for index file patterns (README.md, index.md, etc.) - check this before extension check
     const linkWithoutAnchorForCheck = link.split("#")[0];
-    if (/\.(md|mdx)$/i.test(linkWithoutAnchorForCheck)) {
-      const resolvedPath = await resolveLink(link, filePath, rootDir);
-      const exists = await fileExists(resolvedPath);
-
-      if (exists) {
-        // File exists but has extension - warn about it
-        const withoutExt = linkWithoutAnchorForCheck.replace(
-          /\.(md|mdx)$/i,
-          "",
-        );
-        const anchorPart = link.includes("#") ? "#" + link.split("#")[1] : "";
-        const fixedLink = withoutExt + anchorPart;
-        errors.push({
-          file: path.relative(rootDir, filePath),
-          line,
-          type: "link-with-extension",
-          message: `Link with extension will break on export: ${link}`,
-          suggestion: `Remove extension: ${fixedLink}`,
-          autofix: original.replace(link, fixedLink),
-          original,
-          icon: "⚠️",
-        });
-        continue;
-      }
-      // If file doesn't exist, fall through to broken-link check below
-    }
-
-    // For links without extension, they should resolve via resolveLink
-    // Don't add extension check errors - clean URLs are valid
     const indexFilePatterns = [
       // README variants
       /README\.md$/i,
@@ -407,6 +377,61 @@ async function validateInternalLinks(
       continue;
     }
 
+    // Check for links with .md or .mdx extensions (will break on export)
+    // Only flag this if the file EXISTS - if it doesn't exist, it's a broken link, not an extension issue
+    if (/\.(md|mdx)$/i.test(linkWithoutAnchorForCheck)) {
+      const resolvedPath = await resolveLink(link, filePath, rootDir);
+      const exists = await fileExists(resolvedPath);
+
+      if (exists) {
+        // File exists but has extension - warn about it
+        const withoutExt = linkWithoutAnchorForCheck.replace(
+          /\.(md|mdx)$/i,
+          "",
+        );
+        const anchorPart = link.includes("#") ? "#" + link.split("#")[1] : "";
+        const fixedLink = withoutExt + anchorPart;
+        errors.push({
+          file: path.relative(rootDir, filePath),
+          line,
+          type: "link-with-extension",
+          message: `Link with extension will break on export: ${link}`,
+          suggestion: `Remove extension: ${fixedLink}`,
+          autofix: original.replace(link, fixedLink),
+          original,
+          icon: "⚠️",
+        });
+        continue;
+      }
+      // If file doesn't exist, report as broken link
+      const fileDir = path.dirname(resolvedPath);
+      const fileName = path.basename(resolvedPath, ".md");
+      const suggestion = await findSimilarFile(fileDir, fileName, rootDir);
+
+      let autofix: string | undefined;
+      if (suggestion) {
+        const relativePath = path.relative(path.dirname(filePath), suggestion);
+        const newLink = relativePath.startsWith("..")
+          ? relativePath
+          : `./${relativePath}`;
+        autofix = original.replace(link, newLink);
+      }
+
+      errors.push({
+        file: path.relative(rootDir, filePath),
+        line,
+        type: "broken-link",
+        message: `Broken link: ${link} -> ${resolvedPath}`,
+        suggestion: suggestion
+          ? `Did you mean: ${path.relative(rootDir, suggestion)}?`
+          : undefined,
+        autofix,
+        original,
+        icon: "🔗",
+      });
+      continue;
+    }
+
     // Extract anchor if present
     const anchorIndex = link.indexOf("#");
     const anchor = anchorIndex !== -1 ? link.slice(anchorIndex + 1) : null;
@@ -430,17 +455,54 @@ async function validateInternalLinks(
       continue;
     }
 
-    // Skip file existence check for clean URLs (no .md/.mdx extension)
-    // Clean URLs are valid in server mode and will be handled by static export
-    // Check if link ends with .md or .mdx (case-insensitive)
+    // For clean URLs (no .md/.mdx extension), resolve and check file existence
+    // Clean URLs are valid in server mode but should still reference existing files
     if (!/\.(md|mdx)$/i.test(linkWithoutAnchor)) {
+      const resolvedPath = await resolveLink(
+        linkWithoutAnchor,
+        filePath,
+        rootDir,
+      );
+
+      // Check file existence for clean URLs
+      if (resolvedPath !== filePath) {
+        const exists = await fileExists(resolvedPath);
+        if (!exists) {
+          // Try to find similar files for suggestion
+          const fileDir = path.dirname(resolvedPath);
+          const fileName = path.basename(resolvedPath, ".md");
+          const suggestion = await findSimilarFile(fileDir, fileName, rootDir);
+
+          let autofix: string | undefined;
+          if (suggestion) {
+            const relativePath = path.relative(
+              path.dirname(filePath),
+              suggestion,
+            );
+            const newLink = relativePath.startsWith("..")
+              ? relativePath
+              : `./${relativePath}`;
+            autofix = original.replace(link, newLink);
+          }
+
+          errors.push({
+            file: path.relative(rootDir, filePath),
+            line,
+            type: "broken-link",
+            message: `Broken link: ${link} -> ${resolvedPath}`,
+            suggestion: suggestion
+              ? `Did you mean: ${path.relative(rootDir, suggestion)}?`
+              : undefined,
+            autofix,
+            original,
+            icon: "🔗",
+          });
+          continue;
+        }
+      }
+
       // Still validate anchors for clean URLs
       if (anchor) {
-        const resolvedPath = await resolveLink(
-          linkWithoutAnchor,
-          filePath,
-          rootDir,
-        );
         const slugifiedAnchor = slugify(anchor);
         // If link points to same file, check if anchor exists
         if (resolvedPath === filePath) {
