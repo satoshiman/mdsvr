@@ -370,7 +370,7 @@ async function validateInternalLinks(
         line,
         type: "index-files",
         message: `Link to index file will break on export: ${link}`,
-        suggestion: `Use directory path instead: ${dirPath || "./"}`,
+        suggestion: `Use directory path instead: ${dirPath || "./"} (or run autofix)`,
         original,
         icon: "⚠️",
       });
@@ -396,7 +396,7 @@ async function validateInternalLinks(
           line,
           type: "link-with-extension",
           message: `Link with extension will break on export: ${link}`,
-          suggestion: `Remove extension: ${fixedLink}`,
+          suggestion: `Remove extension: ${fixedLink} (or run autofix)`,
           autofix: original.replace(link, fixedLink),
           original,
           icon: "⚠️",
@@ -421,10 +421,10 @@ async function validateInternalLinks(
         file: path.relative(rootDir, filePath),
         line,
         type: "broken-link",
-        message: `Broken link: ${link} -> ${resolvedPath}`,
-        suggestion: suggestion
-          ? `Did you mean: ${path.relative(rootDir, suggestion)}?`
-          : undefined,
+        message: suggestion
+          ? `➤ ${path.relative(rootDir, suggestion)}`
+          : `➤ ${link}`,
+        suggestion: undefined,
         autofix,
         original,
         icon: "🔗",
@@ -489,7 +489,7 @@ async function validateInternalLinks(
             file: path.relative(rootDir, filePath),
             line,
             type: "broken-link",
-            message: `Broken link: ${link} -> ${resolvedPath}`,
+            message: `➤ ${link}`,
             suggestion: suggestion
               ? `Did you mean: ${path.relative(rootDir, suggestion)}?`
               : undefined,
@@ -579,10 +579,10 @@ async function validateInternalLinks(
         file: path.relative(rootDir, filePath),
         line,
         type: "broken-link",
-        message: `Broken link: ${link} -> ${resolvedPath}`,
-        suggestion: suggestion
-          ? `Did you mean: ${path.relative(rootDir, suggestion)}?`
-          : undefined,
+        message: suggestion
+          ? `➤ ${path.relative(rootDir, suggestion)}`
+          : `➤ ${link}`,
+        suggestion: undefined,
         autofix,
         original,
         icon: "🔗",
@@ -792,36 +792,71 @@ function validateStructure(
   // Check for frontmatter (optional - just skip check)
   // Frontmatter is optional, so we don't add errors for missing it
 
-  // Check for missing H1
+  // Check for missing H1 and heading hierarchy
   let hasH1 = false;
-  let lastLevel = 0;
+  const headings: Array<{
+    line: number;
+    level: number;
+    text: string;
+    index: number;
+  }> = [];
+
   lines.forEach((line, index) => {
     const headingMatch = line.match(/^(#{1,6})\s+(.+)$/);
     if (headingMatch) {
       const level = headingMatch[1].length;
+      const text = headingMatch[2];
 
       if (level === 1) {
         hasH1 = true;
       }
 
-      if (level > lastLevel + 1 && lastLevel > 0) {
-        const correctLevel = lastLevel + 1;
-        const originalHeading = line;
-        const newHeading = "#".repeat(correctLevel) + line.slice(level);
+      headings.push({ line: index + 1, level, text, index });
+    }
+  });
+
+  // Detect heading hierarchy jumps and calculate fixes for all affected headings
+  if (headings.length > 0) {
+    const fixedLevels = new Map<number, number>(); // line -> new level
+
+    for (let i = 0; i < headings.length; i++) {
+      const current = headings[i];
+      const prev = i > 0 ? headings[i - 1] : null;
+
+      if (prev && current.level > prev.level + 1) {
+        // Found a jump - need to fix this and all subsequent headings at this level or deeper
+        const jumpAmount = current.level - (prev.level + 1);
+
+        // Fix all headings from this point onward that are at level >= current.level
+        for (let j = i; j < headings.length; j++) {
+          const h = headings[j];
+          if (h.level >= current.level) {
+            const newLevel = h.level - jumpAmount;
+            fixedLevels.set(h.line, newLevel);
+          }
+        }
+      }
+    }
+
+    // Generate errors for all fixed headings
+    fixedLevels.forEach((newLevel, line) => {
+      const heading = headings.find((h) => h.line === line);
+      if (heading) {
+        const originalHeading = lines[heading.index];
+        const newHeading = "#".repeat(newLevel) + " " + heading.text;
         errors.push({
           file: path.relative(rootDir, filePath),
-          line: index + 1,
+          line: heading.line,
           type: "heading-hierarchy",
-          message: `Heading level jumped from H${lastLevel} to H${level}`,
-          suggestion: `Use H${correctLevel} instead of H${level}`,
+          message: `Heading level should be H${newLevel} instead of H${heading.level}`,
+          suggestion: `Use H${newLevel} instead of H${heading.level} (or run autofix)`,
           autofix: newHeading,
           original: originalHeading,
           icon: "📝",
         });
       }
-      lastLevel = level;
-    }
-  });
+    });
+  }
 
   if (!hasH1) {
     // Find the first non-empty, non-frontmatter line to insert H1 before
@@ -858,7 +893,7 @@ function validateStructure(
       line: insertLine + 1,
       type: "missing-h1",
       message: "Missing H1 heading",
-      suggestion: "Add a top-level heading: # Your Title",
+      suggestion: "Add a top-level heading: # Your Title (or run autofix)",
       autofix: h1Autofix,
       original: "",
       icon: "📌",
@@ -963,24 +998,52 @@ export async function validateMarkdown(
       // Fix structure errors (by line index for accuracy)
       if (structureErrors.length > 0) {
         const lines = newContent.split("\n");
-        for (const error of structureErrors) {
-          if (error.autofix) {
-            if (error.type === "missing-h1" && error.original === "") {
-              // Insert H1 at the beginning
-              lines.splice(error.line - 1, 0, error.autofix);
+
+        // Group heading-hierarchy fixes to apply them together
+        const headingFixes = structureErrors.filter(
+          (e) => e.type === "heading-hierarchy" && e.autofix && e.original,
+        );
+        const otherFixes = structureErrors.filter(
+          (e) => e.type !== "heading-hierarchy" && e.autofix,
+        );
+
+        // Apply heading-hierarchy fixes first (replace by line index to handle duplicate headings)
+        if (headingFixes.length > 0) {
+          // Sort by line index in descending order to avoid index shifting
+          const sortedFixes = [...headingFixes].sort((a, b) => b.line - a.line);
+
+          for (const error of sortedFixes) {
+            const lineIndex = error.line - 1;
+            if (lineIndex < lines.length) {
+              lines[lineIndex] = error.autofix!;
               hasFixes = true;
               fixed++;
-            } else if (error.original && error.line > 0) {
-              // Replace specific line
-              const lineIndex = error.line - 1;
-              if (lineIndex < lines.length) {
-                lines[lineIndex] = error.autofix;
-                hasFixes = true;
-                fixed++;
-              }
             }
           }
         }
+
+        // Apply other fixes (like missing-h1) using line index
+        for (const error of otherFixes) {
+          if (
+            error.type === "missing-h1" &&
+            error.original === "" &&
+            error.autofix
+          ) {
+            // Insert H1 at the beginning
+            lines.splice(error.line - 1, 0, error.autofix);
+            hasFixes = true;
+            fixed++;
+          } else if (error.original && error.line > 0 && error.autofix) {
+            // Replace specific line
+            const lineIndex = error.line - 1;
+            if (lineIndex < lines.length) {
+              lines[lineIndex] = error.autofix;
+              hasFixes = true;
+              fixed++;
+            }
+          }
+        }
+
         if (hasFixes) {
           newContent = lines.join("\n");
         }
