@@ -11,7 +11,7 @@ This is a valid markdown file with proper structure.
 
 Proper heading hierarchy.
 
-[Internal Link](test-validator-valid)
+[Internal Link](#sub-heading)
 
 [External Link](https://example.com)
 

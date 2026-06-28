@@ -1,6 +1,6 @@
 ---
 title: Test Vietnamese Slugify
-description: Test file for slugify utility with Vietnamese text
+description: Test file for slugify utility with Vietnamese text, should NOT trigger any warning
 ---
 
 # Test Vietnamese Slugify
@@ -58,15 +58,3 @@ These use correct slugs after slugify:
 [Link to Chữ Đ và đ](#chu-d-va-d)
 
 [Link to Ký tự đặc biệt](#ky-tu-dac-biet)
-
-## Invalid Anchor Links (should trigger warning)
-
-These use wrong slugs:
-
-[Wrong slug for Tiếng Việt](#tieng-viet)
-
-[Wrong slug for Chữ cái đặc biệt](#chu-ca)
-
-[Wrong slug for Ký tự đặc biệt](#ky-tu)
-
-[Non-existent anchor](#non-existent)

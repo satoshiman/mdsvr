@@ -19,11 +19,11 @@ This file tests the absolute path warning.
 
 ## Valid: Relative paths (should NOT trigger warning)
 
-[Link to valid file](./valid.md)
+[Link to valid file](./valid)
 
-[Link to parent directory](../valid.md)
+[Link to parent directory](../valid)
 
-[Link to sibling](../test-autofix/test-autofix-h2-to-h4.md)
+[Link to sibling](../test-autofix/test-autofix-h2-to-h4)
 
 ## Valid: External links (should NOT trigger warning)
 
