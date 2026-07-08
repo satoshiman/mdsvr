@@ -136,8 +136,8 @@ mdsvr ./docs
 Pull and run with Docker:
 
 ```bash
-docker pull thedeployer/mdsvr:latest
-docker run -d --name docs-server -p 1800:1800 -v /path/to/docs:/app/docs thedeployer/mdsvr:latest
+docker pull ghcr.io/satoshiman/mdsvr:latest
+docker run -d --name docs-server -p 1800:1800 -v /path/to/docs:/app/docs ghcr.io/satoshiman/mdsvr:latest
 ```
 
 Then open http://localhost:1800 in your browser.

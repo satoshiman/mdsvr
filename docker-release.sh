@@ -34,7 +34,7 @@ if [ -z "$VERSION" ]; then
   exit 1
 fi
 
-IMAGE_NAME="thedeployer/mdsvr"
+IMAGE_NAME="ghcr.io/satoshiman/mdsvr"
 
 echo "Building Docker image for version $VERSION (multi-platform)..."
 
