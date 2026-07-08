@@ -117,6 +117,6 @@ See [Docker deployment](../02-settings#docker) for more details.
 
 ## Next Steps
 
-- Learn about [MDX components](../03-features/mdx.mdx) for interactive docs
+- Learn about [MDX components](../03-features/mdx) for interactive docs
 - [Configure](../02-settings) your site with `_mdsvr/settings.json`
 - See all [features](../03-features) mdsvr offers

@@ -220,6 +220,7 @@ export function renderPage(params: TemplateParams): string {
   ${themeScript}
   ${seoTags}
   ${settings.site.favicon ? `<link rel="icon" href="${settings.site.favicon}">` : ""}
+  ${body.includes('class="katex') ? '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css" crossorigin="anonymous">' : ""}
   <style>
 ${getBaseStyles(settings)}
 ${getHighlightJsStyles(settings)}
@@ -1480,6 +1481,17 @@ pre.code-block-wrapper {
   padding: 24px;
   text-align: center;
   color: var(--text-muted);
+}
+
+/* Math expressions (KaTeX) */
+.math-block {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 8px 0;
+  margin-bottom: 16px;
+}
+.markdown-body .katex {
+  font-size: 1.1em;
 }
 
 /* MDX Components - Light mode */
