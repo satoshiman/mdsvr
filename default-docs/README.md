@@ -52,13 +52,13 @@ Options:
 ### Serve your own documentation
 
 ```bash
-docker run -d -p 1800:1800 -v /path/to/your/docs:/app/docs thedeployer/mdsvr
+docker run -d -p 1800:1800 -v /path/to/your/docs:/app/docs ghcr.io/satoshiman/mdsvr:latest
 ```
 
 ### Custom port
 
 ```bash
-docker run -d -p 8080:1800 -v /path/to/your/docs:/app/docs thedeployer/mdsvr
+docker run -d -p 8080:1800 -v /path/to/your/docs:/app/docs ghcr.io/satoshiman/mdsvr:latest
 ```
 
 ### Build from source

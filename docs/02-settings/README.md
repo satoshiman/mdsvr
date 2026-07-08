@@ -643,17 +643,17 @@ jobs:
 ### Using Pre-built Image
 
 ```bash
-docker pull thedeployer/mdsvr:latest
+docker pull ghcr.io/satoshiman/mdsvr:latest
 docker run -d \
   -p 1800:1800 \
   -v /path/to/docs:/app/docs \
-  thedeployer/mdsvr:latest
+  ghcr.io/satoshiman/mdsvr:latest
 ```
 
 ### Build Your Own
 
 ```dockerfile
-FROM thedeployer/mdsvr:latest
+FROM ghcr.io/satoshiman/mdsvr:latest
 COPY ./docs /app/docs
 ```
 

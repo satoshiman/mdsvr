@@ -107,8 +107,8 @@ mdsvr --version
 Pull and run:
 
 ```bash
-docker pull thedeployer/mdsvr:latest
-docker run -d -p 1800:1800 -v /path/to/docs:/app/docs thedeployer/mdsvr:latest
+docker pull ghcr.io/satoshiman/mdsvr:latest
+docker run -d -p 1800:1800 -v /path/to/docs:/app/docs ghcr.io/satoshiman/mdsvr:latest
 ```
 
 See [Docker deployment](../02-settings#docker) for more details.
