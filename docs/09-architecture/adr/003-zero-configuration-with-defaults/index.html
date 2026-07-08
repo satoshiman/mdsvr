@@ -25,6 +25,7 @@
     <meta name="twitter:image" content="/docs/public/assets/og/09-architecture/adr/003-zero-configuration-with-defaults/index.jpg">
     <link rel="sitemap" type="application/xml" href="/docs/sitemap.xml">
   
+  
   <style>
 
 :root {
@@ -710,6 +711,17 @@ pre.code-block-wrapper {
   color: var(--text-muted);
 }
 
+/* Math expressions (KaTeX) */
+.math-block {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 8px 0;
+  margin-bottom: 16px;
+}
+.markdown-body .katex {
+  font-size: 1.1em;
+}
+
 /* MDX Components - Light mode */
 .callout {
   border-left: 4px solid;
@@ -1377,6 +1389,9 @@ code.hljs {
     <ul class="sidebar-nav" data-level="1">
       <li class="nav-item" data-type="file">
         <a href="/docs/03-features/markdown" class="nav-link">Markdown Formats</a>
+      </li>
+      <li class="nav-item" data-type="file">
+        <a href="/docs/03-features/math" class="nav-link">Mathematical Expressions</a>
       </li>
       <li class="nav-item" data-type="file">
         <a href="/docs/03-features/mdx" class="nav-link">MDX Components</a>

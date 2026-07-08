@@ -25,6 +25,7 @@
     <meta name="twitter:image" content="/docs/public/assets/og/01-getting-started/index.jpg">
     <link rel="sitemap" type="application/xml" href="/docs/sitemap.xml">
   
+  
   <style>
 
 :root {
@@ -710,6 +711,17 @@ pre.code-block-wrapper {
   color: var(--text-muted);
 }
 
+/* Math expressions (KaTeX) */
+.math-block {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 8px 0;
+  margin-bottom: 16px;
+}
+.markdown-body .katex {
+  font-size: 1.1em;
+}
+
 /* MDX Components - Light mode */
 .callout {
   border-left: 4px solid;
@@ -1379,6 +1391,9 @@ code.hljs {
         <a href="/docs/03-features/markdown" class="nav-link">Markdown Formats</a>
       </li>
       <li class="nav-item" data-type="file">
+        <a href="/docs/03-features/math" class="nav-link">Mathematical Expressions</a>
+      </li>
+      <li class="nav-item" data-type="file">
         <a href="/docs/03-features/mdx" class="nav-link">MDX Components</a>
       </li>
       <li class="nav-item" data-type="file">
@@ -1880,7 +1895,7 @@ docker run -d -p 1800:1800 -v /path/to/docs:/app/docs thedeployer/mdsvr:latest
 <hr>
 <h2 id="next-steps" tabindex="-1">Next Steps</h2>
 <ul>
-<li>Learn about <a href="../03-features/mdx.mdx">MDX components</a> for interactive docs</li>
+<li>Learn about <a href="../03-features/mdx">MDX components</a> for interactive docs</li>
 <li><a href="../02-settings">Configure</a> your site with <code>_mdsvr/settings.json</code></li>
 <li>See all <a href="../03-features">features</a> mdsvr offers</li>
 </ul>

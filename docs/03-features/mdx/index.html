@@ -25,6 +25,7 @@
     <meta name="twitter:image" content="/docs/public/assets/og/03-features/mdx/index.jpg">
     <link rel="sitemap" type="application/xml" href="/docs/sitemap.xml">
   
+  
   <style>
 
 :root {
@@ -710,6 +711,17 @@ pre.code-block-wrapper {
   color: var(--text-muted);
 }
 
+/* Math expressions (KaTeX) */
+.math-block {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 8px 0;
+  margin-bottom: 16px;
+}
+.markdown-body .katex {
+  font-size: 1.1em;
+}
+
 /* MDX Components - Light mode */
 .callout {
   border-left: 4px solid;
@@ -1378,6 +1390,9 @@ code.hljs {
       <li class="nav-item" data-type="file">
         <a href="/docs/03-features/markdown" class="nav-link">Markdown Formats</a>
       </li>
+      <li class="nav-item" data-type="file">
+        <a href="/docs/03-features/math" class="nav-link">Mathematical Expressions</a>
+      </li>
       <li class="nav-item active" data-type="file">
         <a href="/docs/03-features/mdx" class="nav-link active">MDX Components</a>
       </li>
@@ -1599,7 +1614,7 @@ noIndex: false
 <p>You can add additional plugins by installing them and adding their names to the arrays.</p>
       </article>
       <nav class="prev-next-nav">
-        <a href="/docs/03-features/markdown" class="prev-next-card prev-card"><span class="prev-next-label">← Prev</span><span class="prev-next-title">Markdown Formats</span></a>
+        <a href="/docs/03-features/math" class="prev-next-card prev-card"><span class="prev-next-label">← Prev</span><span class="prev-next-title">Mathematical Expressions</span></a>
         <a href="/docs/03-features/mermaid" class="prev-next-card next-card"><span class="prev-next-label">Next →</span><span class="prev-next-title">Mermaid Diagrams in mdsvr</span></a>
       </nav>
       <footer class="footer">

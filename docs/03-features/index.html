@@ -25,6 +25,7 @@
     <meta name="twitter:image" content="/docs/public/assets/og/03-features/index.jpg">
     <link rel="sitemap" type="application/xml" href="/docs/sitemap.xml">
   
+  
   <style>
 
 :root {
@@ -710,6 +711,17 @@ pre.code-block-wrapper {
   color: var(--text-muted);
 }
 
+/* Math expressions (KaTeX) */
+.math-block {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 8px 0;
+  margin-bottom: 16px;
+}
+.markdown-body .katex {
+  font-size: 1.1em;
+}
+
 /* MDX Components - Light mode */
 .callout {
   border-left: 4px solid;
@@ -1379,6 +1391,9 @@ code.hljs {
         <a href="/docs/03-features/markdown" class="nav-link">Markdown Formats</a>
       </li>
       <li class="nav-item" data-type="file">
+        <a href="/docs/03-features/math" class="nav-link">Mathematical Expressions</a>
+      </li>
+      <li class="nav-item" data-type="file">
         <a href="/docs/03-features/mdx" class="nav-link">MDX Components</a>
       </li>
       <li class="nav-item" data-type="file">
@@ -1471,6 +1486,11 @@ code.hljs {
 <td><strong>Mermaid</strong></td>
 <td>Diagrams and flowcharts</td>
 <td><a href="./mermaid">mermaid</a></td>
+</tr>
+<tr>
+<td><strong>Math</strong></td>
+<td>LaTeX mathematical expressions</td>
+<td><a href="./math">math</a></td>
 </tr>
 </tbody>
 </table></div>

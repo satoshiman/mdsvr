@@ -25,6 +25,7 @@
     <meta name="twitter:image" content="/docs/public/assets/og/03-features/markdown/index.jpg">
     <link rel="sitemap" type="application/xml" href="/docs/sitemap.xml">
   
+  
   <style>
 
 :root {
@@ -710,6 +711,17 @@ pre.code-block-wrapper {
   color: var(--text-muted);
 }
 
+/* Math expressions (KaTeX) */
+.math-block {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 8px 0;
+  margin-bottom: 16px;
+}
+.markdown-body .katex {
+  font-size: 1.1em;
+}
+
 /* MDX Components - Light mode */
 .callout {
   border-left: 4px solid;
@@ -1379,6 +1391,9 @@ code.hljs {
         <a href="/docs/03-features/markdown" class="nav-link active">Markdown Formats</a>
       </li>
       <li class="nav-item" data-type="file">
+        <a href="/docs/03-features/math" class="nav-link">Mathematical Expressions</a>
+      </li>
+      <li class="nav-item" data-type="file">
         <a href="/docs/03-features/mdx" class="nav-link">MDX Components</a>
       </li>
       <li class="nav-item" data-type="file">
@@ -1991,7 +2006,7 @@ New line starts here.</p>
       </article>
       <nav class="prev-next-nav">
         <a href="/docs/03-features/" class="prev-next-card prev-card"><span class="prev-next-label">← Prev</span><span class="prev-next-title">Features</span></a>
-        <a href="/docs/03-features/mdx" class="prev-next-card next-card"><span class="prev-next-label">Next →</span><span class="prev-next-title">MDX Components</span></a>
+        <a href="/docs/03-features/math" class="prev-next-card next-card"><span class="prev-next-label">Next →</span><span class="prev-next-title">Mathematical Expressions</span></a>
       </nav>
       <footer class="footer">
     <div class="footer-content">
