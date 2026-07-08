@@ -14,6 +14,7 @@ mdsvr comes with everything you need for modern documentation sites:
 | **Markdown** | Full GitHub-flavored Markdown support | [markdown](./markdown) |
 | **MDX**      | React components in your docs         | [mdx](./mdx)           |
 | **Mermaid**  | Diagrams and flowcharts               | [mermaid](./mermaid)   |
+| **Math**     | LaTeX mathematical expressions        | [math](./math)         |
 
 ## Navigation & UX
 

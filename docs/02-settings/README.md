@@ -433,7 +433,7 @@ Second step content
 </Steps>
 ```
 
-See [MDX Components](../03-features/mdx.mdx) for all available components.
+See [MDX Components](../03-features/mdx) for all available components.
 
 ### Images & Assets
 

@@ -4,6 +4,7 @@ import hljs from "highlight.js";
 import matter from "gray-matter";
 import type { Settings } from "../settings/index.js";
 import { slugify } from "./slugify.js";
+import { mathPlugin } from "./math.js";
 
 // Convert GitHub-style callouts and triple-colon callouts in HTML to callout divs
 function convertGithubCallouts(html: string): string {
@@ -161,6 +162,8 @@ function createMarkdownIt(settings: Settings): MarkdownIt {
     permalink: false,
     slugify,
   });
+
+  md.use(mathPlugin);
 
   // Wrap tables in a scrollable container for mobile responsiveness
   md.renderer.rules.table_open = () => '<div class="table-wrapper"><table>\n';
@@ -328,6 +331,8 @@ export function renderMarkdownSimple(content: string): string {
     permalink: false,
     slugify,
   });
+
+  md.use(mathPlugin);
 
   md.renderer.rules.table_open = () => '<div class="table-wrapper"><table>\n';
   md.renderer.rules.table_close = () => "</table></div>\n";

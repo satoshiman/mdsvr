@@ -4,6 +4,8 @@ import { renderToStaticMarkup } from "react-dom/server";
 import remarkGfm from "remark-gfm";
 import remarkFrontmatter from "remark-frontmatter";
 import remarkMdxFrontmatter from "remark-mdx-frontmatter";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import type { Settings } from "../settings/index.js";
@@ -65,8 +67,13 @@ export async function renderMdx(
 
   const compiled = await compile(content, {
     outputFormat: "function-body",
-    remarkPlugins: [remarkGfm, remarkFrontmatter, remarkMdxFrontmatter],
-    rehypePlugins: [rehypeSlug, rehypeAutolinkHeadings],
+    remarkPlugins: [
+      remarkGfm,
+      remarkFrontmatter,
+      remarkMdxFrontmatter,
+      remarkMath,
+    ],
+    rehypePlugins: [rehypeSlug, rehypeAutolinkHeadings, rehypeKatex],
     development: false,
   });
 

@@ -171,4 +171,59 @@ describe("renderer", () => {
     assert.ok(result.html.includes('class="mermaid-source"'));
     assert.ok(result.html.includes("A --> B"));
   });
+
+  it("renders inline math with $...$", () => {
+    const md = "The equation $\\sqrt{3x-1}+(1+x)^2$ is inline.";
+    const result = renderMarkdown(md, settings);
+    assert.ok(result.html.includes('class="katex"'));
+    assert.ok(!result.html.includes('class="katex-display"'));
+  });
+
+  it("renders inline math with $`...`$", () => {
+    const md = "The equation $`\\sqrt{3x-1}+(1+x)^2`$ is inline.";
+    const result = renderMarkdown(md, settings);
+    assert.ok(result.html.includes('class="katex"'));
+    assert.ok(!result.html.includes("<code>"));
+  });
+
+  it("renders block math with $$...$$", () => {
+    const md = "$$\n\\int_0^1 x^2 dx\n$$";
+    const result = renderMarkdown(md, settings);
+    assert.ok(result.html.includes('class="math-block"'));
+    assert.ok(result.html.includes("katex-display"));
+  });
+
+  it("renders single-line block math with $$...$$", () => {
+    const md = "$$E = mc^2$$";
+    const result = renderMarkdown(md, settings);
+    assert.ok(result.html.includes('class="math-block"'));
+    assert.ok(result.html.includes("katex-display"));
+  });
+
+  it("renders math fenced code blocks", () => {
+    const md = "```math\n\\frac{a}{b}\n```";
+    const result = renderMarkdown(md, settings);
+    assert.ok(result.html.includes('class="math-block"'));
+    assert.ok(result.html.includes("katex-display"));
+    assert.ok(!result.html.includes('class="code-block-container"'));
+  });
+
+  it("does not treat escaped \\$ as math delimiter", () => {
+    const md = "Costs \\$100 and \\$200 in total.";
+    const result = renderMarkdown(md, settings);
+    assert.ok(!result.html.includes('class="katex"'));
+    assert.ok(result.html.includes("$100"));
+  });
+
+  it("does not treat dollar amounts as math", () => {
+    const md = "Price is $5 to $10 range.";
+    const result = renderMarkdown(md, settings);
+    assert.ok(!result.html.includes('class="katex"'));
+  });
+
+  it("does not render math inside code blocks", () => {
+    const md = "```\n$x + y$\n```";
+    const result = renderMarkdown(md, settings);
+    assert.ok(!result.html.includes('class="katex"'));
+  });
 });
