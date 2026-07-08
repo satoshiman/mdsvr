@@ -3325,17 +3325,17 @@ jobs:
       </svg>
     </button>
   </div>
-  <pre><code class="hljs language-bash">docker pull thedeployer/mdsvr:latest
+  <pre><code class="hljs language-bash">docker pull ghcr.io/satoshiman/mdsvr:latest
 docker run -d \
   -p 1800:1800 \
   -v /path/to/docs:/app/docs \
-  thedeployer/mdsvr:latest
+  ghcr.io/satoshiman/mdsvr:latest
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>docker pull thedeployer/mdsvr:latest
+  <pre class="code-block-raw" style="display:none;"><code>docker pull ghcr.io/satoshiman/mdsvr:latest
 docker run -d \
   -p 1800:1800 \
   -v /path/to/docs:/app/docs \
-  thedeployer/mdsvr:latest
+  ghcr.io/satoshiman/mdsvr:latest
 </code></pre>
 </div></pre>
 
@@ -3369,10 +3369,10 @@ docker run -d \
       </svg>
     </button>
   </div>
-  <pre><code class="hljs language-dockerfile"><span class="hljs-keyword">FROM</span> thedeployer/mdsvr:latest
+  <pre><code class="hljs language-dockerfile"><span class="hljs-keyword">FROM</span> ghcr.io/satoshiman/mdsvr:latest
 <span class="hljs-keyword">COPY</span><span class="language-bash"> ./docs /app/docs</span>
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>FROM thedeployer/mdsvr:latest
+  <pre class="code-block-raw" style="display:none;"><code>FROM ghcr.io/satoshiman/mdsvr:latest
 COPY ./docs /app/docs
 </code></pre>
 </div></pre>
