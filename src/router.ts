@@ -81,7 +81,12 @@ export async function route(
   // Resolve path and check for path traversal
   const cleanUrlPath = urlPath.replace(/^\/+/, "");
   const resolvedPath = path.resolve(path.join(rootDir, cleanUrlPath));
-  if (!resolvedPath.startsWith(rootDir)) {
+  const relativePath = path.relative(rootDir, resolvedPath);
+  if (
+    relativePath === ".." ||
+    relativePath.startsWith(`..${path.sep}`) ||
+    path.isAbsolute(relativePath)
+  ) {
     sendError(res, 403, "Forbidden", settings);
     return;
   }

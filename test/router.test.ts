@@ -179,6 +179,37 @@ describe("router", () => {
     assert.strictEqual(res.statusCode, 403);
   });
 
+  it("returns 403 when encoded traversal reaches a sibling sharing the root prefix", async () => {
+    // Given
+    const outsideDir = `${tempDir}-outside`;
+    const secret = "outside-root-prefix-secret";
+    await fs.mkdir(outsideDir);
+    await fs.writeFile(path.join(outsideDir, "secret.txt"), secret);
+
+    try {
+      const requestPath = `/%2e%2e/${encodeURIComponent(path.basename(outsideDir))}/secret.txt`;
+
+      // When
+      const res = await requestRaw(baseUrl, requestPath);
+      res.setEncoding("utf8");
+      let body = "";
+      for await (const chunk of res) {
+        body += chunk;
+      }
+
+      // Then
+      assert.strictEqual(
+        res.statusCode,
+        403,
+        `expected encoded traversal to be forbidden, got ${res.statusCode} with body: ${body}`,
+      );
+      assert.strictEqual(res.headers.location, undefined);
+      assert.ok(!body.includes(secret));
+    } finally {
+      await fs.rm(outsideDir, { recursive: true, force: true });
+    }
+  });
+
   it("returns 405 for POST requests", async () => {
     const res = await fetch(`${baseUrl}/README.md`, { method: "POST" });
     assert.strictEqual(res.status, 405);
