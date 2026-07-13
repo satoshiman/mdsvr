@@ -210,6 +210,46 @@ describe("router", () => {
     }
   });
 
+  it("returns 403 for direct and pretty paths through an outside-root directory symlink", async () => {
+    // Given
+    const outsideDir = `${tempDir}-symlink-outside`;
+    const linkDir = path.join(tempDir, "symlink-outside");
+    const secret = "outside-symlink-secret";
+    await fs.mkdir(outsideDir);
+    await fs.writeFile(path.join(outsideDir, "secret.txt"), secret);
+    await fs.writeFile(path.join(outsideDir, "pretty-secret.md"), `# ${secret}`);
+    await fs.writeFile(path.join(outsideDir, "pretty-secret-mdx.mdx"), `# ${secret}`);
+    await fs.symlink(outsideDir, linkDir, "junction");
+
+    try {
+      for (const requestPath of [
+        "/symlink-outside/pretty-secret",
+        "/symlink-outside/pretty-secret-mdx",
+        "/symlink-outside/secret.txt",
+      ]) {
+        // When
+        const res = await requestRaw(baseUrl, requestPath);
+        res.setEncoding("utf8");
+        let body = "";
+        for await (const chunk of res) {
+          body += chunk;
+        }
+
+        // Then
+        assert.strictEqual(
+          res.statusCode,
+          403,
+          `expected ${requestPath} to be forbidden, got ${res.statusCode}; exposed secret: ${body.includes(secret) ? secret : "none"}`,
+        );
+        assert.strictEqual(res.headers.location, undefined);
+        assert.ok(!body.includes(secret));
+      }
+    } finally {
+      await fs.rm(linkDir, { recursive: true, force: true });
+      await fs.rm(outsideDir, { recursive: true, force: true });
+    }
+  });
+
   it("returns 405 for POST requests", async () => {
     const res = await fetch(`${baseUrl}/README.md`, { method: "POST" });
     assert.strictEqual(res.status, 405);
@@ -220,5 +260,27 @@ describe("router", () => {
     assert.strictEqual(res.status, 200);
     const body = await res.text();
     assert.ok(body.includes("Nested"));
+  });
+
+  it("returns 200 for a file reached through an in-root directory symlink", async () => {
+    // Given
+    const targetDir = path.join(tempDir, "symlink-target");
+    const linkDir = path.join(tempDir, "symlink-inside");
+    const content = "In-root symlink content";
+    await fs.mkdir(targetDir);
+    await fs.writeFile(path.join(targetDir, "linked.txt"), content);
+    await fs.symlink(targetDir, linkDir, "junction");
+
+    try {
+      // When
+      const res = await fetch(`${baseUrl}/symlink-inside/linked.txt`);
+
+      // Then
+      assert.strictEqual(res.status, 200);
+      assert.strictEqual(await res.text(), content);
+    } finally {
+      await fs.rm(linkDir, { recursive: true, force: true });
+      await fs.rm(targetDir, { recursive: true, force: true });
+    }
   });
 });

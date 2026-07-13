@@ -80,13 +80,9 @@ export async function route(
 
   // Resolve path and check for path traversal
   const cleanUrlPath = urlPath.replace(/^\/+/, "");
-  const resolvedPath = path.resolve(path.join(rootDir, cleanUrlPath));
-  const relativePath = path.relative(rootDir, resolvedPath);
-  if (
-    relativePath === ".." ||
-    relativePath.startsWith(`..${path.sep}`) ||
-    path.isAbsolute(relativePath)
-  ) {
+  const resolvedRootPath = path.resolve(rootDir);
+  const resolvedPath = path.resolve(path.join(resolvedRootPath, cleanUrlPath));
+  if (!isPathWithinRoot(resolvedRootPath, resolvedPath)) {
     sendError(res, 403, "Forbidden", settings);
     return;
   }
@@ -105,7 +101,16 @@ export async function route(
   }
 
   try {
-    const stat = await fs.stat(resolvedPath);
+    const realPath = await resolveContainedRealPath(
+      resolvedRootPath,
+      resolvedPath,
+    );
+    if (realPath === null) {
+      sendError(res, 403, "Forbidden", settings);
+      return;
+    }
+
+    const stat = await fs.stat(realPath);
 
     if (stat.isDirectory()) {
       const encodedPath = urlPath
@@ -124,11 +129,11 @@ export async function route(
         return;
       }
 
-      await serveDirectory(res, resolvedPath, urlPath, rootDir, settings);
+      await serveDirectory(res, realPath, urlPath, rootDir, settings);
     } else if (ext === ".md" || (ext === ".mdx" && settings.mdx.enabled)) {
-      await serveMarkdownOrMdx(res, resolvedPath, urlPath, rootDir, settings);
+      await serveMarkdownOrMdx(res, realPath, urlPath, rootDir, settings);
     } else if (isAllowedExtension(ext, settings)) {
-      await serveStatic(req, res, resolvedPath, ext);
+      await serveStatic(req, res, realPath, ext);
     } else {
       sendError(res, 403, "Forbidden", settings);
     }
@@ -141,15 +146,35 @@ export async function route(
       const mdxPath = resolvedPath + ".mdx";
 
       try {
-        await fs.access(mdPath);
-        await serveMarkdownOrMdx(res, mdPath, urlPath, rootDir, settings);
+        const realMdPath = await resolveContainedRealPath(
+          resolvedRootPath,
+          mdPath,
+        );
+        if (realMdPath === null) {
+          sendError(res, 403, "Forbidden", settings);
+          return;
+        }
+        await serveMarkdownOrMdx(res, realMdPath, urlPath, rootDir, settings);
         return;
       } catch {
         // Try .mdx
         if (settings.mdx.enabled) {
           try {
-            await fs.access(mdxPath);
-            await serveMarkdownOrMdx(res, mdxPath, urlPath, rootDir, settings);
+            const realMdxPath = await resolveContainedRealPath(
+              resolvedRootPath,
+              mdxPath,
+            );
+            if (realMdxPath === null) {
+              sendError(res, 403, "Forbidden", settings);
+              return;
+            }
+            await serveMarkdownOrMdx(
+              res,
+              realMdxPath,
+              urlPath,
+              rootDir,
+              settings,
+            );
             return;
           } catch {
             // Fall through to 404
@@ -162,6 +187,28 @@ export async function route(
       sendError(res, 500, "Internal Server Error", settings);
     }
   }
+}
+
+async function resolveContainedRealPath(
+  rootPath: string,
+  candidatePath: string,
+): Promise<string | null> {
+  const [realRootPath, realCandidatePath] = await Promise.all([
+    fs.realpath(rootPath),
+    fs.realpath(candidatePath),
+  ]);
+  return isPathWithinRoot(realRootPath, realCandidatePath)
+    ? realCandidatePath
+    : null;
+}
+
+function isPathWithinRoot(rootPath: string, candidatePath: string): boolean {
+  const relativePath = path.relative(rootPath, candidatePath);
+  return (
+    relativePath !== ".." &&
+    !relativePath.startsWith(`..${path.sep}`) &&
+    !path.isAbsolute(relativePath)
+  );
 }
 
 async function serveDirectory(
