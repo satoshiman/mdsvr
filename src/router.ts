@@ -103,11 +103,18 @@ export async function route(
     const stat = await fs.stat(resolvedPath);
 
     if (stat.isDirectory()) {
-      if (!urlPath.endsWith("/")) {
-        const location = url.includes("?")
-          ? url.replace("?", "/?")
-          : `${url}/`;
-        res.writeHead(308, { Location: location });
+      const encodedPath = urlPath
+        .split("/")
+        .filter((segment) => segment.length > 0)
+        .map(encodeURIComponent)
+        .join("/");
+      const canonicalPath = encodedPath ? `/${encodedPath}/` : "/";
+      const queryIndex = url.indexOf("?");
+      const requestPath = queryIndex === -1 ? url : url.slice(0, queryIndex);
+      const rawQuery = queryIndex === -1 ? "" : url.slice(queryIndex);
+
+      if (requestPath !== canonicalPath) {
+        res.writeHead(308, { Location: `${canonicalPath}${rawQuery}` });
         res.end();
         return;
       }

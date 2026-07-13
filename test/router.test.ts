@@ -7,6 +7,26 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 import os from "node:os";
 
+function requestRaw(
+  baseUrl: string,
+  requestPath: string,
+): Promise<http.IncomingMessage> {
+  const url = new URL(baseUrl);
+  return new Promise((resolve, reject) => {
+    const req = http.request(
+      {
+        hostname: url.hostname,
+        port: url.port,
+        path: requestPath,
+        method: "GET",
+      },
+      resolve,
+    );
+    req.on("error", reject);
+    req.end();
+  });
+}
+
 describe("router", () => {
   let tempDir: string;
   let server: ServerInstance;
@@ -84,6 +104,30 @@ describe("router", () => {
     // Then
     assert.strictEqual(res.status, 308);
     assert.strictEqual(res.headers.get("location"), "/subdir/?x=1");
+  });
+
+  it("canonicalizes protocol-relative directory paths before redirecting", async () => {
+    // Given
+    const requestPath = "//subdir";
+
+    // When
+    const res = await requestRaw(baseUrl, requestPath);
+
+    // Then
+    assert.strictEqual(res.statusCode, 308);
+    assert.strictEqual(res.headers.location, "/subdir/");
+  });
+
+  it("canonicalizes encoded trailing slashes before redirecting", async () => {
+    // Given
+    const requestPath = "/subdir%2F?x=1";
+
+    // When
+    const res = await requestRaw(baseUrl, requestPath);
+
+    // Then
+    assert.strictEqual(res.statusCode, 308);
+    assert.strictEqual(res.headers.location, "/subdir/?x=1");
   });
 
   it("returns 200 for directory URLs with a trailing slash", async () => {
