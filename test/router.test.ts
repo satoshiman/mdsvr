@@ -250,6 +250,54 @@ describe("router", () => {
     }
   });
 
+  it("returns 403 for directory indexes symlinked outside the root", async () => {
+    // Given
+    const outsideDir = `${tempDir}-index-symlink-outside`;
+    const readmeDir = path.join(tempDir, "readme-index-symlink");
+    const htmlDir = path.join(tempDir, "html-index-symlink");
+    const markdownSentinel = "outside-markdown-index-sentinel";
+    const htmlSentinel = "outside-html-index-sentinel";
+    const outsideMarkdown = path.join(outsideDir, "outside.md");
+    const outsideHtml = path.join(outsideDir, "outside.html");
+    await fs.mkdir(outsideDir);
+    await fs.mkdir(readmeDir);
+    await fs.mkdir(htmlDir);
+    await fs.writeFile(outsideMarkdown, `# ${markdownSentinel}`);
+    await fs.writeFile(outsideHtml, `<p>${htmlSentinel}</p>`);
+    await fs.symlink(outsideMarkdown, path.join(readmeDir, "README.md"), "file");
+    await fs.symlink(outsideHtml, path.join(htmlDir, "index.html"), "file");
+
+    try {
+      const cases = [
+        ["/readme-index-symlink/", markdownSentinel],
+        ["/html-index-symlink/", htmlSentinel],
+      ] as const;
+
+      // When
+      const responses = await Promise.all(
+        cases.map(async ([requestPath, sentinel]) => {
+          const res = await fetch(`${baseUrl}${requestPath}`);
+          const body = await res.text();
+          return { requestPath, sentinel, res, body };
+        }),
+      );
+
+      // Then
+      for (const { requestPath, sentinel, res, body } of responses) {
+        assert.strictEqual(
+          res.status,
+          403,
+          `expected ${requestPath} to be forbidden, got ${res.status}`,
+        );
+        assert.ok(!body.includes(sentinel));
+      }
+    } finally {
+      await fs.rm(readmeDir, { recursive: true, force: true });
+      await fs.rm(htmlDir, { recursive: true, force: true });
+      await fs.rm(outsideDir, { recursive: true, force: true });
+    }
+  });
+
   it("returns 405 for POST requests", async () => {
     const res = await fetch(`${baseUrl}/README.md`, { method: "POST" });
     assert.strictEqual(res.status, 405);

@@ -222,12 +222,16 @@ async function serveDirectory(
   for (const indexFile of settings.files.indexFiles) {
     const indexPath = path.join(dirPath, indexFile);
     try {
-      await fs.access(indexPath);
+      const realIndexPath = await resolveContainedRealPath(rootDir, indexPath);
+      if (realIndexPath === null) {
+        sendError(res, 403, "Forbidden", settings);
+        return;
+      }
       const ext = path.extname(indexFile).toLowerCase();
       if (ext === ".md" || (ext === ".mdx" && settings.mdx.enabled)) {
         await serveMarkdownOrMdx(
           res,
-          indexPath,
+          realIndexPath,
           path.join(urlPath, indexFile),
           rootDir,
           settings,
@@ -242,11 +246,15 @@ async function serveDirectory(
   // Try index.html
   const indexHtml = path.join(dirPath, "index.html");
   try {
-    await fs.access(indexHtml);
+    const realIndexHtml = await resolveContainedRealPath(rootDir, indexHtml);
+    if (realIndexHtml === null) {
+      sendError(res, 403, "Forbidden", settings);
+      return;
+    }
     await serveStatic(
       { method: "GET", url: urlPath } as IncomingMessage,
       res,
-      indexHtml,
+      realIndexHtml,
       ".html",
     );
     return;
