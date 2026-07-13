@@ -23,6 +23,14 @@ describe("router", () => {
     await fs.writeFile(path.join(tempDir, "test.txt"), "Plain text file");
     await fs.mkdir(path.join(tempDir, "subdir"));
     await fs.writeFile(
+      path.join(tempDir, "subdir", "README.md"),
+      "# Subdir\n\n[File](./file)",
+    );
+    await fs.writeFile(
+      path.join(tempDir, "subdir", "file.md"),
+      "# File\n\nLinked content.",
+    );
+    await fs.writeFile(
       path.join(tempDir, "subdir", "nested.md"),
       "# Nested\n\nNested content.",
     );
@@ -58,6 +66,51 @@ describe("router", () => {
     const body = await res.text();
     assert.ok(body.includes("README.md"));
     assert.ok(body.includes("subdir"));
+  });
+
+  it("redirects directory URLs to a trailing slash", async () => {
+    // When
+    const res = await fetch(`${baseUrl}/subdir`, { redirect: "manual" });
+
+    // Then
+    assert.strictEqual(res.status, 308);
+    assert.strictEqual(res.headers.get("location"), "/subdir/");
+  });
+
+  it("preserves query strings in directory redirects", async () => {
+    // When
+    const res = await fetch(`${baseUrl}/subdir?x=1`, { redirect: "manual" });
+
+    // Then
+    assert.strictEqual(res.status, 308);
+    assert.strictEqual(res.headers.get("location"), "/subdir/?x=1");
+  });
+
+  it("returns 200 for directory URLs with a trailing slash", async () => {
+    // When
+    const res = await fetch(`${baseUrl}/subdir/`);
+
+    // Then
+    assert.strictEqual(res.status, 200);
+    const body = await res.text();
+    assert.ok(body.includes("Subdir"));
+  });
+
+  it("resolves relative links after following a directory redirect", async () => {
+    // When
+    const res = await fetch(`${baseUrl}/subdir`);
+
+    // Then
+    assert.strictEqual(res.status, 200);
+    assert.strictEqual(res.url, `${baseUrl}/subdir/`);
+    const body = await res.text();
+    assert.match(body, /href="\.\/file"/);
+
+    const linkedUrl = new URL("./file", res.url);
+    assert.strictEqual(linkedUrl.pathname, "/subdir/file");
+    const linkedRes = await fetch(linkedUrl);
+    assert.strictEqual(linkedRes.status, 200);
+    assert.ok((await linkedRes.text()).includes("Linked content."));
   });
 
   it("returns 404 for missing file", async () => {

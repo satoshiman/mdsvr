@@ -103,6 +103,15 @@ export async function route(
     const stat = await fs.stat(resolvedPath);
 
     if (stat.isDirectory()) {
+      if (!urlPath.endsWith("/")) {
+        const location = url.includes("?")
+          ? url.replace("?", "/?")
+          : `${url}/`;
+        res.writeHead(308, { Location: location });
+        res.end();
+        return;
+      }
+
       await serveDirectory(res, resolvedPath, urlPath, rootDir, settings);
     } else if (ext === ".md" || (ext === ".mdx" && settings.mdx.enabled)) {
       await serveMarkdownOrMdx(res, resolvedPath, urlPath, rootDir, settings);
