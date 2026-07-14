@@ -156,10 +156,17 @@ Static export uses hash-based caching:
 
 ### Path Traversal Protection
 
-All resolved paths are verified to stay within the root directory:
+Request paths first pass a component-aware lexical containment check. The root
+and candidate are then resolved with `realpath`, and the canonical target must
+pass the same check before it is read or served:
 
 ```typescript
-if (!resolvedPath.startsWith(rootDir)) {
+const relativePath = path.relative(rootPath, candidatePath);
+if (
+  relativePath === ".." ||
+  relativePath.startsWith(`..${path.sep}`) ||
+  path.isAbsolute(relativePath)
+) {
   return 403 Forbidden;
 }
 ```
