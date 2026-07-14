@@ -1669,7 +1669,9 @@ code.hljs {
 </ul>
 <h2 id="security-model" tabindex="-1">Security Model</h2>
 <h3 id="path-traversal-protection" tabindex="-1">Path Traversal Protection</h3>
-<p>All resolved paths are verified to stay within the root directory:</p>
+<p>Request paths first pass a component-aware lexical containment check. The root
+and candidate are then resolved with <code>realpath</code>, and the canonical target must
+pass the same check before it is read or served:</p>
 <pre class="code-block-wrapper"><div class="code-block-container">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -1699,11 +1701,21 @@ code.hljs {
       </svg>
     </button>
   </div>
-  <pre><code class="hljs language-typescript"><span class="hljs-keyword">if</span> (!resolvedPath.<span class="hljs-title function_">startsWith</span>(rootDir)) {
+  <pre><code class="hljs language-typescript"><span class="hljs-keyword">const</span> relativePath = path.<span class="hljs-title function_">relative</span>(rootPath, candidatePath);
+<span class="hljs-keyword">if</span> (
+  relativePath === <span class="hljs-string">&quot;..&quot;</span> ||
+  relativePath.<span class="hljs-title function_">startsWith</span>(<span class="hljs-string">`..<span class="hljs-subst">${path.sep}</span>`</span>) ||
+  path.<span class="hljs-title function_">isAbsolute</span>(relativePath)
+) {
   <span class="hljs-keyword">return</span> <span class="hljs-number">403</span> <span class="hljs-title class_">Forbidden</span>;
 }
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>if (!resolvedPath.startsWith(rootDir)) {
+  <pre class="code-block-raw" style="display:none;"><code>const relativePath = path.relative(rootPath, candidatePath);
+if (
+  relativePath === &quot;..&quot; ||
+  relativePath.startsWith(`..${path.sep}`) ||
+  path.isAbsolute(relativePath)
+) {
   return 403 Forbidden;
 }
 </code></pre>
