@@ -37,27 +37,23 @@ If any of these are unclear, ask ONE focused question before proceeding.
 
 ## Step 2 — Plan the File Structure
 
-Design a logical hierarchy **before** writing content. A typical mdsvr doc site:
+Design the file structure **before** writing content. Prefer a flat structure because it is easier to browse, link, reorder, and maintain:
 
 ```
 docs/
 ├── README.md                    ← Homepage (required)
-├── 01-getting-started/
-│   ├── README.md                ← Section index
-│   ├── 01-installation.md
-│   ├── 02-quickstart.md
-│   └── 03-configuration.md
-├── 02-guides/
-│   ├── README.md
-│   ├── 01-basic-usage.md
-│   └── 02-advanced.md
-├── 03-api-reference/
-│   ├── README.md
-│   └── 01-endpoints.md
-└── 04-troubleshooting.md
+├── 01-installation.md
+├── 02-quickstart.md
+├── 03-configuration.md
+├── 04-basic-usage.md
+├── 05-advanced.md
+├── 06-api-reference.md
+└── 07-troubleshooting.md
 ```
 
-Adapt structure to user's topic. Scale up or down as needed.
+Create subdirectories only when the documentation is large enough that a flat list becomes difficult to navigate, such as when a section contains many closely related pages or needs its own index. Do not create a subdirectory for only one or two pages. When subdirectories are justified, each must contain a `README.md` section index.
+
+Adapt the structure to the user's topic and scale it up or down as needed.
 
 ---
 
@@ -116,6 +112,8 @@ description: "One-sentence description of this page's content."
 
 ### Section README.md (Directory Index)
 
+Only required when the documentation is large enough to justify a subdirectory.
+
 - Summarize what the section covers.
 - List all pages in the section with relative links.
 
@@ -123,9 +121,24 @@ description: "One-sentence description of this page's content."
 
 - One focused topic per page.
 - Start with a brief intro paragraph.
-- Use MDX components where appropriate:
-  - `:::note`, `:::warning`, `:::tip`, `:::danger` for callouts.
-  - Numbered lists for step-by-step procedures.
+- Prefer GitHub-style callouts because they are portable and widely supported:
+
+  ```markdown
+  > [!NOTE]
+  > Additional context the reader should know.
+
+  > [!TIP]
+  > Practical advice that helps the reader.
+
+  > [!WARNING]
+  > Important information requiring attention.
+
+  > [!CAUTION]
+  > A risk or potentially harmful consequence.
+  ```
+
+- Do not use triple-colon callouts such as `:::note`, `:::warning`, `:::tip`, or `:::danger` unless the user explicitly requests them.
+- Use numbered lists for step-by-step procedures.
 - Link liberally to related pages using relative paths.
 - End with a "Next Steps" or "Related" section when useful.
 
@@ -165,8 +178,8 @@ under `/mnt/user-data/outputs/<project-name>/`:
 
 ```
 /mnt/user-data/outputs/my-project/README.md
-/mnt/user-data/outputs/my-project/01-getting-started/README.md
-/mnt/user-data/outputs/my-project/01-getting-started/01-installation.md
+/mnt/user-data/outputs/my-project/01-installation.md
+/mnt/user-data/outputs/my-project/02-quickstart.md
 ...
 ```
 
