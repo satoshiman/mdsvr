@@ -173,7 +173,7 @@ if (
 
 ### Hidden Files
 
-Files starting with `_` or matching patterns in `settings.files.extensions.hidden` are not served.
+Files and folders starting with `_` or `.`, or matching patterns in `settings.files.extensions.hidden`, are not served.
 
 ### Blocked Extensions
 
