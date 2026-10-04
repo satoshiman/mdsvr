@@ -170,6 +170,56 @@ async function loadVietnameseFont(
   }
 }
 
+export interface OgFont {
+  name: string;
+  data: Buffer;
+  weight?: number;
+  style?: string;
+}
+
+const OG_FONT_WEIGHTS = [400, 600, 700, 800];
+
+type FontLoader = (
+  fontFamily: string,
+  weight?: number,
+) => Promise<Buffer | null>;
+
+/**
+ * Load primary fonts plus Vietnamese-capable fallback fonts.
+ *
+ * Satori resolves a single engine per `name` when matching a font-family, so
+ * duplicate entries registered under the same name are unreachable — the
+ * Vietnamese subset must use a distinct name so Satori's per-glyph fallback
+ * picks it up for glyphs missing from the primary Latin subset.
+ */
+export async function loadOgFonts(
+  fontFamily: string,
+  weights: number[] = OG_FONT_WEIGHTS,
+  loaders: { primary?: FontLoader; vietnamese?: FontLoader } = {},
+): Promise<OgFont[]> {
+  const primary = loaders.primary ?? loadFont;
+  const vietnamese = loaders.vietnamese ?? loadVietnameseFont;
+  const fonts: OgFont[] = [];
+
+  for (const weight of weights) {
+    const fontData = await primary(fontFamily, weight);
+    if (fontData) {
+      fonts.push({ name: fontFamily, data: fontData, weight });
+    }
+
+    const vietnameseFontData = await vietnamese(fontFamily, weight);
+    if (vietnameseFontData) {
+      fonts.push({
+        name: `${fontFamily}-vietnamese`,
+        data: vietnameseFontData,
+        weight,
+      });
+    }
+  }
+
+  return fonts;
+}
+
 /**
  * Generate OG image using Satori and Resvg
  */
@@ -194,35 +244,7 @@ export async function generateOgImage(
 
     // Load fonts - we need specific weights for the template
     const fontFamily = data.fontFamily || "Inter";
-    const fonts: {
-      name: string;
-      data: Buffer;
-      weight?: number;
-      style?: string;
-    }[] = [];
-
-    // Load different font weights needed for the template
-    const weights = [400, 600, 700, 800];
-    for (const weight of weights) {
-      const fontData = await loadFont(fontFamily, weight);
-      if (fontData) {
-        fonts.push({
-          name: fontFamily,
-          data: fontData,
-          weight,
-        });
-      }
-
-      // Load Vietnamese-capable variant for the same weight so diacritics render
-      const vietnameseFontData = await loadVietnameseFont(fontFamily, weight);
-      if (vietnameseFontData) {
-        fonts.push({
-          name: fontFamily,
-          data: vietnameseFontData,
-          weight,
-        });
-      }
-    }
+    const fonts = await loadOgFonts(fontFamily);
 
     // If no fonts were loaded, we can't generate the image
     if (fonts.length === 0) {

@@ -1,6 +1,10 @@
 import { describe, it } from "node:test";
 import assert from "node:assert";
-import { getOgImagePath, getOgImageUrl } from "../src/og/generator.js";
+import {
+  getOgImagePath,
+  getOgImageUrl,
+  loadOgFonts,
+} from "../src/og/generator.js";
 import {
   extractDependencies,
   generateOgFilename,
@@ -46,6 +50,63 @@ describe("og generator", () => {
       assert.strictEqual(
         result,
         "/docs/public/assets/og/3.-features/index.jpg",
+      );
+    });
+  });
+
+  describe("loadOgFonts", () => {
+    it("registers the vietnamese fallback under a distinct font name", async () => {
+      // Satori resolves a single engine per font name, so the vietnamese
+      // subset must use a different name to act as a per-glyph fallback.
+      const fonts = await loadOgFonts("Inter", [400], {
+        primary: async () => Buffer.from("latin-font"),
+        vietnamese: async () => Buffer.from("vietnamese-font"),
+      });
+      assert.strictEqual(fonts.length, 2);
+      assert.strictEqual(fonts[0].name, "Inter");
+      assert.strictEqual(fonts[0].weight, 400);
+      assert.strictEqual(fonts[1].name, "Inter-vietnamese");
+      assert.strictEqual(fonts[1].weight, 400);
+      assert.notStrictEqual(fonts[0].name, fonts[1].name);
+    });
+
+    it("uses the custom font family as the fallback name prefix", async () => {
+      const fonts = await loadOgFonts("MyFont", [700], {
+        primary: async () => Buffer.from("latin-font"),
+        vietnamese: async () => Buffer.from("vietnamese-font"),
+      });
+      assert.deepStrictEqual(
+        fonts.map((f) => f.name),
+        ["MyFont", "MyFont-vietnamese"],
+      );
+    });
+
+    it("skips fonts that fail to load", async () => {
+      const fonts = await loadOgFonts("Inter", [400, 700], {
+        primary: async (_family, weight) =>
+          weight === 400 ? Buffer.from("latin-font") : null,
+        vietnamese: async () => null,
+      });
+      assert.strictEqual(fonts.length, 1);
+      assert.strictEqual(fonts[0].name, "Inter");
+      assert.strictEqual(fonts[0].weight, 400);
+    });
+
+    it("loads every requested weight", async () => {
+      const fonts = await loadOgFonts("Inter", [400, 700, 800], {
+        primary: async () => Buffer.from("latin-font"),
+        vietnamese: async () => Buffer.from("vietnamese-font"),
+      });
+      assert.deepStrictEqual(
+        fonts.map((f) => `${f.name}@${f.weight}`),
+        [
+          "Inter@400",
+          "Inter-vietnamese@400",
+          "Inter@700",
+          "Inter-vietnamese@700",
+          "Inter@800",
+          "Inter-vietnamese@800",
+        ],
       );
     });
   });
