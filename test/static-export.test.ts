@@ -21,6 +21,10 @@ describe("static export", () => {
 
     const rootDir = path.join(tempDir, "docs");
     await fs.mkdir(path.join(rootDir, "no-readme-dir"), { recursive: true });
+    await fs.mkdir(path.join(rootDir, "assets"), { recursive: true });
+    await fs.mkdir(path.join(rootDir, ".github", "workflows"), {
+      recursive: true,
+    });
     await fs.writeFile(
       path.join(rootDir, "README.md"),
       "# Root Page\n\nRoot content.",
@@ -45,6 +49,16 @@ describe("static export", () => {
         null,
         2,
       ),
+    );
+    await fs.writeFile(path.join(rootDir, "package.json"), "{}");
+    await fs.writeFile(path.join(rootDir, "notes.mdx"), "# Notes");
+    await fs.writeFile(
+      path.join(rootDir, "assets", "app.js"),
+      "console.log('ok');",
+    );
+    await fs.writeFile(
+      path.join(rootDir, ".github", "workflows", "deploy.yml"),
+      "name: Deploy",
     );
   });
 
@@ -107,13 +121,15 @@ describe("static export", () => {
     );
   });
 
-  it("generates sitemap.xml when seo.generateSitemap is enabled", async () => {
+  it("generates sitemap.xml with absolute URLs when baseUrl is set", async () => {
     const rootDir = path.join(tempDir, "docs");
     const settings = await loadSettings(rootDir);
+    const withBase = structuredClone(settings);
+    withBase.site.baseUrl = "https://docs.example.com";
     await exportStaticSite({
       rootDir,
       outputDir,
-      settings,
+      settings: withBase,
       silent: true,
     });
 
@@ -123,12 +139,42 @@ describe("static export", () => {
     assert.ok(sitemap.includes('<?xml version="1.0" encoding="UTF-8"?>'));
     assert.ok(sitemap.includes("<urlset"));
     assert.ok(
-      sitemap.includes("<loc>"),
-      "sitemap should contain at least one URL",
+      sitemap.includes("<loc>https://docs.example.com/</loc>"),
+      "sitemap should contain absolute homepage URL",
+    );
+    assert.ok(
+      sitemap.includes("<loc>https://docs.example.com/vietnamese/</loc>"),
+      "sitemap doc URLs should use the canonical trailing-slash form",
+    );
+    assert.ok(
+      sitemap.includes("<loc>https://docs.example.com/no-readme-dir/</loc>"),
+      "sitemap should include auto-index directory pages",
     );
     assert.ok(
       !sitemap.includes("/README</loc>"),
       "README files should map to directory URLs, not /README",
+    );
+    assert.ok(
+      !sitemap.includes("localhost"),
+      "sitemap must never emit localhost URLs",
+    );
+  });
+
+  it("skips sitemap.xml on export when baseUrl is not configured", async () => {
+    const rootDir = path.join(tempDir, "docs");
+    const settings = await loadSettings(rootDir);
+    const noBaseOutput = path.join(tempDir, "output-nobase");
+    await exportStaticSite({
+      rootDir,
+      outputDir: noBaseOutput,
+      settings,
+      silent: true,
+    });
+
+    await assert.rejects(
+      fs.access(path.join(noBaseOutput, "sitemap.xml")),
+      (err: NodeJS.ErrnoException) => err.code === "ENOENT",
+      "sitemap.xml must not be written without an absolute base URL",
     );
   });
 
@@ -163,6 +209,77 @@ describe("static export", () => {
       !rootIndex.includes("https://example.com/default.jpg"),
       "defaultImage should not appear when generated OG is available",
     );
+  });
+
+  it("generates robots.txt and exports only served web files", async () => {
+    const rootDir = path.join(tempDir, "docs");
+    const settings = await loadSettings(rootDir);
+    await exportStaticSite({
+      rootDir,
+      outputDir,
+      settings,
+      silent: true,
+    });
+
+    const robots = await fs.readFile(
+      path.join(outputDir, "robots.txt"),
+      "utf-8",
+    );
+    assert.ok(robots.includes("User-agent: *"));
+    assert.ok(robots.includes("Allow: /"));
+    assert.ok(
+      !robots.includes("Sitemap:"),
+      "robots.txt must not emit a relative Sitemap line without baseUrl",
+    );
+
+    await fs.access(path.join(outputDir, "notes", "index.html"));
+    await fs.access(path.join(outputDir, "assets", "app.js"));
+
+    await assert.rejects(
+      fs.access(path.join(outputDir, "package.json")),
+      (err: NodeJS.ErrnoException) => err.code === "ENOENT",
+    );
+    await assert.rejects(
+      fs.access(path.join(outputDir, ".github")),
+      (err: NodeJS.ErrnoException) => err.code === "ENOENT",
+    );
+    await assert.rejects(
+      fs.access(path.join(outputDir, "settings.json")),
+      (err: NodeJS.ErrnoException) => err.code === "ENOENT",
+    );
+  });
+
+  it("honors a custom robots.txt and can disable generation", async () => {
+    const rootDir = path.join(tempDir, "docs");
+    const settings = await loadSettings(rootDir);
+    const customRobots = "User-agent: *\nDisallow: /drafts\n";
+    await fs.writeFile(path.join(rootDir, "robots.txt"), customRobots);
+
+    await exportStaticSite({
+      rootDir,
+      outputDir,
+      settings,
+      silent: true,
+    });
+    assert.strictEqual(
+      await fs.readFile(path.join(outputDir, "robots.txt"), "utf-8"),
+      customRobots,
+    );
+
+    const disabledSettings = structuredClone(settings);
+    disabledSettings.seo.generateRobotsTxt = false;
+    await exportStaticSite({
+      rootDir,
+      outputDir,
+      settings: disabledSettings,
+      silent: true,
+    });
+    await assert.rejects(
+      fs.access(path.join(outputDir, "robots.txt")),
+      (err: NodeJS.ErrnoException) => err.code === "ENOENT",
+    );
+
+    await fs.unlink(path.join(rootDir, "robots.txt"));
   });
 
   it("cleans up orphaned HTML files when source is deleted", async () => {

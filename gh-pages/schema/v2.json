@@ -59,6 +59,26 @@
         "favicon": {
           "type": "string",
           "description": "Favicon path or URL"
+        },
+        "author": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              }
+            }
+          ],
+          "description": "Site-wide default author (string or object with name/url); emitted as meta author and JSON-LD author"
         }
       }
     },
@@ -131,8 +151,8 @@
       "properties": {
         "titleTemplate": {
           "type": "string",
-          "default": "%s",
-          "description": "Title template (%s replaced with page title)"
+          "default": "%s | <site title>",
+          "description": "Title template (%s replaced with page title); defaults to '%s | site title' when unset"
         },
         "defaultImage": {
           "type": "string",
@@ -160,6 +180,16 @@
           "type": "boolean",
           "default": true,
           "description": "Generate sitemap.xml"
+        },
+        "generateRobotsTxt": {
+          "type": "boolean",
+          "default": true,
+          "description": "Generate robots.txt (skipped when a custom robots.txt exists in docs root)"
+        },
+        "structuredData": {
+          "type": "boolean",
+          "default": true,
+          "description": "Emit JSON-LD structured data (Article/WebSite/BreadcrumbList) per page"
         },
         "generateRssFeed": {
           "type": "boolean",

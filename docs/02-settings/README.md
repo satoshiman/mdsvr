@@ -47,10 +47,17 @@ Or create it manually:
       "alt": "My Project",
       "href": "/"
     },
-    "favicon": "./assets/favicon.ico"
+    "favicon": "./assets/favicon.ico",
+    "author": {
+      "name": "Acme Docs Team",
+      "url": "https://acme.example"
+    }
   }
 }
 ```
+
+- `author` — optional site-wide default author (string or `{ name, url }` object); emitted as `<meta name="author">` and JSON-LD `author` on document pages unless page frontmatter overrides it
+- `baseUrl` — required for absolute canonical URLs, `og:url`, exported `sitemap.xml`, and the `robots.txt` `Sitemap:` line; without it those URL-dependent tags/files are omitted rather than emitted as relative URLs
 
 ### Appearance
 
@@ -125,7 +132,9 @@ Configure search engine optimization features:
     "twitterCard": "summary_large_image",
     "twitterSite": "@myhandle",
     "generateSitemap": true,
+    "generateRobotsTxt": true,
     "generateRssFeed": true,
+    "structuredData": true,
     "og": {
       "enabled": true,
       "imageFormat": "jpg",
@@ -146,8 +155,12 @@ Configure search engine optimization features:
 
 When enabled, these endpoints are automatically generated:
 
-- `/sitemap.xml` — XML sitemap for search engines
+- `/sitemap.xml` — XML sitemap for search engines (requires `site.baseUrl` for static export; uses request origin in serve mode)
+- `/robots.txt` — crawler rules; a custom `robots.txt` in the docs root takes precedence
 - `/feed.xml` — RSS feed for blog posts (files with `date` in frontmatter)
+- `titleTemplate` — optional; defaults to `%s | <site title>` when unset, `%s` alone when `site.title` is empty
+- `structuredData` — emit JSON-LD `Article`/`WebSite`/`BreadcrumbList` per page (default `true`)
+- Page frontmatter: `seoTitle`, `noindex`/`noIndex`, `datePublished`, `dateModified` — see [SEO](../03-features/seo)
 
 ### MDX
 
@@ -296,6 +309,7 @@ Here's a complete `_mdsvr/settings.json` with all available options:
     "defaultImage": "./assets/og-default.png",
     "twitterCard": "summary_large_image",
     "generateSitemap": true,
+    "generateRobotsTxt": true,
     "generateRssFeed": false,
     "og": {
       "enabled": true,
@@ -376,10 +390,13 @@ Optional fields:
 ---
 title: Page Title
 description: Description
-date: 2025-01-15 # For RSS feed
-author: John Doe # Attribution
+date: 2025-01-15 # For RSS feed / article datePublished
+author: John Doe # Attribution (or { name, url })
 tags: [setup, guide] # For organization
-noIndex: true # Exclude from search
+seoTitle: Title Override # Wins over `title` for SEO output
+datePublished: 2025-01-15 # Article published date
+dateModified: 2025-01-20 # Article last update (also sitemap lastmod)
+noindex: true # Exclude from search + sitemap (noIndex also works)
 ---
 ```
 

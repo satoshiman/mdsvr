@@ -51,7 +51,9 @@ describe("renderer", () => {
       titleTemplate: "%s",
       noIndex: false,
       generateSitemap: true,
+      generateRobotsTxt: true,
       generateRssFeed: false,
+      structuredData: true,
       twitterCard: "summary",
       og: {
         enabled: false,

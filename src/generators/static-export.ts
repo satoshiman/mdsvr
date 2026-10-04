@@ -9,7 +9,8 @@ import {
   isAllowedExtension,
 } from "../render-page.js";
 import { buildSearchIndex } from "./search-index.js";
-import { generateSitemap } from "./sitemap.js";
+import { generateSitemapFromPages } from "./sitemap.js";
+import { generateRobotsTxt } from "./robots.js";
 import { generateFeed } from "./feed.js";
 import type { Settings } from "../settings/index.js";
 import {
@@ -49,6 +50,8 @@ interface PageInfo {
   sourcePath: string;
   title: string;
   description?: string;
+  noIndex?: boolean;
+  lastmod?: string;
 }
 
 export async function exportStaticSite(options: ExportOptions): Promise<void> {
@@ -145,6 +148,8 @@ export async function exportStaticSite(options: ExportOptions): Promise<void> {
           sourcePath: "", // Auto-index pages have no source file
           title: dirInfo.urlPath ? `Index of ${dirInfo.urlPath}` : "Index",
           description: settings.site.description,
+          noIndex: false,
+          lastmod: await directoryLastmod(absRootDir, dirInfo.urlPath),
         });
 
         if (!silent) {
@@ -221,14 +226,35 @@ export async function exportStaticSite(options: ExportOptions): Promise<void> {
       }
     }
 
-    // 7. Generate sitemap.xml if enabled
+    // 7. Generate sitemap.xml and robots.txt if enabled
     if (settings.seo.generateSitemap) {
-      const sitemap = await generateSitemap(absRootDir, settings);
+      const sitemap = generateSitemapFromPages(pageInfos, settings);
       const sitemapPath = path.join(absOutputDir, "sitemap.xml");
-      await fs.writeFile(sitemapPath, sitemap, "utf-8");
-      if (!silent) {
-        console.log(`  ✓ sitemap.xml`);
+      if (sitemap === null) {
+        // A sitemap requires absolute URLs — skip and drop any stale copy
+        await fs.rm(sitemapPath, { force: true });
+        if (!silent) {
+          console.log(
+            `  ⚠ sitemap.xml skipped: site.baseUrl is not configured`,
+          );
+        }
+      } else {
+        await fs.writeFile(sitemapPath, sitemap, "utf-8");
+        if (!silent) {
+          console.log(`  ✓ sitemap.xml`);
+        }
       }
+    }
+
+    const robotsPath = path.join(absOutputDir, "robots.txt");
+    if (settings.seo.generateRobotsTxt) {
+      const robots = await generateRobotsTxt(absRootDir, settings);
+      await fs.writeFile(robotsPath, robots, "utf-8");
+      if (!silent) {
+        console.log(`  ✓ robots.txt`);
+      }
+    } else {
+      await fs.rm(robotsPath, { force: true });
     }
 
     // 8. Generate RSS/Atom feed if enabled
@@ -388,7 +414,7 @@ async function processDirectory(
           console.log(`  ✓ ${relativePath} → ${displayPath}`);
         }
         updateCount(count);
-      } else if (isAllowedExtension(ext, settings)) {
+      } else if (isExportableFile(entry.name, settings)) {
         // Copy static files
         await copyFile(fullPath, outputFilePath);
       }
@@ -416,14 +442,51 @@ async function renderMarkdownFile(
 
   await fs.writeFile(outputPath, page.html, "utf-8");
 
-  // Return page info for OG generation
+  const frontmatter = page.frontmatter;
+  const dateValue = frontmatter.dateModified ?? frontmatter.date;
+  let lastmod: string | undefined;
+  if (dateValue != null && dateValue !== "") {
+    const date = new Date(String(dateValue));
+    if (!Number.isNaN(date.getTime())) {
+      lastmod = date.toISOString().split("T")[0];
+    }
+  }
+  if (!lastmod) {
+    const stat = await fs.stat(filePath);
+    lastmod = stat.mtime.toISOString().split("T")[0];
+  }
+
+  // Return page info for OG generation and the sitemap
   return {
     urlPath,
     outputPath,
     sourcePath: filePath,
     title: page.title,
     description: page.description,
+    noIndex: (frontmatter.noindex ?? frontmatter.noIndex) === true,
+    lastmod,
   };
+}
+
+async function directoryLastmod(
+  rootDir: string,
+  urlPath: string,
+): Promise<string | undefined> {
+  try {
+    const relDir = urlPath.replace(/^\/+|\/+$/g, "");
+    const stat = await fs.stat(path.join(rootDir, relDir));
+    return stat.mtime.toISOString().split("T")[0];
+  } catch {
+    return undefined;
+  }
+}
+
+function isExportableFile(fileName: string, settings: Settings): boolean {
+  const lowerName = fileName.toLowerCase();
+  if (settings.seo.generateRobotsTxt && lowerName === "robots.txt") {
+    return true;
+  }
+  return isAllowedExtension(path.extname(lowerName).toLowerCase(), settings);
 }
 
 async function copyFile(src: string, dest: string): Promise<void> {

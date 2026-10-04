@@ -1,15 +1,8 @@
 import type { Settings } from "../settings/index.js";
+import { formatPageTitle, type SeoData } from "../seo/metadata.js";
+import { normalizeBasePath, toAbsoluteAssetUrl } from "../seo/url.js";
 
-export interface SeoData {
-  title: string;
-  description?: string;
-  image?: string;
-  url?: string;
-  type?: "website" | "article";
-  date?: string;
-  author?: string;
-  noIndex?: boolean;
-}
+export type { SeoData } from "../seo/metadata.js";
 
 function escapeHtml(text: string): string {
   const htmlEscapes: Record<string, string> = {
@@ -22,22 +15,17 @@ function escapeHtml(text: string): string {
   return text.replace(/[&<>"']/g, (char) => htmlEscapes[char] || char);
 }
 
-function resolveImageUrl(image: string, settings: Settings): string {
-  if (image.startsWith("http://") || image.startsWith("https://")) {
-    return image;
-  }
-  if (settings.site.baseUrl) {
-    const base = settings.site.baseUrl.replace(/\/$/, "");
-    const path = image.startsWith("/") ? image : `/${image}`;
-    return `${base}${path}`;
-  }
-  return image;
-}
-
+/**
+ * Render the `<head>` SEO tags for a resolved page. All attribute values
+ * (including URLs) are HTML-escaped. Canonical and `og:url` are only
+ * emitted as absolute URLs — never relative.
+ */
 export function buildSeoTags(data: SeoData, settings: Settings): string {
-  const title = settings.seo.titleTemplate.replace("%s", data.title);
-  const image = data.image ?? settings.seo.defaultImage;
-  const description = data.description ?? settings.site.description ?? "";
+  const title = formatPageTitle(data.title, settings);
+  const description = data.description ?? "";
+  const image = data.image
+    ? (toAbsoluteAssetUrl(data.image, settings) ?? data.image)
+    : undefined;
 
   const tags: string[] = [];
 
@@ -46,7 +34,16 @@ export function buildSeoTags(data: SeoData, settings: Settings): string {
   tags.push(`<meta name="description" content="${escapeHtml(description)}">`);
 
   if (data.noIndex || settings.seo.noIndex) {
-    tags.push('<meta name="robots" content="noindex">');
+    tags.push('<meta name="robots" content="noindex, nofollow">');
+  }
+
+  if (data.author) {
+    tags.push(`<meta name="author" content="${escapeHtml(data.author.name)}">`);
+  }
+
+  // Canonical — absolute only, never relative
+  if (data.absoluteUrl) {
+    tags.push(`<link rel="canonical" href="${escapeHtml(data.absoluteUrl)}">`);
   }
 
   // Open Graph
@@ -54,16 +51,22 @@ export function buildSeoTags(data: SeoData, settings: Settings): string {
   tags.push(
     `<meta property="og:description" content="${escapeHtml(description)}">`,
   );
-  tags.push(`<meta property="og:type" content="${data.type ?? "website"}">`);
+  tags.push(`<meta property="og:type" content="${data.type}">`);
 
-  if (data.url) {
-    tags.push(`<meta property="og:url" content="${data.url}">`);
+  if (settings.site.title) {
+    tags.push(
+      `<meta property="og:site_name" content="${escapeHtml(settings.site.title)}">`,
+    );
+  }
+
+  if (data.absoluteUrl) {
+    tags.push(
+      `<meta property="og:url" content="${escapeHtml(data.absoluteUrl)}">`,
+    );
   }
 
   if (image) {
-    tags.push(
-      `<meta property="og:image" content="${resolveImageUrl(image, settings)}">`,
-    );
+    tags.push(`<meta property="og:image" content="${escapeHtml(image)}">`);
   }
 
   // Twitter Card
@@ -71,45 +74,49 @@ export function buildSeoTags(data: SeoData, settings: Settings): string {
 
   if (settings.seo.twitterSite) {
     tags.push(
-      `<meta name="twitter:site" content="${settings.seo.twitterSite}">`,
+      `<meta name="twitter:site" content="${escapeHtml(settings.seo.twitterSite)}">`,
     );
   }
 
   tags.push(`<meta name="twitter:title" content="${escapeHtml(title)}">`);
+  tags.push(
+    `<meta name="twitter:description" content="${escapeHtml(description)}">`,
+  );
 
   if (image) {
-    tags.push(
-      `<meta name="twitter:image" content="${resolveImageUrl(image, settings)}">`,
-    );
+    tags.push(`<meta name="twitter:image" content="${escapeHtml(image)}">`);
   }
 
   // Article meta
-  if (data.date) {
+  if (data.datePublished) {
     tags.push(
-      `<meta property="article:published_time" content="${data.date}">`,
+      `<meta property="article:published_time" content="${escapeHtml(data.datePublished)}">`,
+    );
+  }
+
+  if (data.dateModified) {
+    tags.push(
+      `<meta property="article:modified_time" content="${escapeHtml(data.dateModified)}">`,
     );
   }
 
   if (data.author) {
-    tags.push(`<meta property="article:author" content="${data.author}">`);
-  }
-
-  // Canonical & Sitemap
-  if (data.url && settings.site.baseUrl) {
-    tags.push(`<link rel="canonical" href="${data.url}">`);
-  }
-
-  if (settings.seo.generateSitemap) {
-    const basePath = settings.generate.basePath || "";
     tags.push(
-      `<link rel="sitemap" type="application/xml" href="${basePath}/sitemap.xml">`,
+      `<meta property="article:author" content="${escapeHtml(data.author.name)}">`,
+    );
+  }
+
+  // Sitemap & RSS
+  if (data.sitemapUrl) {
+    tags.push(
+      `<link rel="sitemap" type="application/xml" href="${escapeHtml(data.sitemapUrl)}">`,
     );
   }
 
   if (settings.seo.generateRssFeed) {
-    const basePath = settings.generate.basePath || "";
+    const basePath = normalizeBasePath(settings.generate.basePath);
     tags.push(
-      `<link rel="alternate" type="application/rss+xml" href="${basePath}/feed.xml">`,
+      `<link rel="alternate" type="application/rss+xml" href="${escapeHtml(`${basePath}/feed.xml`)}">`,
     );
   }
 

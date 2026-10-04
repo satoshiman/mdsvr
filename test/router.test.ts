@@ -40,7 +40,7 @@ describe("router", () => {
       path.join(tempDir, "README.md"),
       "# Hello World\n\nTest content.",
     );
-    await fs.writeFile(path.join(tempDir, "test.txt"), "Plain text file");
+    await fs.writeFile(path.join(tempDir, "test.html"), "Plain text file");
     await fs.mkdir(path.join(tempDir, "subdir"));
     await fs.writeFile(
       path.join(tempDir, "subdir", "README.md"),
@@ -73,8 +73,8 @@ describe("router", () => {
     assert.ok(body.includes("<h1"));
   });
 
-  it("returns 200 for static text file", async () => {
-    const res = await fetch(`${baseUrl}/test.txt`);
+  it("returns 200 for static file", async () => {
+    const res = await fetch(`${baseUrl}/test.html`);
     assert.strictEqual(res.status, 200);
     const body = await res.text();
     assert.ok(body.includes("Plain text file"));
@@ -84,7 +84,7 @@ describe("router", () => {
     const res = await fetch(`${baseUrl}/`);
     assert.strictEqual(res.status, 200);
     const body = await res.text();
-    assert.ok(body.includes("README.md"));
+    assert.ok(body.includes("Hello World"));
     assert.ok(body.includes("subdir"));
   });
 
@@ -217,8 +217,14 @@ describe("router", () => {
     const secret = "outside-symlink-secret";
     await fs.mkdir(outsideDir);
     await fs.writeFile(path.join(outsideDir, "secret.txt"), secret);
-    await fs.writeFile(path.join(outsideDir, "pretty-secret.md"), `# ${secret}`);
-    await fs.writeFile(path.join(outsideDir, "pretty-secret-mdx.mdx"), `# ${secret}`);
+    await fs.writeFile(
+      path.join(outsideDir, "pretty-secret.md"),
+      `# ${secret}`,
+    );
+    await fs.writeFile(
+      path.join(outsideDir, "pretty-secret-mdx.mdx"),
+      `# ${secret}`,
+    );
     await fs.symlink(outsideDir, linkDir, "junction");
 
     try {
@@ -264,7 +270,11 @@ describe("router", () => {
     await fs.mkdir(htmlDir);
     await fs.writeFile(outsideMarkdown, `# ${markdownSentinel}`);
     await fs.writeFile(outsideHtml, `<p>${htmlSentinel}</p>`);
-    await fs.symlink(outsideMarkdown, path.join(readmeDir, "README.md"), "file");
+    await fs.symlink(
+      outsideMarkdown,
+      path.join(readmeDir, "README.md"),
+      "file",
+    );
     await fs.symlink(outsideHtml, path.join(htmlDir, "index.html"), "file");
 
     try {
@@ -316,12 +326,12 @@ describe("router", () => {
     const linkDir = path.join(tempDir, "symlink-inside");
     const content = "In-root symlink content";
     await fs.mkdir(targetDir);
-    await fs.writeFile(path.join(targetDir, "linked.txt"), content);
+    await fs.writeFile(path.join(targetDir, "linked.html"), content);
     await fs.symlink(targetDir, linkDir, "junction");
 
     try {
       // When
-      const res = await fetch(`${baseUrl}/symlink-inside/linked.txt`);
+      const res = await fetch(`${baseUrl}/symlink-inside/linked.html`);
 
       // Then
       assert.strictEqual(res.status, 200);

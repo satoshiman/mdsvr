@@ -91,6 +91,7 @@ export function generateDefaultSettings(): object {
       enabled: true,
     },
     seo: {
+      structuredData: true,
       og: {
         enabled: true,
       },
@@ -102,6 +103,7 @@ export { SettingsSchema } from "./schema.js";
 export type {
   Settings,
   Logo,
+  SiteAuthor,
   Site,
   Appearance,
   Navigation,

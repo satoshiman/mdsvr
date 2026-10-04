@@ -3,6 +3,7 @@ export type { ServeOptions, ServerInstance } from "./types.js";
 export type {
   Settings,
   Logo,
+  SiteAuthor,
   Site,
   Appearance,
   Navigation,
