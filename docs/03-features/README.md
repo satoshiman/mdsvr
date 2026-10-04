@@ -11,24 +11,24 @@ mdsvr comes with everything you need for modern documentation sites:
 
 | Feature      | Description                           | Link                   |
 | ------------ | ------------------------------------- | ---------------------- |
-| **Markdown** | Full GitHub-flavored Markdown support | [markdown](./markdown.md) |
-| **MDX**      | React components in your docs         | [mdx](./mdx.mdx)           |
-| **Mermaid**  | Diagrams and flowcharts               | [mermaid](./mermaid.md)   |
-| **Math**     | LaTeX mathematical expressions        | [math](./math.md)         |
+| **Markdown** | Full GitHub-flavored Markdown support | [markdown](./markdown) |
+| **MDX**      | React components in your docs         | [mdx](./mdx)           |
+| **Mermaid**  | Diagrams and flowcharts               | [mermaid](./mermaid)   |
+| **Math**     | LaTeX mathematical expressions        | [math](./math)         |
 
 ## Navigation & UX
 
 | Feature        | Description                    | Link                       |
 | -------------- | ------------------------------ | -------------------------- |
-| **Navigation** | Auto-generated sidebar and TOC | [navigation](./navigation.md) |
-| **Search**     | Built-in full-text search      | [search](./search.md)         |
-| **Theming**    | Dark/light mode                | [theming](./theming.md)       |
+| **Navigation** | Auto-generated sidebar and TOC | [navigation](./navigation) |
+| **Search**     | Built-in full-text search      | [search](./search)         |
+| **Theming**    | Dark/light mode                | [theming](./theming)       |
 
 ## SEO & Sharing
 
 | Feature | Description             | Link         |
 | ------- | ----------------------- | ------------ |
-| **SEO** | Meta tags, sitemap, RSS | [seo](./seo.md) |
+| **SEO** | Meta tags, sitemap, RSS | [seo](./seo) |
 
 ## Why These Features?
 

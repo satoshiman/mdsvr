@@ -7,6 +7,7 @@ import {
   isHidden,
   isBlocked,
   isAllowedExtension,
+  type RenderedPage,
 } from "../render-page.js";
 import { buildSearchIndex } from "./search-index.js";
 import { generateSitemapFromPages } from "./sitemap.js";
@@ -136,7 +137,7 @@ export async function exportStaticSite(options: ExportOptions): Promise<void> {
     let autoIndexCount = 0;
     for (const [dirPath, dirInfo] of dirMap) {
       if (!dirInfo.hasIndex) {
-        await generateAutoIndex(dirInfo, rootDir, settings);
+        const page = await generateAutoIndex(dirInfo, rootDir, settings);
         autoIndexCount++;
 
         const autoIndexOutputPath = path.join(dirInfo.outputPath, "index.html");
@@ -146,9 +147,9 @@ export async function exportStaticSite(options: ExportOptions): Promise<void> {
           urlPath: dirInfo.urlPath,
           outputPath: autoIndexOutputPath,
           sourcePath: "", // Auto-index pages have no source file
-          title: dirInfo.urlPath ? `Index of ${dirInfo.urlPath}` : "Index",
-          description: settings.site.description,
-          noIndex: false,
+          title: page.title,
+          description: page.description ?? settings.site.description,
+          noIndex: settings.seo.noIndexDirectoryPages,
           lastmod: await directoryLastmod(absRootDir, dirInfo.urlPath),
         });
 
@@ -722,7 +723,7 @@ async function generateAutoIndex(
   dirInfo: DirInfo,
   rootDir: string,
   settings: Settings,
-): Promise<void> {
+): Promise<RenderedPage> {
   // List output directory contents (excludes dotfiles and the generated
   // index.html itself), matching the server's directory listing behavior
   const page = await renderDirectoryPage({
@@ -734,11 +735,11 @@ async function generateAutoIndex(
     isEntryVisible: (entry) =>
       !entry.name.startsWith(".") &&
       !(entry.isFile() && entry.name === "index.html"),
-    title: dirInfo.urlPath ? `Index of ${dirInfo.urlPath}` : "Index",
   });
 
   const indexPath = path.join(dirInfo.outputPath, "index.html");
   await fs.writeFile(indexPath, page.html, "utf-8");
+  return page;
 }
 
 /**

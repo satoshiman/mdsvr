@@ -135,6 +135,12 @@ Configure search engine optimization features:
     "generateRobotsTxt": true,
     "generateRssFeed": true,
     "structuredData": true,
+    "noIndex": false,
+    "noIndexDirectoryPages": false,
+    "verification": {
+      "google": "google-site-verification-token",
+      "bing": "msvalidate-token"
+    },
     "og": {
       "enabled": true,
       "imageFormat": "jpg",
@@ -160,7 +166,34 @@ When enabled, these endpoints are automatically generated:
 - `/feed.xml` — RSS feed for blog posts (files with `date` in frontmatter)
 - `titleTemplate` — optional; defaults to `%s | <site title>` when unset, `%s` alone when `site.title` is empty
 - `structuredData` — emit JSON-LD `Article`/`WebSite`/`BreadcrumbList` per page (default `true`)
+- `noIndexDirectoryPages` — emit `noindex, nofollow` on auto-generated directory listing pages and exclude them from the sitemap (default `false`)
+- `verification` — emit site-verification meta tags; keys: `google`, `bing`, `yandex`, `pinterest`, `naver`. (For Google you can also drop the `googleXXXX.html` file into the docs root — it is served/exported as-is.)
 - Page frontmatter: `seoTitle`, `noindex`/`noIndex`, `datePublished`, `dateModified` — see [SEO](../03-features/seo)
+
+### Analytics
+
+Emit analytics snippets in `<head>` (and the GTM `<noscript>` right after `<body>`) on every page, in both serve and export modes:
+
+```json
+{
+  "analytics": {
+    "googleAnalytics": "G-XXXXXXXXXX",
+    "googleTagManager": "GTM-XXXXXXX",
+    "clarity": "clarity-project-id",
+    "plausible": {
+      "domain": "docs.example.com",
+      "scriptSrc": "https://plausible.io/js/script.js"
+    },
+    "umami": {
+      "websiteId": "xxxx-xxxx",
+      "scriptSrc": "https://cloud.umami.is/script.js"
+    },
+    "customHead": ["<script>/* any provider snippet */</script>"]
+  }
+}
+```
+
+All fields are optional — nothing is emitted when absent. Malformed GA/GTM IDs log a warning at startup but never fail. `customHead` entries are appended verbatim to the end of `<head>`; they come from your own `settings.json`, so only add snippets you trust. Note that local preview also fires analytics hits — filter the preview origin on the provider side if needed.
 
 ### MDX
 
@@ -420,7 +453,7 @@ noindex: true # Exclude from search + sitemap (noIndex also works)
 Use relative paths:
 
 ```markdown
-See [configuration guide](./README.md)
+See [configuration guide](./)
 ```
 
 #### Code Blocks
@@ -451,7 +484,7 @@ Second step content
 </Steps>
 ```
 
-See [MDX Components](../03-features/mdx.mdx) for all available components.
+See [MDX Components](../03-features/mdx) for all available components.
 
 ### Images & Assets
 
@@ -486,7 +519,7 @@ Follow these guidelines to ensure your documentation passes validation and works
   - ✅ `[Setup](./setup.md)`
 - **Link to index files explicitly** — Point at `README.md` so links work on GitHub; directory links are converted to clean directory URLs
   - ❌ `[Getting Started](./01-getting-started)`
-  - ✅ `[Getting Started](./01-getting-started/README.md)`
+  - ✅ `[Getting Started](./01-getting-started/)`
 - **Validate anchors** — Ensure `#section` links match actual headings
 
 #### Heading Structure
@@ -709,6 +742,6 @@ Exported sites use clean URLs:
 
 ## Related
 
-- [Getting Started](../01-getting-started/README.md) — If you're new to mdsvr
-- [Features](../03-features/README.md) — Learn about specific features
-- [CLI Reference](../04-reference/README.md) — Command-line documentation
+- [Getting Started](../01-getting-started/) — If you're new to mdsvr
+- [Features](../03-features/) — Learn about specific features
+- [CLI Reference](../04-reference/) — Command-line documentation

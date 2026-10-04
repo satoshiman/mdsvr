@@ -16,9 +16,27 @@ export async function loadSettings(rootDir: string): Promise<Settings> {
       );
       return SettingsSchema.parse({}); // fallback to defaults
     }
+    warnOnInvalidAnalyticsIds(result.data);
     return result.data;
   } catch {
     return SettingsSchema.parse({}); // no _mdsvr/settings.json → all defaults
+  }
+}
+
+const ANALYTICS_ID_PATTERNS: [keyof Settings["analytics"], RegExp][] = [
+  ["googleAnalytics", /^G-[A-Z0-9]+$/],
+  ["googleTagManager", /^GTM-[A-Z0-9]+$/],
+];
+
+/** Warn (never fail) when configured analytics IDs look malformed. */
+function warnOnInvalidAnalyticsIds(settings: Settings): void {
+  for (const [key, pattern] of ANALYTICS_ID_PATTERNS) {
+    const value = settings.analytics[key];
+    if (typeof value === "string" && value && !pattern.test(value)) {
+      console.warn(
+        `[mdsvr] analytics.${key}: "${value}" does not match expected format ${pattern}`,
+      );
+    }
   }
 }
 

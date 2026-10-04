@@ -27,10 +27,7 @@ describe("GitHub-compatible source format (cleanUrls)", () => {
       path.join(rootDir, "README.md"),
       "# Home\n\nSee [guide](./guide.md#setup).\n",
     );
-    await fs.writeFile(
-      path.join(rootDir, "guide.md"),
-      "# Guide\n\nContent.\n",
-    );
+    await fs.writeFile(path.join(rootDir, "guide.md"), "# Guide\n\nContent.\n");
     await fs.mkdir(path.join(rootDir, "_mdsvr"));
     await fs.writeFile(
       path.join(rootDir, "_mdsvr/settings.json"),
@@ -95,7 +92,8 @@ describe("GitHub-compatible source format (cleanUrls)", () => {
     const body = await res.text();
     const index = await (await fetch(`${cleanServer.url}/`)).text();
     assert.ok(res.ok);
-    assert.ok(index.includes('href="./guide#setup"'));
+    // Relative .md links are rebased to canonical site-relative routes
+    assert.ok(index.includes('href="/guide/#setup"'));
     assert.ok(!extractBody(index).includes("guide.md"));
     assert.ok(body.includes("Guide"));
   });

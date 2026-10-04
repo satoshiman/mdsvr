@@ -46,7 +46,7 @@ Content...
 - `seoTitle` — optional; wins over `title` for SEO output when present
 - Without either, the first `#` heading (then the humanized filename) is used
 
-### Meta Descriptions
+## Meta Descriptions
 
 Every page gets a `<meta name="description">` resolved in this order:
 
@@ -73,13 +73,15 @@ Generated tags:
 - `og:type` — `article` for document pages, `website` for the homepage and directory/auto-index pages
 - `og:url` — Absolute canonical URL (only when `site.baseUrl` is set)
 - `og:site_name` — Site title
+- `og:locale` — Derived from `site.language` (`pt-BR` → `pt_BR`)
 - `og:image` — Featured image, resolved to an absolute URL against `site.baseUrl` + `generate.basePath` when possible
+- `og:image:width` / `og:image:height` — `1200`×`630`, emitted for generated OG images
 
 ## OG Image Generation
 
 mdsvr can automatically generate beautiful OG images for every page. This feature is **enabled by default**.
 
-### Enabling/Disabling
+## Enabling/Disabling
 
 ```json
 {
@@ -93,7 +95,7 @@ mdsvr can automatically generate beautiful OG images for every page. This featur
 
 Set `enabled: false` to disable automatic OG image generation.
 
-### Customization
+## Customization
 
 ```json
 {
@@ -125,14 +127,14 @@ Set `enabled: false` to disable automatic OG image generation.
 - `colors.text`: Text color (default: `#ffffff`)
 - `colors.accent`: Accent color for highlights (default: `#0969da`)
 
-### Output Location
+## Output Location
 
 OG images are generated at:
 
 - Static export: `_html/public/assets/og/{path}/index.jpg`
 - Live server: `public/assets/og/{path}/index.jpg`
 
-### Caching
+## Caching
 
 OG images are cached and only regenerated when:
 
@@ -141,9 +143,9 @@ OG images are cached and only regenerated when:
 - The export state is deleted
 - Using `--force-og` flag during export
 
-See [Export Caching](../02-settings/README.md#export-caching) for details.
+See [Export Caching](../02-settings/#export-caching) for details.
 
-### Force Regeneration
+## Force Regeneration
 
 To force regenerate all OG images during export:
 
@@ -157,7 +159,7 @@ This bypasses the cache and regenerates all OG images, useful when:
 - Font files are updated
 - You want to refresh all social media preview images
 
-### Custom Images Per Page
+## Custom Images Per Page
 
 ```mdx
 ---
@@ -180,7 +182,7 @@ Twitter Cards make your links stand out on Twitter/X.
 }
 ```
 
-### Card Types
+## Card Types
 
 - `summary` — Small square image + text
 - `summary_large_image` — Large featured image (recommended)
@@ -191,7 +193,7 @@ Generated tags: `twitter:card`, `twitter:site`, `twitter:title`, `twitter:descri
 
 Generate an XML sitemap for search engines.
 
-### Enabling
+## Enabling
 
 ```json
 {
@@ -201,7 +203,7 @@ Generate an XML sitemap for search engines.
 }
 ```
 
-### Endpoint
+## Endpoint
 
 Access your sitemap at:
 
@@ -209,7 +211,7 @@ Access your sitemap at:
 https://yoursite.com/sitemap.xml
 ```
 
-### Sitemap Contents
+## Sitemap Contents
 
 The sitemap includes:
 
@@ -219,14 +221,14 @@ The sitemap includes:
 - Change frequency (`weekly`)
 - `noindex` pages are excluded
 
-### Absolute URLs required
+## Absolute URLs required
 
 A sitemap must contain absolute URLs, so behavior depends on `site.baseUrl`:
 
 - **Export**: `sitemap.xml` is only written when `site.baseUrl` is configured — otherwise generation is skipped with a warning.
 - **Serve mode**: `/sitemap.xml` uses `site.baseUrl` when set, otherwise the actual request origin (e.g. `http://localhost:1800`).
 
-### Example Output
+## Example Output
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -248,7 +250,7 @@ A sitemap must contain absolute URLs, so behavior depends on `site.baseUrl`:
 
 Generate an RSS feed for blog posts or changelogs.
 
-### Enabling
+## Enabling
 
 ```json
 {
@@ -263,7 +265,7 @@ Generate an RSS feed for blog posts or changelogs.
 }
 ```
 
-### Endpoint
+## Endpoint
 
 Access the feed at:
 
@@ -271,7 +273,7 @@ Access the feed at:
 https://yoursite.com/feed.xml
 ```
 
-### Including Posts
+## Including Posts
 
 Pages are included in the RSS feed when they have a `date` in their frontmatter:
 
@@ -313,7 +315,7 @@ The same absolute URL is used for `og:url` and JSON-LD. When `baseUrl` is **not*
 
 Prevent specific pages from being indexed:
 
-### Site-Wide
+## Site-Wide
 
 ```json
 {
@@ -323,7 +325,7 @@ Prevent specific pages from being indexed:
 }
 ```
 
-### Per Page
+## Per Page
 
 ```mdx
 ---
@@ -343,6 +345,20 @@ This adds:
 
 - `noindex` is the canonical spelling; the older `noIndex` alias still works (`noindex` wins if both are set)
 - `noindex` pages are also excluded from `sitemap.xml`
+
+## Directory Listing Pages
+
+Auto-generated index pages for directories without a `README.md`/`index.md` are `website`-type pages with a humanized title and a `Directory listing for …` description. To keep them out of search results, set:
+
+```json
+{
+  "seo": {
+    "noIndexDirectoryPages": true
+  }
+}
+```
+
+They then emit `noindex, nofollow` and are excluded from `sitemap.xml`.
 
 ## robots.txt
 
@@ -401,7 +417,7 @@ Disable with:
 }
 ```
 
-### Author & dates
+## Author & dates
 
 Article metadata comes from frontmatter and site settings:
 
@@ -429,7 +445,7 @@ Frontmatter `author` (a `Person`) wins over `site.author`.
 
 ## Deployment
 
-### Firebase Hosting
+## Firebase Hosting
 
 The export works with zero special configuration — point `public` at the output directory:
 
@@ -445,7 +461,7 @@ The export works with zero special configuration — point `public` at the outpu
 
 Set `site.baseUrl` to your public origin so canonical URLs, `og:url`, `sitemap.xml`, and the `robots.txt` `Sitemap:` line are absolute.
 
-### GitHub Pages
+## GitHub Pages
 
 For `https://<user>.github.io/<repo>/` project sites, set both `baseUrl` and `basePath`:
 
@@ -471,7 +487,7 @@ To get the best social sharing previews:
 3. **Write good descriptions** in frontmatter
 4. **Keep titles concise** (under 60 characters)
 
-### Recommended Image Sizes
+## Recommended Image Sizes
 
 - **Open Graph**: 1200×630 pixels
 - **Twitter Cards**: 1200×600 pixels (large image)

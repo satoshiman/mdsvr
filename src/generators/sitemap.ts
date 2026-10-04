@@ -156,7 +156,12 @@ async function scanDirectory(
       try {
         const content = await fs.readFile(fullPath, "utf-8");
         const parsed = matter(content);
-        lastmod = toIsoDate(parsed.data.dateModified ?? parsed.data.date);
+        lastmod = toIsoDate(
+          parsed.data.dateModified ??
+            parsed.data.lastmod ??
+            parsed.data.updated ??
+            parsed.data.date,
+        );
         noIndex = (parsed.data.noindex ?? parsed.data.noIndex) === true;
       } catch {
         // Fall through to file stat
@@ -182,6 +187,7 @@ async function scanDirectory(
       pages.push({
         urlPath,
         lastmod: stat.mtime.toISOString().split("T")[0],
+        noIndex: settings.seo.noIndexDirectoryPages,
       });
     } catch {
       // Skip directories that can't be stat'ed

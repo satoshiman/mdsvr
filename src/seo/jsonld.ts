@@ -27,6 +27,17 @@ export function buildJsonLd(seo: SeoData, settings: Settings): string {
     if (url) site.url = url;
     const description = seo.description || settings.site.description;
     if (description) site.description = description;
+    // Sitelinks search box — client-side search reads the `q` query param.
+    if (settings.search.enabled && url) {
+      site.potentialAction = {
+        "@type": "SearchAction",
+        target: {
+          "@type": "EntryPoint",
+          urlTemplate: `${url.replace(/\/+$/, "")}/?q={search_term_string}`,
+        },
+        "query-input": "required name=search_term_string",
+      };
+    }
     graph.push(site);
   } else if (seo.kind === "document" && seo.type === "article") {
     const article: Record<string, unknown> = {

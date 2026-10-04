@@ -4,6 +4,14 @@ import { normalizeBasePath, toAbsoluteAssetUrl } from "../seo/url.js";
 
 export type { SeoData } from "../seo/metadata.js";
 
+/**
+ * Convert `site.language` to the Open Graph locale form:
+ * `pt-BR` → `pt_BR`; bare codes like `en`/`vi` pass through unchanged.
+ */
+function toOgLocale(language: string): string {
+  return language.trim().replace(/-/g, "_");
+}
+
 function escapeHtml(text: string): string {
   const htmlEscapes: Record<string, string> = {
     "&": "&amp;",
@@ -59,6 +67,12 @@ export function buildSeoTags(data: SeoData, settings: Settings): string {
     );
   }
 
+  if (settings.site.language) {
+    tags.push(
+      `<meta property="og:locale" content="${escapeHtml(toOgLocale(settings.site.language))}">`,
+    );
+  }
+
   if (data.absoluteUrl) {
     tags.push(
       `<meta property="og:url" content="${escapeHtml(data.absoluteUrl)}">`,
@@ -67,6 +81,16 @@ export function buildSeoTags(data: SeoData, settings: Settings): string {
 
   if (image) {
     tags.push(`<meta property="og:image" content="${escapeHtml(image)}">`);
+    if (data.imageWidth) {
+      tags.push(
+        `<meta property="og:image:width" content="${data.imageWidth}">`,
+      );
+    }
+    if (data.imageHeight) {
+      tags.push(
+        `<meta property="og:image:height" content="${data.imageHeight}">`,
+      );
+    }
   }
 
   // Twitter Card
