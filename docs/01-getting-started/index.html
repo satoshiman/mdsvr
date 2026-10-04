@@ -19,10 +19,11 @@
     <meta property="og:description" content="Get up and running with mdsvr - installation and quick start guide">
     <meta property="og:type" content="website">
     <meta property="og:url" content="/01-getting-started/">
-    <meta property="og:image" content="/docs/public/assets/og/01-getting-started/index.jpg">
+    <meta property="og:image" content="https://mdsvr.js.org/docs/public/assets/og/01-getting-started/index.jpg">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Getting Started">
-    <meta name="twitter:image" content="/docs/public/assets/og/01-getting-started/index.jpg">
+    <meta name="twitter:image" content="https://mdsvr.js.org/docs/public/assets/og/01-getting-started/index.jpg">
+    <link rel="canonical" href="/01-getting-started/">
     <link rel="sitemap" type="application/xml" href="/docs/sitemap.xml">
   
   
@@ -1884,20 +1885,20 @@ mdsvr ./docs
     </button>
   </div>
   <pre><code class="hljs language-bash">docker pull ghcr.io/satoshiman/mdsvr:latest
-docker run -d -p 1800:1800 -v /path/to/docs:/app/docs ghcr.io/satoshiman/mdsvr:latest
+docker run -d -p 1800:1800 -v /path/to/docs:/app/docs:ro ghcr.io/satoshiman/mdsvr:latest
 </code></pre>
   <pre class="code-block-raw" style="display:none;"><code>docker pull ghcr.io/satoshiman/mdsvr:latest
-docker run -d -p 1800:1800 -v /path/to/docs:/app/docs ghcr.io/satoshiman/mdsvr:latest
+docker run -d -p 1800:1800 -v /path/to/docs:/app/docs:ro ghcr.io/satoshiman/mdsvr:latest
 </code></pre>
 </div></pre>
 
-<p>See <a href="../02-settings#docker">Docker deployment</a> for more details.</p>
+<p>See <a href="../02-settings/README#docker">Docker deployment</a> for more details.</p>
 <hr>
 <h2 id="next-steps" tabindex="-1">Next Steps</h2>
 <ul>
 <li>Learn about <a href="../03-features/mdx">MDX components</a> for interactive docs</li>
-<li><a href="../02-settings">Configure</a> your site with <code>_mdsvr/settings.json</code></li>
-<li>See all <a href="../03-features">features</a> mdsvr offers</li>
+<li><a href="../02-settings/README">Configure</a> your site with <code>_mdsvr/settings.json</code></li>
+<li>See all <a href="../03-features/README">features</a> mdsvr offers</li>
 </ul>
 
       </article>

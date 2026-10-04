@@ -19,10 +19,11 @@
     <meta property="og:description" content="Detailed guides for configuring, writing, and deploying your mdsvr documentation">
     <meta property="og:type" content="website">
     <meta property="og:url" content="/02-settings/">
-    <meta property="og:image" content="/docs/public/assets/og/02-settings/index.jpg">
+    <meta property="og:image" content="https://mdsvr.js.org/docs/public/assets/og/02-settings/index.jpg">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Guides">
-    <meta name="twitter:image" content="/docs/public/assets/og/02-settings/index.jpg">
+    <meta name="twitter:image" content="https://mdsvr.js.org/docs/public/assets/og/02-settings/index.jpg">
+    <link rel="canonical" href="/02-settings/">
     <link rel="sitemap" type="application/xml" href="/docs/sitemap.xml">
   
   
@@ -2783,16 +2784,16 @@ Second step content
 <li>✅ <code>[Guide](./guide)</code> or <code>[Guide](../guide)</code></li>
 </ul>
 </li>
-<li><strong>Remove file extensions</strong> — Links without <code>.md</code>/<code>.mdx</code> work in both modes
+<li><strong>Include file extensions</strong> — <code>.md</code>/<code>.mdx</code> links resolve on GitHub and in IDE previews; mdsvr converts them to clean URLs when serving (with <code>generate.cleanUrls</code>) and in static export
 <ul>
 <li>❌ <code>[Setup](./setup)</code></li>
 <li>✅ <code>[Setup](./setup)</code></li>
 </ul>
 </li>
-<li><strong>Link to directories, not index files</strong> — Use directory paths instead of README/index
+<li><strong>Link to index files explicitly</strong> — Point at <code>README.md</code> so links work on GitHub; directory links are converted to clean directory URLs
 <ul>
-<li>❌ <code>[Getting Started](./01-getting-started/README)</code></li>
-<li>✅ <code>[Getting Started](./01-getting-started)</code></li>
+<li>❌ <code>[Getting Started](./01-getting-started)</code></li>
+<li>✅ <code>[Getting Started](./01-getting-started/README)</code></li>
 </ul>
 </li>
 <li><strong>Validate anchors</strong> — Ensure <code>#section</code> links match actual headings</li>
@@ -3328,17 +3329,20 @@ jobs:
   <pre><code class="hljs language-bash">docker pull ghcr.io/satoshiman/mdsvr:latest
 docker run -d \
   -p 1800:1800 \
-  -v /path/to/docs:/app/docs \
+  -v /path/to/docs:/app/docs:ro \
   ghcr.io/satoshiman/mdsvr:latest
 </code></pre>
   <pre class="code-block-raw" style="display:none;"><code>docker pull ghcr.io/satoshiman/mdsvr:latest
 docker run -d \
   -p 1800:1800 \
-  -v /path/to/docs:/app/docs \
+  -v /path/to/docs:/app/docs:ro \
   ghcr.io/satoshiman/mdsvr:latest
 </code></pre>
 </div></pre>
 
+<blockquote>
+<p><strong>Note:</strong> Mount your docs read-only (<code>:ro</code>) where possible. mdsvr renders raw HTML in Markdown and executes MDX in the server process — it is designed for trusted content, not as a sandbox for user-supplied documents.</p>
+</blockquote>
 <h3 id="build-your-own" tabindex="-1">Build Your Own</h3>
 <pre class="code-block-wrapper"><div class="code-block-container">
   <div class="code-block-toolbar">
@@ -3476,9 +3480,9 @@ server {
 <hr>
 <h2 id="related" tabindex="-1">Related</h2>
 <ul>
-<li><a href="../01-getting-started">Getting Started</a> — If you’re new to mdsvr</li>
-<li><a href="../03-features">Features</a> — Learn about specific features</li>
-<li><a href="../04-reference">CLI Reference</a> — Command-line documentation</li>
+<li><a href="../01-getting-started/README">Getting Started</a> — If you’re new to mdsvr</li>
+<li><a href="../03-features/README">Features</a> — Learn about specific features</li>
+<li><a href="../04-reference/README">CLI Reference</a> — Command-line documentation</li>
 </ul>
 
       </article>
