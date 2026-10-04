@@ -27,27 +27,27 @@
   </url>
   <url>
     <loc>https://mdsvr.js.org/docs/03-features/math</loc>
-    <lastmod>2026-10-04</lastmod>
+    <lastmod>2026-07-08</lastmod>
     <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://mdsvr.js.org/docs/03-features/mdx</loc>
-    <lastmod>2026-10-04</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://mdsvr.js.org/docs/03-features/mermaid</loc>
-    <lastmod>2026-10-04</lastmod>
+    <lastmod>2026-06-24</lastmod>
     <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://mdsvr.js.org/docs/03-features/navigation</loc>
-    <lastmod>2026-10-04</lastmod>
+    <lastmod>2026-06-22</lastmod>
     <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://mdsvr.js.org/docs/03-features/search</loc>
-    <lastmod>2026-10-04</lastmod>
+    <lastmod>2026-06-22</lastmod>
     <changefreq>weekly</changefreq>
   </url>
   <url>
@@ -57,7 +57,7 @@
   </url>
   <url>
     <loc>https://mdsvr.js.org/docs/03-features/theming</loc>
-    <lastmod>2026-10-04</lastmod>
+    <lastmod>2026-06-22</lastmod>
     <changefreq>weekly</changefreq>
   </url>
   <url>
@@ -72,32 +72,32 @@
   </url>
   <url>
     <loc>https://mdsvr.js.org/docs/09-architecture/adr/001-file-based-content-storage</loc>
-    <lastmod>2026-10-04</lastmod>
+    <lastmod>2026-06-24</lastmod>
     <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://mdsvr.js.org/docs/09-architecture/adr/002-server-side-mdx-rendering</loc>
-    <lastmod>2026-10-04</lastmod>
+    <lastmod>2026-06-24</lastmod>
     <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://mdsvr.js.org/docs/09-architecture/adr/003-zero-configuration-with-defaults</loc>
-    <lastmod>2026-10-04</lastmod>
+    <lastmod>2026-06-24</lastmod>
     <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://mdsvr.js.org/docs/09-architecture/adr/004-client-side-search-with-pre-built-index</loc>
-    <lastmod>2026-10-04</lastmod>
+    <lastmod>2026-06-24</lastmod>
     <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://mdsvr.js.org/docs/09-architecture/adr/005-incremental-static-export</loc>
-    <lastmod>2026-10-04</lastmod>
+    <lastmod>2026-06-24</lastmod>
     <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://mdsvr.js.org/docs/09-architecture/adr/006-markdown-validation-and-autofix</loc>
-    <lastmod>2026-10-04</lastmod>
+    <lastmod>2026-06-24</lastmod>
     <changefreq>weekly</changefreq>
   </url>
 </urlset>
