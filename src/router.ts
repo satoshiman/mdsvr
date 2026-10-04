@@ -3,6 +3,7 @@ import { promises as fs, createReadStream } from "node:fs";
 import path from "node:path";
 import { renderPage } from "./template/index.js";
 import { generateSitemap } from "./generators/sitemap.js";
+import { generateRobotsTxt } from "./generators/robots.js";
 import { generateFeed } from "./generators/feed.js";
 import {
   renderPageService,
@@ -58,20 +59,28 @@ export async function route(
   const urlPath = decodeURIComponent(url.split("?")[0]);
 
   // Special routes
-  if (urlPath === "/sitemap.xml" && settings.seo.generateSitemap) {
+  const requestOrigin = () => {
     const proto = ((req.headers["x-forwarded-proto"] as string) || "http")
       .split(",")[0]
       .trim();
-    const origin = req.headers.host
-      ? `${proto}://${req.headers.host}`
-      : undefined;
-    const sitemap = await generateSitemap(rootDir, settings, origin);
+    return req.headers.host ? `${proto}://${req.headers.host}` : undefined;
+  };
+
+  if (urlPath === "/sitemap.xml" && settings.seo.generateSitemap) {
+    const sitemap = await generateSitemap(rootDir, settings, requestOrigin());
     if (sitemap === null) {
       sendError(res, 404, "Not Found", settings);
       return;
     }
     res.writeHead(200, { "Content-Type": "application/xml" });
     res.end(sitemap);
+    return;
+  }
+
+  if (urlPath === "/robots.txt" && settings.seo.generateRobotsTxt) {
+    const robots = await generateRobotsTxt(rootDir, settings, requestOrigin());
+    res.writeHead(200, { "Content-Type": "text/plain" });
+    res.end(robots);
     return;
   }
 
