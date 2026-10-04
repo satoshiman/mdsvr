@@ -72,6 +72,9 @@ describe("static export", () => {
       ),
       "root index should include generated OG image meta tag",
     );
+    assert.ok(rootIndex.includes('class="view-toggle"'));
+    assert.ok(rootIndex.includes("function toggleContentView()"));
+    assert.ok(rootIndex.includes('data-content-view="wide"'));
 
     const autoIndex = await fs.readFile(
       path.join(outputDir, "no-readme-dir", "index.html"),

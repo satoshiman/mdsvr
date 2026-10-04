@@ -137,9 +137,12 @@ describe("renderer", () => {
     assert.ok(result.html.includes('href="https://example.com"'));
   });
 
-  it("renders tables", () => {
+  it("renders tables with a fullscreen control", () => {
     const md = "| a | b |\n|---|---|\n| 1 | 2 |";
     const result = renderMarkdown(md, settings);
+    assert.ok(result.html.includes('class="table-wrapper"'));
+    assert.ok(result.html.includes('class="table-btn-fullscreen"'));
+    assert.ok(result.html.includes('aria-label="Fullscreen table"'));
     assert.ok(result.html.includes("<table>"));
     assert.ok(result.html.includes("<tr>"));
   });
