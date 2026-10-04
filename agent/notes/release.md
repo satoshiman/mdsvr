@@ -1,76 +1,127 @@
 # Hướng dẫn release cho agent
 
-Tài liệu này tóm tắt **quy trình release** của `mdsvr` và những việc agent nên làm khi chuẩn bị hoặc thực hiện release.
+Tài liệu này tóm tắt **quy trình release thủ công** của `mdsvr`. Các bước publish npm được tách ra để user tự chạy lệnh.
 
-> Chỉ thực hiện release khi được yêu cầu rõ ràng. Không tự động push hoặc publish nếu user chưa xác nhận.
+> Chỉ thực hiện release khi được yêu cầu rõ ràng. Không tự động push, publish, hoặc merge nếu user chưa xác nhận.
 
 ## Các loại release
 
-| Loại | Khi nào dùng | Lệnh npm |
-| ---- | ----------- | -------- |
-| Patch | Bug fix, refactor nhỏ, docs | `npm run release:patch` |
-| Minor | Tính năng mới, không breaking | `npm run release:minor` |
-| Major | Breaking changes | `npm run release:major` |
+| Loại  | Khi nào dùng                  | Lệnh bump version   |
+| ----- | ----------------------------- | ------------------- |
+| Patch | Bug fix, refactor nhỏ, docs   | `npm version patch` |
+| Minor | Tính năng mới, không breaking | `npm version minor` |
+| Major | Breaking changes              | `npm version major` |
 
-Các lệnh trên tự động:
-1. Bump version trong `package.json` và tạo git tag.
-2. Chạy `prepublishOnly` → `npm run build && npm test`.
-3. Publish lên npm registry.
+`npm version *` tự động:
+
+1. Bump version trong `package.json`.
+2. Tạo git commit `vX.Y.Z`.
+3. Tạo git tag `vX.Y.Z`.
+
+> Không dùng `npm run release:*` vì các lệnh đó kết hợp cả bump version và `npm publish` trong một bước.
 
 ## Checklist trước khi release
 
-1. [ ] Đảm bảo working tree sạch, không còn thay đổi chưa commit.
+1. [ ] Working tree sạch, không còn thay đổi chưa commit.
 2. [ ] Chạy `npm test` thành công ở local.
-3. [ ] Kiểm tra `CHANGELOG` hoặc mô tả commit xem thay đổi có xứng đáng với semver level không.
-4. [ ] Kiểm tra commit message tuân thủ Conventional Commits (dùng với `@commitlint/config-conventional`).
-5. [ ] Nếu có thay đổi `docs/`, `gh-pages/` hoặc ảnh hưởng đến export, chạy `npm run docs:generate` và xem trước output.
-6. [ ] Đối chiếu `.github/workflows/pr-check.yml` để đảm bảo CI sẽ pass (build + test + commitlint).
+3. [ ] Kiểm tra commit message tuân thủ Conventional Commits (dùng `@commitlint/config-conventional`).
+4. [ ] Đối chiếu `.github/workflows/pr-check.yml` để đảm bảo CI sẽ pass (build + test + commitlint).
 
-## Quy trình release (thủ công)
+## Quy trình release thủ công
 
-```bash
-# 1. Kiểm tra trạng thái
-git status
-git log --oneline -5
+### 1. Cập nhật docs nếu có thay đổi
 
-# 2. Chạy test đầy đủ
-npm test
-
-# 3. Chọn loại release (ví dụ patch)
-npm run release:patch
-
-# 4. Push tag và commit lên remote (chỉ khi được phép)
-git push && git push --tags
-```
-
-## GitHub Pages docs deploy
-
-Workflow `.github/workflows/deploy-gh-pages.yml` tự động chạy khi push lên `main` nếu thay đổi nằm trong `docs/**` hoặc `gh-pages/**`.
-
-Nếu muốn tạo output thủ công trước:
+Nếu sửa file trong `docs/`, cần commit các thay đổi source. Để kiểm tra output trước:
 
 ```bash
 npm run docs:generate
-# Output nằm trong ./gh-pages/docs
+# Output nằm trong ./gh-pages/docs (gitignored, action sẽ regenerate khi deploy)
 ```
 
-## Docker image release
+Commit file `docs/**` nếu có thay đổi. Không commit `gh-pages/docs/*` vì folder này được tạo lại bởi GitHub Actions.
 
-Workflow `.github/workflows/docker-release.yml` tự động build và push multi-platform image (`linux/amd64`, `linux/arm64`) lên `ghcr.io` khi một PR có nhánh tên chứa `release` được merge vào `main`.
-
-Nếu muốn build local:
+### 2. Bump version
 
 ```bash
-bash docker-release.sh
+cd /Users/apple/md-serve
+npm version patch
+# hoặc: npm version minor
+# hoặc: npm version major
 ```
 
-Yêu cầu:
-- `docker` + `docker buildx`
-- Đã login `ghcr.io` nếu push
+Sau bước này:
+
+- `package.json` đã được cập nhật.
+- Có commit `vX.Y.Z`.
+- Có tag `vX.Y.Z` local.
+
+### 3. Login npm
+
+> Agent **KHÔNG** tự động chạy `npm login`. Hãy đưa lệnh cho user.
+
+```bash
+cd /Users/apple/md-serve
+npm login
+```
+
+User sẽ mở browser để xác thực. Kiểm tra bằng:
+
+```bash
+npm whoami
+```
+
+### 4. Publish lên npm
+
+> Agent **KHÔNG** tự động chạy `npm publish`. Hãy đưa lệnh cho user.
+
+```bash
+cd /Users/apple/md-serve
+npm publish
+```
+
+Nếu tài khoản bật 2FA, npm sẽ yêu cầu OTP hoặc mở browser authenticate. Sau khi thành công, output sẽ hiển thị `+ mdsvr@X.Y.Z`. Lưu ý package có thể mất vài phút mới propagate hết registry.
+
+### 5. Push lên GitHub
+
+Push commit và tag để trigger các GitHub Actions:
+
+```bash
+cd /Users/apple/md-serve
+git push origin <branch> && git push origin --tags
+```
+
+Nếu đang ở nhánh release (ví dụ `release/v2.3.4`), push nhánh đó. Sau đó tạo PR merge vào `main`.
+
+## Các workflow GitHub Actions
+
+### GitHub Pages docs deploy
+
+`.github/workflows/deploy-gh-pages.yml` chạy khi **push lên `main`** nếu thay đổi nằm trong `docs/**` hoặc `gh-pages/**`:
+
+1. `npm ci`
+2. `npm run build`
+3. `npm run docs:generate` → tạo `gh-pages/docs/`
+4. Deploy `./gh-pages` lên GitHub Pages
+
+### Docker image release
+
+`.github/workflows/docker-release.yml` chạy khi một **PR được merge vào `main`** và nhánh source có tên chứa `release` (ví dụ `release/v2.3.4`):
+
+- Build multi-platform image (`linux/amd64`, `linux/arm64`).
+- Push lên `ghcr.io/satoshiman/mdsvr:X.Y.Z` và `ghcr.io/satoshiman/mdsvr:latest`.
+
+Do đó, để có Docker image, cần:
+
+1. Push nhánh release lên remote.
+2. Tạo PR từ nhánh release → `main`.
+3. Merge PR.
 
 ## Sau release
 
-1. [ ] Log event trong `agent/` để lưu lịch sử:
+1. [ ] Kiểm tra package trên npm: `npm view mdsvr@X.Y.Z version`.
+2. [ ] Kiểm tra tag đã push: `git ls-remote --tags origin`.
+3. [ ] Kiểm tra GitHub Actions chạy thành công (docs deploy, Docker image).
+4. [ ] Log event trong `agent/`:
 
 ```bash
 cd /Users/apple/md-serve/agent
@@ -81,12 +132,9 @@ python3 event.py log \
   --desc "Bump version and publish to npm"
 ```
 
-2. [ ] Kiểm tra package trên npm có version mới.
-3. [ ] Kiểm tra GitHub Actions workflow chạy thành công (Docker image, docs deploy nếu có).
-
 ## Những điều KHÔNG nên làm
 
-- Không chạy `npm publish` trực tiếp nếu có thể dùng `npm run release:*`.
-- Không commit `dist/`, `dist-test/`, `gh-pages/` bằng tay — đây là generated output.
+- Không chạy `npm publish` thay user trừ khi user cung cấp OTP hoặc xác nhận rõ ràng.
+- Không commit `dist/`, `dist-test/`, `gh-pages/docs/*` bằng tay — đây là generated output.
 - Không để working tree dirty khi chạy `npm version` vì lệnh sẽ commit + tag.
-- Không push trừ khi user đã xác nhận hoặc đây là workflow CI tự động.
+- Không push hoặc merge trừ khi user đã xác nhận.
