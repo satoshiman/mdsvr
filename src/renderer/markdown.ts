@@ -166,7 +166,8 @@ function createMarkdownIt(settings: Settings): MarkdownIt {
   md.use(mathPlugin);
 
   // Wrap tables in a scrollable container for mobile responsiveness
-  md.renderer.rules.table_open = () => '<div class="table-wrapper"><table>\n';
+  md.renderer.rules.table_open = () =>
+    '<div class="table-wrapper"><div class="table-toolbar"><button class="table-btn-fullscreen" type="button" title="Fullscreen table" aria-label="Fullscreen table"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m15 15 6 6"/><path d="m15 9 6-6"/><path d="M21 16v5h-5"/><path d="M21 8V3h-5"/><path d="M3 16v5h5"/><path d="m3 21 6-6"/><path d="M3 8V3h5"/><path d="M9 9 3 3"/></svg></button></div><table>\n';
   md.renderer.rules.table_close = () => "</table></div>\n";
 
   return md;
@@ -334,7 +335,8 @@ export function renderMarkdownSimple(content: string): string {
 
   md.use(mathPlugin);
 
-  md.renderer.rules.table_open = () => '<div class="table-wrapper"><table>\n';
+  md.renderer.rules.table_open = () =>
+    '<div class="table-wrapper"><div class="table-toolbar"><button class="table-btn-fullscreen" type="button" title="Fullscreen table" aria-label="Fullscreen table"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m15 15 6 6"/><path d="m15 9 6-6"/><path d="M21 16v5h-5"/><path d="M21 8V3h-5"/><path d="M3 16v5h5"/><path d="m3 21 6-6"/><path d="M3 8V3h5"/><path d="M9 9 3 3"/></svg></button></div><table>\n';
   md.renderer.rules.table_close = () => "</table></div>\n";
 
   let html = md.render(content);

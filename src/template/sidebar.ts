@@ -407,6 +407,9 @@ export function renderSidebar(
       lines.push(
         `${indent}      <a href="${withBasePath(item.href, settings, isStaticExport)}" class="nav-link${activeClass}" data-folder-icon="${shouldExpand ? "open" : "closed"}"><span class="folder-icon">${icon}</span> ${escapeHtml(item.title)}</a>`,
       );
+      lines.push(
+        `${indent}      <button type="button" class="nav-toggle" aria-label="Toggle folder"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></button>`,
+      );
       lines.push(`${indent}    </div>`);
     } else {
       lines.push(
