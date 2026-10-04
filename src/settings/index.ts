@@ -1,4 +1,4 @@
-import { watch } from "node:fs";
+import { watch, type FSWatcher } from "node:fs";
 import path from "node:path";
 import { promises as fs } from "node:fs";
 import { SettingsSchema, type Settings } from "./schema.js";
@@ -25,9 +25,9 @@ export async function loadSettings(rootDir: string): Promise<Settings> {
 export function watchSettings(
   rootDir: string,
   onChange: (s: Settings) => void,
-): void {
+): FSWatcher {
   // Re-load on file change without restarting server
-  watch(path.join(rootDir, "_mdsvr/settings.json"), async () => {
+  return watch(path.join(rootDir, "_mdsvr/settings.json"), async () => {
     const newSettings = await loadSettings(rootDir);
     onChange(newSettings);
   });
