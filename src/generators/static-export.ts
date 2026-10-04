@@ -13,6 +13,7 @@ import { buildSearchIndex } from "./search-index.js";
 import { generateSitemapFromPages } from "./sitemap.js";
 import { generateRobotsTxt } from "./robots.js";
 import { generateFeed } from "./feed.js";
+import { generateLlmsTxt, generateLlmsFullTxt } from "./llms.js";
 import type { Settings } from "../settings/index.js";
 import {
   generateOgImage,
@@ -268,6 +269,25 @@ export async function exportStaticSite(options: ExportOptions): Promise<void> {
       }
     }
 
+    // 8.5. Generate llms.txt and llms-full.txt if enabled
+    const llmsTxtPath = path.join(absOutputDir, "llms.txt");
+    const llmsFullPath = path.join(absOutputDir, "llms-full.txt");
+    if (settings.seo.generateLlmsTxt) {
+      const [llmsTxt, llmsFull] = await Promise.all([
+        generateLlmsTxt(absRootDir, settings),
+        generateLlmsFullTxt(absRootDir, settings),
+      ]);
+      await fs.writeFile(llmsTxtPath, llmsTxt, "utf-8");
+      await fs.writeFile(llmsFullPath, llmsFull, "utf-8");
+      if (!silent) {
+        console.log(`  ✓ llms.txt`);
+        console.log(`  ✓ llms-full.txt`);
+      }
+    } else {
+      await fs.rm(llmsTxtPath, { force: true });
+      await fs.rm(llmsFullPath, { force: true });
+    }
+
     // 9. Save new export state (only OG state)
     const finalState: ExportState = {
       settingsHash: currentSettingsHash,
@@ -485,6 +505,12 @@ async function directoryLastmod(
 function isExportableFile(fileName: string, settings: Settings): boolean {
   const lowerName = fileName.toLowerCase();
   if (settings.seo.generateRobotsTxt && lowerName === "robots.txt") {
+    return true;
+  }
+  if (
+    settings.seo.generateLlmsTxt &&
+    (lowerName === "llms.txt" || lowerName === "llms-full.txt")
+  ) {
     return true;
   }
   return isAllowedExtension(path.extname(lowerName).toLowerCase(), settings);

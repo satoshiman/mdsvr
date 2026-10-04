@@ -5,6 +5,7 @@ import { renderPage } from "./template/index.js";
 import { generateSitemap } from "./generators/sitemap.js";
 import { generateRobotsTxt } from "./generators/robots.js";
 import { generateFeed } from "./generators/feed.js";
+import { generateLlmsTxt, generateLlmsFullTxt } from "./generators/llms.js";
 import {
   renderPageService,
   renderDirectoryPage,
@@ -88,6 +89,19 @@ export async function route(
     const feed = await generateFeed(rootDir, settings);
     res.writeHead(200, { "Content-Type": "application/rss+xml" });
     res.end(feed);
+    return;
+  }
+
+  if (
+    settings.seo.generateLlmsTxt &&
+    (urlPath === "/llms.txt" || urlPath === "/llms-full.txt")
+  ) {
+    const content =
+      urlPath === "/llms.txt"
+        ? await generateLlmsTxt(rootDir, settings, requestOrigin())
+        : await generateLlmsFullTxt(rootDir, settings, requestOrigin());
+    res.writeHead(200, { "Content-Type": "text/plain; charset=utf-8" });
+    res.end(content);
     return;
   }
 

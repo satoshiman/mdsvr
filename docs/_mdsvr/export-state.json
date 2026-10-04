@@ -8,7 +8,7 @@
     },
     "/02-settings/": {
       "outputPath": "public/assets/og/02-settings/index.jpg",
-      "hash": "feca2aa64e11502f5c5d3aadad7e8c21e266be1657b5e6b1bb3769bc253032c2"
+      "hash": "bc183ddf84e3f71a31f610a833dae4fc9f91c2ea223aaa3a1d68d8c2dfecf53e"
     },
     "/03-features/": {
       "outputPath": "public/assets/og/03-features/index.jpg",
@@ -40,7 +40,7 @@
     },
     "/03-features/seo": {
       "outputPath": "public/assets/og/03-features/seo/index.jpg",
-      "hash": "a234394232ee007b906ee23e02a3f8311ed87bff37b408bdbfd03cc0f495d4bb"
+      "hash": "4e49ebe1ee674e12239965bc15180669a2662dfb92ce79e7c50644b3e4f5a4f3"
     },
     "/03-features/theming": {
       "outputPath": "public/assets/og/03-features/theming/index.jpg",

@@ -73,8 +73,9 @@ Generated tags:
 - `og:type` — `article` for document pages, `website` for the homepage and directory/auto-index pages
 - `og:url` — Absolute canonical URL (only when `site.baseUrl` is set)
 - `og:site_name` — Site title
-- `og:locale` — Derived from `site.language` (`pt-BR` → `pt_BR`)
+- `og:locale` — Derived from `site.language` in `language_TERRITORY` form (`en` → `en_US`, `vi` → `vi_VN`, `pt-BR` → `pt_BR`)
 - `og:image` — Featured image, resolved to an absolute URL against `site.baseUrl` + `generate.basePath` when possible
+- `og:image:alt` — `imageAlt` frontmatter, falling back to the page title (also emitted as `twitter:image:alt`)
 - `og:image:width` / `og:image:height` — `1200`×`630`, emitted for generated OG images
 
 ## OG Image Generation
@@ -166,6 +167,7 @@ This bypasses the cache and regenerates all OG images, useful when:
 title: My Article
 description: Article description
 image: ./assets/article-image.png
+imageAlt: Diagram of the deployment pipeline # optional og:image:alt / twitter:image:alt
 ---
 ```
 
@@ -399,6 +401,25 @@ Sitemap: https://docs.example.com/sitemap.xml
 
 The generated `Sitemap:` line is only included when an absolute sitemap URL can be derived (`site.baseUrl`, or the request origin in serve mode) — relative `Sitemap:` URLs are invalid.
 
+## llms.txt
+
+mdsvr generates two files for LLM consumers (see [llmstxt.org](https://llmstxt.org)), enabled by default:
+
+- `/llms.txt` — a Markdown index of every page: the site title, a blockquote summary, then link lists grouped by top-level section with page descriptions. Links are absolute when `site.baseUrl` (or the request origin in serve mode) is available.
+- `/llms-full.txt` — the full Markdown source of every page, each preceded by its title and canonical URL so chunks stay attributable.
+
+`noindex` pages are excluded from both files. To write your own, place a non-empty `llms.txt` or `llms-full.txt` in the docs root — custom files always win (same convention as `robots.txt`).
+
+Disable generation entirely:
+
+```json
+{
+  "seo": {
+    "generateLlmsTxt": false
+  }
+}
+```
+
 ## Structured Data (JSON-LD)
 
 Every page emits one `<script type="application/ld+json">` block with a schema.org `@graph`:
@@ -430,6 +451,8 @@ datePublished: 2026-09-30 # wins over `date` when set
 dateModified: 2026-10-04
 ---
 ```
+
+When frontmatter omits the dates, the source file's filesystem timestamps are used as fallback (creation time for `datePublished`, modification time for `dateModified`), so `og:type="article"` pages always carry `article:published_time`/`article:modified_time` and JSON-LD dates.
 
 A site-wide default author can be configured and emits `<meta name="author">` plus JSON-LD `author` (as an `Organization`):
 
@@ -512,6 +535,7 @@ To get the best social sharing previews:
     "generateSitemap": true,
     "generateRobotsTxt": true,
     "generateRssFeed": true,
+    "generateLlmsTxt": true,
     "structuredData": true,
     "rss": {
       "title": "My Docs Blog",

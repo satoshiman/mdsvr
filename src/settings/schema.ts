@@ -121,6 +121,9 @@ export const SeoSchema = z.object({
   generateSitemap: z.boolean().default(true),
   generateRobotsTxt: z.boolean().default(true),
   generateRssFeed: z.boolean().default(false),
+  // Emits /llms.txt (page index) and /llms-full.txt (full markdown corpus)
+  // for LLM consumers; custom files in the docs root override.
+  generateLlmsTxt: z.boolean().default(true),
   structuredData: z.boolean().default(true),
   verification: VerificationSchema.default({}),
   rss: z

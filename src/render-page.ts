@@ -48,6 +48,7 @@ export async function renderPageService(
   const isStatic = mode === "static";
 
   const content = await fs.readFile(sourcePath, "utf-8");
+  const stat = await fs.stat(sourcePath);
   const ext = path.extname(sourcePath).toLowerCase();
 
   let result: MarkdownResult | MdxRenderResult;
@@ -87,6 +88,15 @@ export async function renderPageService(
     sidebar,
     urlPath,
     isStaticExport: isStatic,
+    // Filesystem dates feed `article:*` meta and JSON-LD when frontmatter
+    // omits them — birthtime when the FS reports it, else mtime.
+    fileDates: {
+      published:
+        stat.birthtimeMs > 0 && stat.birthtime <= stat.mtime
+          ? stat.birthtime
+          : stat.mtime,
+      modified: stat.mtime,
+    },
   });
 
   return {

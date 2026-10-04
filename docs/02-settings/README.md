@@ -134,6 +134,7 @@ Configure search engine optimization features:
     "generateSitemap": true,
     "generateRobotsTxt": true,
     "generateRssFeed": true,
+    "generateLlmsTxt": true,
     "structuredData": true,
     "noIndex": false,
     "noIndexDirectoryPages": false,
@@ -164,6 +165,7 @@ When enabled, these endpoints are automatically generated:
 - `/sitemap.xml` — XML sitemap for search engines (requires `site.baseUrl` for static export; uses request origin in serve mode)
 - `/robots.txt` — crawler rules; a custom `robots.txt` in the docs root takes precedence
 - `/feed.xml` — RSS feed for blog posts (files with `date` in frontmatter)
+- `/llms.txt` + `/llms-full.txt` — LLM-facing page index and full Markdown corpus; custom files in the docs root take precedence (see [SEO](../03-features/seo))
 - `titleTemplate` — optional; defaults to `%s | <site title>` when unset, `%s` alone when `site.title` is empty
 - `structuredData` — emit JSON-LD `Article`/`WebSite`/`BreadcrumbList` per page (default `true`)
 - `noIndexDirectoryPages` — emit `noindex, nofollow` on auto-generated directory listing pages and exclude them from the sitemap (default `false`)
@@ -240,6 +242,7 @@ Control which files are served, blocked, or hidden:
 - Files and folders starting with `_` or `.` are automatically hidden
 - Only web-servable extensions in `extensions.serve` are copied during static export
 - `robots.txt` is generated or copied when `seo.generateRobotsTxt` is enabled
+- `llms.txt`/`llms-full.txt` are generated or copied when `seo.generateLlmsTxt` is enabled
 - Blocked extensions return 403 Forbidden
 - Hidden files return 404 Not Found (as if they don't exist)
 - `staticFolders`: Array of folder names to serve as static assets (all files in these folders are served directly)

@@ -23,6 +23,8 @@ export interface SeoData {
   title: string;
   description?: string;
   image?: string;
+  /** Explicit `imageAlt` frontmatter; callers fall back to the page title. */
+  imageAlt?: string;
   /** Pixel dimensions, set only for generated OG images (known size). */
   imageWidth?: number;
   imageHeight?: number;
@@ -53,6 +55,11 @@ export interface ResolveSeoInput {
   settings: Settings;
   sidebar?: NavItem[];
   isStaticExport?: boolean;
+  /**
+   * Source-file dates used as fallbacks when frontmatter omits
+   * `date`/`datePublished`/`dateModified` (birthtime/mtime from the caller).
+   */
+  fileDates?: { published?: Date; modified?: Date };
 }
 
 function str(value: unknown): string | undefined {
@@ -204,15 +211,23 @@ export function resolveSeoData(input: ResolveSeoInput): SeoData {
     title: resolvedTitle,
     description,
     image,
+    imageAlt: str(frontmatter.imageAlt),
     imageWidth: generatedOg ? OG_WIDTH : undefined,
     imageHeight: generatedOg ? OG_HEIGHT : undefined,
     absoluteUrl: buildPageUrl(urlPath, settings),
     urlPath,
     type,
     kind,
-    datePublished: toIsoDate(frontmatter.datePublished ?? frontmatter.date),
+    datePublished: toIsoDate(
+      frontmatter.datePublished ??
+        frontmatter.date ??
+        input.fileDates?.published,
+    ),
     dateModified: toIsoDate(
-      frontmatter.dateModified ?? frontmatter.updated ?? frontmatter.lastmod,
+      frontmatter.dateModified ??
+        frontmatter.updated ??
+        frontmatter.lastmod ??
+        input.fileDates?.modified,
     ),
     author,
     noIndex:
