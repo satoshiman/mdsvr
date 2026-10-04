@@ -2,11 +2,7 @@ import type { Settings } from "../settings/index.js";
 import type { NavItem } from "../template/sidebar.js";
 import { getOgImageUrl } from "../og/index.js";
 import { extractFirstParagraph } from "./extract.js";
-import {
-  buildPageUrl,
-  normalizeBasePath,
-  normalizeUrlPath,
-} from "./url.js";
+import { buildPageUrl, normalizeBasePath, normalizeUrlPath } from "./url.js";
 
 export type PageKind = "document" | "directory" | "generic";
 
@@ -116,10 +112,18 @@ function findNavTitle(items: NavItem[], urlPath: string): string | undefined {
  * has no title).
  */
 export function formatPageTitle(pageTitle: string, settings: Settings): string {
-  const template =
-    settings.seo.titleTemplate ??
-    (settings.site.title ? `%s | ${settings.site.title}` : "%s");
-  return template.replace("%s", pageTitle);
+  if (settings.seo.titleTemplate != null) {
+    return settings.seo.titleTemplate.replace("%s", pageTitle);
+  }
+  // Default: "<title> | <site title>"; skip the suffix when it would
+  // duplicate the site title (e.g. homepage H1 == site.title).
+  if (
+    !settings.site.title ||
+    pageTitle.trim().toLowerCase() === settings.site.title.trim().toLowerCase()
+  ) {
+    return pageTitle;
+  }
+  return `${pageTitle} | ${settings.site.title}`;
 }
 
 /**

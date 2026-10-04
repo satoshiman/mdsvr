@@ -68,7 +68,7 @@ function isHidden(filePath: string, settings: Settings): boolean {
   }
 
   // Files starting with _ are hidden
-  if (basename.startsWith("_")) return true;
+  if (basename.startsWith("_") || basename.startsWith(".")) return true;
 
   return false;
 }
