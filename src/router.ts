@@ -1,13 +1,16 @@
 import { IncomingMessage, ServerResponse } from "node:http";
-import { promises as fs, createReadStream, type Dirent } from "node:fs";
+import { promises as fs, createReadStream } from "node:fs";
 import path from "node:path";
-import { renderMarkdown, type MarkdownResult } from "./renderer/markdown.js";
-import { renderMdx, type MdxRenderResult } from "./renderer/mdx.js";
 import { renderPage } from "./template/index.js";
-import { renderDirectory } from "./directory.js";
 import { generateSitemap } from "./generators/sitemap.js";
 import { generateFeed } from "./generators/feed.js";
-import { buildSidebar, type NavItem } from "./template/sidebar.js";
+import {
+  renderPageService,
+  renderDirectoryPage,
+  isHidden,
+  isBlocked,
+  isAllowedExtension,
+} from "./render-page.js";
 import type { Settings } from "./settings/index.js";
 
 const MIME: Record<string, string> = {
@@ -262,47 +265,17 @@ async function serveDirectory(
     // Continue to directory listing
   }
 
-  // Read directory contents
-  const entries = await fs.readdir(dirPath, { withFileTypes: true });
-
-  // Filter hidden entries
-  const visibleEntries = entries.filter(
-    (entry) => !isHidden(entry.name, settings),
-  );
-
-  // Add size information to entries
-  const entriesWithSize = await Promise.all(
-    visibleEntries.map(async (entry: Dirent & { size?: number }) => {
-      if (entry.isFile()) {
-        const fullPath = path.join(dirPath, entry.name);
-        const stat = await fs.stat(fullPath);
-        return Object.assign(entry, { size: stat.size });
-      }
-      return Object.assign(entry, { size: 0 });
-    }),
-  );
-
-  // Build sidebar if enabled
-  let sidebar: NavItem[] = [];
-  if (settings.navigation.sidebar.enabled) {
-    sidebar = await buildSidebar(rootDir, urlPath, settings, false);
-  }
-
-  const dirName = urlPath
-    ? path.basename(urlPath.replace(/\/+$/, "")) || urlPath
-    : "";
-  const html = renderPage({
-    title: dirName ? humanizeFilename(dirName) : "Index",
-    body: renderDirectory({ urlPath, entries: entriesWithSize }),
-    filePath: urlPath,
-    settings,
+  // Render directory listing through the shared page service
+  const page = await renderDirectoryPage({
+    listDir: dirPath,
     urlPath,
-    sidebar,
-    isStaticExport: false,
+    rootDir,
+    settings,
+    mode: "dynamic",
   });
 
   res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
-  res.end(html);
+  res.end(page.html);
 }
 
 async function serveMarkdownOrMdx(
@@ -312,42 +285,16 @@ async function serveMarkdownOrMdx(
   rootDir: string,
   settings: Settings,
 ): Promise<void> {
-  const content = await fs.readFile(filePath, "utf-8");
-  const ext = path.extname(filePath).toLowerCase();
-
-  let result: MarkdownResult | MdxRenderResult;
-
-  if (ext === ".mdx" && settings.mdx.enabled) {
-    result = await renderMdx(content, settings);
-  } else {
-    result = renderMarkdown(content, settings);
-  }
-
-  const title =
-    (result.frontmatter.title as string) ||
-    extractFirstHeading(content) ||
-    humanizeFilename(path.basename(filePath, ext));
-
-  // Build sidebar if enabled
-  let sidebar: NavItem[] = [];
-  if (settings.navigation.sidebar.enabled) {
-    sidebar = await buildSidebar(rootDir, urlPath, settings, false);
-  }
-
-  const html = renderPage({
-    title,
-    body: result.html,
-    filePath: urlPath,
-    settings,
-    frontmatter: result.frontmatter,
-    toc: result.toc,
-    sidebar,
+  const page = await renderPageService({
+    sourcePath: filePath,
     urlPath,
-    isStaticExport: false,
+    rootDir,
+    settings,
+    mode: "dynamic",
   });
 
   res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
-  res.end(html);
+  res.end(page.html);
 }
 
 function serveStatic(
@@ -388,38 +335,4 @@ function sendError(
 
   res.writeHead(code, { "Content-Type": "text/html; charset=utf-8" });
   res.end(html);
-}
-
-function isHidden(filename: string, settings: Settings): boolean {
-  for (const pattern of settings.files.extensions.hidden) {
-    if (filename === pattern) return true;
-    if (pattern.startsWith("*") && filename.endsWith(pattern.slice(1)))
-      return true;
-  }
-  if (filename.startsWith("_")) return true;
-  return false;
-}
-
-function isBlocked(ext: string, settings: Settings): boolean {
-  return settings.files.extensions.block.includes(ext);
-}
-
-function isAllowedExtension(ext: string, settings: Settings): boolean {
-  return settings.files.extensions.serve.includes(ext);
-}
-
-function extractFirstHeading(content: string): string | null {
-  const h1Match = content.match(/^#\s+(.+)$/m);
-  if (h1Match) {
-    return h1Match[1].trim();
-  }
-  return null;
-}
-
-function humanizeFilename(filename: string): string {
-  return filename
-    .replace(/^\d+\./, "")
-    .replace(/[-_]/g, " ")
-    .trim()
-    .replace(/^\w/, (c) => c.toUpperCase());
 }
