@@ -1,15 +1,13 @@
-import { promises as fs, type Dirent } from "node:fs";
+import { promises as fs } from "node:fs";
 import path from "node:path";
 import { createHash } from "node:crypto";
 import {
-  renderMarkdown,
-  type MarkdownResult,
-  extractSeoData,
-} from "../renderer/markdown.js";
-import { renderMdx, type MdxRenderResult } from "../renderer/mdx.js";
-import { renderPage } from "../template/index.js";
-import { buildSidebar, type NavItem } from "../template/sidebar.js";
-import { renderDirectory } from "../directory.js";
+  renderPageService,
+  renderDirectoryPage,
+  isHidden,
+  isBlocked,
+  isAllowedExtension,
+} from "../render-page.js";
 import { buildSearchIndex } from "./search-index.js";
 import type { Settings } from "../settings/index.js";
 import {
@@ -386,55 +384,23 @@ async function renderMarkdownFile(
   outputDir: string,
   settings: Settings,
 ): Promise<PageInfo> {
-  const content = await fs.readFile(filePath, "utf-8");
-  const ext = path.extname(filePath).toLowerCase();
-
-  let result: MarkdownResult | MdxRenderResult;
-
-  if (ext === ".mdx" && settings.mdx.enabled) {
-    result = await renderMdx(content, settings);
-  } else {
-    result = renderMarkdown(content, settings);
-  }
-
-  const title =
-    (result.frontmatter.title as string) ||
-    extractFirstHeading(content) ||
-    humanizeFilename(path.basename(filePath, ext));
-
-  // Build sidebar if enabled
-  let sidebar: NavItem[] = [];
-  if (settings.navigation.sidebar.enabled) {
-    sidebar = await buildSidebar(rootDir, urlPath, settings, true);
-  }
-
-  // Fix asset paths for subdirectories
-  const fixedHtml = fixAssetPaths(result.html, urlPath);
-
-  // Convert .md/.mdx links to clean URLs for static export
-  const cleanUrlHtml = convertMarkdownLinks(fixedHtml);
-
-  const html = renderPage({
-    title,
-    body: cleanUrlHtml,
-    filePath: urlPath,
-    settings,
-    frontmatter: result.frontmatter,
-    toc: result.toc,
-    sidebar,
+  const page = await renderPageService({
+    sourcePath: filePath,
     urlPath,
-    isStaticExport: true,
+    rootDir,
+    settings,
+    mode: "static",
   });
 
-  await fs.writeFile(outputPath, html, "utf-8");
+  await fs.writeFile(outputPath, page.html, "utf-8");
 
   // Return page info for OG generation
   return {
     urlPath,
     outputPath,
     sourcePath: filePath,
-    title,
-    description: result.frontmatter.description as string | undefined,
+    title: page.title,
+    description: page.description,
   };
 }
 
@@ -442,24 +408,6 @@ async function copyFile(src: string, dest: string): Promise<void> {
   await fs.mkdir(path.dirname(dest), { recursive: true });
   const data = await fs.readFile(src);
   await fs.writeFile(dest, data);
-}
-
-function isHidden(filename: string, settings: Settings): boolean {
-  for (const pattern of settings.files.extensions.hidden) {
-    if (filename === pattern) return true;
-    if (pattern.startsWith("*") && filename.endsWith(pattern.slice(1)))
-      return true;
-  }
-  if (filename.startsWith("_")) return true;
-  return false;
-}
-
-function isBlocked(ext: string, settings: Settings): boolean {
-  return settings.files.extensions.block.includes(ext);
-}
-
-function isAllowedExtension(ext: string, settings: Settings): boolean {
-  return settings.files.extensions.serve.includes(ext);
 }
 
 function isStaticFolder(folderName: string, settings: Settings): boolean {
@@ -496,82 +444,6 @@ async function copyStaticFolder(
       }
     }
   }
-}
-
-function extractFirstHeading(content: string): string | null {
-  const h1Match = content.match(/^#\s+(.+)$/m);
-  if (h1Match) {
-    return h1Match[1].trim();
-  }
-  return null;
-}
-
-function fixAssetPaths(html: string, urlPath: string): string {
-  // Calculate the root path for assets (everything up to the current directory)
-  const pathSegments = urlPath.split("/").filter(Boolean);
-
-  // Build the absolute assets path based on the current directory structure
-  let absoluteAssetsPath = "";
-
-  if (pathSegments.length === 0) {
-    // Root level: /assets/
-    absoluteAssetsPath = "/assets/";
-  } else {
-    // Subdirectory: assets are at the root level of the project
-    // Use all segments except the last one to build the path to assets
-    // For /k8s/LFS158-docs/12/, assets should be at /k8s/LFS158-docs/assets/
-    const rootSegments = pathSegments.slice(0, -1);
-    if (rootSegments.length > 0) {
-      absoluteAssetsPath = "/" + rootSegments.join("/") + "/assets/";
-    } else {
-      absoluteAssetsPath = "/assets/";
-    }
-  }
-
-  // Replace all relative assets/ paths with absolute paths
-  return html.replace(
-    /(src|href|data-src|poster|content)="assets\//g,
-    `$1="${absoluteAssetsPath}`,
-  );
-}
-
-/**
- * Convert .md/.mdx links to clean URLs for static export
- * This ensures links work in static HTML where clean URLs are used
- */
-function convertMarkdownLinks(html: string): string {
-  // Match markdown links: [text](path) and [text](path#anchor)
-  // Also match image links: ![text](path) - but we skip those
-  return html.replace(/(?<!\!)\[([^\]]+)\]\(([^)]+)\)/g, (match, text, url) => {
-    // Skip external links
-    if (
-      url.startsWith("http://") ||
-      url.startsWith("https://") ||
-      url.startsWith("//")
-    ) {
-      return match;
-    }
-
-    // Skip mailto, tel, and other protocols
-    if (/^[a-z]+:/i.test(url) && !url.startsWith("#")) {
-      return match;
-    }
-
-    // Remove .md or .mdx extension from the URL
-    const cleanUrl = url.replace(
-      /\.(md|mdx)(#|$)/i,
-      (_m: string, _ext: string, suffix: string) => {
-        // If there's an anchor, preserve it
-        return suffix === "#" ? "#" : "";
-      },
-    );
-
-    return `[${text}](${cleanUrl})`;
-  });
-}
-
-function humanizeFilename(filename: string): string {
-  return filename.replace(/[-_]/g, " ").replace(/^\w/, (c) => c.toUpperCase());
 }
 
 /**
@@ -766,57 +638,22 @@ async function generateAutoIndex(
   rootDir: string,
   settings: Settings,
 ): Promise<void> {
-  // Read the output directory to list contents
-  const entries = await fs.readdir(dirInfo.outputPath, { withFileTypes: true });
-
-  // Filter hidden entries (matching server behavior in router.ts)
-  // Also exclude index.html since it's generated by auto-index itself
-  const visibleEntries = entries.filter(
-    (entry) =>
-      !entry.name.startsWith(".") &&
-      !entry.name.startsWith("_") &&
-      !settings.files.extensions.hidden.includes(entry.name) &&
-      !(entry.isFile() && entry.name === "index.html"),
-  );
-
-  // Add size information to entries (matching server behavior)
-  const entriesWithSize = await Promise.all(
-    visibleEntries.map(async (entry: Dirent & { size?: number }) => {
-      if (entry.isFile()) {
-        const fullPath = path.join(dirInfo.outputPath, entry.name);
-        const stat = await fs.stat(fullPath);
-        return Object.assign(entry, { size: stat.size });
-      }
-      return Object.assign(entry, { size: 0 });
-    }),
-  );
-
-  // Build sidebar if enabled
-  let sidebar: NavItem[] = [];
-  if (settings.navigation.sidebar.enabled) {
-    sidebar = await buildSidebar(rootDir, dirInfo.urlPath, settings, true);
-  }
-
-  // Use same renderDirectory as server, wrap in renderPage
-  const body = renderDirectory({
+  // List output directory contents (excludes dotfiles and the generated
+  // index.html itself), matching the server's directory listing behavior
+  const page = await renderDirectoryPage({
+    listDir: dirInfo.outputPath,
     urlPath: dirInfo.urlPath,
-    entries: entriesWithSize,
-  });
-
-  const title = dirInfo.urlPath ? `Index of ${dirInfo.urlPath}` : "Index";
-
-  const html = renderPage({
-    title,
-    body,
-    filePath: dirInfo.urlPath,
+    rootDir,
     settings,
-    urlPath: dirInfo.urlPath,
-    sidebar,
-    isStaticExport: true,
+    mode: "static",
+    isEntryVisible: (entry) =>
+      !entry.name.startsWith(".") &&
+      !(entry.isFile() && entry.name === "index.html"),
+    title: dirInfo.urlPath ? `Index of ${dirInfo.urlPath}` : "Index",
   });
 
   const indexPath = path.join(dirInfo.outputPath, "index.html");
-  await fs.writeFile(indexPath, html, "utf-8");
+  await fs.writeFile(indexPath, page.html, "utf-8");
 }
 
 /**
