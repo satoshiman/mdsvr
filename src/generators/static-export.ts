@@ -9,6 +9,8 @@ import {
   isAllowedExtension,
 } from "../render-page.js";
 import { buildSearchIndex } from "./search-index.js";
+import { generateSitemap } from "./sitemap.js";
+import { generateFeed } from "./feed.js";
 import type { Settings } from "../settings/index.js";
 import {
   generateOgImage,
@@ -219,7 +221,27 @@ export async function exportStaticSite(options: ExportOptions): Promise<void> {
       }
     }
 
-    // 7. Save new export state (only OG state)
+    // 7. Generate sitemap.xml if enabled
+    if (settings.seo.generateSitemap) {
+      const sitemap = await generateSitemap(absRootDir, settings);
+      const sitemapPath = path.join(absOutputDir, "sitemap.xml");
+      await fs.writeFile(sitemapPath, sitemap, "utf-8");
+      if (!silent) {
+        console.log(`  ✓ sitemap.xml`);
+      }
+    }
+
+    // 8. Generate RSS/Atom feed if enabled
+    if (settings.seo.generateRssFeed) {
+      const feed = await generateFeed(absRootDir, settings);
+      const feedPath = path.join(absOutputDir, "feed.xml");
+      await fs.writeFile(feedPath, feed, "utf-8");
+      if (!silent) {
+        console.log(`  ✓ feed.xml`);
+      }
+    }
+
+    // 9. Save new export state (only OG state)
     const finalState: ExportState = {
       settingsHash: currentSettingsHash,
       html: {},
