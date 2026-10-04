@@ -81,16 +81,34 @@ npm publish
 
 Nếu tài khoản bật 2FA, npm sẽ yêu cầu OTP hoặc mở browser authenticate. Sau khi thành công, output sẽ hiển thị `+ mdsvr@X.Y.Z`. Lưu ý package có thể mất vài phút mới propagate hết registry.
 
-### 5. Push lên GitHub
+### 5. Push lên GitHub qua release branch + PR
 
-Push commit và tag để trigger các GitHub Actions:
+`main` là **protected branch** — push thẳng sẽ bị reject (`GH006`). Luôn đi qua nhánh `release/*` và PR:
 
 ```bash
 cd /Users/apple/md-serve
-git push origin <branch> && git push origin --tags
+
+# 1. Tạo nhánh release từ HEAD (đã chứa commit version bump)
+git checkout -b release/vX.Y.Z
+git push -u origin release/vX.Y.Z
+
+# 2. Tạo PR vào main rồi merge (rebase) + xoá nhánh remote
+gh pr create --base main --head release/vX.Y.Z --title "release: vX.Y.Z" --body "..."
+gh pr merge --rebase --delete-branch
+
+# 3. Về main và pull kết quả merge
+git checkout main && git pull
+
+# 4. Tag phải trỏ vào commit version SAU rebase (SHA mới trên main)
+git tag -d vX.Y.Z
+git tag vX.Y.Z <sha-commit-"X.Y.Z"-trên-main>
+git push origin vX.Y.Z
+
+# 5. Xoá nhánh local nếu còn
+git branch -d release/vX.Y.Z
 ```
 
-Nếu đang ở nhánh release (ví dụ `release/v2.3.4`), push nhánh đó. Sau đó tạo PR merge vào `main`.
+> Vì merge bằng rebase, SHA của commit version trên `main` khác với commit local lúc chạy `npm version`. Không push tag trước khi merge — retag sau khi pull main.
 
 ## Các workflow GitHub Actions
 
