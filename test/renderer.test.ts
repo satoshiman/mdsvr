@@ -55,6 +55,7 @@ describe("renderer", () => {
       generateSitemap: true,
       generateRobotsTxt: true,
       generateRssFeed: false,
+      generateLlmsTxt: false,
       structuredData: true,
       twitterCard: "summary",
       og: {
@@ -139,6 +140,28 @@ describe("renderer", () => {
     assert.ok(!result.html.includes('class="code-block-raw"'));
     // Valid HTML: no <pre><div> nesting
     assert.ok(!/<pre[^>]*>\s*<div/.test(result.html));
+  });
+
+  it("does not wrap the block markup in an extra <pre><code>", () => {
+    // markdown-it's default fence/code_block rules wrap highlight() output in
+    // <pre><code>. The wrapper div must be emitted verbatim — otherwise the
+    // block gets double padding/background and invalid <div>-in-<pre> nesting.
+    const fenced = renderMarkdown("```js\nconst x = 1;\n```", settings);
+    assert.ok(!/<pre[^>]*>\s*<code[^>]*>\s*<div/.test(fenced.html));
+    assert.strictEqual(
+      (fenced.html.match(/<pre>/g) || []).length,
+      1,
+      "exactly one <pre> per fenced block",
+    );
+
+    const indented = renderMarkdown("    indented code\n", settings);
+    assert.ok(!/<pre[^>]*>\s*<code[^>]*>\s*<div/.test(indented.html));
+    assert.ok(indented.html.includes('class="code-block-container"'));
+    assert.strictEqual(
+      (indented.html.match(/<pre>/g) || []).length,
+      1,
+      "indented code also gets a single <pre>",
+    );
   });
 
   it("auto-links URLs", () => {
