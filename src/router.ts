@@ -81,6 +81,21 @@ export async function route(
     return;
   }
 
+  // When cleanUrls is enabled, .md/.mdx URLs redirect to canonical clean URLs
+  // (README.md maps to the directory URL, matching static export structure)
+  if (settings.generate.cleanUrls && /\.mdx?$/i.test(urlPath)) {
+    const queryIndex = url.indexOf("?");
+    const rawQuery = queryIndex === -1 ? "" : url.slice(queryIndex);
+    const baseName = path.posix.basename(urlPath).replace(/\.mdx?$/i, "");
+    const cleanUrl =
+      baseName.toLowerCase() === "readme"
+        ? urlPath.replace(/[^/]+$/, "")
+        : urlPath.replace(/\.mdx?$/i, "");
+    res.writeHead(308, { Location: `${cleanUrl}${rawQuery}` });
+    res.end();
+    return;
+  }
+
   // Resolve path and check for path traversal
   const cleanUrlPath = urlPath.replace(/^\/+/, "");
   const resolvedRootPath = path.resolve(rootDir);

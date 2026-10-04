@@ -66,4 +66,4 @@ ADR chuyển sang Accepted khi multi-instance test pass và không còn mutable 
 
 ## Liên quan
 
-- [Cấu hình và dữ liệu](../01-architecture/05-configuration-and-data)
+- [Cấu hình và dữ liệu](../01-architecture/05-configuration-and-data.md)

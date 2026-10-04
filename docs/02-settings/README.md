@@ -433,7 +433,7 @@ Second step content
 </Steps>
 ```
 
-See [MDX Components](../03-features/mdx) for all available components.
+See [MDX Components](../03-features/mdx.mdx) for all available components.
 
 ### Images & Assets
 
@@ -462,13 +462,13 @@ Follow these guidelines to ensure your documentation passes validation and works
 
 - **Use relative paths** — Never use absolute paths starting with `/`
   - ❌ `[Guide](/docs/guide)`
-  - ✅ `[Guide](./guide)` or `[Guide](../guide)`
-- **Remove file extensions** — Links without `.md`/`.mdx` work in both modes
-  - ❌ `[Setup](./setup.md)`
-  - ✅ `[Setup](./setup)`
-- **Link to directories, not index files** — Use directory paths instead of README/index
-  - ❌ `[Getting Started](./01-getting-started/README.md)`
-  - ✅ `[Getting Started](./01-getting-started)`
+  - ✅ `[Guide](./guide.md)` or `[Guide](../guide.md)`
+- **Include file extensions** — `.md`/`.mdx` links resolve on GitHub and in IDE previews; mdsvr converts them to clean URLs when serving (with `generate.cleanUrls`) and in static export
+  - ❌ `[Setup](./setup)`
+  - ✅ `[Setup](./setup.md)`
+- **Link to index files explicitly** — Point at `README.md` so links work on GitHub; directory links are converted to clean directory URLs
+  - ❌ `[Getting Started](./01-getting-started)`
+  - ✅ `[Getting Started](./01-getting-started/README.md)`
 - **Validate anchors** — Ensure `#section` links match actual headings
 
 #### Heading Structure
@@ -689,6 +689,6 @@ Exported sites use clean URLs:
 
 ## Related
 
-- [Getting Started](../01-getting-started) — If you're new to mdsvr
-- [Features](../03-features) — Learn about specific features
-- [CLI Reference](../04-reference) — Command-line documentation
+- [Getting Started](../01-getting-started/README.md) — If you're new to mdsvr
+- [Features](../03-features/README.md) — Learn about specific features
+- [CLI Reference](../04-reference/README.md) — Command-line documentation

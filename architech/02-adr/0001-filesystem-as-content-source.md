@@ -52,5 +52,5 @@ Quyết định thể hiện ở `createServer(rootDir)`, router dựa trên pat
 
 ## Liên quan
 
-- [Tổng quan hệ thống](../01-architecture/01-system-overview)
-- [ADR-0004](./0004-layered-filesystem-access-control)
+- [Tổng quan hệ thống](../01-architecture/01-system-overview.md)
+- [ADR-0004](./0004-layered-filesystem-access-control.md)

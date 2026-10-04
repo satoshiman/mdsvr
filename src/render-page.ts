@@ -65,6 +65,9 @@ export async function renderPageService(
   let body = result.html;
   if (isStatic) {
     body = convertMarkdownLinks(fixAssetPaths(body, urlPath));
+  } else if (settings.generate.cleanUrls) {
+    // Preview static-export output: rewrite .md/.mdx links to clean URLs
+    body = convertMarkdownLinks(body);
   }
 
   const html = renderPage({
@@ -118,7 +121,8 @@ export async function renderDirectoryPage(
   const entries = await fs.readdir(listDir, { withFileTypes: true });
 
   const visibleEntries = entries.filter(
-    (entry) => !isHidden(entry.name, settings) && (isEntryVisible?.(entry) ?? true),
+    (entry) =>
+      !isHidden(entry.name, settings) && (isEntryVisible?.(entry) ?? true),
   );
 
   const entriesWithSize = await Promise.all(
@@ -170,10 +174,7 @@ export function isBlocked(ext: string, settings: Settings): boolean {
   return settings.files.extensions.block.includes(ext);
 }
 
-export function isAllowedExtension(
-  ext: string,
-  settings: Settings,
-): boolean {
+export function isAllowedExtension(ext: string, settings: Settings): boolean {
   return settings.files.extensions.serve.includes(ext);
 }
 

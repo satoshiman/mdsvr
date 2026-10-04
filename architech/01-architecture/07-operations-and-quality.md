@@ -78,6 +78,6 @@ Exporter tạo cây HTML có thể triển khai bằng GitHub Pages, Firebase, N
 
 ## Liên quan
 
-- [Danh mục ADR](../02-adr)
-- [ADR-0006: Cô lập server state](../02-adr/0006-isolate-server-instance-state)
-- [ADR-0007: Hợp nhất pipeline render](../02-adr/0007-unify-page-rendering-pipeline)
+- [Danh mục ADR](../02-adr/README.md)
+- [ADR-0006: Cô lập server state](../02-adr/0006-isolate-server-instance-state.md)
+- [ADR-0007: Hợp nhất pipeline render](../02-adr/0007-unify-page-rendering-pipeline.md)

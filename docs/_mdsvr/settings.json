@@ -6,7 +6,8 @@
     "language": "en"
   },
   "generate": {
-    "basePath": "/docs"
+    "basePath": "/docs",
+    "cleanUrls": true
   },
   "appearance": {
     "defaultTheme": "system",

@@ -13,17 +13,17 @@ Bộ tài liệu này mô tả kiến trúc **đang được triển khai trong 
 
 ### Tài liệu kiến trúc
 
-1. [Tổng quan hệ thống](./01-architecture/01-system-overview)
-2. [Cấu trúc module](./01-architecture/02-module-map)
-3. [Luồng HTTP và render](./01-architecture/03-request-rendering-flow)
-4. [Luồng static export](./01-architecture/04-static-export-flow)
-5. [Cấu hình và dữ liệu](./01-architecture/05-configuration-and-data)
-6. [Mô hình bảo mật](./01-architecture/06-security-model)
-7. [Vận hành, kiểm thử và giới hạn](./01-architecture/07-operations-and-quality)
+1. [Tổng quan hệ thống](./01-architecture/01-system-overview.md)
+2. [Cấu trúc module](./01-architecture/02-module-map.md)
+3. [Luồng HTTP và render](./01-architecture/03-request-rendering-flow.md)
+4. [Luồng static export](./01-architecture/04-static-export-flow.md)
+5. [Cấu hình và dữ liệu](./01-architecture/05-configuration-and-data.md)
+6. [Mô hình bảo mật](./01-architecture/06-security-model.md)
+7. [Vận hành, kiểm thử và giới hạn](./01-architecture/07-operations-and-quality.md)
 
 ### Quyết định kiến trúc
 
-- [Danh mục ADR](./02-adr)
+- [Danh mục ADR](./02-adr/README.md)
 - ADR có trạng thái **Accepted** ghi nhận hiện trạng đã có trong code.
 - ADR có trạng thái **Proposed** là hướng cải tiến, chưa được xem là cam kết triển khai.
 
@@ -39,7 +39,7 @@ Tài liệu bao phủ:
 - static export và export state;
 - chiến lược kiểm thử, build và phát hành.
 
-Tài liệu không thay thế [hướng dẫn người dùng](../docs) và không mô tả chi tiết từng option cấu hình.
+Tài liệu không thay thế [hướng dẫn người dùng](../docs/README.md) và không mô tả chi tiết từng option cấu hình.
 
 ## Nguồn sự thật
 

@@ -69,6 +69,6 @@ ADR chuyển sang Accepted khi router và exporter dùng chung application servi
 
 ## Liên quan
 
-- [Cấu trúc module](../01-architecture/02-module-map)
-- [Luồng static export](../01-architecture/04-static-export-flow)
-- [ADR-0009: Source content tương thích GitHub](./0009-github-compatible-source-format)
+- [Cấu trúc module](../01-architecture/02-module-map.md)
+- [Luồng static export](../01-architecture/04-static-export-flow.md)
+- [ADR-0009: Source content tương thích GitHub](./0009-github-compatible-source-format.md)

@@ -71,5 +71,5 @@ Search index được build từ content tree và trả qua `/search-index.json`
 
 ## Liên quan
 
-- [ADR-0002: Cấu hình tùy chọn với Zod](../02-adr/0002-optional-zod-validated-settings)
-- [ADR-0006: Cô lập state theo server instance](../02-adr/0006-isolate-server-instance-state)
+- [ADR-0002: Cấu hình tùy chọn với Zod](../02-adr/0002-optional-zod-validated-settings.md)
+- [ADR-0006: Cô lập state theo server instance](../02-adr/0006-isolate-server-instance-state.md)

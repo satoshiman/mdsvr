@@ -57,4 +57,4 @@ Test phải bao phủ traversal, encoded paths, sibling-prefix path, symlink esc
 
 ## Liên quan
 
-- [Mô hình bảo mật](../01-architecture/06-security-model)
+- [Mô hình bảo mật](../01-architecture/06-security-model.md)

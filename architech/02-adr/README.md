@@ -11,15 +11,15 @@ ADR ghi lại bối cảnh, lựa chọn, hệ quả và trạng thái của quy
 
 | ADR                                              | Tiêu đề                                       | Trạng thái |
 | ------------------------------------------------ | --------------------------------------------- | ---------- |
-| [0001](./0001-filesystem-as-content-source)      | Dùng filesystem làm nguồn nội dung            | Accepted   |
-| [0002](./0002-optional-zod-validated-settings)   | Cấu hình tùy chọn được validate bằng Zod      | Accepted   |
-| [0003](./0003-server-side-rendering)             | Render Markdown và MDX phía server            | Accepted   |
-| [0004](./0004-layered-filesystem-access-control) | Kiểm soát truy cập filesystem nhiều lớp       | Accepted   |
-| [0005](./0005-clean-urls-for-static-export)      | Dùng clean URL cho static export              | Accepted   |
-| [0006](./0006-isolate-server-instance-state)     | Cô lập settings và cache theo server instance | Proposed   |
-| [0007](./0007-unify-page-rendering-pipeline)     | Hợp nhất page-rendering pipeline              | Proposed   |
-| [0008](./0008-trusted-content-policy)            | Chính thức hóa policy cho nội dung tin cậy    | Proposed   |
-| [0009](./0009-github-compatible-source-format)   | Source content tương thích GitHub             | Accepted   |
+| [0001](./0001-filesystem-as-content-source.md)      | Dùng filesystem làm nguồn nội dung            | Accepted   |
+| [0002](./0002-optional-zod-validated-settings.md)   | Cấu hình tùy chọn được validate bằng Zod      | Accepted   |
+| [0003](./0003-server-side-rendering.md)             | Render Markdown và MDX phía server            | Accepted   |
+| [0004](./0004-layered-filesystem-access-control.md) | Kiểm soát truy cập filesystem nhiều lớp       | Accepted   |
+| [0005](./0005-clean-urls-for-static-export.md)      | Dùng clean URL cho static export              | Accepted   |
+| [0006](./0006-isolate-server-instance-state.md)     | Cô lập settings và cache theo server instance | Proposed   |
+| [0007](./0007-unify-page-rendering-pipeline.md)     | Hợp nhất page-rendering pipeline              | Proposed   |
+| [0008](./0008-trusted-content-policy.md)            | Chính thức hóa policy cho nội dung tin cậy    | Proposed   |
+| [0009](./0009-github-compatible-source-format.md)   | Source content tương thích GitHub             | Accepted   |
 
 ## Trạng thái
 
