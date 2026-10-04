@@ -108,8 +108,8 @@ function renderCodeBlockWithToolbar(
 </div></div>\n`;
 }
 
-// Create markdown-it instance with settings
-function createMarkdownIt(settings: Settings): MarkdownIt {
+// Create markdown-it instance with the shared highlight/table/callout rules.
+function createMarkdownIt(): MarkdownIt {
   const md = new MarkdownIt({
     html: true,
     linkify: true,
@@ -126,7 +126,7 @@ function createMarkdownIt(settings: Settings): MarkdownIt {
   </div>
   <div class="mermaid-zoom-controls">
     <button class="mermaid-btn mermaid-btn-zoom-in" title="Zoom in"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
   </div>
   <div class="mermaid-chart">
     <div class="mermaid">${str.trim()}</div>
@@ -162,6 +162,35 @@ function createMarkdownIt(settings: Settings): MarkdownIt {
     slugify,
   });
 
+  // Emit highlight() output verbatim. markdown-it's default fence/code_block
+  // rules wrap the highlight result in another <pre><code> — that nests
+  // <div> inside <pre> (invalid HTML) and doubles the padding from the
+  // .markdown-body pre styles. Must be installed BEFORE mathPlugin, which
+  // wraps rules.fence and delegates non-math blocks to the rule found here.
+  md.renderer.rules.fence = (tokens, idx, options) => {
+    const token = tokens[idx];
+    const langName = token.info ? token.info.trim().split(/\s+/g)[0] : "";
+    const highlighted = options.highlight
+      ? options.highlight(token.content, langName, "") ||
+        md.utils.escapeHtml(token.content)
+      : md.utils.escapeHtml(token.content);
+    if (/^<(?:pre|div)[\s>]/.test(highlighted)) {
+      return `${highlighted}\n`;
+    }
+    return `<pre><code class="language-${md.utils.escapeHtml(langName)}">${highlighted}</code></pre>\n`;
+  };
+  md.renderer.rules.code_block = (tokens, idx, options) => {
+    const token = tokens[idx];
+    const highlighted = options.highlight
+      ? options.highlight(token.content, "", "") ||
+        md.utils.escapeHtml(token.content)
+      : md.utils.escapeHtml(token.content);
+    if (/^<(?:pre|div)[\s>]/.test(highlighted)) {
+      return `${highlighted}\n`;
+    }
+    return `<pre><code>${highlighted}</code></pre>\n`;
+  };
+
   md.use(mathPlugin);
 
   // Wrap tables in a scrollable container for mobile responsiveness
@@ -181,7 +210,7 @@ export function renderMarkdown(
   const frontmatter = parsed.data as Record<string, unknown>;
 
   // Render markdown
-  const md = createMarkdownIt(settings);
+  const md = createMarkdownIt();
   let html = md.render(parsed.content);
 
   // Convert GitHub-style callouts
@@ -209,64 +238,7 @@ function extractToc(html: string): TocItem[] {
 
 // For V1 compatibility - simple render without frontmatter extraction
 export function renderMarkdownSimple(content: string): string {
-  const md = new MarkdownIt({
-    html: true,
-    linkify: true,
-    typographer: true,
-    highlight: (str: string, lang: string): string => {
-      // ADD: intercept mermaid blocks
-      if (lang === "mermaid") {
-        const escaped = str.trim().replace(/</g, "&lt;").replace(/>/g, "&gt;");
-        return `<div class="mermaid-wrapper"><div class="mermaid-container">
-  <div class="mermaid-toolbar">
-    <button class="mermaid-btn mermaid-btn-chart" title="Chart view"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z"/><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/></svg></button>
-    <button class="mermaid-btn mermaid-btn-code" title="Show code"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg></button>
-    <button class="mermaid-btn mermaid-btn-fullscreen" title="Fullscreen"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 15 6 6"/><path d="m15 9 6-6"/><path d="M21 16v5h-5"/><path d="M21 8V3h-5"/><path d="M3 16v5h5"/><path d="m3 21 6-6"/><path d="M3 8V3h5"/><path d="M9 9 3 3"/></svg></button>
-  </div>
-  <div class="mermaid-zoom-controls">
-    <button class="mermaid-btn mermaid-btn-zoom-in" title="Zoom in"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-  </div>
-  <div class="mermaid-chart">
-    <div class="mermaid">${str.trim()}</div>
-  </div>
-  <pre class="mermaid-source"><code>${escaped}</code></pre>
-</div></div>\n`;
-      }
-
-      // existing hljs logic — KEEP AS IS
-      if (lang && hljs.getLanguage(lang)) {
-        try {
-          return renderCodeBlockWithToolbar(
-            hljs.highlight(str, { language: lang }).value,
-            lang,
-            str,
-            md.utils.escapeHtml,
-          );
-        } catch {
-          // Fall through to plain text
-        }
-      }
-      return renderCodeBlockWithToolbar(
-        md.utils.escapeHtml(str),
-        null,
-        str,
-        md.utils.escapeHtml,
-      );
-    },
-  });
-
-  md.use(markdownItAnchor, {
-    permalink: false,
-    slugify,
-  });
-
-  md.use(mathPlugin);
-
-  md.renderer.rules.table_open = () =>
-    '<div class="table-wrapper"><div class="table-toolbar"><button class="table-btn-fullscreen" type="button" title="Fullscreen table" aria-label="Fullscreen table"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m15 15 6 6"/><path d="m15 9 6-6"/><path d="M21 16v5h-5"/><path d="M21 8V3h-5"/><path d="M3 16v5h5"/><path d="m3 21 6-6"/><path d="M3 8V3h5"/><path d="M9 9 3 3"/></svg></button></div><table>\n';
-  md.renderer.rules.table_close = () => "</table></div>\n";
-
+  const md = createMarkdownIt();
   let html = md.render(content);
 
   // Convert GitHub-style callouts
