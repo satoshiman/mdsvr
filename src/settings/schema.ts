@@ -98,6 +98,14 @@ export const OgSchema = z.object({
     .default({}),
 });
 
+export const VerificationSchema = z.object({
+  google: z.string().optional(),
+  bing: z.string().optional(),
+  yandex: z.string().optional(),
+  pinterest: z.string().optional(),
+  naver: z.string().optional(),
+});
+
 export const SeoSchema = z.object({
   // Optional. When unset, titles render as "<page title> | <site title>".
   titleTemplate: z.string().optional(),
@@ -107,10 +115,14 @@ export const SeoSchema = z.object({
     .default("summary_large_image"),
   twitterSite: z.string().optional(),
   noIndex: z.boolean().default(false),
+  // When true, auto-generated directory listing pages emit
+  // `noindex, nofollow` and are excluded from the sitemap.
+  noIndexDirectoryPages: z.boolean().default(false),
   generateSitemap: z.boolean().default(true),
   generateRobotsTxt: z.boolean().default(true),
   generateRssFeed: z.boolean().default(false),
   structuredData: z.boolean().default(true),
+  verification: VerificationSchema.default({}),
   rss: z
     .object({
       title: z.string(),
@@ -161,6 +173,31 @@ export const GenerateSchema = z.object({
   cleanUrls: z.boolean().default(false),
 });
 
+export const AnalyticsSchema = z.object({
+  // GA4 measurement ID, e.g. "G-XXXXXXXXXX" — emits gtag.js.
+  googleAnalytics: z.string().optional(),
+  // GTM container ID, e.g. "GTM-XXXXXXX" — head script + body noscript.
+  googleTagManager: z.string().optional(),
+  // Microsoft Clarity project ID — emits the clarity inline snippet.
+  clarity: z.string().optional(),
+  plausible: z
+    .object({
+      domain: z.string(),
+      // Self-hosted instances can override the script URL.
+      scriptSrc: z.string().default("https://plausible.io/js/script.js"),
+    })
+    .optional(),
+  umami: z
+    .object({
+      websiteId: z.string(),
+      scriptSrc: z.string().default("https://cloud.umami.is/script.js"),
+    })
+    .optional(),
+  // Raw snippets appended verbatim to the end of <head>. Trusted content:
+  // only ever read from the site owner's settings.json (ADR-0008).
+  customHead: z.array(z.string()).default([]),
+});
+
 export const SettingsSchema = z.object({
   $schema: z.string().optional(),
   site: SiteSchema.default({}),
@@ -172,6 +209,7 @@ export const SettingsSchema = z.object({
   mdx: MdxSchema.default({}),
   footer: FooterSchema.default({}),
   generate: GenerateSchema.default({}),
+  analytics: AnalyticsSchema.default({}),
 });
 
 export type Settings = z.infer<typeof SettingsSchema>;
@@ -187,3 +225,5 @@ export type Files = z.infer<typeof FilesSchema>;
 export type Mdx = z.infer<typeof MdxSchema>;
 export type Footer = z.infer<typeof FooterSchema>;
 export type Generate = z.infer<typeof GenerateSchema>;
+export type Analytics = z.infer<typeof AnalyticsSchema>;
+export type Verification = z.infer<typeof VerificationSchema>;

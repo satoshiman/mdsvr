@@ -81,11 +81,12 @@ async function readDirRecursive(
         const relativePath =
           "/" + path.relative(rootDir, fullPath).replace(/\\/g, "/");
         let href = relativePath.replace(/\.(md|mdx)$/, "");
-        // README becomes directory index, so link to the directory path
-        if (path.basename(href).toLowerCase() === "readme") {
+        // Index files render at the directory URL; everything else is a
+        // trailing-slash doc route — both canonical clean-URL forms.
+        if (/^(readme|index)$/i.test(path.basename(href))) {
           href = path.dirname(href);
-          if (!href.endsWith("/")) href += "/";
         }
+        if (!href.endsWith("/")) href += "/";
 
         const title =
           (parsed.data.title as string) ||

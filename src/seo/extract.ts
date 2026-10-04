@@ -40,6 +40,8 @@ function cleanInline(text: string): string {
       .replace(/<[^>]+>/g, "") // HTML tags
       .replace(/(\*\*|__)(.*?)\1/g, "$2") // bold
       .replace(/\*([^*]+)\*/g, "$1") // italic
+      // _italic_ — only at word boundaries so SNAKE_CASE identifiers survive
+      .replace(/(^|\W)_([^_]+)_(?=\W|$)/g, "$1$2")
       .replace(/~~([^~]+)~~/g, "$1") // strikethrough
       .replace(/`([^`]+)`/g, "$1") // inline code
       .replace(/\s+/g, " ")
@@ -88,34 +90,63 @@ export function extractFirstHeading(content: string): string | null {
   return match ? cleanInline(match[1]) || null : null;
 }
 
+/** Descriptions shorter than this are treated as degenerate — keep scanning. */
+const MIN_DESCRIPTION_LENGTH = 40;
+
+/**
+ * Whether a line is a bare label like `**Làm gì:**` or `Functional:` —
+ * markdown emphasis that cleans to a short colon-terminated string.
+ */
+function isLabelOnly(line: string): boolean {
+  const text = cleanInline(line);
+  return (
+    text.length > 0 &&
+    text.length <= MIN_DESCRIPTION_LENGTH &&
+    text.endsWith(":")
+  );
+}
+
 /**
  * Extract the first meaningful paragraph from markdown content
  * (for the meta description fallback). Skips frontmatter, code blocks,
- * headings, HTML, comments, and nav-like lines; collapses whitespace;
- * cuts at ~160 chars on a word boundary (hard cap 200).
+ * headings, HTML, comments, and nav-like lines; drops label-only lines;
+ * requires ~40 chars of real prose (shorter paragraphs are kept only as a
+ * last resort); collapses whitespace; cuts at ~160 chars on a word
+ * boundary (hard cap 200).
  */
 export function extractFirstParagraph(content: string): string | null {
   let body = stripFrontmatter(content);
   body = stripFencedCode(body);
   body = body.replace(/<!--[\s\S]*?-->/g, "");
 
-  const paraLines: string[] = [];
+  let fallback: string | null = null;
+  let paraLines: string[] = [];
+
+  // Evaluate the accumulated paragraph: returns a qualifying description,
+  // records a shorter candidate as fallback, or null if the block is empty.
+  const flush = (): string | null => {
+    if (paraLines.length === 0) return null;
+    const kept = paraLines.filter((l) => !isLabelOnly(l));
+    paraLines = [];
+    const text = cleanInline(kept.join(" "));
+    if (!text) return null;
+    if (text.length >= MIN_DESCRIPTION_LENGTH) return truncate(text, 160, 200);
+    if (!fallback || text.length > fallback.length) fallback = text;
+    return null;
+  };
+
   for (const rawLine of body.split("\n")) {
     const line = rawLine.trim();
-    if (!line) {
-      if (paraLines.length > 0) break; // paragraph ends at first blank line
-      continue;
-    }
-    if (isSkippableLine(line)) {
-      if (paraLines.length > 0) break; // stop at non-prose content
+    if (!line || isSkippableLine(line)) {
+      const result = flush();
+      if (result) return result;
       continue;
     }
     paraLines.push(line);
   }
 
-  if (paraLines.length === 0) return null;
-  const text = cleanInline(paraLines.join(" "));
-  return text ? truncate(text, 160, 200) : null;
+  const result = flush();
+  return result ?? (fallback ? truncate(fallback, 160, 200) : null);
 }
 
 /**

@@ -75,7 +75,7 @@ function renderCodeBlockWithToolbar(
 ): string {
   const langClass = lang ? ` class="hljs language-${lang}"` : ' class="hljs"';
   const escapedRaw = escapeHtml(rawCode);
-  return `<pre class="code-block-wrapper"><div class="code-block-container">
+  return `<div class="code-block-wrapper"><div class="code-block-container" data-code="${escapedRaw}">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -105,8 +105,7 @@ function renderCodeBlockWithToolbar(
     </button>
   </div>
   <pre><code${langClass}>${codeHtml}</code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>${escapedRaw}</code></pre>
-</div></pre>\n`;
+</div></div>\n`;
 }
 
 // Create markdown-it instance with settings
@@ -119,7 +118,7 @@ function createMarkdownIt(settings: Settings): MarkdownIt {
       // ADD: intercept mermaid blocks
       if (lang === "mermaid") {
         const escaped = str.trim().replace(/</g, "&lt;").replace(/>/g, "&gt;");
-        return `<pre class="mermaid-wrapper"><div class="mermaid-container">
+        return `<div class="mermaid-wrapper"><div class="mermaid-container">
   <div class="mermaid-toolbar">
     <button class="mermaid-btn mermaid-btn-chart" title="Chart view"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z"/><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/></svg></button>
     <button class="mermaid-btn mermaid-btn-code" title="Show code"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg></button>
@@ -133,7 +132,7 @@ function createMarkdownIt(settings: Settings): MarkdownIt {
     <div class="mermaid">${str.trim()}</div>
   </div>
   <pre class="mermaid-source"><code>${escaped}</code></pre>
-</div></pre>\n`;
+</div></div>\n`;
       }
 
       // existing hljs logic — KEEP AS IS
@@ -218,7 +217,7 @@ export function renderMarkdownSimple(content: string): string {
       // ADD: intercept mermaid blocks
       if (lang === "mermaid") {
         const escaped = str.trim().replace(/</g, "&lt;").replace(/>/g, "&gt;");
-        return `<pre class="mermaid-wrapper"><div class="mermaid-container">
+        return `<div class="mermaid-wrapper"><div class="mermaid-container">
   <div class="mermaid-toolbar">
     <button class="mermaid-btn mermaid-btn-chart" title="Chart view"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z"/><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/></svg></button>
     <button class="mermaid-btn mermaid-btn-code" title="Show code"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg></button>
@@ -232,7 +231,7 @@ export function renderMarkdownSimple(content: string): string {
     <div class="mermaid">${str.trim()}</div>
   </div>
   <pre class="mermaid-source"><code>${escaped}</code></pre>
-</div></pre>\n`;
+</div></div>\n`;
       }
 
       // existing hljs logic — KEEP AS IS

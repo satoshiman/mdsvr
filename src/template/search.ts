@@ -96,8 +96,15 @@ export function getSearchInlineScript(basePath: string = ""): string {
       searchInput.addEventListener('input', debounce(performSearch, 150));
     }
 
-    // Load search index
-    loadSearchIndex();
+    // Load search index, then honor ?q=<query> (SearchAction entry point)
+    loadSearchIndex().then(function() {
+      const initialQuery = new URLSearchParams(window.location.search).get('q');
+      if (initialQuery && searchInput) {
+        searchInput.value = initialQuery;
+        openSearch();
+        performSearch();
+      }
+    });
   }
 
   async function loadSearchIndex() {

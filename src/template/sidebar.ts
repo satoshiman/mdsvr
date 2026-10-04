@@ -223,7 +223,8 @@ async function readDirRecursive(
       if (baseName === "readme") continue;
 
       const title = await extractTitle(fullPath, settings);
-      const href = relativePath.replace(/\.(md|mdx)$/, "");
+      // Canonical clean-URL form: trailing-slash doc route
+      const href = relativePath.replace(/\.(md|mdx)$/, "") + "/";
       items.push({
         title,
         href,
@@ -317,11 +318,12 @@ export async function buildSidebar(
           currentPath === item.href + "index.md");
 
       // Check if currentPath has .md/.mdx extension but item href doesn't
-      // e.g., currentPath="/projects/github/github.md" should match item href="/projects/github/github"
+      // e.g., currentPath="/projects/github/github.md" should match item href="/projects/github/github/"
+      const itemHrefNoSlash = item.href.replace(/\/$/, "");
       const isExtensionMatch =
         item.type === "file" &&
-        (currentPath === item.href + ".md" ||
-          currentPath === item.href + ".mdx");
+        (currentPath === itemHrefNoSlash + ".md" ||
+          currentPath === itemHrefNoSlash + ".mdx");
 
       // Check if currentPath is a child of this directory (for items deeper than sidebar depth)
       // e.g., currentPath="/k8s/practices/pvc-homework/EXERCISE.md" should match folder href="/k8s/practices/pvc-homework/"
@@ -550,9 +552,10 @@ export function getPrevNext(
     // Match without trailing slash
     if (item.href === currentPath + "/") return true;
     if (item.href + "/" === currentPath) return true;
-    // Match .md/.mdx extension
-    if (item.href + ".md" === currentPath) return true;
-    if (item.href + ".mdx" === currentPath) return true;
+    // Match .md/.mdx extension (href uses canonical trailing-slash form)
+    const hrefNoSlash = item.href.replace(/\/$/, "");
+    if (hrefNoSlash + ".md" === currentPath) return true;
+    if (hrefNoSlash + ".mdx" === currentPath) return true;
     // Match directory index files (README.md, index.md served under dir href)
     if (
       item.type === "dir" &&

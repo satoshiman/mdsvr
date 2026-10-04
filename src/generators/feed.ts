@@ -74,7 +74,13 @@ async function readDirRecursive(
 
         const relativePath =
           "/" + path.relative(rootDir, fullPath).replace(/\\/g, "/");
-        const urlPath = relativePath.replace(/\.(md|mdx)$/, "");
+        let urlPath = relativePath.replace(/\.(md|mdx)$/, "");
+        // Index files render at the directory URL; other docs are
+        // trailing-slash routes — both canonical clean-URL forms.
+        if (/^(readme|index)$/i.test(path.basename(urlPath))) {
+          urlPath = path.dirname(urlPath);
+        }
+        if (!urlPath.endsWith("/")) urlPath += "/";
         const fullUrl = `${baseUrl.replace(/\/$/, "")}${urlPath}`;
 
         const title =

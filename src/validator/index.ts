@@ -17,7 +17,8 @@ export interface ValidationError {
     | "broken-anchor"
     | "index-files"
     | "link-with-extension"
-    | "filename-with-dots";
+    | "filename-with-dots"
+    | "outside-root";
   message: string;
   suggestion?: string;
   autofix?: string;
@@ -333,6 +334,30 @@ async function validateInternalLinks(
         icon: "⚠️",
       });
       continue;
+    }
+
+    // Check for relative links that resolve outside the docs root — they
+    // cannot be served or exported (the rewriter keeps them and warns).
+    const linkPathPart = link.split("#")[0].split("?")[0];
+    if (linkPathPart) {
+      const rawResolved = path.resolve(path.dirname(filePath), linkPathPart);
+      const relToRoot = path.relative(rootDir, rawResolved);
+      if (
+        relToRoot === ".." ||
+        relToRoot.startsWith(`..${path.sep}`) ||
+        path.isAbsolute(relToRoot)
+      ) {
+        errors.push({
+          file: path.relative(rootDir, filePath),
+          line,
+          type: "outside-root",
+          message: `Link resolves outside the docs root: ${link}`,
+          suggestion: "Move the target into the docs root or remove the link",
+          original,
+          icon: "🔗",
+        });
+        continue;
+      }
     }
 
     // Check for index file patterns (README.md, index.md, etc.) - check this before extension check

@@ -50,6 +50,8 @@ describe("renderer", () => {
     seo: {
       titleTemplate: "%s",
       noIndex: false,
+      noIndexDirectoryPages: false,
+      verification: {},
       generateSitemap: true,
       generateRobotsTxt: true,
       generateRssFeed: false,
@@ -92,6 +94,9 @@ describe("renderer", () => {
       text: "Test",
       links: [],
     },
+    analytics: {
+      customHead: [],
+    },
   };
 
   it("renders basic markdown", () => {
@@ -129,8 +134,11 @@ describe("renderer", () => {
     assert.ok(
       result.html.includes('class="code-block-btn code-block-btn-fullscreen"'),
     );
-    assert.ok(result.html.includes('class="code-block-raw"'));
-    assert.ok(result.html.includes("const x = 1;"));
+    // Raw source for copy lives in a data-code attribute, not a hidden <pre>
+    assert.ok(result.html.includes('data-code="const x = 1;'));
+    assert.ok(!result.html.includes('class="code-block-raw"'));
+    // Valid HTML: no <pre><div> nesting
+    assert.ok(!/<pre[^>]*>\s*<div/.test(result.html));
   });
 
   it("auto-links URLs", () => {

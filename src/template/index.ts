@@ -13,6 +13,11 @@ import {
   renderSearchTrigger,
   getSearchInlineScript,
 } from "./search.js";
+import {
+  buildVerificationTags,
+  buildAnalyticsHeadTags,
+  buildBodyStartTags,
+} from "./analytics.js";
 import { readFileSync } from "fs";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
@@ -113,6 +118,9 @@ export function renderPage(params: TemplateParams): string {
 
   const seoTags = buildSeoTags(seoData, settings);
   const jsonLd = buildJsonLd(seoData, settings);
+  const verificationTags = buildVerificationTags(settings);
+  const analyticsHeadTags = buildAnalyticsHeadTags(settings);
+  const bodyStartTags = buildBodyStartTags(settings);
 
   // Render sidebar if enabled
   const hasSidebar = settings.navigation.sidebar.enabled && sidebar.length > 0;
@@ -195,14 +203,17 @@ export function renderPage(params: TemplateParams): string {
   ${themeScript}
   ${seoTags}
   ${jsonLd}
-  ${settings.site.favicon ? `<link rel="icon" href="${settings.site.favicon}">` : ""}
+  ${verificationTags}
+  ${settings.site.favicon ? `<link rel="icon" href="${escapeHtml(withBasePath(normalizeAssetPath(settings.site.favicon), settings, isStaticExport))}">` : ""}
   ${body.includes('class="katex') ? '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css" crossorigin="anonymous">' : ""}
   <style>
 ${getBaseStyles(settings)}
 ${getHighlightJsStyles(settings)}
   </style>
+  ${analyticsHeadTags}
 </head>
 <body>
+  ${bodyStartTags}
   <header class="site-header">
     <div class="header-left">
       ${sidebarToggle}
@@ -605,8 +616,7 @@ function initCodeBlockToolbars() {
     var fullscreenBtn = container.querySelector('.code-block-btn-fullscreen');
 
     function getRawCode() {
-      var rawEl = container.querySelector('.code-block-raw code');
-      return rawEl ? rawEl.textContent : '';
+      return container.getAttribute('data-code') || '';
     }
 
     function fallbackCopy(text) {
@@ -714,6 +724,7 @@ function initTableToolbars() {
   }
 
   document.querySelectorAll('.markdown-body table').forEach(function(table) {
+    if (table.closest('.dir-listing')) return;
     var wrapper = table.parentElement;
     if (!wrapper || !wrapper.classList.contains('table-wrapper')) {
       wrapper = document.createElement('div');
@@ -809,6 +820,16 @@ function withBasePath(
   return normalizedBase + href;
 }
 
+/**
+ * Normalize a configured asset path (favicon, logo) so that a bare file
+ * name like `favicon.svg` becomes root-relative `/favicon.svg`. Absolute
+ * and protocol-relative URLs pass through unchanged.
+ */
+function normalizeAssetPath(pathOrUrl: string): string {
+  if (/^(https?:)?\/\//i.test(pathOrUrl)) return pathOrUrl;
+  return pathOrUrl.startsWith("/") ? pathOrUrl : `/${pathOrUrl}`;
+}
+
 function renderBreadcrumbs(
   urlPath: string,
   settings: Settings,
@@ -826,7 +847,7 @@ function renderBreadcrumbs(
     if (isLast) {
       return `<span class="breadcrumb-current">${escapeHtml(label)}</span>`;
     }
-    return `<a href="${withBasePath(accum, settings, isStaticExport)}">${escapeHtml(label)}</a>`;
+    return `<a href="${withBasePath(`${accum}/`, settings, isStaticExport)}">${escapeHtml(label)}</a>`;
   });
 
   return `<nav class="breadcrumbs">
@@ -1274,10 +1295,8 @@ body {
 }
 
 /* Code block wrapper */
-pre.code-block-wrapper {
-  all: unset;
+.code-block-wrapper {
   display: block;
-  padding: 0;
   margin-bottom: 16px;
 }
 .code-block-container {
@@ -1297,11 +1316,6 @@ pre.code-block-wrapper {
   background: transparent;
   padding: 0;
   border-radius: 0;
-}
-.code-block-raw {
-  display: none;
-  margin: 0;
-  padding: 0;
 }
 .code-block-toolbar {
   position: absolute;
@@ -1460,6 +1474,27 @@ pre.code-block-wrapper {
 }
 .markdown-body th { background: var(--bg-secondary); font-weight: 600; white-space: nowrap; }
 .markdown-body tr:nth-child(2n) { background: var(--bg-secondary); }
+
+/* Directory listing (auto-index pages) */
+.dir-listing table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 16px;
+}
+.dir-listing th, .dir-listing td {
+  padding: 8px 12px;
+  text-align: left;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+  white-space: normal;
+}
+.dir-listing th { font-weight: 600; color: var(--text-muted); }
+.dir-listing tr { background: transparent; }
+.dir-listing td a { color: var(--accent); text-decoration: none; }
+.dir-listing td a:hover { text-decoration: underline; }
+.dir-listing .size { color: var(--text-muted); text-align: right; width: 100px; }
+.dir-listing .empty { color: var(--text-muted); font-style: italic; }
 .markdown-body img { max-width: 100%; height: auto; }
 .markdown-body hr {
   height: 0.25em;
@@ -1869,16 +1904,11 @@ pre.code-block-wrapper {
   padding: 16px;
 }
 
-/* Mermaid wrapper - reset pre defaults */
+/* Mermaid wrapper */
 .mermaid-wrapper {
-  all: unset;
   display: block;
+  margin-bottom: 16px;
 }
-
-pre.mermaid-wrapper{
-  padding: 0;
-}
-
 
 /* Mermaid container */
 .mermaid-container {

@@ -98,9 +98,12 @@ describe("render parity (dynamic vs static)", () => {
     });
     const dynamicBody = extractBody(dynamic.html);
     const staticBody = extractBody(statik.html);
-    for (const name of ["index.md", "guide.md", "section"]) {
+    for (const name of ["guide.md", "section"]) {
       assert.ok(dynamicBody.includes(name));
       assert.ok(staticBody.includes(name));
     }
+    // Index files render as the directory page itself — hidden in listings
+    assert.ok(!dynamicBody.includes("index.md"));
+    assert.ok(!staticBody.includes("index.md"));
   });
 });

@@ -4,19 +4,19 @@
   "og": {
     "/01-getting-started/": {
       "outputPath": "public/assets/og/01-getting-started/index.jpg",
-      "hash": "6e588ab8fe2124159f4bef8558780e5066670853cb108d9fd98e79ca1c2b682e"
+      "hash": "160260cde6d382d14c7519cd270005cea1cb46784e682245651a941a36b0b882"
     },
     "/02-settings/": {
       "outputPath": "public/assets/og/02-settings/index.jpg",
-      "hash": "c92931352f3f0fc0311f6a70debd9025bea9ebf20b304c828cb814f433c081ab"
+      "hash": "feca2aa64e11502f5c5d3aadad7e8c21e266be1657b5e6b1bb3769bc253032c2"
     },
     "/03-features/": {
       "outputPath": "public/assets/og/03-features/index.jpg",
-      "hash": "7943cd2b95cfbafa9d7f8434e2a64fcdfa250eb6f07834e9d75afa509b84dea1"
+      "hash": "87e840e5b5f70be143f255b648393fa5558f3af16aad204f94965ebcff12e785"
     },
     "/03-features/markdown": {
       "outputPath": "public/assets/og/03-features/markdown/index.jpg",
-      "hash": "eb9e65ac210094dfc8c722e7f62e8ec893a828fda410150a1134feb7af4a34e1"
+      "hash": "510c775299ae98b4928a310191b36f061fff67cf3d7f8df4bfa0dee797fdb79c"
     },
     "/03-features/math": {
       "outputPath": "public/assets/og/03-features/math/index.jpg",
@@ -40,7 +40,7 @@
     },
     "/03-features/seo": {
       "outputPath": "public/assets/og/03-features/seo/index.jpg",
-      "hash": "4b8fd2456c2e88b9c8c8e2e93d7aa68a0ea935bccd8e8da2b5b44f4ae266a43a"
+      "hash": "a234394232ee007b906ee23e02a3f8311ed87bff37b408bdbfd03cc0f495d4bb"
     },
     "/03-features/theming": {
       "outputPath": "public/assets/og/03-features/theming/index.jpg",
@@ -48,11 +48,11 @@
     },
     "/04-reference/": {
       "outputPath": "public/assets/og/04-reference/index.jpg",
-      "hash": "4d65cb00d72f0479a578ca1e686f4db2f1876ee74373338927079f81cca1472f"
+      "hash": "c4bbf5d24f4e56b9298a225a4d8c61394cb15f25a4ec786a40a1c56ac6c50491"
     },
     "/09-architecture/": {
       "outputPath": "public/assets/og/09-architecture/index.jpg",
-      "hash": "a5d5f236039c130a5ae5af0a3b8d204a33a6bc8c63c45e76e5ce2c3c5afe9f93"
+      "hash": "cb83560020924cc5b81de68c63facf2be95d8caf87688341f088400ee926eb8c"
     },
     "/09-architecture/adr/001-file-based-content-storage": {
       "outputPath": "public/assets/og/09-architecture/adr/001-file-based-content-storage/index.jpg",
@@ -80,7 +80,7 @@
     },
     "/": {
       "outputPath": "public/assets/og/index.jpg",
-      "hash": "464c2cdf0af95efd8a0bd91986b8fc5ed5c1f8921b51d9f88e3ded7399dc57df"
+      "hash": "a12c60b47f7752fdcb125bc2782cc0f4a75d0d7a7291d7d703ad07c9875a4493"
     },
     "/09-architecture/adr/": {
       "outputPath": "public/assets/og/09-architecture/adr/index.jpg",

@@ -1,4 +1,8 @@
-import { promises as fs, type Dirent } from "node:fs";
+import {
+  promises as fs,
+  realpathSync as fsRealpathSync,
+  type Dirent,
+} from "node:fs";
 import path from "node:path";
 import {
   renderMarkdown,
@@ -10,7 +14,7 @@ import { extractFirstHeading } from "./seo/extract.js";
 import { renderPage } from "./template/index.js";
 import { buildSidebar, type NavItem } from "./template/sidebar.js";
 import { renderDirectory } from "./directory.js";
-import { convertMarkdownLinks } from "./link-transform.js";
+import { convertMarkdownLinks, createLinkResolver } from "./link-transform.js";
 import type { Settings } from "./settings/index.js";
 
 /**
@@ -64,11 +68,11 @@ export async function renderPageService(
   }
 
   let body = result.html;
-  if (isStatic) {
-    body = convertMarkdownLinks(fixAssetPaths(body, urlPath));
-  } else if (settings.generate.cleanUrls) {
-    // Preview static-export output: rewrite .md/.mdx links to clean URLs
-    body = convertMarkdownLinks(body);
+  if (isStatic || settings.generate.cleanUrls) {
+    // Rebase relative links/assets against the source file's directory and
+    // emit canonical site-relative routes (clean URLs). Dynamic serve
+    // without cleanUrls keeps .md links untouched — they resolve directly.
+    body = transformLinks(body, sourcePath, rootDir);
   }
 
   const html = renderPage({
@@ -149,19 +153,21 @@ export async function renderDirectoryPage(
     : "";
   const title =
     titleOverride ?? (dirName ? humanizeFilename(dirName) : "Index");
+  const description = `Directory listing for ${title}`;
 
   const html = renderPage({
     title,
-    body: renderDirectory({ urlPath, entries: entriesWithSize }),
+    body: renderDirectory({ urlPath, entries: entriesWithSize, title }),
     filePath: urlPath,
     settings,
+    frontmatter: { description },
     kind: "directory",
     urlPath,
     sidebar,
     isStaticExport: isStatic,
   });
 
-  return { html, title, frontmatter: {}, toc: [] };
+  return { html, title, frontmatter: {}, toc: [], description };
 }
 
 export function isHidden(filename: string, settings: Settings): boolean {
@@ -184,39 +190,62 @@ export function isAllowedExtension(ext: string, settings: Settings): boolean {
 
 export { extractFirstHeading } from "./seo/extract.js";
 
+/**
+ * Rebase every relative href/src in rendered body HTML against the source
+ * file's directory, emitting canonical site-relative routes. Unresolvable
+ * links are kept as-is and logged (they surface in --validate-md too).
+ */
+function transformLinks(
+  html: string,
+  sourcePath: string,
+  rootDir: string,
+): string {
+  // Resolve symlinks on both sides so path.relative works even when the
+  // caller passed a symlinked rootDir (e.g. /var → /private/var on macOS)
+  // while the router resolved the source file to its real path.
+  const realRoot = realpathSyncSafe(rootDir);
+  const realSource = realpathSyncSafe(sourcePath);
+  const relDir = path
+    .relative(realRoot, path.dirname(realSource))
+    .replace(/\\/g, "/");
+  if (relDir.startsWith("..") || path.isAbsolute(relDir)) {
+    console.warn(
+      `[mdsvr] ${path.basename(sourcePath)}: source file is outside the docs root — links left unchanged`,
+    );
+    return html;
+  }
+  const result = convertMarkdownLinks(html, {
+    sourceDirUrlPath: relDir ? `/${relDir}` : "/",
+    rootDir,
+    resolveFile: createLinkResolver(),
+  });
+  if (result.warnings.length > 0) {
+    const relSource = path.relative(rootDir, sourcePath);
+    for (const w of result.warnings) {
+      console.warn(
+        `[mdsvr] ${relSource}: link "${w.url}" ${
+          w.reason === "outside-root"
+            ? "resolves outside the docs root"
+            : `target not found (${w.resolvedUrlPath})`
+        }`,
+      );
+    }
+  }
+  return result.html;
+}
+
+function realpathSyncSafe(p: string): string {
+  try {
+    return fsRealpathSync(p);
+  } catch {
+    return p;
+  }
+}
+
 export function humanizeFilename(filename: string): string {
   return filename
     .replace(/^\d+\./, "")
     .replace(/[-_]/g, " ")
     .trim()
     .replace(/^\w/, (c) => c.toUpperCase());
-}
-
-export function fixAssetPaths(html: string, urlPath: string): string {
-  // Calculate the root path for assets (everything up to the current directory)
-  const pathSegments = urlPath.split("/").filter(Boolean);
-
-  // Build the absolute assets path based on the current directory structure
-  let absoluteAssetsPath = "";
-
-  if (pathSegments.length === 0) {
-    // Root level: /assets/
-    absoluteAssetsPath = "/assets/";
-  } else {
-    // Subdirectory: assets are at the root level of the project
-    // Use all segments except the last one to build the path to assets
-    // For /k8s/LFS158-docs/12/, assets should be at /k8s/LFS158-docs/assets/
-    const rootSegments = pathSegments.slice(0, -1);
-    if (rootSegments.length > 0) {
-      absoluteAssetsPath = "/" + rootSegments.join("/") + "/assets/";
-    } else {
-      absoluteAssetsPath = "/assets/";
-    }
-  }
-
-  // Replace all relative assets/ paths with absolute paths
-  return html.replace(
-    /(src|href|data-src|poster|content)="assets\//g,
-    `$1="${absoluteAssetsPath}`,
-  );
 }

@@ -1,6 +1,7 @@
 import type { Settings } from "../settings/index.js";
 import type { NavItem } from "../template/sidebar.js";
 import { getOgImageUrl } from "../og/index.js";
+import { OG_WIDTH, OG_HEIGHT } from "../og/template.js";
 import { extractFirstParagraph } from "./extract.js";
 import { buildPageUrl, normalizeBasePath, normalizeUrlPath } from "./url.js";
 
@@ -22,6 +23,9 @@ export interface SeoData {
   title: string;
   description?: string;
   image?: string;
+  /** Pixel dimensions, set only for generated OG images (known size). */
+  imageWidth?: number;
+  imageHeight?: number;
   /** Absolute canonical URL, or null when no `site.baseUrl` is configured. */
   absoluteUrl: string | null;
   /** Normalized trailing-slash route. */
@@ -155,12 +159,14 @@ export function resolveSeoData(input: ResolveSeoInput): SeoData {
     kind === "document" && !isHome ? "article" : "website";
 
   let image = str(frontmatter.image);
+  let generatedOg = false;
   if (!image && isStaticExport && settings.seo.og?.enabled) {
     image = getOgImageUrl(
       urlPath,
       settings.generate.basePath || "",
       settings.seo.og.imageFormat,
     );
+    generatedOg = true;
   }
   image ??= settings.seo.defaultImage;
 
@@ -198,14 +204,20 @@ export function resolveSeoData(input: ResolveSeoInput): SeoData {
     title: resolvedTitle,
     description,
     image,
+    imageWidth: generatedOg ? OG_WIDTH : undefined,
+    imageHeight: generatedOg ? OG_HEIGHT : undefined,
     absoluteUrl: buildPageUrl(urlPath, settings),
     urlPath,
     type,
     kind,
     datePublished: toIsoDate(frontmatter.datePublished ?? frontmatter.date),
-    dateModified: toIsoDate(frontmatter.dateModified),
+    dateModified: toIsoDate(
+      frontmatter.dateModified ?? frontmatter.updated ?? frontmatter.lastmod,
+    ),
     author,
-    noIndex: (frontmatter.noindex ?? frontmatter.noIndex) === true,
+    noIndex:
+      (frontmatter.noindex ?? frontmatter.noIndex) === true ||
+      (kind === "directory" && settings.seo.noIndexDirectoryPages),
     breadcrumbs,
     sitemapUrl,
   };
