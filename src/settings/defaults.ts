@@ -3,7 +3,6 @@
 export const DEFAULT_SERVE_EXTENSIONS = [
   ".md",
   ".mdx",
-  ".txt",
   ".pdf",
   ".png",
   ".jpg",
@@ -15,7 +14,6 @@ export const DEFAULT_SERVE_EXTENSIONS = [
   ".css",
   ".js",
   ".mjs",
-  ".json",
   ".mp4",
   ".m4v",
   ".mp3",

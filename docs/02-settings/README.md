@@ -193,7 +193,7 @@ Control which files are served, blocked, or hidden:
 {
   "files": {
     "extensions": {
-      "serve": [".md", ".mdx", ".png", ".jpg", ".svg", ".css", ".js"],
+      "serve": [".md", ".mdx", ".png", ".jpg", ".svg", ".css", ".js", ".html"],
       "block": [".env", ".key", ".pem"],
       "hidden": ["settings.json", ".git", "node_modules"]
     },
@@ -204,7 +204,9 @@ Control which files are served, blocked, or hidden:
 }
 ```
 
-- Files starting with `_` are automatically hidden
+- Files and folders starting with `_` or `.` are automatically hidden
+- Only web-servable extensions in `extensions.serve` are copied during static export
+- `robots.txt` is generated or copied when `seo.generateRobotsTxt` is enabled
 - Blocked extensions return 403 Forbidden
 - Hidden files return 404 Not Found (as if they don't exist)
 - `staticFolders`: Array of folder names to serve as static assets (all files in these folders are served directly)
@@ -321,14 +323,13 @@ Here's a complete `_mdsvr/settings.json` with all available options:
       "serve": [
         ".md",
         ".mdx",
-        ".txt",
         ".pdf",
         ".png",
         ".jpg",
         ".svg",
         ".css",
         ".js",
-        ".json"
+        ".html"
       ],
       "block": [".env", ".key", ".pem", ".p12"],
       "hidden": ["_mdsvr", "settings.json", ".git", "node_modules", ".DS_Store"]
