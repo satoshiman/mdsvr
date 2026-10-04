@@ -108,7 +108,7 @@ Pull and run:
 
 ```bash
 docker pull ghcr.io/satoshiman/mdsvr:latest
-docker run -d -p 1800:1800 -v /path/to/docs:/app/docs ghcr.io/satoshiman/mdsvr:latest
+docker run -d -p 1800:1800 -v /path/to/docs:/app/docs:ro ghcr.io/satoshiman/mdsvr:latest
 ```
 
 See [Docker deployment](../02-settings/README.md#docker) for more details.

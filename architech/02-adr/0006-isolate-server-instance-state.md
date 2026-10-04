@@ -5,7 +5,8 @@ description: "Đề xuất loại bỏ state cấp module để nhiều server i
 
 # ADR-0006: Cô lập settings và cache theo server instance
 
-- **Trạng thái:** Proposed
+- **Trạng thái:** Accepted
+- **Ngày chấp nhận:** 2026-10-04
 - **Ngày đề xuất:** 2026-10-04
 - **Phạm vi:** HTTP runtime
 

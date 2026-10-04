@@ -5,7 +5,8 @@ description: "Đề xuất xác định rõ Markdown HTML và MDX chỉ chạy v
 
 # ADR-0008: Chính thức hóa policy cho nội dung tin cậy
 
-- **Trạng thái:** Proposed
+- **Trạng thái:** Accepted
+- **Ngày chấp nhận:** 2026-10-04
 - **Ngày đề xuất:** 2026-10-04
 - **Phạm vi:** Security và deployment
 

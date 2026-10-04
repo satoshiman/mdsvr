@@ -5,7 +5,8 @@ description: "Đề xuất dùng một application service để render trang ch
 
 # ADR-0007: Hợp nhất page-rendering pipeline
 
-- **Trạng thái:** Proposed
+- **Trạng thái:** Accepted
+- **Ngày chấp nhận:** 2026-10-04
 - **Ngày đề xuất:** 2026-10-04
 - **Phạm vi:** Router, renderer và static exporter
 

@@ -101,6 +101,8 @@ When navigating to a directory without a README, mdsvr renders a clean listing o
 - Sensitive extensions (`.env`, `.key`, `.pem`, etc.) are blocked by default
 - Server is strictly read-only — no write operations exposed
 
+> **Trusted content only:** mdsvr renders raw HTML in Markdown and executes MDX inside the server process. These protections control _file access_ — they are not content sandboxing. Only serve a docs root you trust; do not accept Markdown/MDX uploads from untrusted users.
+
 ## Quick Start
 
 ```bash
@@ -137,7 +139,7 @@ Pull and run with Docker:
 
 ```bash
 docker pull ghcr.io/satoshiman/mdsvr:latest
-docker run -d --name docs-server -p 1800:1800 -v /path/to/docs:/app/docs ghcr.io/satoshiman/mdsvr:latest
+docker run -d --name docs-server -p 1800:1800 -v /path/to/docs:/app/docs:ro ghcr.io/satoshiman/mdsvr:latest
 ```
 
 Then open http://localhost:1800 in your browser.
@@ -146,7 +148,7 @@ Then open http://localhost:1800 in your browser.
 
 ```bash
 docker build -t mdsvr:latest .
-docker run -d --name docs-server -p 1800:1800 -v /path/to/docs:/app/docs mdsvr:latest
+docker run -d --name docs-server -p 1800:1800 -v /path/to/docs:/app/docs:ro mdsvr:latest
 ```
 
 ## CLI Usage
@@ -274,6 +276,8 @@ await server.reloadSettings();
 // Graceful shutdown - SIGINT is sent when user presses Ctrl+C
 process.on("SIGINT", () => server.close());
 ```
+
+> **Warning:** MDX is compiled and executed inside the server process at render time. Only point `createServer` at a docs root you trust — mdsvr is not a sandbox for untrusted content.
 
 ### Accessing Settings
 
@@ -418,6 +422,7 @@ docs/
 - **Hidden files**: Files starting with `_` or listed in `_mdsvr/settings.json` are hidden
 - **Blocked extensions**: `.env`, `.key`, `.pem`, etc. are blocked by default
 - **Read-only**: Server only serves files, no write operations
+- **Trusted content required**: Raw HTML in Markdown is rendered and MDX is executed in the server process. File-access protection above is not a content sandbox — only serve docs roots you trust.
 
 ## Requirements
 
