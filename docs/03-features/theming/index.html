@@ -22,14 +22,18 @@
     <meta property="og:description" content="Customize the appearance of your documentation">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="MDSVR | Markdown Documentation Server">
+    <meta property="og:locale" content="en">
     <meta property="og:url" content="https://mdsvr.js.org/docs/03-features/theming/">
     <meta property="og:image" content="https://mdsvr.js.org/docs/public/assets/og/03-features/theming/index.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Theming | MDSVR | Markdown Documentation Server">
     <meta name="twitter:description" content="Customize the appearance of your documentation">
     <meta name="twitter:image" content="https://mdsvr.js.org/docs/public/assets/og/03-features/theming/index.jpg">
     <link rel="sitemap" type="application/xml" href="/docs/sitemap.xml">
   <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"Theming","description":"Customize the appearance of your documentation","url":"https://mdsvr.js.org/docs/03-features/theming/","image":"https://mdsvr.js.org/docs/public/assets/og/03-features/theming/index.jpg"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://mdsvr.js.org/docs/"},{"@type":"ListItem","position":2,"name":"Features","item":"https://mdsvr.js.org/docs/03-features/"},{"@type":"ListItem","position":3,"name":"Theming","item":"https://mdsvr.js.org/docs/03-features/theming/"}]}]}</script>
+  
   
   
   <style>
@@ -449,10 +453,8 @@ body {
 }
 
 /* Code block wrapper */
-pre.code-block-wrapper {
-  all: unset;
+.code-block-wrapper {
   display: block;
-  padding: 0;
   margin-bottom: 16px;
 }
 .code-block-container {
@@ -472,11 +474,6 @@ pre.code-block-wrapper {
   background: transparent;
   padding: 0;
   border-radius: 0;
-}
-.code-block-raw {
-  display: none;
-  margin: 0;
-  padding: 0;
 }
 .code-block-toolbar {
   position: absolute;
@@ -635,6 +632,27 @@ pre.code-block-wrapper {
 }
 .markdown-body th { background: var(--bg-secondary); font-weight: 600; white-space: nowrap; }
 .markdown-body tr:nth-child(2n) { background: var(--bg-secondary); }
+
+/* Directory listing (auto-index pages) */
+.dir-listing table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 16px;
+}
+.dir-listing th, .dir-listing td {
+  padding: 8px 12px;
+  text-align: left;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+  white-space: normal;
+}
+.dir-listing th { font-weight: 600; color: var(--text-muted); }
+.dir-listing tr { background: transparent; }
+.dir-listing td a { color: var(--accent); text-decoration: none; }
+.dir-listing td a:hover { text-decoration: underline; }
+.dir-listing .size { color: var(--text-muted); text-align: right; width: 100px; }
+.dir-listing .empty { color: var(--text-muted); font-style: italic; }
 .markdown-body img { max-width: 100%; height: auto; }
 .markdown-body hr {
   height: 0.25em;
@@ -1044,16 +1062,11 @@ pre.code-block-wrapper {
   padding: 16px;
 }
 
-/* Mermaid wrapper - reset pre defaults */
+/* Mermaid wrapper */
 .mermaid-wrapper {
-  all: unset;
   display: block;
+  margin-bottom: 16px;
 }
-
-pre.mermaid-wrapper{
-  padding: 0;
-}
-
 
 /* Mermaid container */
 .mermaid-container {
@@ -1465,8 +1478,10 @@ code.hljs {
 :root[data-theme="dark"] .hljs { background: var(--code-bg); }
 
   </style>
+  
 </head>
 <body>
+  
   <header class="site-header">
     <div class="header-left">
       <button class="sidebar-toggle sidebar-toggle-mobile" onclick="document.getElementById('sidebar').classList.toggle('open')" aria-label="Toggle menu">☰</button><button class="sidebar-toggle sidebar-toggle-desktop" onclick="toggleDesktopSidebar()" aria-label="Toggle sidebar">☰</button>
@@ -1512,28 +1527,28 @@ code.hljs {
     <div class="nav-children" data-expanded="true">
     <ul class="sidebar-nav" data-level="1">
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/markdown" class="nav-link">Markdown Formats</a>
+        <a href="/docs/03-features/markdown/" class="nav-link">Markdown Formats</a>
       </li>
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/math" class="nav-link">Mathematical Expressions</a>
+        <a href="/docs/03-features/math/" class="nav-link">Mathematical Expressions</a>
       </li>
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/mdx" class="nav-link">MDX Components</a>
+        <a href="/docs/03-features/mdx/" class="nav-link">MDX Components</a>
       </li>
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/mermaid" class="nav-link">Mermaid Diagrams in mdsvr</a>
+        <a href="/docs/03-features/mermaid/" class="nav-link">Mermaid Diagrams in mdsvr</a>
       </li>
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/navigation" class="nav-link">Navigation</a>
+        <a href="/docs/03-features/navigation/" class="nav-link">Navigation</a>
       </li>
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/search" class="nav-link">Search</a>
+        <a href="/docs/03-features/search/" class="nav-link">Search</a>
       </li>
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/seo" class="nav-link">SEO</a>
+        <a href="/docs/03-features/seo/" class="nav-link">SEO</a>
       </li>
-      <li class="nav-item active" data-type="file">
-        <a href="/docs/03-features/theming" class="nav-link active">Theming</a>
+      <li class="nav-item" data-type="file">
+        <a href="/docs/03-features/theming/" class="nav-link">Theming</a>
       </li>
     </ul>
     </div>
@@ -1556,22 +1571,22 @@ code.hljs {
         <div class="nav-children" data-expanded="false">
         <ul class="sidebar-nav" data-level="2">
           <li class="nav-item" data-type="file">
-            <a href="/docs/09-architecture/adr/001-file-based-content-storage" class="nav-link">ADR-001: File-based content storage instead of database</a>
+            <a href="/docs/09-architecture/adr/001-file-based-content-storage/" class="nav-link">ADR-001: File-based content storage instead of database</a>
           </li>
           <li class="nav-item" data-type="file">
-            <a href="/docs/09-architecture/adr/002-server-side-mdx-rendering" class="nav-link">ADR-002: Server-side MDX rendering instead of client-side</a>
+            <a href="/docs/09-architecture/adr/002-server-side-mdx-rendering/" class="nav-link">ADR-002: Server-side MDX rendering instead of client-side</a>
           </li>
           <li class="nav-item" data-type="file">
-            <a href="/docs/09-architecture/adr/003-zero-configuration-with-defaults" class="nav-link">ADR-003: Zero configuration with sensible defaults</a>
+            <a href="/docs/09-architecture/adr/003-zero-configuration-with-defaults/" class="nav-link">ADR-003: Zero configuration with sensible defaults</a>
           </li>
           <li class="nav-item" data-type="file">
-            <a href="/docs/09-architecture/adr/004-client-side-search-with-pre-built-index" class="nav-link">ADR-004: Client-side search with pre-built index instead of external service</a>
+            <a href="/docs/09-architecture/adr/004-client-side-search-with-pre-built-index/" class="nav-link">ADR-004: Client-side search with pre-built index instead of external service</a>
           </li>
           <li class="nav-item" data-type="file">
-            <a href="/docs/09-architecture/adr/005-incremental-static-export" class="nav-link">ADR-005: Incremental static export with hash-based caching</a>
+            <a href="/docs/09-architecture/adr/005-incremental-static-export/" class="nav-link">ADR-005: Incremental static export with hash-based caching</a>
           </li>
           <li class="nav-item" data-type="file">
-            <a href="/docs/09-architecture/adr/006-markdown-validation-and-autofix" class="nav-link">ADR-006: Markdown validation and auto-fixing</a>
+            <a href="/docs/09-architecture/adr/006-markdown-validation-and-autofix/" class="nav-link">ADR-006: Markdown validation and auto-fixing</a>
           </li>
         </ul>
         </div>
@@ -1583,14 +1598,20 @@ code.hljs {
     <main class="content">
       <nav class="breadcrumbs">
     <a href="/docs/">Home</a>
-    <span class="breadcrumb-sep">/</span><a href="/docs/03-features">03 features</a><span class="breadcrumb-sep">/</span><span class="breadcrumb-current">Theming</span>
+    <span class="breadcrumb-sep">/</span><a href="/docs/03-features/">03 features</a><span class="breadcrumb-sep">/</span><span class="breadcrumb-current">Theming</span>
   </nav>
       <article class="markdown-body">
         <h1 id="theming" tabindex="-1">Theming</h1>
 <p>mdsvr supports <strong>dark mode</strong>, <strong>light mode</strong>, and <strong>automatic theme detection</strong> based on the user’s system preferences.</p>
 <h2 id="theme-modes" tabindex="-1">Theme Modes</h2>
 <p>Configure the default theme in <code>_mdsvr/settings.json</code>:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+  &quot;appearance&quot;: {
+    &quot;defaultTheme&quot;: &quot;system&quot;,
+    &quot;allowThemeToggle&quot;: true
+  }
+}
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1626,15 +1647,8 @@ code.hljs {
   <span class="hljs-punctuation">}</span>
 <span class="hljs-punctuation">}</span>
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>{
-  &quot;appearance&quot;: {
-    &quot;defaultTheme&quot;: &quot;system&quot;,
-    &quot;allowThemeToggle&quot;: true
-  }
-}
+</div></div>
 </code></pre>
-</div></pre>
-
 <h3 id="options" tabindex="-1">Options</h3>
 <div class="table-wrapper"><div class="table-toolbar"><button class="table-btn-fullscreen" type="button" title="Fullscreen table" aria-label="Fullscreen table"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m15 15 6 6"/><path d="m15 9 6-6"/><path d="M21 16v5h-5"/><path d="M21 8V3h-5"/><path d="M3 16v5h5"/><path d="m3 21 6-6"/><path d="M3 8V3h5"/><path d="M9 9 3 3"/></svg></button></div><table>
 <thead>
@@ -1665,7 +1679,12 @@ code.hljs {
 </Callout>
 <h2 id="accent-color" tabindex="-1">Accent Color</h2>
 <p>Customize the primary color used for links, buttons, and accents:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+  &quot;appearance&quot;: {
+    &quot;accentColor&quot;: &quot;#0969da&quot;
+  }
+}
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1700,14 +1719,8 @@ code.hljs {
   <span class="hljs-punctuation">}</span>
 <span class="hljs-punctuation">}</span>
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>{
-  &quot;appearance&quot;: {
-    &quot;accentColor&quot;: &quot;#0969da&quot;
-  }
-}
+</div></div>
 </code></pre>
-</div></pre>
-
 <p>This affects:</p>
 <ul>
 <li>Links in content</li>
@@ -1749,7 +1762,15 @@ code.hljs {
 </table></div>
 <h2 id="code-themes" tabindex="-1">Code Themes</h2>
 <p>Configure syntax highlighting themes for light and dark modes:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+  &quot;appearance&quot;: {
+    &quot;codeTheme&quot;: {
+      &quot;light&quot;: &quot;github&quot;,
+      &quot;dark&quot;: &quot;github-dark&quot;
+    }
+  }
+}
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1787,17 +1808,8 @@ code.hljs {
   <span class="hljs-punctuation">}</span>
 <span class="hljs-punctuation">}</span>
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>{
-  &quot;appearance&quot;: {
-    &quot;codeTheme&quot;: {
-      &quot;light&quot;: &quot;github&quot;,
-      &quot;dark&quot;: &quot;github-dark&quot;
-    }
-  }
-}
+</div></div>
 </code></pre>
-</div></pre>
-
 <p>Currently supported:</p>
 <ul>
 <li><code>github</code></li>
@@ -1805,7 +1817,16 @@ code.hljs {
 </ul>
 <h2 id="font-family" tabindex="-1">Font Family</h2>
 <p>Customize fonts for different content types:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+  &quot;appearance&quot;: {
+    &quot;fontFamily&quot;: {
+      &quot;body&quot;: &quot;Inter, system-ui, sans-serif&quot;,
+      &quot;code&quot;: &quot;Fira Code, monospace&quot;,
+      &quot;heading&quot;: &quot;Inter, system-ui, sans-serif&quot;
+    }
+  }
+}
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1844,18 +1865,8 @@ code.hljs {
   <span class="hljs-punctuation">}</span>
 <span class="hljs-punctuation">}</span>
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>{
-  &quot;appearance&quot;: {
-    &quot;fontFamily&quot;: {
-      &quot;body&quot;: &quot;Inter, system-ui, sans-serif&quot;,
-      &quot;code&quot;: &quot;Fira Code, monospace&quot;,
-      &quot;heading&quot;: &quot;Inter, system-ui, sans-serif&quot;
-    }
-  }
-}
+</div></div>
 </code></pre>
-</div></pre>
-
 <p><strong>Options:</strong></p>
 <ul>
 <li><code>body</code>: Font for body text (optional)</li>
@@ -1865,7 +1876,26 @@ code.hljs {
 <p>If not specified, the system default fonts are used.</p>
 <h2 id="css-variables" tabindex="-1">CSS Variables</h2>
 <p>The following CSS variables are available for custom styling:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-css"><div class="code-block-wrapper"><div class="code-block-container" data-code=":root[data-theme=&quot;light&quot;] {
+  --bg: #ffffff;
+  --bg-secondary: #f6f8fa;
+  --border: #d1d9e0;
+  --text: #1f2328;
+  --text-muted: #636c76;
+  --accent: var(--accent-color, #0969da);
+  --code-bg: #f6f8fa;
+}
+
+:root[data-theme=&quot;dark&quot;] {
+  --bg: #0d1117;
+  --bg-secondary: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --text-muted: #8d96a0;
+  --accent: var(--accent-color, #58a6ff);
+  --code-bg: #161b22;
+}
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1914,32 +1944,17 @@ code.hljs {
   <span class="hljs-attr">--code-bg</span>: <span class="hljs-number">#161b22</span>;
 }
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>:root[data-theme=&quot;light&quot;] {
-  --bg: #ffffff;
-  --bg-secondary: #f6f8fa;
-  --border: #d1d9e0;
-  --text: #1f2328;
-  --text-muted: #636c76;
-  --accent: var(--accent-color, #0969da);
-  --code-bg: #f6f8fa;
-}
-
-:root[data-theme=&quot;dark&quot;] {
-  --bg: #0d1117;
-  --bg-secondary: #161b22;
-  --border: #30363d;
-  --text: #e6edf3;
-  --text-muted: #8d96a0;
-  --accent: var(--accent-color, #58a6ff);
-  --code-bg: #161b22;
-}
+</div></div>
 </code></pre>
-</div></pre>
-
 <p>You can use these variables in custom CSS if needed (custom CSS injection coming in a future release).</p>
 <h2 id="system-preference-detection" tabindex="-1">System Preference Detection</h2>
 <p>When using <code>defaultTheme: &quot;system&quot;</code>, mdsvr automatically detects the user’s OS preference:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-javascript"><div class="code-block-wrapper"><div class="code-block-container" data-code="// Runs before paint to prevent flash
+const theme =
+  localStorage.getItem(&quot;theme&quot;) ||
+  (matchMedia(&quot;(prefers-color-scheme: dark)&quot;).matches ? &quot;dark&quot; : &quot;light&quot;);
+document.documentElement.setAttribute(&quot;data-theme&quot;, theme);
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1974,14 +1989,8 @@ code.hljs {
   (<span class="hljs-title function_">matchMedia</span>(<span class="hljs-string">&quot;(prefers-color-scheme: dark)&quot;</span>).<span class="hljs-property">matches</span> ? <span class="hljs-string">&quot;dark&quot;</span> : <span class="hljs-string">&quot;light&quot;</span>);
 <span class="hljs-variable language_">document</span>.<span class="hljs-property">documentElement</span>.<span class="hljs-title function_">setAttribute</span>(<span class="hljs-string">&quot;data-theme&quot;</span>, theme);
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>// Runs before paint to prevent flash
-const theme =
-  localStorage.getItem(&quot;theme&quot;) ||
-  (matchMedia(&quot;(prefers-color-scheme: dark)&quot;).matches ? &quot;dark&quot; : &quot;light&quot;);
-document.documentElement.setAttribute(&quot;data-theme&quot;, theme);
+</div></div>
 </code></pre>
-</div></pre>
-
 <p>The theme also updates automatically when the system preference changes (no page reload needed).</p>
 <h2 id="no-flash-theme-loading" tabindex="-1">No-Flash Theme Loading</h2>
 <p>To prevent a flash of unstyled content (FOUC) when the page loads, mdsvr injects a small script in the <code>&lt;head&gt;</code> that:</p>
@@ -1992,7 +2001,22 @@ document.documentElement.setAttribute(&quot;data-theme&quot;, theme);
 </ol>
 <p>This ensures the correct theme is applied immediately without any visible flash.</p>
 <h2 id="example-configuration" tabindex="-1">Example Configuration</h2>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+  &quot;appearance&quot;: {
+    &quot;defaultTheme&quot;: &quot;system&quot;,
+    &quot;allowThemeToggle&quot;: true,
+    &quot;accentColor&quot;: &quot;#8250df&quot;,
+    &quot;codeTheme&quot;: {
+      &quot;light&quot;: &quot;github&quot;,
+      &quot;dark&quot;: &quot;github-dark&quot;
+    },
+    &quot;fontFamily&quot;: {
+      &quot;body&quot;: &quot;Inter, system-ui, sans-serif&quot;,
+      &quot;code&quot;: &quot;Fira Code, monospace&quot;
+    }
+  }
+}
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2037,28 +2061,12 @@ document.documentElement.setAttribute(&quot;data-theme&quot;, theme);
   <span class="hljs-punctuation">}</span>
 <span class="hljs-punctuation">}</span>
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>{
-  &quot;appearance&quot;: {
-    &quot;defaultTheme&quot;: &quot;system&quot;,
-    &quot;allowThemeToggle&quot;: true,
-    &quot;accentColor&quot;: &quot;#8250df&quot;,
-    &quot;codeTheme&quot;: {
-      &quot;light&quot;: &quot;github&quot;,
-      &quot;dark&quot;: &quot;github-dark&quot;
-    },
-    &quot;fontFamily&quot;: {
-      &quot;body&quot;: &quot;Inter, system-ui, sans-serif&quot;,
-      &quot;code&quot;: &quot;Fira Code, monospace&quot;
-    }
-  }
-}
+</div></div>
 </code></pre>
-</div></pre>
-
 
       </article>
       <nav class="prev-next-nav">
-        <a href="/docs/03-features/seo" class="prev-next-card prev-card"><span class="prev-next-label">← Prev</span><span class="prev-next-title">SEO</span></a>
+        <a href="/docs/03-features/seo/" class="prev-next-card prev-card"><span class="prev-next-label">← Prev</span><span class="prev-next-title">SEO</span></a>
         <a href="/docs/04-reference/" class="prev-next-card next-card"><span class="prev-next-label">Next →</span><span class="prev-next-title">Reference</span></a>
       </nav>
       <footer class="footer">
@@ -2162,8 +2170,15 @@ document.documentElement.setAttribute(&quot;data-theme&quot;, theme);
       searchInput.addEventListener('input', debounce(performSearch, 150));
     }
 
-    // Load search index
-    loadSearchIndex();
+    // Load search index, then honor ?q=<query> (SearchAction entry point)
+    loadSearchIndex().then(function() {
+      const initialQuery = new URLSearchParams(window.location.search).get('q');
+      if (initialQuery && searchInput) {
+        searchInput.value = initialQuery;
+        openSearch();
+        performSearch();
+      }
+    });
   }
 
   async function loadSearchIndex() {
@@ -2687,8 +2702,7 @@ function initCodeBlockToolbars() {
     var fullscreenBtn = container.querySelector('.code-block-btn-fullscreen');
 
     function getRawCode() {
-      var rawEl = container.querySelector('.code-block-raw code');
-      return rawEl ? rawEl.textContent : '';
+      return container.getAttribute('data-code') || '';
     }
 
     function fallbackCopy(text) {
@@ -2796,6 +2810,7 @@ function initTableToolbars() {
   }
 
   document.querySelectorAll('.markdown-body table').forEach(function(table) {
+    if (table.closest('.dir-listing')) return;
     var wrapper = table.parentElement;
     if (!wrapper || !wrapper.classList.contains('table-wrapper')) {
       wrapper = document.createElement('div');

@@ -22,14 +22,18 @@
     <meta property="og:description" content="Documentation tools often require extensive configuration files (Docusaurus config.js, Nextra config, MkDocs config, etc.). This creates:">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="MDSVR | Markdown Documentation Server">
+    <meta property="og:locale" content="en">
     <meta property="og:url" content="https://mdsvr.js.org/docs/09-architecture/adr/003-zero-configuration-with-defaults/">
     <meta property="og:image" content="https://mdsvr.js.org/docs/public/assets/og/09-architecture/adr/003-zero-configuration-with-defaults/index.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="ADR-003: Zero configuration with sensible defaults | MDSVR | Markdown Documentation Server">
     <meta name="twitter:description" content="Documentation tools often require extensive configuration files (Docusaurus config.js, Nextra config, MkDocs config, etc.). This creates:">
     <meta name="twitter:image" content="https://mdsvr.js.org/docs/public/assets/og/09-architecture/adr/003-zero-configuration-with-defaults/index.jpg">
     <link rel="sitemap" type="application/xml" href="/docs/sitemap.xml">
   <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"ADR-003: Zero configuration with sensible defaults","description":"Documentation tools often require extensive configuration files (Docusaurus config.js, Nextra config, MkDocs config, etc.). This creates:","url":"https://mdsvr.js.org/docs/09-architecture/adr/003-zero-configuration-with-defaults/","image":"https://mdsvr.js.org/docs/public/assets/og/09-architecture/adr/003-zero-configuration-with-defaults/index.jpg"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://mdsvr.js.org/docs/"},{"@type":"ListItem","position":2,"name":"Architecture","item":"https://mdsvr.js.org/docs/09-architecture/"},{"@type":"ListItem","position":3,"name":"Adr","item":"https://mdsvr.js.org/docs/09-architecture/adr/"},{"@type":"ListItem","position":4,"name":"ADR-003: Zero configuration with sensible defaults","item":"https://mdsvr.js.org/docs/09-architecture/adr/003-zero-configuration-with-defaults/"}]}]}</script>
+  
   
   
   <style>
@@ -449,10 +453,8 @@ body {
 }
 
 /* Code block wrapper */
-pre.code-block-wrapper {
-  all: unset;
+.code-block-wrapper {
   display: block;
-  padding: 0;
   margin-bottom: 16px;
 }
 .code-block-container {
@@ -472,11 +474,6 @@ pre.code-block-wrapper {
   background: transparent;
   padding: 0;
   border-radius: 0;
-}
-.code-block-raw {
-  display: none;
-  margin: 0;
-  padding: 0;
 }
 .code-block-toolbar {
   position: absolute;
@@ -635,6 +632,27 @@ pre.code-block-wrapper {
 }
 .markdown-body th { background: var(--bg-secondary); font-weight: 600; white-space: nowrap; }
 .markdown-body tr:nth-child(2n) { background: var(--bg-secondary); }
+
+/* Directory listing (auto-index pages) */
+.dir-listing table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 16px;
+}
+.dir-listing th, .dir-listing td {
+  padding: 8px 12px;
+  text-align: left;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+  white-space: normal;
+}
+.dir-listing th { font-weight: 600; color: var(--text-muted); }
+.dir-listing tr { background: transparent; }
+.dir-listing td a { color: var(--accent); text-decoration: none; }
+.dir-listing td a:hover { text-decoration: underline; }
+.dir-listing .size { color: var(--text-muted); text-align: right; width: 100px; }
+.dir-listing .empty { color: var(--text-muted); font-style: italic; }
 .markdown-body img { max-width: 100%; height: auto; }
 .markdown-body hr {
   height: 0.25em;
@@ -1044,16 +1062,11 @@ pre.code-block-wrapper {
   padding: 16px;
 }
 
-/* Mermaid wrapper - reset pre defaults */
+/* Mermaid wrapper */
 .mermaid-wrapper {
-  all: unset;
   display: block;
+  margin-bottom: 16px;
 }
-
-pre.mermaid-wrapper{
-  padding: 0;
-}
-
 
 /* Mermaid container */
 .mermaid-container {
@@ -1465,8 +1478,10 @@ code.hljs {
 :root[data-theme="dark"] .hljs { background: var(--code-bg); }
 
   </style>
+  
 </head>
 <body>
+  
   <header class="site-header">
     <div class="header-left">
       <button class="sidebar-toggle sidebar-toggle-mobile" onclick="document.getElementById('sidebar').classList.toggle('open')" aria-label="Toggle menu">☰</button><button class="sidebar-toggle sidebar-toggle-desktop" onclick="toggleDesktopSidebar()" aria-label="Toggle sidebar">☰</button>
@@ -1512,28 +1527,28 @@ code.hljs {
     <div class="nav-children" data-expanded="false">
     <ul class="sidebar-nav" data-level="1">
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/markdown" class="nav-link">Markdown Formats</a>
+        <a href="/docs/03-features/markdown/" class="nav-link">Markdown Formats</a>
       </li>
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/math" class="nav-link">Mathematical Expressions</a>
+        <a href="/docs/03-features/math/" class="nav-link">Mathematical Expressions</a>
       </li>
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/mdx" class="nav-link">MDX Components</a>
+        <a href="/docs/03-features/mdx/" class="nav-link">MDX Components</a>
       </li>
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/mermaid" class="nav-link">Mermaid Diagrams in mdsvr</a>
+        <a href="/docs/03-features/mermaid/" class="nav-link">Mermaid Diagrams in mdsvr</a>
       </li>
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/navigation" class="nav-link">Navigation</a>
+        <a href="/docs/03-features/navigation/" class="nav-link">Navigation</a>
       </li>
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/search" class="nav-link">Search</a>
+        <a href="/docs/03-features/search/" class="nav-link">Search</a>
       </li>
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/seo" class="nav-link">SEO</a>
+        <a href="/docs/03-features/seo/" class="nav-link">SEO</a>
       </li>
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/theming" class="nav-link">Theming</a>
+        <a href="/docs/03-features/theming/" class="nav-link">Theming</a>
       </li>
     </ul>
     </div>
@@ -1556,22 +1571,22 @@ code.hljs {
         <div class="nav-children" data-expanded="true">
         <ul class="sidebar-nav" data-level="2">
           <li class="nav-item" data-type="file">
-            <a href="/docs/09-architecture/adr/001-file-based-content-storage" class="nav-link">ADR-001: File-based content storage instead of database</a>
+            <a href="/docs/09-architecture/adr/001-file-based-content-storage/" class="nav-link">ADR-001: File-based content storage instead of database</a>
           </li>
           <li class="nav-item" data-type="file">
-            <a href="/docs/09-architecture/adr/002-server-side-mdx-rendering" class="nav-link">ADR-002: Server-side MDX rendering instead of client-side</a>
-          </li>
-          <li class="nav-item active" data-type="file">
-            <a href="/docs/09-architecture/adr/003-zero-configuration-with-defaults" class="nav-link active">ADR-003: Zero configuration with sensible defaults</a>
+            <a href="/docs/09-architecture/adr/002-server-side-mdx-rendering/" class="nav-link">ADR-002: Server-side MDX rendering instead of client-side</a>
           </li>
           <li class="nav-item" data-type="file">
-            <a href="/docs/09-architecture/adr/004-client-side-search-with-pre-built-index" class="nav-link">ADR-004: Client-side search with pre-built index instead of external service</a>
+            <a href="/docs/09-architecture/adr/003-zero-configuration-with-defaults/" class="nav-link">ADR-003: Zero configuration with sensible defaults</a>
           </li>
           <li class="nav-item" data-type="file">
-            <a href="/docs/09-architecture/adr/005-incremental-static-export" class="nav-link">ADR-005: Incremental static export with hash-based caching</a>
+            <a href="/docs/09-architecture/adr/004-client-side-search-with-pre-built-index/" class="nav-link">ADR-004: Client-side search with pre-built index instead of external service</a>
           </li>
           <li class="nav-item" data-type="file">
-            <a href="/docs/09-architecture/adr/006-markdown-validation-and-autofix" class="nav-link">ADR-006: Markdown validation and auto-fixing</a>
+            <a href="/docs/09-architecture/adr/005-incremental-static-export/" class="nav-link">ADR-005: Incremental static export with hash-based caching</a>
+          </li>
+          <li class="nav-item" data-type="file">
+            <a href="/docs/09-architecture/adr/006-markdown-validation-and-autofix/" class="nav-link">ADR-006: Markdown validation and auto-fixing</a>
           </li>
         </ul>
         </div>
@@ -1583,7 +1598,7 @@ code.hljs {
     <main class="content">
       <nav class="breadcrumbs">
     <a href="/docs/">Home</a>
-    <span class="breadcrumb-sep">/</span><a href="/docs/09-architecture">09 architecture</a><span class="breadcrumb-sep">/</span><a href="/docs/09-architecture/adr">Adr</a><span class="breadcrumb-sep">/</span><span class="breadcrumb-current">003 zero configuration with defaults</span>
+    <span class="breadcrumb-sep">/</span><a href="/docs/09-architecture/">09 architecture</a><span class="breadcrumb-sep">/</span><a href="/docs/09-architecture/adr/">Adr</a><span class="breadcrumb-sep">/</span><span class="breadcrumb-current">003 zero configuration with defaults</span>
   </nav>
       <article class="markdown-body">
         <h1 id="adr-003-zero-configuration-with-sensible-defaults" tabindex="-1">ADR-003: Zero configuration with sensible defaults</h1>
@@ -1649,8 +1664,8 @@ code.hljs {
 
       </article>
       <nav class="prev-next-nav">
-        <a href="/docs/09-architecture/adr/002-server-side-mdx-rendering" class="prev-next-card prev-card"><span class="prev-next-label">← Prev</span><span class="prev-next-title">ADR-002: Server-side MDX rendering instead of client-side</span></a>
-        <a href="/docs/09-architecture/adr/004-client-side-search-with-pre-built-index" class="prev-next-card next-card"><span class="prev-next-label">Next →</span><span class="prev-next-title">ADR-004: Client-side search with pre-built index instead of external service</span></a>
+        <a href="/docs/09-architecture/adr/002-server-side-mdx-rendering/" class="prev-next-card prev-card"><span class="prev-next-label">← Prev</span><span class="prev-next-title">ADR-002: Server-side MDX rendering instead of client-side</span></a>
+        <a href="/docs/09-architecture/adr/004-client-side-search-with-pre-built-index/" class="prev-next-card next-card"><span class="prev-next-label">Next →</span><span class="prev-next-title">ADR-004: Client-side search with pre-built index instead of external service</span></a>
       </nav>
       <footer class="footer">
     <div class="footer-content">
@@ -1751,8 +1766,15 @@ code.hljs {
       searchInput.addEventListener('input', debounce(performSearch, 150));
     }
 
-    // Load search index
-    loadSearchIndex();
+    // Load search index, then honor ?q=<query> (SearchAction entry point)
+    loadSearchIndex().then(function() {
+      const initialQuery = new URLSearchParams(window.location.search).get('q');
+      if (initialQuery && searchInput) {
+        searchInput.value = initialQuery;
+        openSearch();
+        performSearch();
+      }
+    });
   }
 
   async function loadSearchIndex() {
@@ -2276,8 +2298,7 @@ function initCodeBlockToolbars() {
     var fullscreenBtn = container.querySelector('.code-block-btn-fullscreen');
 
     function getRawCode() {
-      var rawEl = container.querySelector('.code-block-raw code');
-      return rawEl ? rawEl.textContent : '';
+      return container.getAttribute('data-code') || '';
     }
 
     function fallbackCopy(text) {
@@ -2385,6 +2406,7 @@ function initTableToolbars() {
   }
 
   document.querySelectorAll('.markdown-body table').forEach(function(table) {
+    if (table.closest('.dir-listing')) return;
     var wrapper = table.parentElement;
     if (!wrapper || !wrapper.classList.contains('table-wrapper')) {
       wrapper = document.createElement('div');

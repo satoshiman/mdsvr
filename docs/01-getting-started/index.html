@@ -22,14 +22,18 @@
     <meta property="og:description" content="Get up and running with mdsvr - installation and quick start guide">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="MDSVR | Markdown Documentation Server">
+    <meta property="og:locale" content="en">
     <meta property="og:url" content="https://mdsvr.js.org/docs/01-getting-started/">
     <meta property="og:image" content="https://mdsvr.js.org/docs/public/assets/og/01-getting-started/index.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Getting Started | MDSVR | Markdown Documentation Server">
     <meta name="twitter:description" content="Get up and running with mdsvr - installation and quick start guide">
     <meta name="twitter:image" content="https://mdsvr.js.org/docs/public/assets/og/01-getting-started/index.jpg">
     <link rel="sitemap" type="application/xml" href="/docs/sitemap.xml">
   <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"Getting Started","description":"Get up and running with mdsvr - installation and quick start guide","url":"https://mdsvr.js.org/docs/01-getting-started/","image":"https://mdsvr.js.org/docs/public/assets/og/01-getting-started/index.jpg"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://mdsvr.js.org/docs/"},{"@type":"ListItem","position":2,"name":"Getting Started","item":"https://mdsvr.js.org/docs/01-getting-started/"}]}]}</script>
+  
   
   
   <style>
@@ -449,10 +453,8 @@ body {
 }
 
 /* Code block wrapper */
-pre.code-block-wrapper {
-  all: unset;
+.code-block-wrapper {
   display: block;
-  padding: 0;
   margin-bottom: 16px;
 }
 .code-block-container {
@@ -472,11 +474,6 @@ pre.code-block-wrapper {
   background: transparent;
   padding: 0;
   border-radius: 0;
-}
-.code-block-raw {
-  display: none;
-  margin: 0;
-  padding: 0;
 }
 .code-block-toolbar {
   position: absolute;
@@ -635,6 +632,27 @@ pre.code-block-wrapper {
 }
 .markdown-body th { background: var(--bg-secondary); font-weight: 600; white-space: nowrap; }
 .markdown-body tr:nth-child(2n) { background: var(--bg-secondary); }
+
+/* Directory listing (auto-index pages) */
+.dir-listing table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 16px;
+}
+.dir-listing th, .dir-listing td {
+  padding: 8px 12px;
+  text-align: left;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+  white-space: normal;
+}
+.dir-listing th { font-weight: 600; color: var(--text-muted); }
+.dir-listing tr { background: transparent; }
+.dir-listing td a { color: var(--accent); text-decoration: none; }
+.dir-listing td a:hover { text-decoration: underline; }
+.dir-listing .size { color: var(--text-muted); text-align: right; width: 100px; }
+.dir-listing .empty { color: var(--text-muted); font-style: italic; }
 .markdown-body img { max-width: 100%; height: auto; }
 .markdown-body hr {
   height: 0.25em;
@@ -1044,16 +1062,11 @@ pre.code-block-wrapper {
   padding: 16px;
 }
 
-/* Mermaid wrapper - reset pre defaults */
+/* Mermaid wrapper */
 .mermaid-wrapper {
-  all: unset;
   display: block;
+  margin-bottom: 16px;
 }
-
-pre.mermaid-wrapper{
-  padding: 0;
-}
-
 
 /* Mermaid container */
 .mermaid-container {
@@ -1465,8 +1478,10 @@ code.hljs {
 :root[data-theme="dark"] .hljs { background: var(--code-bg); }
 
   </style>
+  
 </head>
 <body>
+  
   <header class="site-header">
     <div class="header-left">
       <button class="sidebar-toggle sidebar-toggle-mobile" onclick="document.getElementById('sidebar').classList.toggle('open')" aria-label="Toggle menu">☰</button><button class="sidebar-toggle sidebar-toggle-desktop" onclick="toggleDesktopSidebar()" aria-label="Toggle sidebar">☰</button>
@@ -1512,28 +1527,28 @@ code.hljs {
     <div class="nav-children" data-expanded="false">
     <ul class="sidebar-nav" data-level="1">
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/markdown" class="nav-link">Markdown Formats</a>
+        <a href="/docs/03-features/markdown/" class="nav-link">Markdown Formats</a>
       </li>
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/math" class="nav-link">Mathematical Expressions</a>
+        <a href="/docs/03-features/math/" class="nav-link">Mathematical Expressions</a>
       </li>
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/mdx" class="nav-link">MDX Components</a>
+        <a href="/docs/03-features/mdx/" class="nav-link">MDX Components</a>
       </li>
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/mermaid" class="nav-link">Mermaid Diagrams in mdsvr</a>
+        <a href="/docs/03-features/mermaid/" class="nav-link">Mermaid Diagrams in mdsvr</a>
       </li>
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/navigation" class="nav-link">Navigation</a>
+        <a href="/docs/03-features/navigation/" class="nav-link">Navigation</a>
       </li>
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/search" class="nav-link">Search</a>
+        <a href="/docs/03-features/search/" class="nav-link">Search</a>
       </li>
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/seo" class="nav-link">SEO</a>
+        <a href="/docs/03-features/seo/" class="nav-link">SEO</a>
       </li>
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/theming" class="nav-link">Theming</a>
+        <a href="/docs/03-features/theming/" class="nav-link">Theming</a>
       </li>
     </ul>
     </div>
@@ -1556,22 +1571,22 @@ code.hljs {
         <div class="nav-children" data-expanded="false">
         <ul class="sidebar-nav" data-level="2">
           <li class="nav-item" data-type="file">
-            <a href="/docs/09-architecture/adr/001-file-based-content-storage" class="nav-link">ADR-001: File-based content storage instead of database</a>
+            <a href="/docs/09-architecture/adr/001-file-based-content-storage/" class="nav-link">ADR-001: File-based content storage instead of database</a>
           </li>
           <li class="nav-item" data-type="file">
-            <a href="/docs/09-architecture/adr/002-server-side-mdx-rendering" class="nav-link">ADR-002: Server-side MDX rendering instead of client-side</a>
+            <a href="/docs/09-architecture/adr/002-server-side-mdx-rendering/" class="nav-link">ADR-002: Server-side MDX rendering instead of client-side</a>
           </li>
           <li class="nav-item" data-type="file">
-            <a href="/docs/09-architecture/adr/003-zero-configuration-with-defaults" class="nav-link">ADR-003: Zero configuration with sensible defaults</a>
+            <a href="/docs/09-architecture/adr/003-zero-configuration-with-defaults/" class="nav-link">ADR-003: Zero configuration with sensible defaults</a>
           </li>
           <li class="nav-item" data-type="file">
-            <a href="/docs/09-architecture/adr/004-client-side-search-with-pre-built-index" class="nav-link">ADR-004: Client-side search with pre-built index instead of external service</a>
+            <a href="/docs/09-architecture/adr/004-client-side-search-with-pre-built-index/" class="nav-link">ADR-004: Client-side search with pre-built index instead of external service</a>
           </li>
           <li class="nav-item" data-type="file">
-            <a href="/docs/09-architecture/adr/005-incremental-static-export" class="nav-link">ADR-005: Incremental static export with hash-based caching</a>
+            <a href="/docs/09-architecture/adr/005-incremental-static-export/" class="nav-link">ADR-005: Incremental static export with hash-based caching</a>
           </li>
           <li class="nav-item" data-type="file">
-            <a href="/docs/09-architecture/adr/006-markdown-validation-and-autofix" class="nav-link">ADR-006: Markdown validation and auto-fixing</a>
+            <a href="/docs/09-architecture/adr/006-markdown-validation-and-autofix/" class="nav-link">ADR-006: Markdown validation and auto-fixing</a>
           </li>
         </ul>
         </div>
@@ -1591,7 +1606,8 @@ code.hljs {
 <h2 id="quick-start" tabindex="-1">Quick Start</h2>
 <p>Get your documentation site running in under 30 seconds.</p>
 <h3 id="one-command-setup" tabindex="-1">One-Command Setup</h3>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="npx mdsvr ./docs --open
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1622,14 +1638,14 @@ code.hljs {
   </div>
   <pre><code class="hljs language-bash">npx mdsvr ./docs --open
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>npx mdsvr ./docs --open
+</div></div>
 </code></pre>
-</div></pre>
-
 <p>That’s it! No configuration needed, no build step required.</p>
 <h3 id="step-by-step" tabindex="-1">Step-by-Step</h3>
 <h4 id="1-create-a-docs-folder" tabindex="-1">1. Create a Docs Folder</h4>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="mkdir docs
+echo &quot;# Hello World&quot; &gt; docs/README.md
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1661,13 +1677,11 @@ code.hljs {
   <pre><code class="hljs language-bash"><span class="hljs-built_in">mkdir</span> docs
 <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;# Hello World&quot;</span> &gt; docs/README.md
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>mkdir docs
-echo &quot;# Hello World&quot; &gt; docs/README.md
+</div></div>
 </code></pre>
-</div></pre>
-
 <h4 id="2-start-the-server" tabindex="-1">2. Start the Server</h4>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="npx mdsvr ./docs --open
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1698,10 +1712,8 @@ echo &quot;# Hello World&quot; &gt; docs/README.md
   </div>
   <pre><code class="hljs language-bash">npx mdsvr ./docs --open
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>npx mdsvr ./docs --open
+</div></div>
 </code></pre>
-</div></pre>
-
 <p>The <code>--open</code> flag automatically opens your browser to <code>http://localhost:1800</code>.</p>
 <h3 id="what-just-happened" tabindex="-1">What Just Happened?</h3>
 <p>mdsvr:</p>
@@ -1714,7 +1726,8 @@ echo &quot;# Hello World&quot; &gt; docs/README.md
 <hr>
 <h2 id="installation" tabindex="-1">Installation</h2>
 <p>mdsvr requires <strong>Node.js 18+</strong>. Check your version:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="node --version
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1745,13 +1758,12 @@ echo &quot;# Hello World&quot; &gt; docs/README.md
   </div>
   <pre><code class="hljs language-bash">node --version
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>node --version
+</div></div>
 </code></pre>
-</div></pre>
-
 <h3 id="option-1-npx-recommended" tabindex="-1">Option 1: npx (Recommended)</h3>
 <p>No installation needed. Run directly:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="npx mdsvr ./docs
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1782,13 +1794,13 @@ echo &quot;# Hello World&quot; &gt; docs/README.md
   </div>
   <pre><code class="hljs language-bash">npx mdsvr ./docs
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>npx mdsvr ./docs
+</div></div>
 </code></pre>
-</div></pre>
-
 <h3 id="option-2-global-install" tabindex="-1">Option 2: Global Install</h3>
 <p>Install once, use anywhere:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="npm install -g mdsvr
+mdsvr ./docs
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1820,14 +1832,12 @@ echo &quot;# Hello World&quot; &gt; docs/README.md
   <pre><code class="hljs language-bash">npm install -g mdsvr
 mdsvr ./docs
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>npm install -g mdsvr
-mdsvr ./docs
+</div></div>
 </code></pre>
-</div></pre>
-
 <h3 id="option-3-local-install" tabindex="-1">Option 3: Local Install</h3>
 <p>Add to a specific project:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="npm install --save-dev mdsvr
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1858,12 +1868,15 @@ mdsvr ./docs
   </div>
   <pre><code class="hljs language-bash">npm install --save-dev mdsvr
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>npm install --save-dev mdsvr
+</div></div>
 </code></pre>
-</div></pre>
-
 <p>Then add to your <code>package.json</code>:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+  &quot;scripts&quot;: {
+    &quot;docs&quot;: &quot;mdsvr ./docs --open&quot;
+  }
+}
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1898,16 +1911,11 @@ mdsvr ./docs
   <span class="hljs-punctuation">}</span>
 <span class="hljs-punctuation">}</span>
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>{
-  &quot;scripts&quot;: {
-    &quot;docs&quot;: &quot;mdsvr ./docs --open&quot;
-  }
-}
+</div></div>
 </code></pre>
-</div></pre>
-
 <p>Run with:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="npm run docs
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1938,12 +1946,11 @@ mdsvr ./docs
   </div>
   <pre><code class="hljs language-bash">npm run docs
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>npm run docs
+</div></div>
 </code></pre>
-</div></pre>
-
 <h3 id="verify-installation" tabindex="-1">Verify Installation</h3>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="mdsvr --version
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1974,13 +1981,13 @@ mdsvr ./docs
   </div>
   <pre><code class="hljs language-bash">mdsvr --version
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>mdsvr --version
+</div></div>
 </code></pre>
-</div></pre>
-
 <h3 id="docker" tabindex="-1">Docker</h3>
 <p>Pull and run:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="docker pull ghcr.io/satoshiman/mdsvr:latest
+docker run -d -p 1800:1800 -v /path/to/docs:/app/docs:ro ghcr.io/satoshiman/mdsvr:latest
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2012,18 +2019,15 @@ mdsvr ./docs
   <pre><code class="hljs language-bash">docker pull ghcr.io/satoshiman/mdsvr:latest
 docker run -d -p 1800:1800 -v /path/to/docs:/app/docs:ro ghcr.io/satoshiman/mdsvr:latest
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>docker pull ghcr.io/satoshiman/mdsvr:latest
-docker run -d -p 1800:1800 -v /path/to/docs:/app/docs:ro ghcr.io/satoshiman/mdsvr:latest
+</div></div>
 </code></pre>
-</div></pre>
-
-<p>See <a href="../02-settings/README#docker">Docker deployment</a> for more details.</p>
+<p>See <a href="/02-settings/#docker">Docker deployment</a> for more details.</p>
 <hr>
 <h2 id="next-steps" tabindex="-1">Next Steps</h2>
 <ul>
-<li>Learn about <a href="../03-features/mdx">MDX components</a> for interactive docs</li>
-<li><a href="../02-settings/README">Configure</a> your site with <code>_mdsvr/settings.json</code></li>
-<li>See all <a href="../03-features/README">features</a> mdsvr offers</li>
+<li>Learn about <a href="/03-features/mdx/">MDX components</a> for interactive docs</li>
+<li><a href="/02-settings/">Configure</a> your site with <code>_mdsvr/settings.json</code></li>
+<li>See all <a href="/03-features/">features</a> mdsvr offers</li>
 </ul>
 
       </article>
@@ -2132,8 +2136,15 @@ docker run -d -p 1800:1800 -v /path/to/docs:/app/docs:ro ghcr.io/satoshiman/mdsv
       searchInput.addEventListener('input', debounce(performSearch, 150));
     }
 
-    // Load search index
-    loadSearchIndex();
+    // Load search index, then honor ?q=<query> (SearchAction entry point)
+    loadSearchIndex().then(function() {
+      const initialQuery = new URLSearchParams(window.location.search).get('q');
+      if (initialQuery && searchInput) {
+        searchInput.value = initialQuery;
+        openSearch();
+        performSearch();
+      }
+    });
   }
 
   async function loadSearchIndex() {
@@ -2657,8 +2668,7 @@ function initCodeBlockToolbars() {
     var fullscreenBtn = container.querySelector('.code-block-btn-fullscreen');
 
     function getRawCode() {
-      var rawEl = container.querySelector('.code-block-raw code');
-      return rawEl ? rawEl.textContent : '';
+      return container.getAttribute('data-code') || '';
     }
 
     function fallbackCopy(text) {
@@ -2766,6 +2776,7 @@ function initTableToolbars() {
   }
 
   document.querySelectorAll('.markdown-body table').forEach(function(table) {
+    if (table.closest('.dir-listing')) return;
     var wrapper = table.parentElement;
     if (!wrapper || !wrapper.classList.contains('table-wrapper')) {
       wrapper = document.createElement('div');

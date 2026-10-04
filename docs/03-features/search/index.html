@@ -22,14 +22,18 @@
     <meta property="og:description" content="Full-text search for your documentation">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="MDSVR | Markdown Documentation Server">
+    <meta property="og:locale" content="en">
     <meta property="og:url" content="https://mdsvr.js.org/docs/03-features/search/">
     <meta property="og:image" content="https://mdsvr.js.org/docs/public/assets/og/03-features/search/index.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Search | MDSVR | Markdown Documentation Server">
     <meta name="twitter:description" content="Full-text search for your documentation">
     <meta name="twitter:image" content="https://mdsvr.js.org/docs/public/assets/og/03-features/search/index.jpg">
     <link rel="sitemap" type="application/xml" href="/docs/sitemap.xml">
   <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"Search","description":"Full-text search for your documentation","url":"https://mdsvr.js.org/docs/03-features/search/","image":"https://mdsvr.js.org/docs/public/assets/og/03-features/search/index.jpg"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://mdsvr.js.org/docs/"},{"@type":"ListItem","position":2,"name":"Features","item":"https://mdsvr.js.org/docs/03-features/"},{"@type":"ListItem","position":3,"name":"Search","item":"https://mdsvr.js.org/docs/03-features/search/"}]}]}</script>
+  
   
   
   <style>
@@ -449,10 +453,8 @@ body {
 }
 
 /* Code block wrapper */
-pre.code-block-wrapper {
-  all: unset;
+.code-block-wrapper {
   display: block;
-  padding: 0;
   margin-bottom: 16px;
 }
 .code-block-container {
@@ -472,11 +474,6 @@ pre.code-block-wrapper {
   background: transparent;
   padding: 0;
   border-radius: 0;
-}
-.code-block-raw {
-  display: none;
-  margin: 0;
-  padding: 0;
 }
 .code-block-toolbar {
   position: absolute;
@@ -635,6 +632,27 @@ pre.code-block-wrapper {
 }
 .markdown-body th { background: var(--bg-secondary); font-weight: 600; white-space: nowrap; }
 .markdown-body tr:nth-child(2n) { background: var(--bg-secondary); }
+
+/* Directory listing (auto-index pages) */
+.dir-listing table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 16px;
+}
+.dir-listing th, .dir-listing td {
+  padding: 8px 12px;
+  text-align: left;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+  white-space: normal;
+}
+.dir-listing th { font-weight: 600; color: var(--text-muted); }
+.dir-listing tr { background: transparent; }
+.dir-listing td a { color: var(--accent); text-decoration: none; }
+.dir-listing td a:hover { text-decoration: underline; }
+.dir-listing .size { color: var(--text-muted); text-align: right; width: 100px; }
+.dir-listing .empty { color: var(--text-muted); font-style: italic; }
 .markdown-body img { max-width: 100%; height: auto; }
 .markdown-body hr {
   height: 0.25em;
@@ -1044,16 +1062,11 @@ pre.code-block-wrapper {
   padding: 16px;
 }
 
-/* Mermaid wrapper - reset pre defaults */
+/* Mermaid wrapper */
 .mermaid-wrapper {
-  all: unset;
   display: block;
+  margin-bottom: 16px;
 }
-
-pre.mermaid-wrapper{
-  padding: 0;
-}
-
 
 /* Mermaid container */
 .mermaid-container {
@@ -1465,8 +1478,10 @@ code.hljs {
 :root[data-theme="dark"] .hljs { background: var(--code-bg); }
 
   </style>
+  
 </head>
 <body>
+  
   <header class="site-header">
     <div class="header-left">
       <button class="sidebar-toggle sidebar-toggle-mobile" onclick="document.getElementById('sidebar').classList.toggle('open')" aria-label="Toggle menu">☰</button><button class="sidebar-toggle sidebar-toggle-desktop" onclick="toggleDesktopSidebar()" aria-label="Toggle sidebar">☰</button>
@@ -1512,28 +1527,28 @@ code.hljs {
     <div class="nav-children" data-expanded="true">
     <ul class="sidebar-nav" data-level="1">
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/markdown" class="nav-link">Markdown Formats</a>
+        <a href="/docs/03-features/markdown/" class="nav-link">Markdown Formats</a>
       </li>
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/math" class="nav-link">Mathematical Expressions</a>
+        <a href="/docs/03-features/math/" class="nav-link">Mathematical Expressions</a>
       </li>
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/mdx" class="nav-link">MDX Components</a>
+        <a href="/docs/03-features/mdx/" class="nav-link">MDX Components</a>
       </li>
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/mermaid" class="nav-link">Mermaid Diagrams in mdsvr</a>
+        <a href="/docs/03-features/mermaid/" class="nav-link">Mermaid Diagrams in mdsvr</a>
       </li>
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/navigation" class="nav-link">Navigation</a>
-      </li>
-      <li class="nav-item active" data-type="file">
-        <a href="/docs/03-features/search" class="nav-link active">Search</a>
+        <a href="/docs/03-features/navigation/" class="nav-link">Navigation</a>
       </li>
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/seo" class="nav-link">SEO</a>
+        <a href="/docs/03-features/search/" class="nav-link">Search</a>
       </li>
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/theming" class="nav-link">Theming</a>
+        <a href="/docs/03-features/seo/" class="nav-link">SEO</a>
+      </li>
+      <li class="nav-item" data-type="file">
+        <a href="/docs/03-features/theming/" class="nav-link">Theming</a>
       </li>
     </ul>
     </div>
@@ -1556,22 +1571,22 @@ code.hljs {
         <div class="nav-children" data-expanded="false">
         <ul class="sidebar-nav" data-level="2">
           <li class="nav-item" data-type="file">
-            <a href="/docs/09-architecture/adr/001-file-based-content-storage" class="nav-link">ADR-001: File-based content storage instead of database</a>
+            <a href="/docs/09-architecture/adr/001-file-based-content-storage/" class="nav-link">ADR-001: File-based content storage instead of database</a>
           </li>
           <li class="nav-item" data-type="file">
-            <a href="/docs/09-architecture/adr/002-server-side-mdx-rendering" class="nav-link">ADR-002: Server-side MDX rendering instead of client-side</a>
+            <a href="/docs/09-architecture/adr/002-server-side-mdx-rendering/" class="nav-link">ADR-002: Server-side MDX rendering instead of client-side</a>
           </li>
           <li class="nav-item" data-type="file">
-            <a href="/docs/09-architecture/adr/003-zero-configuration-with-defaults" class="nav-link">ADR-003: Zero configuration with sensible defaults</a>
+            <a href="/docs/09-architecture/adr/003-zero-configuration-with-defaults/" class="nav-link">ADR-003: Zero configuration with sensible defaults</a>
           </li>
           <li class="nav-item" data-type="file">
-            <a href="/docs/09-architecture/adr/004-client-side-search-with-pre-built-index" class="nav-link">ADR-004: Client-side search with pre-built index instead of external service</a>
+            <a href="/docs/09-architecture/adr/004-client-side-search-with-pre-built-index/" class="nav-link">ADR-004: Client-side search with pre-built index instead of external service</a>
           </li>
           <li class="nav-item" data-type="file">
-            <a href="/docs/09-architecture/adr/005-incremental-static-export" class="nav-link">ADR-005: Incremental static export with hash-based caching</a>
+            <a href="/docs/09-architecture/adr/005-incremental-static-export/" class="nav-link">ADR-005: Incremental static export with hash-based caching</a>
           </li>
           <li class="nav-item" data-type="file">
-            <a href="/docs/09-architecture/adr/006-markdown-validation-and-autofix" class="nav-link">ADR-006: Markdown validation and auto-fixing</a>
+            <a href="/docs/09-architecture/adr/006-markdown-validation-and-autofix/" class="nav-link">ADR-006: Markdown validation and auto-fixing</a>
           </li>
         </ul>
         </div>
@@ -1583,14 +1598,21 @@ code.hljs {
     <main class="content">
       <nav class="breadcrumbs">
     <a href="/docs/">Home</a>
-    <span class="breadcrumb-sep">/</span><a href="/docs/03-features">03 features</a><span class="breadcrumb-sep">/</span><span class="breadcrumb-current">Search</span>
+    <span class="breadcrumb-sep">/</span><a href="/docs/03-features/">03 features</a><span class="breadcrumb-sep">/</span><span class="breadcrumb-current">Search</span>
   </nav>
       <article class="markdown-body">
         <h1 id="search" tabindex="-1">Search</h1>
 <p>mdsvr includes a <strong>built-in full-text search</strong> that works entirely client-side. No external services or databases required.</p>
 <h2 id="enabling-search" tabindex="-1">Enabling Search</h2>
 <p>Search is enabled by default. Configure it in <code>_mdsvr/settings.json</code>:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+  &quot;search&quot;: {
+    &quot;enabled&quot;: true,
+    &quot;placeholder&quot;: &quot;Search docs...&quot;,
+    &quot;maxResults&quot;: 10
+  }
+}
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1627,16 +1649,8 @@ code.hljs {
   <span class="hljs-punctuation">}</span>
 <span class="hljs-punctuation">}</span>
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>{
-  &quot;search&quot;: {
-    &quot;enabled&quot;: true,
-    &quot;placeholder&quot;: &quot;Search docs...&quot;,
-    &quot;maxResults&quot;: 10
-  }
-}
+</div></div>
 </code></pre>
-</div></pre>
-
 <h2 id="using-search" tabindex="-1">Using Search</h2>
 <h3 id="keyboard-shortcut" tabindex="-1">Keyboard Shortcut</h3>
 <p>Press <code>⌘+K</code> (Mac) or <code>Ctrl+K</code> (Windows/Linux) to open the search modal from anywhere.</p>
@@ -1700,7 +1714,12 @@ code.hljs {
 </table></div>
 <h2 id="disabling-search" tabindex="-1">Disabling Search</h2>
 <p>To disable search entirely:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+  &quot;search&quot;: {
+    &quot;enabled&quot;: false
+  }
+}
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1735,14 +1754,8 @@ code.hljs {
   <span class="hljs-punctuation">}</span>
 <span class="hljs-punctuation">}</span>
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>{
-  &quot;search&quot;: {
-    &quot;enabled&quot;: false
-  }
-}
+</div></div>
 </code></pre>
-</div></pre>
-
 <p>This will:</p>
 <ul>
 <li>Hide the search trigger in the header</li>
@@ -1752,7 +1765,14 @@ code.hljs {
 </ul>
 <h2 id="search-data-structure" tabindex="-1">Search Data Structure</h2>
 <p>Each entry in the search index:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-typescript"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+  title: string;      // Page title
+  href: string;       // URL path
+  excerpt: string;    // First 200 chars
+  headings: string[]; // All H1-H6 text
+  content: string;    // Full plain text
+}
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1789,16 +1809,8 @@ code.hljs {
   <span class="hljs-attr">content</span>: <span class="hljs-built_in">string</span>;    <span class="hljs-comment">// Full plain text</span>
 }
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>{
-  title: string;      // Page title
-  href: string;       // URL path
-  excerpt: string;    // First 200 chars
-  headings: string[]; // All H1-H6 text
-  content: string;    // Full plain text
-}
+</div></div>
 </code></pre>
-</div></pre>
-
 <h2 id="tips-for-better-search" tabindex="-1">Tips for Better Search</h2>
 <ol>
 <li><strong>Use descriptive titles</strong> — They have the highest search weight</li>
@@ -1806,7 +1818,20 @@ code.hljs {
 <li><strong>Frontmatter title</strong> — Set <code>title:</code> in frontmatter for better control</li>
 </ol>
 <p>Example:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-mdx"><div class="code-block-wrapper"><div class="code-block-container" data-code="---
+title: Authentication Guide
+---
+
+# Authentication
+
+## JWT Tokens
+
+How to use JWT tokens for authentication...
+
+## OAuth
+
+Setting up OAuth providers...
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1849,22 +1874,8 @@ How to use JWT tokens for authentication...
 
 Setting up OAuth providers...
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>---
-title: Authentication Guide
----
-
-# Authentication
-
-## JWT Tokens
-
-How to use JWT tokens for authentication...
-
-## OAuth
-
-Setting up OAuth providers...
+</div></div>
 </code></pre>
-</div></pre>
-
 <h2 id="accessibility" tabindex="-1">Accessibility</h2>
 <p>The search modal is fully accessible:</p>
 <ul>
@@ -1884,8 +1895,8 @@ Setting up OAuth providers...
 
       </article>
       <nav class="prev-next-nav">
-        <a href="/docs/03-features/navigation" class="prev-next-card prev-card"><span class="prev-next-label">← Prev</span><span class="prev-next-title">Navigation</span></a>
-        <a href="/docs/03-features/seo" class="prev-next-card next-card"><span class="prev-next-label">Next →</span><span class="prev-next-title">SEO</span></a>
+        <a href="/docs/03-features/navigation/" class="prev-next-card prev-card"><span class="prev-next-label">← Prev</span><span class="prev-next-title">Navigation</span></a>
+        <a href="/docs/03-features/seo/" class="prev-next-card next-card"><span class="prev-next-label">Next →</span><span class="prev-next-title">SEO</span></a>
       </nav>
       <footer class="footer">
     <div class="footer-content">
@@ -1988,8 +1999,15 @@ Setting up OAuth providers...
       searchInput.addEventListener('input', debounce(performSearch, 150));
     }
 
-    // Load search index
-    loadSearchIndex();
+    // Load search index, then honor ?q=<query> (SearchAction entry point)
+    loadSearchIndex().then(function() {
+      const initialQuery = new URLSearchParams(window.location.search).get('q');
+      if (initialQuery && searchInput) {
+        searchInput.value = initialQuery;
+        openSearch();
+        performSearch();
+      }
+    });
   }
 
   async function loadSearchIndex() {
@@ -2513,8 +2531,7 @@ function initCodeBlockToolbars() {
     var fullscreenBtn = container.querySelector('.code-block-btn-fullscreen');
 
     function getRawCode() {
-      var rawEl = container.querySelector('.code-block-raw code');
-      return rawEl ? rawEl.textContent : '';
+      return container.getAttribute('data-code') || '';
     }
 
     function fallbackCopy(text) {
@@ -2622,6 +2639,7 @@ function initTableToolbars() {
   }
 
   document.querySelectorAll('.markdown-body table').forEach(function(table) {
+    if (table.closest('.dir-listing')) return;
     var wrapper = table.parentElement;
     if (!wrapper || !wrapper.classList.contains('table-wrapper')) {
       wrapper = document.createElement('div');

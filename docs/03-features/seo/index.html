@@ -22,8 +22,11 @@
     <meta property="og:description" content="Search engine optimization features">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="MDSVR | Markdown Documentation Server">
+    <meta property="og:locale" content="en">
     <meta property="og:url" content="https://mdsvr.js.org/docs/03-features/seo/">
     <meta property="og:image" content="https://mdsvr.js.org/docs/public/assets/og/03-features/seo/index.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="SEO | MDSVR | Markdown Documentation Server">
     <meta name="twitter:description" content="Search engine optimization features">
@@ -31,6 +34,7 @@
     <meta property="article:published_time" content="2025-01-15">
     <link rel="sitemap" type="application/xml" href="/docs/sitemap.xml">
   <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"SEO","description":"Search engine optimization features","url":"https://mdsvr.js.org/docs/03-features/seo/","image":"https://mdsvr.js.org/docs/public/assets/og/03-features/seo/index.jpg","datePublished":"2025-01-15"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://mdsvr.js.org/docs/"},{"@type":"ListItem","position":2,"name":"Features","item":"https://mdsvr.js.org/docs/03-features/"},{"@type":"ListItem","position":3,"name":"SEO","item":"https://mdsvr.js.org/docs/03-features/seo/"}]}]}</script>
+  
   
   
   <style>
@@ -450,10 +454,8 @@ body {
 }
 
 /* Code block wrapper */
-pre.code-block-wrapper {
-  all: unset;
+.code-block-wrapper {
   display: block;
-  padding: 0;
   margin-bottom: 16px;
 }
 .code-block-container {
@@ -473,11 +475,6 @@ pre.code-block-wrapper {
   background: transparent;
   padding: 0;
   border-radius: 0;
-}
-.code-block-raw {
-  display: none;
-  margin: 0;
-  padding: 0;
 }
 .code-block-toolbar {
   position: absolute;
@@ -636,6 +633,27 @@ pre.code-block-wrapper {
 }
 .markdown-body th { background: var(--bg-secondary); font-weight: 600; white-space: nowrap; }
 .markdown-body tr:nth-child(2n) { background: var(--bg-secondary); }
+
+/* Directory listing (auto-index pages) */
+.dir-listing table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 16px;
+}
+.dir-listing th, .dir-listing td {
+  padding: 8px 12px;
+  text-align: left;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+  white-space: normal;
+}
+.dir-listing th { font-weight: 600; color: var(--text-muted); }
+.dir-listing tr { background: transparent; }
+.dir-listing td a { color: var(--accent); text-decoration: none; }
+.dir-listing td a:hover { text-decoration: underline; }
+.dir-listing .size { color: var(--text-muted); text-align: right; width: 100px; }
+.dir-listing .empty { color: var(--text-muted); font-style: italic; }
 .markdown-body img { max-width: 100%; height: auto; }
 .markdown-body hr {
   height: 0.25em;
@@ -1045,16 +1063,11 @@ pre.code-block-wrapper {
   padding: 16px;
 }
 
-/* Mermaid wrapper - reset pre defaults */
+/* Mermaid wrapper */
 .mermaid-wrapper {
-  all: unset;
   display: block;
+  margin-bottom: 16px;
 }
-
-pre.mermaid-wrapper{
-  padding: 0;
-}
-
 
 /* Mermaid container */
 .mermaid-container {
@@ -1466,8 +1479,10 @@ code.hljs {
 :root[data-theme="dark"] .hljs { background: var(--code-bg); }
 
   </style>
+  
 </head>
 <body>
+  
   <header class="site-header">
     <div class="header-left">
       <button class="sidebar-toggle sidebar-toggle-mobile" onclick="document.getElementById('sidebar').classList.toggle('open')" aria-label="Toggle menu">☰</button><button class="sidebar-toggle sidebar-toggle-desktop" onclick="toggleDesktopSidebar()" aria-label="Toggle sidebar">☰</button>
@@ -1513,28 +1528,28 @@ code.hljs {
     <div class="nav-children" data-expanded="true">
     <ul class="sidebar-nav" data-level="1">
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/markdown" class="nav-link">Markdown Formats</a>
+        <a href="/docs/03-features/markdown/" class="nav-link">Markdown Formats</a>
       </li>
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/math" class="nav-link">Mathematical Expressions</a>
+        <a href="/docs/03-features/math/" class="nav-link">Mathematical Expressions</a>
       </li>
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/mdx" class="nav-link">MDX Components</a>
+        <a href="/docs/03-features/mdx/" class="nav-link">MDX Components</a>
       </li>
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/mermaid" class="nav-link">Mermaid Diagrams in mdsvr</a>
+        <a href="/docs/03-features/mermaid/" class="nav-link">Mermaid Diagrams in mdsvr</a>
       </li>
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/navigation" class="nav-link">Navigation</a>
+        <a href="/docs/03-features/navigation/" class="nav-link">Navigation</a>
       </li>
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/search" class="nav-link">Search</a>
-      </li>
-      <li class="nav-item active" data-type="file">
-        <a href="/docs/03-features/seo" class="nav-link active">SEO</a>
+        <a href="/docs/03-features/search/" class="nav-link">Search</a>
       </li>
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/theming" class="nav-link">Theming</a>
+        <a href="/docs/03-features/seo/" class="nav-link">SEO</a>
+      </li>
+      <li class="nav-item" data-type="file">
+        <a href="/docs/03-features/theming/" class="nav-link">Theming</a>
       </li>
     </ul>
     </div>
@@ -1557,22 +1572,22 @@ code.hljs {
         <div class="nav-children" data-expanded="false">
         <ul class="sidebar-nav" data-level="2">
           <li class="nav-item" data-type="file">
-            <a href="/docs/09-architecture/adr/001-file-based-content-storage" class="nav-link">ADR-001: File-based content storage instead of database</a>
+            <a href="/docs/09-architecture/adr/001-file-based-content-storage/" class="nav-link">ADR-001: File-based content storage instead of database</a>
           </li>
           <li class="nav-item" data-type="file">
-            <a href="/docs/09-architecture/adr/002-server-side-mdx-rendering" class="nav-link">ADR-002: Server-side MDX rendering instead of client-side</a>
+            <a href="/docs/09-architecture/adr/002-server-side-mdx-rendering/" class="nav-link">ADR-002: Server-side MDX rendering instead of client-side</a>
           </li>
           <li class="nav-item" data-type="file">
-            <a href="/docs/09-architecture/adr/003-zero-configuration-with-defaults" class="nav-link">ADR-003: Zero configuration with sensible defaults</a>
+            <a href="/docs/09-architecture/adr/003-zero-configuration-with-defaults/" class="nav-link">ADR-003: Zero configuration with sensible defaults</a>
           </li>
           <li class="nav-item" data-type="file">
-            <a href="/docs/09-architecture/adr/004-client-side-search-with-pre-built-index" class="nav-link">ADR-004: Client-side search with pre-built index instead of external service</a>
+            <a href="/docs/09-architecture/adr/004-client-side-search-with-pre-built-index/" class="nav-link">ADR-004: Client-side search with pre-built index instead of external service</a>
           </li>
           <li class="nav-item" data-type="file">
-            <a href="/docs/09-architecture/adr/005-incremental-static-export" class="nav-link">ADR-005: Incremental static export with hash-based caching</a>
+            <a href="/docs/09-architecture/adr/005-incremental-static-export/" class="nav-link">ADR-005: Incremental static export with hash-based caching</a>
           </li>
           <li class="nav-item" data-type="file">
-            <a href="/docs/09-architecture/adr/006-markdown-validation-and-autofix" class="nav-link">ADR-006: Markdown validation and auto-fixing</a>
+            <a href="/docs/09-architecture/adr/006-markdown-validation-and-autofix/" class="nav-link">ADR-006: Markdown validation and auto-fixing</a>
           </li>
         </ul>
         </div>
@@ -1584,7 +1599,7 @@ code.hljs {
     <main class="content">
       <nav class="breadcrumbs">
     <a href="/docs/">Home</a>
-    <span class="breadcrumb-sep">/</span><a href="/docs/03-features">03 features</a><span class="breadcrumb-sep">/</span><span class="breadcrumb-current">Seo</span>
+    <span class="breadcrumb-sep">/</span><a href="/docs/03-features/">03 features</a><span class="breadcrumb-sep">/</span><span class="breadcrumb-current">Seo</span>
   </nav>
       <article class="markdown-body">
         <h1 id="seo-features" tabindex="-1">SEO Features</h1>
@@ -1592,7 +1607,12 @@ code.hljs {
 <h2 id="meta-tags" tabindex="-1">Meta Tags</h2>
 <p>Every page includes optimized meta tags based on your <code>_mdsvr/settings.json</code> and page frontmatter.</p>
 <h3 id="title-template" tabindex="-1">Title Template</h3>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+  &quot;seo&quot;: {
+    &quot;titleTemplate&quot;: &quot;%s | My Docs&quot;
+  }
+}
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1627,14 +1647,8 @@ code.hljs {
   <span class="hljs-punctuation">}</span>
 <span class="hljs-punctuation">}</span>
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>{
-  &quot;seo&quot;: {
-    &quot;titleTemplate&quot;: &quot;%s | My Docs&quot;
-  }
-}
+</div></div>
 </code></pre>
-</div></pre>
-
 <ul>
 <li><code>%s</code> is replaced with the page title</li>
 <li>Example: <code>Installation | My Docs</code></li>
@@ -1642,7 +1656,16 @@ code.hljs {
 </ul>
 <h3 id="page-level-titles" tabindex="-1">Page-Level Titles</h3>
 <p>Override the title for individual pages using frontmatter:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-mdx"><div class="code-block-wrapper"><div class="code-block-container" data-code="---
+title: Custom Page Title
+description: A description for SEO and social sharing
+seoTitle: Custom Page Title | Keyword-Rich Suffix
+---
+
+# Page Heading
+
+Content...
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1681,24 +1704,14 @@ seoTitle: Custom Page Title | Keyword-Rich Suffix
 
 Content...
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>---
-title: Custom Page Title
-description: A description for SEO and social sharing
-seoTitle: Custom Page Title | Keyword-Rich Suffix
----
-
-# Page Heading
-
-Content...
+</div></div>
 </code></pre>
-</div></pre>
-
 <ul>
 <li><code>title</code> — used for the <code>&lt;title&gt;</code> tag, <code>og:title</code>, and <code>twitter:title</code></li>
 <li><code>seoTitle</code> — optional; wins over <code>title</code> for SEO output when present</li>
 <li>Without either, the first <code>#</code> heading (then the humanized filename) is used</li>
 </ul>
-<h3 id="meta-descriptions" tabindex="-1">Meta Descriptions</h3>
+<h2 id="meta-descriptions" tabindex="-1">Meta Descriptions</h2>
 <p>Every page gets a <code>&lt;meta name=&quot;description&quot;&gt;</code> resolved in this order:</p>
 <ol>
 <li><code>description</code> in frontmatter</li>
@@ -1707,7 +1720,12 @@ Content...
 </ol>
 <h2 id="open-graph" tabindex="-1">Open Graph</h2>
 <p>Open Graph tags ensure your pages look great when shared on Facebook, LinkedIn, and other platforms.</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+  &quot;seo&quot;: {
+    &quot;defaultImage&quot;: &quot;./assets/og-image.png&quot;
+  }
+}
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1742,14 +1760,8 @@ Content...
   <span class="hljs-punctuation">}</span>
 <span class="hljs-punctuation">}</span>
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>{
-  &quot;seo&quot;: {
-    &quot;defaultImage&quot;: &quot;./assets/og-image.png&quot;
-  }
-}
+</div></div>
 </code></pre>
-</div></pre>
-
 <p>Generated tags:</p>
 <ul>
 <li><code>og:title</code> — Page title</li>
@@ -1757,12 +1769,21 @@ Content...
 <li><code>og:type</code> — <code>article</code> for document pages, <code>website</code> for the homepage and directory/auto-index pages</li>
 <li><code>og:url</code> — Absolute canonical URL (only when <code>site.baseUrl</code> is set)</li>
 <li><code>og:site_name</code> — Site title</li>
+<li><code>og:locale</code> — Derived from <code>site.language</code> (<code>pt-BR</code> → <code>pt_BR</code>)</li>
 <li><code>og:image</code> — Featured image, resolved to an absolute URL against <code>site.baseUrl</code> + <code>generate.basePath</code> when possible</li>
+<li><code>og:image:width</code> / <code>og:image:height</code> — <code>1200</code>×<code>630</code>, emitted for generated OG images</li>
 </ul>
 <h2 id="og-image-generation" tabindex="-1">OG Image Generation</h2>
 <p>mdsvr can automatically generate beautiful OG images for every page. This feature is <strong>enabled by default</strong>.</p>
-<h3 id="enablingdisabling" tabindex="-1">Enabling/Disabling</h3>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<h2 id="enablingdisabling" tabindex="-1">Enabling/Disabling</h2>
+<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+  &quot;seo&quot;: {
+    &quot;og&quot;: {
+      &quot;enabled&quot;: true
+    }
+  }
+}
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1799,19 +1820,27 @@ Content...
   <span class="hljs-punctuation">}</span>
 <span class="hljs-punctuation">}</span>
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>{
+</div></div>
+</code></pre>
+<p>Set <code>enabled: false</code> to disable automatic OG image generation.</p>
+<h2 id="customization" tabindex="-1">Customization</h2>
+<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
   &quot;seo&quot;: {
     &quot;og&quot;: {
-      &quot;enabled&quot;: true
+      &quot;enabled&quot;: true,
+      &quot;template&quot;: &quot;default&quot;,
+      &quot;imageFormat&quot;: &quot;jpg&quot;,
+      &quot;generateOnServe&quot;: false,
+      &quot;fontFamily&quot;: &quot;Inter&quot;,
+      &quot;colors&quot;: {
+        &quot;background&quot;: &quot;#0a0a0f&quot;,
+        &quot;text&quot;: &quot;#ffffff&quot;,
+        &quot;accent&quot;: &quot;#0969da&quot;
+      }
     }
   }
 }
-</code></pre>
-</div></pre>
-
-<p>Set <code>enabled: false</code> to disable automatic OG image generation.</p>
-<h3 id="customization" tabindex="-1">Customization</h3>
-<pre class="code-block-wrapper"><div class="code-block-container">
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1857,25 +1886,8 @@ Content...
   <span class="hljs-punctuation">}</span>
 <span class="hljs-punctuation">}</span>
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>{
-  &quot;seo&quot;: {
-    &quot;og&quot;: {
-      &quot;enabled&quot;: true,
-      &quot;template&quot;: &quot;default&quot;,
-      &quot;imageFormat&quot;: &quot;jpg&quot;,
-      &quot;generateOnServe&quot;: false,
-      &quot;fontFamily&quot;: &quot;Inter&quot;,
-      &quot;colors&quot;: {
-        &quot;background&quot;: &quot;#0a0a0f&quot;,
-        &quot;text&quot;: &quot;#ffffff&quot;,
-        &quot;accent&quot;: &quot;#0969da&quot;
-      }
-    }
-  }
-}
+</div></div>
 </code></pre>
-</div></pre>
-
 <p><strong>Options:</strong></p>
 <ul>
 <li><code>enabled</code>: Enable/disable OG image generation (default: <code>true</code>)</li>
@@ -1887,13 +1899,13 @@ Content...
 <li><code>colors.text</code>: Text color (default: <code>#ffffff</code>)</li>
 <li><code>colors.accent</code>: Accent color for highlights (default: <code>#0969da</code>)</li>
 </ul>
-<h3 id="output-location" tabindex="-1">Output Location</h3>
+<h2 id="output-location" tabindex="-1">Output Location</h2>
 <p>OG images are generated at:</p>
 <ul>
 <li>Static export: <code>_html/public/assets/og/{path}/index.jpg</code></li>
 <li>Live server: <code>public/assets/og/{path}/index.jpg</code></li>
 </ul>
-<h3 id="caching" tabindex="-1">Caching</h3>
+<h2 id="caching" tabindex="-1">Caching</h2>
 <p>OG images are cached and only regenerated when:</p>
 <ul>
 <li>The source markdown file changes</li>
@@ -1901,10 +1913,11 @@ Content...
 <li>The export state is deleted</li>
 <li>Using <code>--force-og</code> flag during export</li>
 </ul>
-<p>See <a href="../02-settings/README#export-caching">Export Caching</a> for details.</p>
-<h3 id="force-regeneration" tabindex="-1">Force Regeneration</h3>
+<p>See <a href="/02-settings/#export-caching">Export Caching</a> for details.</p>
+<h2 id="force-regeneration" tabindex="-1">Force Regeneration</h2>
 <p>To force regenerate all OG images during export:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="npx mdsvr ./docs --export --force-og
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1935,18 +1948,21 @@ Content...
   </div>
   <pre><code class="hljs language-bash">npx mdsvr ./docs --<span class="hljs-built_in">export</span> --force-og
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>npx mdsvr ./docs --export --force-og
+</div></div>
 </code></pre>
-</div></pre>
-
 <p>This bypasses the cache and regenerates all OG images, useful when:</p>
 <ul>
 <li>OG image template changes</li>
 <li>Font files are updated</li>
 <li>You want to refresh all social media preview images</li>
 </ul>
-<h3 id="custom-images-per-page" tabindex="-1">Custom Images Per Page</h3>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<h2 id="custom-images-per-page" tabindex="-1">Custom Images Per Page</h2>
+<pre><code class="language-mdx"><div class="code-block-wrapper"><div class="code-block-container" data-code="---
+title: My Article
+description: Article description
+image: ./assets/article-image.png
+---
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1981,17 +1997,17 @@ description: Article description
 image: ./assets/article-image.png
 ---
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>---
-title: My Article
-description: Article description
-image: ./assets/article-image.png
----
+</div></div>
 </code></pre>
-</div></pre>
-
 <h2 id="twitter-cards" tabindex="-1">Twitter Cards</h2>
 <p>Twitter Cards make your links stand out on Twitter/X.</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+  &quot;seo&quot;: {
+    &quot;twitterCard&quot;: &quot;summary_large_image&quot;,
+    &quot;twitterSite&quot;: &quot;@myhandle&quot;
+  }
+}
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2027,16 +2043,9 @@ image: ./assets/article-image.png
   <span class="hljs-punctuation">}</span>
 <span class="hljs-punctuation">}</span>
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>{
-  &quot;seo&quot;: {
-    &quot;twitterCard&quot;: &quot;summary_large_image&quot;,
-    &quot;twitterSite&quot;: &quot;@myhandle&quot;
-  }
-}
+</div></div>
 </code></pre>
-</div></pre>
-
-<h3 id="card-types" tabindex="-1">Card Types</h3>
+<h2 id="card-types" tabindex="-1">Card Types</h2>
 <ul>
 <li><code>summary</code> — Small square image + text</li>
 <li><code>summary_large_image</code> — Large featured image (recommended)</li>
@@ -2044,8 +2053,13 @@ image: ./assets/article-image.png
 <p>Generated tags: <code>twitter:card</code>, <code>twitter:site</code>, <code>twitter:title</code>, <code>twitter:description</code>, and <code>twitter:image</code>.</p>
 <h2 id="sitemap" tabindex="-1">Sitemap</h2>
 <p>Generate an XML sitemap for search engines.</p>
-<h3 id="enabling" tabindex="-1">Enabling</h3>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<h2 id="enabling" tabindex="-1">Enabling</h2>
+<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+  &quot;seo&quot;: {
+    &quot;generateSitemap&quot;: true
+  }
+}
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2080,17 +2094,12 @@ image: ./assets/article-image.png
   <span class="hljs-punctuation">}</span>
 <span class="hljs-punctuation">}</span>
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>{
-  &quot;seo&quot;: {
-    &quot;generateSitemap&quot;: true
-  }
-}
+</div></div>
 </code></pre>
-</div></pre>
-
-<h3 id="endpoint" tabindex="-1">Endpoint</h3>
+<h2 id="endpoint" tabindex="-1">Endpoint</h2>
 <p>Access your sitemap at:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code><div class="code-block-wrapper"><div class="code-block-container" data-code="https://yoursite.com/sitemap.xml
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2121,11 +2130,9 @@ image: ./assets/article-image.png
   </div>
   <pre><code class="hljs">https://yoursite.com/sitemap.xml
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>https://yoursite.com/sitemap.xml
+</div></div>
 </code></pre>
-</div></pre>
-
-<h3 id="sitemap-contents" tabindex="-1">Sitemap Contents</h3>
+<h2 id="sitemap-contents" tabindex="-1">Sitemap Contents</h2>
 <p>The sitemap includes:</p>
 <ul>
 <li>All rendered <code>.md</code>/<code>.mdx</code> pages <strong>and</strong> auto-generated directory index pages</li>
@@ -2134,14 +2141,27 @@ image: ./assets/article-image.png
 <li>Change frequency (<code>weekly</code>)</li>
 <li><code>noindex</code> pages are excluded</li>
 </ul>
-<h3 id="absolute-urls-required" tabindex="-1">Absolute URLs required</h3>
+<h2 id="absolute-urls-required" tabindex="-1">Absolute URLs required</h2>
 <p>A sitemap must contain absolute URLs, so behavior depends on <code>site.baseUrl</code>:</p>
 <ul>
 <li><strong>Export</strong>: <code>sitemap.xml</code> is only written when <code>site.baseUrl</code> is configured — otherwise generation is skipped with a warning.</li>
 <li><strong>Serve mode</strong>: <code>/sitemap.xml</code> uses <code>site.baseUrl</code> when set, otherwise the actual request origin (e.g. <code>http://localhost:1800</code>).</li>
 </ul>
-<h3 id="example-output" tabindex="-1">Example Output</h3>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<h2 id="example-output" tabindex="-1">Example Output</h2>
+<pre><code class="language-xml"><div class="code-block-wrapper"><div class="code-block-container" data-code="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;urlset xmlns=&quot;http://www.sitemaps.org/schemas/sitemap/0.9&quot;&gt;
+  &lt;url&gt;
+    &lt;loc&gt;https://docs.example.com/&lt;/loc&gt;
+    &lt;lastmod&gt;2025-01-15&lt;/lastmod&gt;
+    &lt;changefreq&gt;weekly&lt;/changefreq&gt;
+  &lt;/url&gt;
+  &lt;url&gt;
+    &lt;loc&gt;https://docs.example.com/configuration/&lt;/loc&gt;
+    &lt;lastmod&gt;2025-01-10&lt;/lastmod&gt;
+    &lt;changefreq&gt;weekly&lt;/changefreq&gt;
+  &lt;/url&gt;
+&lt;/urlset&gt;
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2184,26 +2204,22 @@ image: ./assets/article-image.png
   <span class="hljs-tag">&lt;/<span class="hljs-name">url</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-name">urlset</span>&gt;</span>
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;urlset xmlns=&quot;http://www.sitemaps.org/schemas/sitemap/0.9&quot;&gt;
-  &lt;url&gt;
-    &lt;loc&gt;https://docs.example.com/&lt;/loc&gt;
-    &lt;lastmod&gt;2025-01-15&lt;/lastmod&gt;
-    &lt;changefreq&gt;weekly&lt;/changefreq&gt;
-  &lt;/url&gt;
-  &lt;url&gt;
-    &lt;loc&gt;https://docs.example.com/configuration/&lt;/loc&gt;
-    &lt;lastmod&gt;2025-01-10&lt;/lastmod&gt;
-    &lt;changefreq&gt;weekly&lt;/changefreq&gt;
-  &lt;/url&gt;
-&lt;/urlset&gt;
+</div></div>
 </code></pre>
-</div></pre>
-
 <h2 id="rss-feed" tabindex="-1">RSS Feed</h2>
 <p>Generate an RSS feed for blog posts or changelogs.</p>
-<h3 id="enabling-1" tabindex="-1">Enabling</h3>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<h2 id="enabling-1" tabindex="-1">Enabling</h2>
+<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+  &quot;seo&quot;: {
+    &quot;generateRssFeed&quot;: true,
+    &quot;rss&quot;: {
+      &quot;title&quot;: &quot;My Docs Updates&quot;,
+      &quot;feedUrl&quot;: &quot;/feed.xml&quot;,
+      &quot;siteUrl&quot;: &quot;https://docs.example.com&quot;
+    }
+  }
+}
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2243,22 +2259,12 @@ image: ./assets/article-image.png
   <span class="hljs-punctuation">}</span>
 <span class="hljs-punctuation">}</span>
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>{
-  &quot;seo&quot;: {
-    &quot;generateRssFeed&quot;: true,
-    &quot;rss&quot;: {
-      &quot;title&quot;: &quot;My Docs Updates&quot;,
-      &quot;feedUrl&quot;: &quot;/feed.xml&quot;,
-      &quot;siteUrl&quot;: &quot;https://docs.example.com&quot;
-    }
-  }
-}
+</div></div>
 </code></pre>
-</div></pre>
-
-<h3 id="endpoint-1" tabindex="-1">Endpoint</h3>
+<h2 id="endpoint-1" tabindex="-1">Endpoint</h2>
 <p>Access the feed at:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code><div class="code-block-wrapper"><div class="code-block-container" data-code="https://yoursite.com/feed.xml
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2289,13 +2295,20 @@ image: ./assets/article-image.png
   </div>
   <pre><code class="hljs">https://yoursite.com/feed.xml
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>https://yoursite.com/feed.xml
+</div></div>
 </code></pre>
-</div></pre>
-
-<h3 id="including-posts" tabindex="-1">Including Posts</h3>
+<h2 id="including-posts" tabindex="-1">Including Posts</h2>
 <p>Pages are included in the RSS feed when they have a <code>date</code> in their frontmatter:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-mdx"><div class="code-block-wrapper"><div class="code-block-container" data-code="---
+title: New Feature Released
+description: We just shipped a great new feature
+date: 2025-01-15
+---
+
+# New Feature Released
+
+Content...
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2334,22 +2347,17 @@ date: 2025-01-15
 
 Content...
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>---
-title: New Feature Released
-description: We just shipped a great new feature
-date: 2025-01-15
----
-
-# New Feature Released
-
-Content...
+</div></div>
 </code></pre>
-</div></pre>
-
 <p>Posts are sorted by date (newest first) and limited to the 20 most recent entries.</p>
 <h2 id="canonical-urls" tabindex="-1">Canonical URLs</h2>
 <p>Canonical URLs help search engines understand the primary version of a page.</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+  &quot;site&quot;: {
+    &quot;baseUrl&quot;: &quot;https://docs.example.com&quot;
+  }
+}
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2384,16 +2392,11 @@ Content...
   <span class="hljs-punctuation">}</span>
 <span class="hljs-punctuation">}</span>
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>{
-  &quot;site&quot;: {
-    &quot;baseUrl&quot;: &quot;https://docs.example.com&quot;
-  }
-}
+</div></div>
 </code></pre>
-</div></pre>
-
 <p>With <code>baseUrl</code> set, every page includes an absolute canonical in the canonical trailing-slash form (<code>baseUrl</code> + <code>generate.basePath</code> + page URL):</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-html"><div class="code-block-wrapper"><div class="code-block-container" data-code="&lt;link rel=&quot;canonical&quot; href=&quot;https://docs.example.com/page-path/&quot; /&gt;
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2424,15 +2427,18 @@ Content...
   </div>
   <pre><code class="hljs language-html"><span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;canonical&quot;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;https://docs.example.com/page-path/&quot;</span> /&gt;</span>
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>&lt;link rel=&quot;canonical&quot; href=&quot;https://docs.example.com/page-path/&quot; /&gt;
+</div></div>
 </code></pre>
-</div></pre>
-
 <p>The same absolute URL is used for <code>og:url</code> and JSON-LD. When <code>baseUrl</code> is <strong>not</strong> configured, <code>canonical</code> and <code>og:url</code> are omitted entirely — relative canonicals are never emitted.</p>
 <h2 id="no-index" tabindex="-1">No-Index</h2>
 <p>Prevent specific pages from being indexed:</p>
-<h3 id="site-wide" tabindex="-1">Site-Wide</h3>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<h2 id="site-wide" tabindex="-1">Site-Wide</h2>
+<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+  &quot;seo&quot;: {
+    &quot;noIndex&quot;: true
+  }
+}
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2467,16 +2473,17 @@ Content...
   <span class="hljs-punctuation">}</span>
 <span class="hljs-punctuation">}</span>
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>{
-  &quot;seo&quot;: {
-    &quot;noIndex&quot;: true
-  }
-}
+</div></div>
 </code></pre>
-</div></pre>
+<h2 id="per-page" tabindex="-1">Per Page</h2>
+<pre><code class="language-mdx"><div class="code-block-wrapper"><div class="code-block-container" data-code="---
+noindex: true
+---
 
-<h3 id="per-page" tabindex="-1">Per Page</h3>
-<pre class="code-block-wrapper"><div class="code-block-container">
+# Draft Page
+
+This page won't be indexed by search engines.
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2513,18 +2520,11 @@ noindex: true
 
 This page won't be indexed by search engines.
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>---
-noindex: true
----
-
-# Draft Page
-
-This page won't be indexed by search engines.
+</div></div>
 </code></pre>
-</div></pre>
-
 <p>This adds:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-html"><div class="code-block-wrapper"><div class="code-block-container" data-code="&lt;meta name=&quot;robots&quot; content=&quot;noindex, nofollow&quot; /&gt;
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2555,17 +2555,63 @@ This page won't be indexed by search engines.
   </div>
   <pre><code class="hljs language-html"><span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;robots&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;noindex, nofollow&quot;</span> /&gt;</span>
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>&lt;meta name=&quot;robots&quot; content=&quot;noindex, nofollow&quot; /&gt;
+</div></div>
 </code></pre>
-</div></pre>
-
 <ul>
 <li><code>noindex</code> is the canonical spelling; the older <code>noIndex</code> alias still works (<code>noindex</code> wins if both are set)</li>
 <li><code>noindex</code> pages are also excluded from <code>sitemap.xml</code></li>
 </ul>
+<h2 id="directory-listing-pages" tabindex="-1">Directory Listing Pages</h2>
+<p>Auto-generated index pages for directories without a <code>README.md</code>/<code>index.md</code> are <code>website</code>-type pages with a humanized title and a <code>Directory listing for …</code> description. To keep them out of search results, set:</p>
+<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+  &quot;seo&quot;: {
+    &quot;noIndexDirectoryPages&quot;: true
+  }
+}
+">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;seo&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;noIndexDirectoryPages&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+</div></div>
+</code></pre>
+<p>They then emit <code>noindex, nofollow</code> and are excluded from <code>sitemap.xml</code>.</p>
 <h2 id="robotstxt" tabindex="-1">robots.txt</h2>
 <p>By default, mdsvr exports a permissive <code>robots.txt</code> for static sites:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code><div class="code-block-wrapper"><div class="code-block-container" data-code="User-agent: *
+Allow: /
+Sitemap: https://docs.example.com/sitemap.xml
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2598,14 +2644,14 @@ This page won't be indexed by search engines.
 Allow: /
 Sitemap: https://docs.example.com/sitemap.xml
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>User-agent: *
-Allow: /
-Sitemap: https://docs.example.com/sitemap.xml
+</div></div>
 </code></pre>
-</div></pre>
-
 <p>Place a non-empty <code>robots.txt</code> in your docs root to override the generated file:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code><div class="code-block-wrapper"><div class="code-block-container" data-code="docs/
+├── robots.txt
+├── README.md
+└── ...
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2639,15 +2685,15 @@ Sitemap: https://docs.example.com/sitemap.xml
 ├── README.md
 └── ...
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>docs/
-├── robots.txt
-├── README.md
-└── ...
+</div></div>
 </code></pre>
-</div></pre>
-
 <p>To keep <code>robots.txt</code> entirely under your own control, disable generation:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+  &quot;seo&quot;: {
+    &quot;generateRobotsTxt&quot;: false
+  }
+}
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2682,16 +2728,13 @@ Sitemap: https://docs.example.com/sitemap.xml
   <span class="hljs-punctuation">}</span>
 <span class="hljs-punctuation">}</span>
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>{
-  &quot;seo&quot;: {
-    &quot;generateRobotsTxt&quot;: false
-  }
-}
+</div></div>
 </code></pre>
-</div></pre>
-
 <p>Example custom <code>robots.txt</code>:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code><div class="code-block-wrapper"><div class="code-block-container" data-code="User-agent: *
+Allow: /
+Sitemap: https://docs.example.com/sitemap.xml
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2724,12 +2767,8 @@ Sitemap: https://docs.example.com/sitemap.xml
 Allow: /
 Sitemap: https://docs.example.com/sitemap.xml
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>User-agent: *
-Allow: /
-Sitemap: https://docs.example.com/sitemap.xml
+</div></div>
 </code></pre>
-</div></pre>
-
 <p>The generated <code>Sitemap:</code> line is only included when an absolute sitemap URL can be derived (<code>site.baseUrl</code>, or the request origin in serve mode) — relative <code>Sitemap:</code> URLs are invalid.</p>
 <h2 id="structured-data-json-ld" tabindex="-1">Structured Data (JSON-LD)</h2>
 <p>Every page emits one <code>&lt;script type=&quot;application/ld+json&quot;&gt;</code> block with a <a href="http://schema.org">schema.org</a> <code>@graph</code>:</p>
@@ -2739,7 +2778,12 @@ Sitemap: https://docs.example.com/sitemap.xml
 <li><strong>Nested routes</strong> → <code>BreadcrumbList</code> when breadcrumbs are enabled (built from the route path and sidebar titles)</li>
 </ul>
 <p>Disable with:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+  &quot;seo&quot;: {
+    &quot;structuredData&quot;: false
+  }
+}
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2774,17 +2818,18 @@ Sitemap: https://docs.example.com/sitemap.xml
   <span class="hljs-punctuation">}</span>
 <span class="hljs-punctuation">}</span>
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>{
-  &quot;seo&quot;: {
-    &quot;structuredData&quot;: false
-  }
-}
+</div></div>
 </code></pre>
-</div></pre>
-
-<h3 id="author-dates" tabindex="-1">Author &amp; dates</h3>
+<h2 id="author-dates" tabindex="-1">Author &amp; dates</h2>
 <p>Article metadata comes from frontmatter and site settings:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-mdx"><div class="code-block-wrapper"><div class="code-block-container" data-code="---
+title: My Article
+author: Jane Doe # string, or { name: &quot;Jane&quot;, url: &quot;https://...&quot; }
+date: 2026-10-01 # treated as datePublished
+datePublished: 2026-09-30 # wins over `date` when set
+dateModified: 2026-10-04
+---
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2821,18 +2866,15 @@ datePublished: 2026-09-30 # wins over `date` when set
 dateModified: 2026-10-04
 ---
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>---
-title: My Article
-author: Jane Doe # string, or { name: &quot;Jane&quot;, url: &quot;https://...&quot; }
-date: 2026-10-01 # treated as datePublished
-datePublished: 2026-09-30 # wins over `date` when set
-dateModified: 2026-10-04
----
+</div></div>
 </code></pre>
-</div></pre>
-
 <p>A site-wide default author can be configured and emits <code>&lt;meta name=&quot;author&quot;&gt;</code> plus JSON-LD <code>author</code> (as an <code>Organization</code>):</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+  &quot;site&quot;: {
+    &quot;author&quot;: { &quot;name&quot;: &quot;Acme Docs Team&quot;, &quot;url&quot;: &quot;https://acme.example/about&quot; }
+  }
+}
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2867,19 +2909,20 @@ dateModified: 2026-10-04
   <span class="hljs-punctuation">}</span>
 <span class="hljs-punctuation">}</span>
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>{
-  &quot;site&quot;: {
-    &quot;author&quot;: { &quot;name&quot;: &quot;Acme Docs Team&quot;, &quot;url&quot;: &quot;https://acme.example/about&quot; }
-  }
-}
+</div></div>
 </code></pre>
-</div></pre>
-
 <p>Frontmatter <code>author</code> (a <code>Person</code>) wins over <code>site.author</code>.</p>
 <h2 id="deployment" tabindex="-1">Deployment</h2>
-<h3 id="firebase-hosting" tabindex="-1">Firebase Hosting</h3>
+<h2 id="firebase-hosting" tabindex="-1">Firebase Hosting</h2>
 <p>The export works with zero special configuration — point <code>public</code> at the output directory:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+  &quot;hosting&quot;: {
+    &quot;public&quot;: &quot;dist&quot;,
+    &quot;cleanUrls&quot;: true,
+    &quot;trailingSlash&quot;: true
+  }
+}
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2916,20 +2959,20 @@ dateModified: 2026-10-04
   <span class="hljs-punctuation">}</span>
 <span class="hljs-punctuation">}</span>
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>{
-  &quot;hosting&quot;: {
-    &quot;public&quot;: &quot;dist&quot;,
-    &quot;cleanUrls&quot;: true,
-    &quot;trailingSlash&quot;: true
+</div></div>
+</code></pre>
+<p>Set <code>site.baseUrl</code> to your public origin so canonical URLs, <code>og:url</code>, <code>sitemap.xml</code>, and the <code>robots.txt</code> <code>Sitemap:</code> line are absolute.</p>
+<h2 id="github-pages" tabindex="-1">GitHub Pages</h2>
+<p>For <code>https://&lt;user&gt;.github.io/&lt;repo&gt;/</code> project sites, set both <code>baseUrl</code> and <code>basePath</code>:</p>
+<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+  &quot;site&quot;: {
+    &quot;baseUrl&quot;: &quot;https://user.github.io&quot;
+  },
+  &quot;generate&quot;: {
+    &quot;basePath&quot;: &quot;/repo&quot;
   }
 }
-</code></pre>
-</div></pre>
-
-<p>Set <code>site.baseUrl</code> to your public origin so canonical URLs, <code>og:url</code>, <code>sitemap.xml</code>, and the <code>robots.txt</code> <code>Sitemap:</code> line are absolute.</p>
-<h3 id="github-pages" tabindex="-1">GitHub Pages</h3>
-<p>For <code>https://&lt;user&gt;.github.io/&lt;repo&gt;/</code> project sites, set both <code>baseUrl</code> and <code>basePath</code>:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2967,17 +3010,8 @@ dateModified: 2026-10-04
   <span class="hljs-punctuation">}</span>
 <span class="hljs-punctuation">}</span>
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>{
-  &quot;site&quot;: {
-    &quot;baseUrl&quot;: &quot;https://user.github.io&quot;
-  },
-  &quot;generate&quot;: {
-    &quot;basePath&quot;: &quot;/repo&quot;
-  }
-}
+</div></div>
 </code></pre>
-</div></pre>
-
 <p>All generated links, canonicals, sitemap entries, and <code>og:image</code> URLs are prefixed with <code>basePath</code> automatically.</p>
 <h2 id="social-sharing-preview" tabindex="-1">Social Sharing Preview</h2>
 <p>To get the best social sharing previews:</p>
@@ -2987,13 +3021,38 @@ dateModified: 2026-10-04
 <li><strong>Write good descriptions</strong> in frontmatter</li>
 <li><strong>Keep titles concise</strong> (under 60 characters)</li>
 </ol>
-<h3 id="recommended-image-sizes" tabindex="-1">Recommended Image Sizes</h3>
+<h2 id="recommended-image-sizes" tabindex="-1">Recommended Image Sizes</h2>
 <ul>
 <li><strong>Open Graph</strong>: 1200×630 pixels</li>
 <li><strong>Twitter Cards</strong>: 1200×600 pixels (large image)</li>
 </ul>
 <h2 id="complete-seo-configuration" tabindex="-1">Complete SEO Configuration</h2>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+  &quot;site&quot;: {
+    &quot;title&quot;: &quot;My Documentation&quot;,
+    &quot;description&quot;: &quot;Comprehensive documentation for My Project&quot;,
+    &quot;baseUrl&quot;: &quot;https://docs.example.com&quot;,
+    &quot;language&quot;: &quot;en&quot;,
+    &quot;author&quot;: { &quot;name&quot;: &quot;Acme Docs Team&quot;, &quot;url&quot;: &quot;https://acme.example&quot; }
+  },
+  &quot;seo&quot;: {
+    &quot;titleTemplate&quot;: &quot;%s | My Docs&quot;,
+    &quot;defaultImage&quot;: &quot;./assets/og-default.png&quot;,
+    &quot;twitterCard&quot;: &quot;summary_large_image&quot;,
+    &quot;twitterSite&quot;: &quot;@myhandle&quot;,
+    &quot;noIndex&quot;: false,
+    &quot;generateSitemap&quot;: true,
+    &quot;generateRobotsTxt&quot;: true,
+    &quot;generateRssFeed&quot;: true,
+    &quot;structuredData&quot;: true,
+    &quot;rss&quot;: {
+      &quot;title&quot;: &quot;My Docs Blog&quot;,
+      &quot;feedUrl&quot;: &quot;/feed.xml&quot;,
+      &quot;siteUrl&quot;: &quot;https://docs.example.com&quot;
+    }
+  }
+}
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -3048,34 +3107,8 @@ dateModified: 2026-10-04
   <span class="hljs-punctuation">}</span>
 <span class="hljs-punctuation">}</span>
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>{
-  &quot;site&quot;: {
-    &quot;title&quot;: &quot;My Documentation&quot;,
-    &quot;description&quot;: &quot;Comprehensive documentation for My Project&quot;,
-    &quot;baseUrl&quot;: &quot;https://docs.example.com&quot;,
-    &quot;language&quot;: &quot;en&quot;,
-    &quot;author&quot;: { &quot;name&quot;: &quot;Acme Docs Team&quot;, &quot;url&quot;: &quot;https://acme.example&quot; }
-  },
-  &quot;seo&quot;: {
-    &quot;titleTemplate&quot;: &quot;%s | My Docs&quot;,
-    &quot;defaultImage&quot;: &quot;./assets/og-default.png&quot;,
-    &quot;twitterCard&quot;: &quot;summary_large_image&quot;,
-    &quot;twitterSite&quot;: &quot;@myhandle&quot;,
-    &quot;noIndex&quot;: false,
-    &quot;generateSitemap&quot;: true,
-    &quot;generateRobotsTxt&quot;: true,
-    &quot;generateRssFeed&quot;: true,
-    &quot;structuredData&quot;: true,
-    &quot;rss&quot;: {
-      &quot;title&quot;: &quot;My Docs Blog&quot;,
-      &quot;feedUrl&quot;: &quot;/feed.xml&quot;,
-      &quot;siteUrl&quot;: &quot;https://docs.example.com&quot;
-    }
-  }
-}
+</div></div>
 </code></pre>
-</div></pre>
-
 <h2 id="testing" tabindex="-1">Testing</h2>
 <p>Test your SEO implementation with these tools:</p>
 <ul>
@@ -3086,8 +3119,8 @@ dateModified: 2026-10-04
 
       </article>
       <nav class="prev-next-nav">
-        <a href="/docs/03-features/search" class="prev-next-card prev-card"><span class="prev-next-label">← Prev</span><span class="prev-next-title">Search</span></a>
-        <a href="/docs/03-features/theming" class="prev-next-card next-card"><span class="prev-next-label">Next →</span><span class="prev-next-title">Theming</span></a>
+        <a href="/docs/03-features/search/" class="prev-next-card prev-card"><span class="prev-next-label">← Prev</span><span class="prev-next-title">Search</span></a>
+        <a href="/docs/03-features/theming/" class="prev-next-card next-card"><span class="prev-next-label">Next →</span><span class="prev-next-title">Theming</span></a>
       </nav>
       <footer class="footer">
     <div class="footer-content">
@@ -3105,56 +3138,41 @@ dateModified: 2026-10-04
 <ul class="toc-list toc-level-3">
 <li class="toc-item"><a href="#title-template">Title Template</a></li>
 <li class="toc-item"><a href="#page-level-titles">Page-Level Titles</a></li>
-<li class="toc-item"><a href="#meta-descriptions">Meta Descriptions</a></li>
 </ul>
+<li class="toc-item"><a href="#meta-descriptions">Meta Descriptions</a></li>
 <li class="toc-item"><a href="#open-graph">Open Graph</a></li>
 <li class="toc-item"><a href="#og-image-generation">OG Image Generation</a></li>
-<ul class="toc-list toc-level-3">
 <li class="toc-item"><a href="#enablingdisabling">Enabling/Disabling</a></li>
 <li class="toc-item"><a href="#customization">Customization</a></li>
 <li class="toc-item"><a href="#output-location">Output Location</a></li>
 <li class="toc-item"><a href="#caching">Caching</a></li>
 <li class="toc-item"><a href="#force-regeneration">Force Regeneration</a></li>
 <li class="toc-item"><a href="#custom-images-per-page">Custom Images Per Page</a></li>
-</ul>
 <li class="toc-item"><a href="#twitter-cards">Twitter Cards</a></li>
-<ul class="toc-list toc-level-3">
 <li class="toc-item"><a href="#card-types">Card Types</a></li>
-</ul>
 <li class="toc-item"><a href="#sitemap">Sitemap</a></li>
-<ul class="toc-list toc-level-3">
 <li class="toc-item"><a href="#enabling">Enabling</a></li>
 <li class="toc-item"><a href="#endpoint">Endpoint</a></li>
 <li class="toc-item"><a href="#sitemap-contents">Sitemap Contents</a></li>
 <li class="toc-item"><a href="#absolute-urls-required">Absolute URLs required</a></li>
 <li class="toc-item"><a href="#example-output">Example Output</a></li>
-</ul>
 <li class="toc-item"><a href="#rss-feed">RSS Feed</a></li>
-<ul class="toc-list toc-level-3">
 <li class="toc-item"><a href="#enabling-1">Enabling</a></li>
 <li class="toc-item"><a href="#endpoint-1">Endpoint</a></li>
 <li class="toc-item"><a href="#including-posts">Including Posts</a></li>
-</ul>
 <li class="toc-item"><a href="#canonical-urls">Canonical URLs</a></li>
 <li class="toc-item"><a href="#no-index">No-Index</a></li>
-<ul class="toc-list toc-level-3">
 <li class="toc-item"><a href="#site-wide">Site-Wide</a></li>
 <li class="toc-item"><a href="#per-page">Per Page</a></li>
-</ul>
+<li class="toc-item"><a href="#directory-listing-pages">Directory Listing Pages</a></li>
 <li class="toc-item"><a href="#robotstxt">robots.txt</a></li>
 <li class="toc-item"><a href="#structured-data-json-ld">Structured Data (JSON-LD)</a></li>
-<ul class="toc-list toc-level-3">
 <li class="toc-item"><a href="#author-dates">Author &amp;amp; dates</a></li>
-</ul>
 <li class="toc-item"><a href="#deployment">Deployment</a></li>
-<ul class="toc-list toc-level-3">
 <li class="toc-item"><a href="#firebase-hosting">Firebase Hosting</a></li>
 <li class="toc-item"><a href="#github-pages">GitHub Pages</a></li>
-</ul>
 <li class="toc-item"><a href="#social-sharing-preview">Social Sharing Preview</a></li>
-<ul class="toc-list toc-level-3">
 <li class="toc-item"><a href="#recommended-image-sizes">Recommended Image Sizes</a></li>
-</ul>
 <li class="toc-item"><a href="#complete-seo-configuration">Complete SEO Configuration</a></li>
 <li class="toc-item"><a href="#testing">Testing</a></li>
 </ul>
@@ -3231,8 +3249,15 @@ dateModified: 2026-10-04
       searchInput.addEventListener('input', debounce(performSearch, 150));
     }
 
-    // Load search index
-    loadSearchIndex();
+    // Load search index, then honor ?q=<query> (SearchAction entry point)
+    loadSearchIndex().then(function() {
+      const initialQuery = new URLSearchParams(window.location.search).get('q');
+      if (initialQuery && searchInput) {
+        searchInput.value = initialQuery;
+        openSearch();
+        performSearch();
+      }
+    });
   }
 
   async function loadSearchIndex() {
@@ -3756,8 +3781,7 @@ function initCodeBlockToolbars() {
     var fullscreenBtn = container.querySelector('.code-block-btn-fullscreen');
 
     function getRawCode() {
-      var rawEl = container.querySelector('.code-block-raw code');
-      return rawEl ? rawEl.textContent : '';
+      return container.getAttribute('data-code') || '';
     }
 
     function fallbackCopy(text) {
@@ -3865,6 +3889,7 @@ function initTableToolbars() {
   }
 
   document.querySelectorAll('.markdown-body table').forEach(function(table) {
+    if (table.closest('.dir-listing')) return;
     var wrapper = table.parentElement;
     if (!wrapper || !wrapper.classList.contains('table-wrapper')) {
       wrapper = document.createElement('div');

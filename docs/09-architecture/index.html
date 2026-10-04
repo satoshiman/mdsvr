@@ -22,14 +22,18 @@
     <meta property="og:description" content="mdsvr is a zero-configuration documentation server built with Node.js and TypeScript. It transforms a directory of Markdown/MDX files into a full-featured...">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="MDSVR | Markdown Documentation Server">
+    <meta property="og:locale" content="en">
     <meta property="og:url" content="https://mdsvr.js.org/docs/09-architecture/">
     <meta property="og:image" content="https://mdsvr.js.org/docs/public/assets/og/09-architecture/index.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Architecture | MDSVR | Markdown Documentation Server">
     <meta name="twitter:description" content="mdsvr is a zero-configuration documentation server built with Node.js and TypeScript. It transforms a directory of Markdown/MDX files into a full-featured...">
     <meta name="twitter:image" content="https://mdsvr.js.org/docs/public/assets/og/09-architecture/index.jpg">
     <link rel="sitemap" type="application/xml" href="/docs/sitemap.xml">
   <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"Architecture","description":"mdsvr is a zero-configuration documentation server built with Node.js and TypeScript. It transforms a directory of Markdown/MDX files into a full-featured...","url":"https://mdsvr.js.org/docs/09-architecture/","image":"https://mdsvr.js.org/docs/public/assets/og/09-architecture/index.jpg"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://mdsvr.js.org/docs/"},{"@type":"ListItem","position":2,"name":"Architecture","item":"https://mdsvr.js.org/docs/09-architecture/"}]}]}</script>
+  
   
   
   <style>
@@ -449,10 +453,8 @@ body {
 }
 
 /* Code block wrapper */
-pre.code-block-wrapper {
-  all: unset;
+.code-block-wrapper {
   display: block;
-  padding: 0;
   margin-bottom: 16px;
 }
 .code-block-container {
@@ -472,11 +474,6 @@ pre.code-block-wrapper {
   background: transparent;
   padding: 0;
   border-radius: 0;
-}
-.code-block-raw {
-  display: none;
-  margin: 0;
-  padding: 0;
 }
 .code-block-toolbar {
   position: absolute;
@@ -635,6 +632,27 @@ pre.code-block-wrapper {
 }
 .markdown-body th { background: var(--bg-secondary); font-weight: 600; white-space: nowrap; }
 .markdown-body tr:nth-child(2n) { background: var(--bg-secondary); }
+
+/* Directory listing (auto-index pages) */
+.dir-listing table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 16px;
+}
+.dir-listing th, .dir-listing td {
+  padding: 8px 12px;
+  text-align: left;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+  white-space: normal;
+}
+.dir-listing th { font-weight: 600; color: var(--text-muted); }
+.dir-listing tr { background: transparent; }
+.dir-listing td a { color: var(--accent); text-decoration: none; }
+.dir-listing td a:hover { text-decoration: underline; }
+.dir-listing .size { color: var(--text-muted); text-align: right; width: 100px; }
+.dir-listing .empty { color: var(--text-muted); font-style: italic; }
 .markdown-body img { max-width: 100%; height: auto; }
 .markdown-body hr {
   height: 0.25em;
@@ -1044,16 +1062,11 @@ pre.code-block-wrapper {
   padding: 16px;
 }
 
-/* Mermaid wrapper - reset pre defaults */
+/* Mermaid wrapper */
 .mermaid-wrapper {
-  all: unset;
   display: block;
+  margin-bottom: 16px;
 }
-
-pre.mermaid-wrapper{
-  padding: 0;
-}
-
 
 /* Mermaid container */
 .mermaid-container {
@@ -1465,8 +1478,10 @@ code.hljs {
 :root[data-theme="dark"] .hljs { background: var(--code-bg); }
 
   </style>
+  
 </head>
 <body>
+  
   <header class="site-header">
     <div class="header-left">
       <button class="sidebar-toggle sidebar-toggle-mobile" onclick="document.getElementById('sidebar').classList.toggle('open')" aria-label="Toggle menu">☰</button><button class="sidebar-toggle sidebar-toggle-desktop" onclick="toggleDesktopSidebar()" aria-label="Toggle sidebar">☰</button>
@@ -1512,28 +1527,28 @@ code.hljs {
     <div class="nav-children" data-expanded="false">
     <ul class="sidebar-nav" data-level="1">
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/markdown" class="nav-link">Markdown Formats</a>
+        <a href="/docs/03-features/markdown/" class="nav-link">Markdown Formats</a>
       </li>
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/math" class="nav-link">Mathematical Expressions</a>
+        <a href="/docs/03-features/math/" class="nav-link">Mathematical Expressions</a>
       </li>
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/mdx" class="nav-link">MDX Components</a>
+        <a href="/docs/03-features/mdx/" class="nav-link">MDX Components</a>
       </li>
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/mermaid" class="nav-link">Mermaid Diagrams in mdsvr</a>
+        <a href="/docs/03-features/mermaid/" class="nav-link">Mermaid Diagrams in mdsvr</a>
       </li>
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/navigation" class="nav-link">Navigation</a>
+        <a href="/docs/03-features/navigation/" class="nav-link">Navigation</a>
       </li>
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/search" class="nav-link">Search</a>
+        <a href="/docs/03-features/search/" class="nav-link">Search</a>
       </li>
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/seo" class="nav-link">SEO</a>
+        <a href="/docs/03-features/seo/" class="nav-link">SEO</a>
       </li>
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/theming" class="nav-link">Theming</a>
+        <a href="/docs/03-features/theming/" class="nav-link">Theming</a>
       </li>
     </ul>
     </div>
@@ -1556,22 +1571,22 @@ code.hljs {
         <div class="nav-children" data-expanded="false">
         <ul class="sidebar-nav" data-level="2">
           <li class="nav-item" data-type="file">
-            <a href="/docs/09-architecture/adr/001-file-based-content-storage" class="nav-link">ADR-001: File-based content storage instead of database</a>
+            <a href="/docs/09-architecture/adr/001-file-based-content-storage/" class="nav-link">ADR-001: File-based content storage instead of database</a>
           </li>
           <li class="nav-item" data-type="file">
-            <a href="/docs/09-architecture/adr/002-server-side-mdx-rendering" class="nav-link">ADR-002: Server-side MDX rendering instead of client-side</a>
+            <a href="/docs/09-architecture/adr/002-server-side-mdx-rendering/" class="nav-link">ADR-002: Server-side MDX rendering instead of client-side</a>
           </li>
           <li class="nav-item" data-type="file">
-            <a href="/docs/09-architecture/adr/003-zero-configuration-with-defaults" class="nav-link">ADR-003: Zero configuration with sensible defaults</a>
+            <a href="/docs/09-architecture/adr/003-zero-configuration-with-defaults/" class="nav-link">ADR-003: Zero configuration with sensible defaults</a>
           </li>
           <li class="nav-item" data-type="file">
-            <a href="/docs/09-architecture/adr/004-client-side-search-with-pre-built-index" class="nav-link">ADR-004: Client-side search with pre-built index instead of external service</a>
+            <a href="/docs/09-architecture/adr/004-client-side-search-with-pre-built-index/" class="nav-link">ADR-004: Client-side search with pre-built index instead of external service</a>
           </li>
           <li class="nav-item" data-type="file">
-            <a href="/docs/09-architecture/adr/005-incremental-static-export" class="nav-link">ADR-005: Incremental static export with hash-based caching</a>
+            <a href="/docs/09-architecture/adr/005-incremental-static-export/" class="nav-link">ADR-005: Incremental static export with hash-based caching</a>
           </li>
           <li class="nav-item" data-type="file">
-            <a href="/docs/09-architecture/adr/006-markdown-validation-and-autofix" class="nav-link">ADR-006: Markdown validation and auto-fixing</a>
+            <a href="/docs/09-architecture/adr/006-markdown-validation-and-autofix/" class="nav-link">ADR-006: Markdown validation and auto-fixing</a>
           </li>
         </ul>
         </div>
@@ -1588,7 +1603,7 @@ code.hljs {
       <article class="markdown-body">
         <h1 id="architecture" tabindex="-1">Architecture</h1>
 <blockquote>
-<p><strong>Note</strong>: This documentation is intended for contributors to mdsvr, not for end users. If you’re looking for user documentation, see the <a href="../README">main docs</a>.</p>
+<p><strong>Note</strong>: This documentation is intended for contributors to mdsvr, not for end users. If you’re looking for user documentation, see the <a href="/">main docs</a>.</p>
 </blockquote>
 <h2 id="overview" tabindex="-1">Overview</h2>
 <p>mdsvr is a zero-configuration documentation server built with Node.js and TypeScript. It transforms a directory of Markdown/MDX files into a full-featured documentation website with no build step required.</p>
@@ -1601,7 +1616,7 @@ code.hljs {
 <li><strong>Security-first</strong> - Path traversal protection, blocked extensions, read-only</li>
 </ol>
 <h2 id="system-architecture" tabindex="-1">System Architecture</h2>
-<pre class="mermaid-wrapper"><div class="mermaid-container">
+<pre><code class="language-mermaid"><div class="mermaid-wrapper"><div class="mermaid-container">
   <div class="mermaid-toolbar">
     <button class="mermaid-btn mermaid-btn-chart" title="Chart view"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z"/><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/></svg></button>
     <button class="mermaid-btn mermaid-btn-code" title="Show code"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg></button>
@@ -1637,8 +1652,8 @@ code.hljs {
     E --&gt; H
     F --&gt; H
     G --&gt; H</code></pre>
-</div></pre>
-
+</div></div>
+</code></pre>
 <h2 id="module-structure" tabindex="-1">Module Structure</h2>
 <h3 id="core-modules" tabindex="-1">Core Modules</h3>
 <ul>
@@ -1682,7 +1697,7 @@ code.hljs {
 </ul>
 <h2 id="data-flow" tabindex="-1">Data Flow</h2>
 <h3 id="request-flow-dynamic-server" tabindex="-1">Request Flow (Dynamic Server)</h3>
-<pre class="mermaid-wrapper"><div class="mermaid-container">
+<pre><code class="language-mermaid"><div class="mermaid-wrapper"><div class="mermaid-container">
   <div class="mermaid-toolbar">
     <button class="mermaid-btn mermaid-btn-chart" title="Chart view"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z"/><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/></svg></button>
     <button class="mermaid-btn mermaid-btn-code" title="Show code"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg></button>
@@ -1718,10 +1733,10 @@ code.hljs {
     F --&gt; H
     G --&gt; H
     H --&gt; I[HTML Response]</code></pre>
-</div></pre>
-
+</div></div>
+</code></pre>
 <h3 id="static-export-flow" tabindex="-1">Static Export Flow</h3>
-<pre class="mermaid-wrapper"><div class="mermaid-container">
+<pre><code class="language-mermaid"><div class="mermaid-wrapper"><div class="mermaid-container">
   <div class="mermaid-toolbar">
     <button class="mermaid-btn mermaid-btn-chart" title="Chart view"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z"/><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/></svg></button>
     <button class="mermaid-btn mermaid-btn-code" title="Show code"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg></button>
@@ -1751,8 +1766,8 @@ code.hljs {
     F --&gt; G[Generate search-index.json]
     G --&gt; H[Generate sitemap.xml & feed.xml]
     H --&gt; I[Save export state&lt;br/&gt;For incremental builds]</code></pre>
-</div></pre>
-
+</div></div>
+</code></pre>
 <h2 id="key-design-decisions" tabindex="-1">Key Design Decisions</h2>
 <h3 id="file-based-content-storage" tabindex="-1">File-Based Content Storage</h3>
 <p>Content is stored as plain Markdown/MDX files in the filesystem. No database is used, making the system:</p>
@@ -1798,7 +1813,15 @@ code.hljs {
 <p>Request paths first pass a component-aware lexical containment check. The root
 and candidate are then resolved with <code>realpath</code>, and the canonical target must
 pass the same check before it is read or served:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-typescript"><div class="code-block-wrapper"><div class="code-block-container" data-code="const relativePath = path.relative(rootPath, candidatePath);
+if (
+  relativePath === &quot;..&quot; ||
+  relativePath.startsWith(`..${path.sep}`) ||
+  path.isAbsolute(relativePath)
+) {
+  return 403 Forbidden;
+}
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1836,17 +1859,8 @@ pass the same check before it is read or served:</p>
   <span class="hljs-keyword">return</span> <span class="hljs-number">403</span> <span class="hljs-title class_">Forbidden</span>;
 }
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>const relativePath = path.relative(rootPath, candidatePath);
-if (
-  relativePath === &quot;..&quot; ||
-  relativePath.startsWith(`..${path.sep}`) ||
-  path.isAbsolute(relativePath)
-) {
-  return 403 Forbidden;
-}
+</div></div>
 </code></pre>
-</div></pre>
-
 <h3 id="hidden-files" tabindex="-1">Hidden Files</h3>
 <p>Files and folders starting with <code>_</code> or <code>.</code>, or matching patterns in <code>settings.files.extensions.hidden</code>, are not served.</p>
 <h3 id="blocked-extensions" tabindex="-1">Blocked Extensions</h3>
@@ -1994,8 +2008,15 @@ if (
       searchInput.addEventListener('input', debounce(performSearch, 150));
     }
 
-    // Load search index
-    loadSearchIndex();
+    // Load search index, then honor ?q=<query> (SearchAction entry point)
+    loadSearchIndex().then(function() {
+      const initialQuery = new URLSearchParams(window.location.search).get('q');
+      if (initialQuery && searchInput) {
+        searchInput.value = initialQuery;
+        openSearch();
+        performSearch();
+      }
+    });
   }
 
   async function loadSearchIndex() {
@@ -2519,8 +2540,7 @@ function initCodeBlockToolbars() {
     var fullscreenBtn = container.querySelector('.code-block-btn-fullscreen');
 
     function getRawCode() {
-      var rawEl = container.querySelector('.code-block-raw code');
-      return rawEl ? rawEl.textContent : '';
+      return container.getAttribute('data-code') || '';
     }
 
     function fallbackCopy(text) {
@@ -2628,6 +2648,7 @@ function initTableToolbars() {
   }
 
   document.querySelectorAll('.markdown-body table').forEach(function(table) {
+    if (table.closest('.dir-listing')) return;
     var wrapper = table.parentElement;
     if (!wrapper || !wrapper.classList.contains('table-wrapper')) {
       wrapper = document.createElement('div');

@@ -22,14 +22,18 @@
     <meta property="og:description" content="Detailed guides for configuring, writing, and deploying your mdsvr documentation">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="MDSVR | Markdown Documentation Server">
+    <meta property="og:locale" content="en">
     <meta property="og:url" content="https://mdsvr.js.org/docs/02-settings/">
     <meta property="og:image" content="https://mdsvr.js.org/docs/public/assets/og/02-settings/index.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Guides | MDSVR | Markdown Documentation Server">
     <meta name="twitter:description" content="Detailed guides for configuring, writing, and deploying your mdsvr documentation">
     <meta name="twitter:image" content="https://mdsvr.js.org/docs/public/assets/og/02-settings/index.jpg">
     <link rel="sitemap" type="application/xml" href="/docs/sitemap.xml">
   <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"Guides","description":"Detailed guides for configuring, writing, and deploying your mdsvr documentation","url":"https://mdsvr.js.org/docs/02-settings/","image":"https://mdsvr.js.org/docs/public/assets/og/02-settings/index.jpg"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://mdsvr.js.org/docs/"},{"@type":"ListItem","position":2,"name":"Guides","item":"https://mdsvr.js.org/docs/02-settings/"}]}]}</script>
+  
   
   
   <style>
@@ -449,10 +453,8 @@ body {
 }
 
 /* Code block wrapper */
-pre.code-block-wrapper {
-  all: unset;
+.code-block-wrapper {
   display: block;
-  padding: 0;
   margin-bottom: 16px;
 }
 .code-block-container {
@@ -472,11 +474,6 @@ pre.code-block-wrapper {
   background: transparent;
   padding: 0;
   border-radius: 0;
-}
-.code-block-raw {
-  display: none;
-  margin: 0;
-  padding: 0;
 }
 .code-block-toolbar {
   position: absolute;
@@ -635,6 +632,27 @@ pre.code-block-wrapper {
 }
 .markdown-body th { background: var(--bg-secondary); font-weight: 600; white-space: nowrap; }
 .markdown-body tr:nth-child(2n) { background: var(--bg-secondary); }
+
+/* Directory listing (auto-index pages) */
+.dir-listing table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 16px;
+}
+.dir-listing th, .dir-listing td {
+  padding: 8px 12px;
+  text-align: left;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+  white-space: normal;
+}
+.dir-listing th { font-weight: 600; color: var(--text-muted); }
+.dir-listing tr { background: transparent; }
+.dir-listing td a { color: var(--accent); text-decoration: none; }
+.dir-listing td a:hover { text-decoration: underline; }
+.dir-listing .size { color: var(--text-muted); text-align: right; width: 100px; }
+.dir-listing .empty { color: var(--text-muted); font-style: italic; }
 .markdown-body img { max-width: 100%; height: auto; }
 .markdown-body hr {
   height: 0.25em;
@@ -1044,16 +1062,11 @@ pre.code-block-wrapper {
   padding: 16px;
 }
 
-/* Mermaid wrapper - reset pre defaults */
+/* Mermaid wrapper */
 .mermaid-wrapper {
-  all: unset;
   display: block;
+  margin-bottom: 16px;
 }
-
-pre.mermaid-wrapper{
-  padding: 0;
-}
-
 
 /* Mermaid container */
 .mermaid-container {
@@ -1465,8 +1478,10 @@ code.hljs {
 :root[data-theme="dark"] .hljs { background: var(--code-bg); }
 
   </style>
+  
 </head>
 <body>
+  
   <header class="site-header">
     <div class="header-left">
       <button class="sidebar-toggle sidebar-toggle-mobile" onclick="document.getElementById('sidebar').classList.toggle('open')" aria-label="Toggle menu">☰</button><button class="sidebar-toggle sidebar-toggle-desktop" onclick="toggleDesktopSidebar()" aria-label="Toggle sidebar">☰</button>
@@ -1512,28 +1527,28 @@ code.hljs {
     <div class="nav-children" data-expanded="false">
     <ul class="sidebar-nav" data-level="1">
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/markdown" class="nav-link">Markdown Formats</a>
+        <a href="/docs/03-features/markdown/" class="nav-link">Markdown Formats</a>
       </li>
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/math" class="nav-link">Mathematical Expressions</a>
+        <a href="/docs/03-features/math/" class="nav-link">Mathematical Expressions</a>
       </li>
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/mdx" class="nav-link">MDX Components</a>
+        <a href="/docs/03-features/mdx/" class="nav-link">MDX Components</a>
       </li>
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/mermaid" class="nav-link">Mermaid Diagrams in mdsvr</a>
+        <a href="/docs/03-features/mermaid/" class="nav-link">Mermaid Diagrams in mdsvr</a>
       </li>
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/navigation" class="nav-link">Navigation</a>
+        <a href="/docs/03-features/navigation/" class="nav-link">Navigation</a>
       </li>
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/search" class="nav-link">Search</a>
+        <a href="/docs/03-features/search/" class="nav-link">Search</a>
       </li>
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/seo" class="nav-link">SEO</a>
+        <a href="/docs/03-features/seo/" class="nav-link">SEO</a>
       </li>
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/theming" class="nav-link">Theming</a>
+        <a href="/docs/03-features/theming/" class="nav-link">Theming</a>
       </li>
     </ul>
     </div>
@@ -1556,22 +1571,22 @@ code.hljs {
         <div class="nav-children" data-expanded="false">
         <ul class="sidebar-nav" data-level="2">
           <li class="nav-item" data-type="file">
-            <a href="/docs/09-architecture/adr/001-file-based-content-storage" class="nav-link">ADR-001: File-based content storage instead of database</a>
+            <a href="/docs/09-architecture/adr/001-file-based-content-storage/" class="nav-link">ADR-001: File-based content storage instead of database</a>
           </li>
           <li class="nav-item" data-type="file">
-            <a href="/docs/09-architecture/adr/002-server-side-mdx-rendering" class="nav-link">ADR-002: Server-side MDX rendering instead of client-side</a>
+            <a href="/docs/09-architecture/adr/002-server-side-mdx-rendering/" class="nav-link">ADR-002: Server-side MDX rendering instead of client-side</a>
           </li>
           <li class="nav-item" data-type="file">
-            <a href="/docs/09-architecture/adr/003-zero-configuration-with-defaults" class="nav-link">ADR-003: Zero configuration with sensible defaults</a>
+            <a href="/docs/09-architecture/adr/003-zero-configuration-with-defaults/" class="nav-link">ADR-003: Zero configuration with sensible defaults</a>
           </li>
           <li class="nav-item" data-type="file">
-            <a href="/docs/09-architecture/adr/004-client-side-search-with-pre-built-index" class="nav-link">ADR-004: Client-side search with pre-built index instead of external service</a>
+            <a href="/docs/09-architecture/adr/004-client-side-search-with-pre-built-index/" class="nav-link">ADR-004: Client-side search with pre-built index instead of external service</a>
           </li>
           <li class="nav-item" data-type="file">
-            <a href="/docs/09-architecture/adr/005-incremental-static-export" class="nav-link">ADR-005: Incremental static export with hash-based caching</a>
+            <a href="/docs/09-architecture/adr/005-incremental-static-export/" class="nav-link">ADR-005: Incremental static export with hash-based caching</a>
           </li>
           <li class="nav-item" data-type="file">
-            <a href="/docs/09-architecture/adr/006-markdown-validation-and-autofix" class="nav-link">ADR-006: Markdown validation and auto-fixing</a>
+            <a href="/docs/09-architecture/adr/006-markdown-validation-and-autofix/" class="nav-link">ADR-006: Markdown validation and auto-fixing</a>
           </li>
         </ul>
         </div>
@@ -1593,7 +1608,8 @@ code.hljs {
 <p>mdsvr can be configured via a <code>settings.json</code> file in the <code>_mdsvr/</code> directory in your docs root. All settings are optional — the server works out of the box with sensible defaults.</p>
 <h3 id="creating-settingsjson" tabindex="-1">Creating settings.json</h3>
 <p>Use the CLI to create a starter configuration:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="npx mdsvr . --init
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1624,12 +1640,17 @@ code.hljs {
   </div>
   <pre><code class="hljs language-bash">npx mdsvr . --init
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>npx mdsvr . --init
+</div></div>
 </code></pre>
-</div></pre>
-
 <p>Or create it manually:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+  &quot;$schema&quot;: &quot;https://mdsvr.js.org/schema/v2.json&quot;,
+  &quot;site&quot;: {
+    &quot;title&quot;: &quot;My Docs&quot;,
+    &quot;description&quot;: &quot;Project documentation&quot;
+  }
+}
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1666,18 +1687,28 @@ code.hljs {
   <span class="hljs-punctuation">}</span>
 <span class="hljs-punctuation">}</span>
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>{
-  &quot;$schema&quot;: &quot;https://mdsvr.js.org/schema/v2.json&quot;,
+</div></div>
+</code></pre>
+<h3 id="site-settings" tabindex="-1">Site Settings</h3>
+<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
   &quot;site&quot;: {
-    &quot;title&quot;: &quot;My Docs&quot;,
-    &quot;description&quot;: &quot;Project documentation&quot;
+    &quot;title&quot;: &quot;My Documentation&quot;,
+    &quot;description&quot;: &quot;A great documentation site&quot;,
+    &quot;baseUrl&quot;: &quot;https://docs.example.com&quot;,
+    &quot;language&quot;: &quot;en&quot;,
+    &quot;logo&quot;: {
+      &quot;src&quot;: &quot;./assets/logo.svg&quot;,
+      &quot;alt&quot;: &quot;My Project&quot;,
+      &quot;href&quot;: &quot;/&quot;
+    },
+    &quot;favicon&quot;: &quot;./assets/favicon.ico&quot;,
+    &quot;author&quot;: {
+      &quot;name&quot;: &quot;Acme Docs Team&quot;,
+      &quot;url&quot;: &quot;https://acme.example&quot;
+    }
   }
 }
-</code></pre>
-</div></pre>
-
-<h3 id="site-settings" tabindex="-1">Site Settings</h3>
-<pre class="code-block-wrapper"><div class="code-block-container">
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1725,34 +1756,26 @@ code.hljs {
   <span class="hljs-punctuation">}</span>
 <span class="hljs-punctuation">}</span>
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>{
-  &quot;site&quot;: {
-    &quot;title&quot;: &quot;My Documentation&quot;,
-    &quot;description&quot;: &quot;A great documentation site&quot;,
-    &quot;baseUrl&quot;: &quot;https://docs.example.com&quot;,
-    &quot;language&quot;: &quot;en&quot;,
-    &quot;logo&quot;: {
-      &quot;src&quot;: &quot;./assets/logo.svg&quot;,
-      &quot;alt&quot;: &quot;My Project&quot;,
-      &quot;href&quot;: &quot;/&quot;
-    },
-    &quot;favicon&quot;: &quot;./assets/favicon.ico&quot;,
-    &quot;author&quot;: {
-      &quot;name&quot;: &quot;Acme Docs Team&quot;,
-      &quot;url&quot;: &quot;https://acme.example&quot;
-    }
-  }
-}
+</div></div>
 </code></pre>
-</div></pre>
-
 <ul>
 <li><code>author</code> — optional site-wide default author (string or <code>{ name, url }</code> object); emitted as <code>&lt;meta name=&quot;author&quot;&gt;</code> and JSON-LD <code>author</code> on document pages unless page frontmatter overrides it</li>
 <li><code>baseUrl</code> — required for absolute canonical URLs, <code>og:url</code>, exported <code>sitemap.xml</code>, and the <code>robots.txt</code> <code>Sitemap:</code> line; without it those URL-dependent tags/files are omitted rather than emitted as relative URLs</li>
 </ul>
 <h3 id="appearance" tabindex="-1">Appearance</h3>
 <p>Control the look and feel of your documentation:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+  &quot;appearance&quot;: {
+    &quot;defaultTheme&quot;: &quot;system&quot;,
+    &quot;allowThemeToggle&quot;: true,
+    &quot;accentColor&quot;: &quot;#0969da&quot;,
+    &quot;codeTheme&quot;: {
+      &quot;light&quot;: &quot;github&quot;,
+      &quot;dark&quot;: &quot;github-dark&quot;
+    }
+  }
+}
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1793,20 +1816,8 @@ code.hljs {
   <span class="hljs-punctuation">}</span>
 <span class="hljs-punctuation">}</span>
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>{
-  &quot;appearance&quot;: {
-    &quot;defaultTheme&quot;: &quot;system&quot;,
-    &quot;allowThemeToggle&quot;: true,
-    &quot;accentColor&quot;: &quot;#0969da&quot;,
-    &quot;codeTheme&quot;: {
-      &quot;light&quot;: &quot;github&quot;,
-      &quot;dark&quot;: &quot;github-dark&quot;
-    }
-  }
-}
+</div></div>
 </code></pre>
-</div></pre>
-
 <p><strong>Theme Options:</strong></p>
 <ul>
 <li><code>defaultTheme</code>: <code>&quot;light&quot;</code>, <code>&quot;dark&quot;</code>, or <code>&quot;system&quot;</code> (follows OS preference)</li>
@@ -1815,7 +1826,21 @@ code.hljs {
 </ul>
 <h3 id="navigation" tabindex="-1">Navigation</h3>
 <p>Configure the sidebar, breadcrumbs, and table of contents:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+  &quot;navigation&quot;: {
+    &quot;sidebar&quot;: {
+      &quot;enabled&quot;: true,
+      &quot;autoGenerate&quot;: true,
+      &quot;collapsible&quot;: true,
+      &quot;defaultOpen&quot;: true
+    },
+    &quot;breadcrumbs&quot;: true,
+    &quot;prevNextLinks&quot;: true,
+    &quot;tocEnabled&quot;: true,
+    &quot;tocMaxDepth&quot;: 3
+  }
+}
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1859,26 +1884,18 @@ code.hljs {
   <span class="hljs-punctuation">}</span>
 <span class="hljs-punctuation">}</span>
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>{
-  &quot;navigation&quot;: {
-    &quot;sidebar&quot;: {
-      &quot;enabled&quot;: true,
-      &quot;autoGenerate&quot;: true,
-      &quot;collapsible&quot;: true,
-      &quot;defaultOpen&quot;: true
-    },
-    &quot;breadcrumbs&quot;: true,
-    &quot;prevNextLinks&quot;: true,
-    &quot;tocEnabled&quot;: true,
-    &quot;tocMaxDepth&quot;: 3
-  }
-}
+</div></div>
 </code></pre>
-</div></pre>
-
 <h3 id="search" tabindex="-1">Search</h3>
 <p>Enable and configure the built-in search:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+  &quot;search&quot;: {
+    &quot;enabled&quot;: true,
+    &quot;placeholder&quot;: &quot;Search docs...&quot;,
+    &quot;maxResults&quot;: 10
+  }
+}
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1915,20 +1932,44 @@ code.hljs {
   <span class="hljs-punctuation">}</span>
 <span class="hljs-punctuation">}</span>
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>{
-  &quot;search&quot;: {
-    &quot;enabled&quot;: true,
-    &quot;placeholder&quot;: &quot;Search docs...&quot;,
-    &quot;maxResults&quot;: 10
-  }
-}
+</div></div>
 </code></pre>
-</div></pre>
-
 <p>Press <code>⌘+K</code> (or <code>Ctrl+K</code>) to open the search modal.</p>
 <h3 id="seo" tabindex="-1">SEO</h3>
 <p>Configure search engine optimization features:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+  &quot;seo&quot;: {
+    &quot;titleTemplate&quot;: &quot;%s | My Docs&quot;,
+    &quot;defaultImage&quot;: &quot;./assets/og-image.png&quot;,
+    &quot;twitterCard&quot;: &quot;summary_large_image&quot;,
+    &quot;twitterSite&quot;: &quot;@myhandle&quot;,
+    &quot;generateSitemap&quot;: true,
+    &quot;generateRobotsTxt&quot;: true,
+    &quot;generateRssFeed&quot;: true,
+    &quot;structuredData&quot;: true,
+    &quot;noIndex&quot;: false,
+    &quot;noIndexDirectoryPages&quot;: false,
+    &quot;verification&quot;: {
+      &quot;google&quot;: &quot;google-site-verification-token&quot;,
+      &quot;bing&quot;: &quot;msvalidate-token&quot;
+    },
+    &quot;og&quot;: {
+      &quot;enabled&quot;: true,
+      &quot;imageFormat&quot;: &quot;jpg&quot;,
+      &quot;fontFamily&quot;: &quot;Inter&quot;,
+      &quot;colors&quot;: {
+        &quot;background&quot;: &quot;#0a0a0f&quot;,
+        &quot;text&quot;: &quot;#ffffff&quot;
+      }
+    },
+    &quot;rss&quot;: {
+      &quot;title&quot;: &quot;My Docs Updates&quot;,
+      &quot;feedUrl&quot;: &quot;/feed.xml&quot;,
+      &quot;siteUrl&quot;: &quot;https://docs.example.com&quot;
+    }
+  }
+}
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1967,6 +2008,12 @@ code.hljs {
     <span class="hljs-attr">&quot;generateRobotsTxt&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
     <span class="hljs-attr">&quot;generateRssFeed&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
     <span class="hljs-attr">&quot;structuredData&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;noIndex&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;noIndexDirectoryPages&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;verification&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">&quot;google&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;google-site-verification-token&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;bing&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;msvalidate-token&quot;</span>
+    <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
     <span class="hljs-attr">&quot;og&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
       <span class="hljs-attr">&quot;enabled&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
       <span class="hljs-attr">&quot;imageFormat&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;jpg&quot;</span><span class="hljs-punctuation">,</span>
@@ -1984,35 +2031,8 @@ code.hljs {
   <span class="hljs-punctuation">}</span>
 <span class="hljs-punctuation">}</span>
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>{
-  &quot;seo&quot;: {
-    &quot;titleTemplate&quot;: &quot;%s | My Docs&quot;,
-    &quot;defaultImage&quot;: &quot;./assets/og-image.png&quot;,
-    &quot;twitterCard&quot;: &quot;summary_large_image&quot;,
-    &quot;twitterSite&quot;: &quot;@myhandle&quot;,
-    &quot;generateSitemap&quot;: true,
-    &quot;generateRobotsTxt&quot;: true,
-    &quot;generateRssFeed&quot;: true,
-    &quot;structuredData&quot;: true,
-    &quot;og&quot;: {
-      &quot;enabled&quot;: true,
-      &quot;imageFormat&quot;: &quot;jpg&quot;,
-      &quot;fontFamily&quot;: &quot;Inter&quot;,
-      &quot;colors&quot;: {
-        &quot;background&quot;: &quot;#0a0a0f&quot;,
-        &quot;text&quot;: &quot;#ffffff&quot;
-      }
-    },
-    &quot;rss&quot;: {
-      &quot;title&quot;: &quot;My Docs Updates&quot;,
-      &quot;feedUrl&quot;: &quot;/feed.xml&quot;,
-      &quot;siteUrl&quot;: &quot;https://docs.example.com&quot;
-    }
-  }
-}
+</div></div>
 </code></pre>
-</div></pre>
-
 <p>When enabled, these endpoints are automatically generated:</p>
 <ul>
 <li><code>/sitemap.xml</code> — XML sitemap for search engines (requires <code>site.baseUrl</code> for static export; uses request origin in serve mode)</li>
@@ -2020,11 +2040,96 @@ code.hljs {
 <li><code>/feed.xml</code> — RSS feed for blog posts (files with <code>date</code> in frontmatter)</li>
 <li><code>titleTemplate</code> — optional; defaults to <code>%s | &lt;site title&gt;</code> when unset, <code>%s</code> alone when <code>site.title</code> is empty</li>
 <li><code>structuredData</code> — emit JSON-LD <code>Article</code>/<code>WebSite</code>/<code>BreadcrumbList</code> per page (default <code>true</code>)</li>
-<li>Page frontmatter: <code>seoTitle</code>, <code>noindex</code>/<code>noIndex</code>, <code>datePublished</code>, <code>dateModified</code> — see <a href="../03-features/seo">SEO</a></li>
+<li><code>noIndexDirectoryPages</code> — emit <code>noindex, nofollow</code> on auto-generated directory listing pages and exclude them from the sitemap (default <code>false</code>)</li>
+<li><code>verification</code> — emit site-verification meta tags; keys: <code>google</code>, <code>bing</code>, <code>yandex</code>, <code>pinterest</code>, <code>naver</code>. (For Google you can also drop the <code>googleXXXX.html</code> file into the docs root — it is served/exported as-is.)</li>
+<li>Page frontmatter: <code>seoTitle</code>, <code>noindex</code>/<code>noIndex</code>, <code>datePublished</code>, <code>dateModified</code> — see <a href="/03-features/seo/">SEO</a></li>
 </ul>
+<h3 id="analytics" tabindex="-1">Analytics</h3>
+<p>Emit analytics snippets in <code>&lt;head&gt;</code> (and the GTM <code>&lt;noscript&gt;</code> right after <code>&lt;body&gt;</code>) on every page, in both serve and export modes:</p>
+<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+  &quot;analytics&quot;: {
+    &quot;googleAnalytics&quot;: &quot;G-XXXXXXXXXX&quot;,
+    &quot;googleTagManager&quot;: &quot;GTM-XXXXXXX&quot;,
+    &quot;clarity&quot;: &quot;clarity-project-id&quot;,
+    &quot;plausible&quot;: {
+      &quot;domain&quot;: &quot;docs.example.com&quot;,
+      &quot;scriptSrc&quot;: &quot;https://plausible.io/js/script.js&quot;
+    },
+    &quot;umami&quot;: {
+      &quot;websiteId&quot;: &quot;xxxx-xxxx&quot;,
+      &quot;scriptSrc&quot;: &quot;https://cloud.umami.is/script.js&quot;
+    },
+    &quot;customHead&quot;: [&quot;&lt;script&gt;/* any provider snippet */&lt;/script&gt;&quot;]
+  }
+}
+">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;analytics&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;googleAnalytics&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;G-XXXXXXXXXX&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;googleTagManager&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;GTM-XXXXXXX&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;clarity&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;clarity-project-id&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;plausible&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">&quot;domain&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;docs.example.com&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;scriptSrc&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;https://plausible.io/js/script.js&quot;</span>
+    <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;umami&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">&quot;websiteId&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;xxxx-xxxx&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;scriptSrc&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;https://cloud.umami.is/script.js&quot;</span>
+    <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;customHead&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;&lt;script&gt;/* any provider snippet */&lt;/script&gt;&quot;</span><span class="hljs-punctuation">]</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+</div></div>
+</code></pre>
+<p>All fields are optional — nothing is emitted when absent. Malformed GA/GTM IDs log a warning at startup but never fail. <code>customHead</code> entries are appended verbatim to the end of <code>&lt;head&gt;</code>; they come from your own <code>settings.json</code>, so only add snippets you trust. Note that local preview also fires analytics hits — filter the preview origin on the provider side if needed.</p>
 <h3 id="mdx" tabindex="-1">MDX</h3>
 <p>Enable MDX support and configure available components:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+  &quot;mdx&quot;: {
+    &quot;enabled&quot;: true,
+    &quot;components&quot;: {
+      &quot;Callout&quot;: true,
+      &quot;CodeGroup&quot;: true,
+      &quot;Steps&quot;: true,
+      &quot;Card&quot;: true,
+      &quot;CardGroup&quot;: true,
+      &quot;Tabs&quot;: true,
+      &quot;Accordion&quot;: true,
+      &quot;Badge&quot;: true,
+      &quot;Mermaid&quot;: true
+    }
+  }
+}
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2070,28 +2175,23 @@ code.hljs {
   <span class="hljs-punctuation">}</span>
 <span class="hljs-punctuation">}</span>
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>{
-  &quot;mdx&quot;: {
-    &quot;enabled&quot;: true,
-    &quot;components&quot;: {
-      &quot;Callout&quot;: true,
-      &quot;CodeGroup&quot;: true,
-      &quot;Steps&quot;: true,
-      &quot;Card&quot;: true,
-      &quot;CardGroup&quot;: true,
-      &quot;Tabs&quot;: true,
-      &quot;Accordion&quot;: true,
-      &quot;Badge&quot;: true,
-      &quot;Mermaid&quot;: true
-    }
-  }
-}
+</div></div>
 </code></pre>
-</div></pre>
-
 <h3 id="files" tabindex="-1">Files</h3>
 <p>Control which files are served, blocked, or hidden:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+  &quot;files&quot;: {
+    &quot;extensions&quot;: {
+      &quot;serve&quot;: [&quot;.md&quot;, &quot;.mdx&quot;, &quot;.png&quot;, &quot;.jpg&quot;, &quot;.svg&quot;, &quot;.css&quot;, &quot;.js&quot;, &quot;.html&quot;],
+      &quot;block&quot;: [&quot;.env&quot;, &quot;.key&quot;, &quot;.pem&quot;],
+      &quot;hidden&quot;: [&quot;settings.json&quot;, &quot;.git&quot;, &quot;node_modules&quot;]
+    },
+    &quot;indexFiles&quot;: [&quot;README.md&quot;, &quot;index.md&quot;, &quot;index.html&quot;],
+    &quot;ignorePatterns&quot;: [&quot;**/node_modules/**&quot;, &quot;**/.git/**&quot;],
+    &quot;staticFolders&quot;: [&quot;assets&quot;, &quot;public&quot;, &quot;images&quot;]
+  }
+}
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2133,21 +2233,8 @@ code.hljs {
   <span class="hljs-punctuation">}</span>
 <span class="hljs-punctuation">}</span>
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>{
-  &quot;files&quot;: {
-    &quot;extensions&quot;: {
-      &quot;serve&quot;: [&quot;.md&quot;, &quot;.mdx&quot;, &quot;.png&quot;, &quot;.jpg&quot;, &quot;.svg&quot;, &quot;.css&quot;, &quot;.js&quot;, &quot;.html&quot;],
-      &quot;block&quot;: [&quot;.env&quot;, &quot;.key&quot;, &quot;.pem&quot;],
-      &quot;hidden&quot;: [&quot;settings.json&quot;, &quot;.git&quot;, &quot;node_modules&quot;]
-    },
-    &quot;indexFiles&quot;: [&quot;README.md&quot;, &quot;index.md&quot;, &quot;index.html&quot;],
-    &quot;ignorePatterns&quot;: [&quot;**/node_modules/**&quot;, &quot;**/.git/**&quot;],
-    &quot;staticFolders&quot;: [&quot;assets&quot;, &quot;public&quot;, &quot;images&quot;]
-  }
-}
+</div></div>
 </code></pre>
-</div></pre>
-
 <ul>
 <li>Files and folders starting with <code>_</code> or <code>.</code> are automatically hidden</li>
 <li>Only web-servable extensions in <code>extensions.serve</code> are copied during static export</li>
@@ -2158,7 +2245,16 @@ code.hljs {
 </ul>
 <h3 id="footer" tabindex="-1">Footer</h3>
 <p>Customize the site footer:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+  &quot;footer&quot;: {
+    &quot;text&quot;: &quot;Built with mdsvr&quot;,
+    &quot;links&quot;: [
+      { &quot;label&quot;: &quot;GitHub&quot;, &quot;href&quot;: &quot;https://github.com/...&quot; },
+      { &quot;label&quot;: &quot;Twitter&quot;, &quot;href&quot;: &quot;https://twitter.com/...&quot; }
+    ]
+  }
+}
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2197,21 +2293,12 @@ code.hljs {
   <span class="hljs-punctuation">}</span>
 <span class="hljs-punctuation">}</span>
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>{
-  &quot;footer&quot;: {
-    &quot;text&quot;: &quot;Built with mdsvr&quot;,
-    &quot;links&quot;: [
-      { &quot;label&quot;: &quot;GitHub&quot;, &quot;href&quot;: &quot;https://github.com/...&quot; },
-      { &quot;label&quot;: &quot;Twitter&quot;, &quot;href&quot;: &quot;https://twitter.com/...&quot; }
-    ]
-  }
-}
+</div></div>
 </code></pre>
-</div></pre>
-
 <h3 id="hot-reload" tabindex="-1">Hot Reload</h3>
 <p>Settings are automatically reloaded when <code>_mdsvr/settings.json</code> changes (except when using <code>--no-watch</code> flag). You’ll see a message in the console:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code><div class="code-block-wrapper"><div class="code-block-container" data-code="[mdsvr] Settings reloaded
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2242,13 +2329,12 @@ code.hljs {
   </div>
   <pre><code class="hljs">[mdsvr] Settings reloaded
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>[mdsvr] Settings reloaded
+</div></div>
 </code></pre>
-</div></pre>
-
 <h3 id="validation" tabindex="-1">Validation</h3>
 <p>Validate your settings.json:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="npx mdsvr . --validate
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2279,14 +2365,18 @@ code.hljs {
   </div>
   <pre><code class="hljs language-bash">npx mdsvr . --validate
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>npx mdsvr . --validate
+</div></div>
 </code></pre>
-</div></pre>
-
 <p>This will check your configuration and report any errors.</p>
 <h3 id="generate-settings" tabindex="-1">Generate Settings</h3>
 <p>Configure static export generation options:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+  &quot;generate&quot;: {
+    &quot;basePath&quot;: &quot;/docs&quot;,
+    &quot;outputDir&quot;: &quot;dist&quot;
+  }
+}
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2322,15 +2412,8 @@ code.hljs {
   <span class="hljs-punctuation">}</span>
 <span class="hljs-punctuation">}</span>
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>{
-  &quot;generate&quot;: {
-    &quot;basePath&quot;: &quot;/docs&quot;,
-    &quot;outputDir&quot;: &quot;dist&quot;
-  }
-}
+</div></div>
 </code></pre>
-</div></pre>
-
 <p><strong>Options:</strong></p>
 <ul>
 <li><code>basePath</code>: Base path for generated URLs (default: <code>&quot;&quot;</code>). Useful when deploying to a subdirectory (e.g., <code>/docs</code>)</li>
@@ -2339,7 +2422,92 @@ code.hljs {
 <p>These settings are used during static export with the <code>--export</code> flag.</p>
 <h3 id="complete-example" tabindex="-1">Complete Example</h3>
 <p>Here’s a complete <code>_mdsvr/settings.json</code> with all available options:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+  &quot;$schema&quot;: &quot;https://mdsvr.js.org/schema/v2.json&quot;,
+  &quot;site&quot;: {
+    &quot;title&quot;: &quot;My Docs&quot;,
+    &quot;description&quot;: &quot;Project documentation&quot;,
+    &quot;baseUrl&quot;: &quot;https://docs.example.com&quot;,
+    &quot;language&quot;: &quot;en&quot;,
+    &quot;logo&quot;: {
+      &quot;src&quot;: &quot;./assets/logo.svg&quot;,
+      &quot;alt&quot;: &quot;My Project&quot;,
+      &quot;href&quot;: &quot;/&quot;
+    },
+    &quot;favicon&quot;: &quot;./assets/favicon.ico&quot;
+  },
+  &quot;appearance&quot;: {
+    &quot;defaultTheme&quot;: &quot;system&quot;,
+    &quot;allowThemeToggle&quot;: true,
+    &quot;accentColor&quot;: &quot;#0969da&quot;
+  },
+  &quot;navigation&quot;: {
+    &quot;sidebar&quot;: {
+      &quot;enabled&quot;: true,
+      &quot;autoGenerate&quot;: true,
+      &quot;collapsible&quot;: true,
+      &quot;defaultOpen&quot;: true
+    },
+    &quot;breadcrumbs&quot;: true,
+    &quot;prevNextLinks&quot;: true,
+    &quot;tocEnabled&quot;: true,
+    &quot;tocMaxDepth&quot;: 3
+  },
+  &quot;search&quot;: {
+    &quot;enabled&quot;: true,
+    &quot;placeholder&quot;: &quot;Search docs...&quot;,
+    &quot;maxResults&quot;: 10
+  },
+  &quot;seo&quot;: {
+    &quot;titleTemplate&quot;: &quot;%s | My Docs&quot;,
+    &quot;defaultImage&quot;: &quot;./assets/og-default.png&quot;,
+    &quot;twitterCard&quot;: &quot;summary_large_image&quot;,
+    &quot;generateSitemap&quot;: true,
+    &quot;generateRobotsTxt&quot;: true,
+    &quot;generateRssFeed&quot;: false,
+    &quot;og&quot;: {
+      &quot;enabled&quot;: true,
+      &quot;imageFormat&quot;: &quot;jpg&quot;
+    }
+  },
+  &quot;files&quot;: {
+    &quot;extensions&quot;: {
+      &quot;serve&quot;: [
+        &quot;.md&quot;,
+        &quot;.mdx&quot;,
+        &quot;.pdf&quot;,
+        &quot;.png&quot;,
+        &quot;.jpg&quot;,
+        &quot;.svg&quot;,
+        &quot;.css&quot;,
+        &quot;.js&quot;,
+        &quot;.html&quot;
+      ],
+      &quot;block&quot;: [&quot;.env&quot;, &quot;.key&quot;, &quot;.pem&quot;, &quot;.p12&quot;],
+      &quot;hidden&quot;: [&quot;_mdsvr&quot;, &quot;settings.json&quot;, &quot;.git&quot;, &quot;node_modules&quot;, &quot;.DS_Store&quot;]
+    },
+    &quot;indexFiles&quot;: [&quot;README.md&quot;, &quot;index.md&quot;, &quot;INDEX.md&quot;]
+  },
+  &quot;mdx&quot;: {
+    &quot;enabled&quot;: true,
+    &quot;components&quot;: {
+      &quot;Callout&quot;: true,
+      &quot;CodeGroup&quot;: true,
+      &quot;Steps&quot;: true,
+      &quot;Card&quot;: true,
+      &quot;CardGroup&quot;: true,
+      &quot;Tabs&quot;: true,
+      &quot;Accordion&quot;: true,
+      &quot;Badge&quot;: true,
+      &quot;Mermaid&quot;: true
+    }
+  },
+  &quot;footer&quot;: {
+    &quot;text&quot;: &quot;Built with mdsvr&quot;,
+    &quot;links&quot;: [{ &quot;label&quot;: &quot;GitHub&quot;, &quot;href&quot;: &quot;https://github.com/...&quot; }]
+  }
+}
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2454,99 +2622,19 @@ code.hljs {
   <span class="hljs-punctuation">}</span>
 <span class="hljs-punctuation">}</span>
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>{
-  &quot;$schema&quot;: &quot;https://mdsvr.js.org/schema/v2.json&quot;,
-  &quot;site&quot;: {
-    &quot;title&quot;: &quot;My Docs&quot;,
-    &quot;description&quot;: &quot;Project documentation&quot;,
-    &quot;baseUrl&quot;: &quot;https://docs.example.com&quot;,
-    &quot;language&quot;: &quot;en&quot;,
-    &quot;logo&quot;: {
-      &quot;src&quot;: &quot;./assets/logo.svg&quot;,
-      &quot;alt&quot;: &quot;My Project&quot;,
-      &quot;href&quot;: &quot;/&quot;
-    },
-    &quot;favicon&quot;: &quot;./assets/favicon.ico&quot;
-  },
-  &quot;appearance&quot;: {
-    &quot;defaultTheme&quot;: &quot;system&quot;,
-    &quot;allowThemeToggle&quot;: true,
-    &quot;accentColor&quot;: &quot;#0969da&quot;
-  },
-  &quot;navigation&quot;: {
-    &quot;sidebar&quot;: {
-      &quot;enabled&quot;: true,
-      &quot;autoGenerate&quot;: true,
-      &quot;collapsible&quot;: true,
-      &quot;defaultOpen&quot;: true
-    },
-    &quot;breadcrumbs&quot;: true,
-    &quot;prevNextLinks&quot;: true,
-    &quot;tocEnabled&quot;: true,
-    &quot;tocMaxDepth&quot;: 3
-  },
-  &quot;search&quot;: {
-    &quot;enabled&quot;: true,
-    &quot;placeholder&quot;: &quot;Search docs...&quot;,
-    &quot;maxResults&quot;: 10
-  },
-  &quot;seo&quot;: {
-    &quot;titleTemplate&quot;: &quot;%s | My Docs&quot;,
-    &quot;defaultImage&quot;: &quot;./assets/og-default.png&quot;,
-    &quot;twitterCard&quot;: &quot;summary_large_image&quot;,
-    &quot;generateSitemap&quot;: true,
-    &quot;generateRobotsTxt&quot;: true,
-    &quot;generateRssFeed&quot;: false,
-    &quot;og&quot;: {
-      &quot;enabled&quot;: true,
-      &quot;imageFormat&quot;: &quot;jpg&quot;
-    }
-  },
-  &quot;files&quot;: {
-    &quot;extensions&quot;: {
-      &quot;serve&quot;: [
-        &quot;.md&quot;,
-        &quot;.mdx&quot;,
-        &quot;.pdf&quot;,
-        &quot;.png&quot;,
-        &quot;.jpg&quot;,
-        &quot;.svg&quot;,
-        &quot;.css&quot;,
-        &quot;.js&quot;,
-        &quot;.html&quot;
-      ],
-      &quot;block&quot;: [&quot;.env&quot;, &quot;.key&quot;, &quot;.pem&quot;, &quot;.p12&quot;],
-      &quot;hidden&quot;: [&quot;_mdsvr&quot;, &quot;settings.json&quot;, &quot;.git&quot;, &quot;node_modules&quot;, &quot;.DS_Store&quot;]
-    },
-    &quot;indexFiles&quot;: [&quot;README.md&quot;, &quot;index.md&quot;, &quot;INDEX.md&quot;]
-  },
-  &quot;mdx&quot;: {
-    &quot;enabled&quot;: true,
-    &quot;components&quot;: {
-      &quot;Callout&quot;: true,
-      &quot;CodeGroup&quot;: true,
-      &quot;Steps&quot;: true,
-      &quot;Card&quot;: true,
-      &quot;CardGroup&quot;: true,
-      &quot;Tabs&quot;: true,
-      &quot;Accordion&quot;: true,
-      &quot;Badge&quot;: true,
-      &quot;Mermaid&quot;: true
-    }
-  },
-  &quot;footer&quot;: {
-    &quot;text&quot;: &quot;Built with mdsvr&quot;,
-    &quot;links&quot;: [{ &quot;label&quot;: &quot;GitHub&quot;, &quot;href&quot;: &quot;https://github.com/...&quot; }]
-  }
-}
+</div></div>
 </code></pre>
-</div></pre>
-
 <hr>
 <h2 id="writing-content" tabindex="-1">Writing Content</h2>
 <p>Tips and best practices for creating great documentation.</p>
 <h3 id="file-organization" tabindex="-1">File Organization</h3>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code><div class="code-block-wrapper"><div class="code-block-container" data-code="docs/
+├── README.md              # Homepage
+├── 01-getting-started/    # Getting started guides
+├── 02-settings/           # Settings &amp; configuration
+├── 03-features/           # Feature documentation
+└── 04-reference/          # API/reference docs
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2582,18 +2670,15 @@ code.hljs {
 ├── 03-features/           # Feature documentation
 └── 04-reference/          # API/reference docs
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>docs/
-├── README.md              # Homepage
-├── 01-getting-started/    # Getting started guides
-├── 02-settings/           # Settings &amp; configuration
-├── 03-features/           # Feature documentation
-└── 04-reference/          # API/reference docs
+</div></div>
 </code></pre>
-</div></pre>
-
 <h3 id="frontmatter" tabindex="-1">Frontmatter</h3>
 <p>Every page should have frontmatter:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-markdown"><div class="code-block-wrapper"><div class="code-block-container" data-code="---
+title: Page Title
+description: Brief description for SEO
+---
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2627,15 +2712,21 @@ title: Page Title
 <span class="hljs-section">description: Brief description for SEO
 ---</span>
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>---
-title: Page Title
-description: Brief description for SEO
----
+</div></div>
 </code></pre>
-</div></pre>
-
 <p>Optional fields:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-markdown"><div class="code-block-wrapper"><div class="code-block-container" data-code="---
+title: Page Title
+description: Description
+date: 2025-01-15 # For RSS feed / article datePublished
+author: John Doe # Attribution (or { name, url })
+tags: [setup, guide] # For organization
+seoTitle: Title Override # Wins over `title` for SEO output
+datePublished: 2025-01-15 # Article published date
+dateModified: 2025-01-20 # Article last update (also sitemap lastmod)
+noindex: true # Exclude from search + sitemap (noIndex also works)
+---
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2676,23 +2767,18 @@ dateModified: 2025-01-20 # Article last update (also sitemap lastmod)
 <span class="hljs-section">noindex: true # Exclude from search + sitemap (noIndex also works)
 ---</span>
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>---
-title: Page Title
-description: Description
-date: 2025-01-15 # For RSS feed / article datePublished
-author: John Doe # Attribution (or { name, url })
-tags: [setup, guide] # For organization
-seoTitle: Title Override # Wins over `title` for SEO output
-datePublished: 2025-01-15 # Article published date
-dateModified: 2025-01-20 # Article last update (also sitemap lastmod)
-noindex: true # Exclude from search + sitemap (noIndex also works)
----
+</div></div>
 </code></pre>
-</div></pre>
-
 <h3 id="markdown-tips" tabindex="-1">Markdown Tips</h3>
 <h4 id="use-descriptive-headings" tabindex="-1">Use Descriptive Headings</h4>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-markdown"><div class="code-block-wrapper"><div class="code-block-container" data-code="&lt;!-- Good --&gt;
+
+## Installing via npm
+
+&lt;!-- Less clear --&gt;
+
+## Installation
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2729,19 +2815,12 @@ noindex: true # Exclude from search + sitemap (noIndex also works)
 
 <span class="hljs-section">## Installation</span>
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>&lt;!-- Good --&gt;
-
-## Installing via npm
-
-&lt;!-- Less clear --&gt;
-
-## Installation
+</div></div>
 </code></pre>
-</div></pre>
-
 <h3 id="cross-reference-links" tabindex="-1">Cross-Reference Links</h3>
 <p>Use relative paths:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-markdown"><div class="code-block-wrapper"><div class="code-block-container" data-code="See [configuration guide](./)
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2770,15 +2849,16 @@ noindex: true # Exclude from search + sitemap (noIndex also works)
       </svg>
     </button>
   </div>
-  <pre><code class="hljs language-markdown">See [<span class="hljs-string">configuration guide</span>](<span class="hljs-link">./README.md</span>)
+  <pre><code class="hljs language-markdown">See [<span class="hljs-string">configuration guide</span>](<span class="hljs-link">./</span>)
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>See [configuration guide](./README)
+</div></div>
 </code></pre>
-</div></pre>
-
 <h4 id="code-blocks" tabindex="-1">Code Blocks</h4>
 <p>Always specify language:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-markdown"><div class="code-block-wrapper"><div class="code-block-container" data-code="```javascript
+const x = 1;
+```
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2811,15 +2891,22 @@ noindex: true # Exclude from search + sitemap (noIndex also works)
 const x = 1;
 ```</span>
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>```javascript
-const x = 1;
-```
+</div></div>
 </code></pre>
-</div></pre>
-
 <h3 id="mdx-components" tabindex="-1">MDX Components</h3>
 <p>Use components for interactive content:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-mdx"><div class="code-block-wrapper"><div class="code-block-container" data-code="&lt;Callout type=&quot;warning&quot;&gt;Important information here&lt;/Callout&gt;
+
+&lt;Steps&gt;
+  ### Step 1
+  First step content
+
+### Step 2
+
+Second step content
+
+&lt;/Steps&gt;
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2860,24 +2947,13 @@ Second step content
 
 &lt;/Steps&gt;
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>&lt;Callout type=&quot;warning&quot;&gt;Important information here&lt;/Callout&gt;
-
-&lt;Steps&gt;
-  ### Step 1
-  First step content
-
-### Step 2
-
-Second step content
-
-&lt;/Steps&gt;
+</div></div>
 </code></pre>
-</div></pre>
-
-<p>See <a href="../03-features/mdx">MDX Components</a> for all available components.</p>
+<p>See <a href="/03-features/mdx/">MDX Components</a> for all available components.</p>
 <h3 id="images-assets" tabindex="-1">Images &amp; Assets</h3>
 <p>Place assets in <code>docs/assets/</code>:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-markdown"><div class="code-block-wrapper"><div class="code-block-container" data-code="![Alt text](../assets/screenshot.png)
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2908,10 +2984,8 @@ Second step content
   </div>
   <pre><code class="hljs language-markdown">![<span class="hljs-string">Alt text</span>](<span class="hljs-link">../assets/screenshot.png</span>)
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>![Alt text](../assets/screenshot.png)
+</div></div>
 </code></pre>
-</div></pre>
-
 <blockquote>
 <p>Note: The assets folder is optional - create it if you need to include images in your documentation.</p>
 </blockquote>
@@ -2934,19 +3008,19 @@ Second step content
 <li><strong>Use relative paths</strong> — Never use absolute paths starting with <code>/</code>
 <ul>
 <li>❌ <code>[Guide](/docs/guide)</code></li>
-<li>✅ <code>[Guide](./guide)</code> or <code>[Guide](../guide)</code></li>
+<li>✅ <code>[Guide](./guide.md)</code> or <code>[Guide](../guide.md)</code></li>
 </ul>
 </li>
 <li><strong>Include file extensions</strong> — <code>.md</code>/<code>.mdx</code> links resolve on GitHub and in IDE previews; mdsvr converts them to clean URLs when serving (with <code>generate.cleanUrls</code>) and in static export
 <ul>
 <li>❌ <code>[Setup](./setup)</code></li>
-<li>✅ <code>[Setup](./setup)</code></li>
+<li>✅ <code>[Setup](./setup.md)</code></li>
 </ul>
 </li>
 <li><strong>Link to index files explicitly</strong> — Point at <code>README.md</code> so links work on GitHub; directory links are converted to clean directory URLs
 <ul>
 <li>❌ <code>[Getting Started](./01-getting-started)</code></li>
-<li>✅ <code>[Getting Started](./01-getting-started/README)</code></li>
+<li>✅ <code>[Getting Started](./01-getting-started/)</code></li>
 </ul>
 </li>
 <li><strong>Validate anchors</strong> — Ensure <code>#section</code> links match actual headings</li>
@@ -2984,7 +3058,8 @@ Second step content
 </ol>
 <h4 id="validation-1" tabindex="-1">Validation</h4>
 <p>Run the validator to check your documentation:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="npx mdsvr ./docs --validate
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -3015,10 +3090,8 @@ Second step content
   </div>
   <pre><code class="hljs language-bash">npx mdsvr ./docs --validate
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>npx mdsvr ./docs --validate
+</div></div>
 </code></pre>
-</div></pre>
-
 <p>The validator checks for:</p>
 <ul>
 <li>🔗 Broken internal links</li>
@@ -3032,7 +3105,8 @@ Second step content
 <li>📝 Heading hierarchy violations</li>
 </ul>
 <p>Use <code>--autofix</code> to automatically fix some issues:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="npx mdsvr ./docs --validate --autofix
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -3063,16 +3137,15 @@ Second step content
   </div>
   <pre><code class="hljs language-bash">npx mdsvr ./docs --validate --autofix
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>npx mdsvr ./docs --validate --autofix
+</div></div>
 </code></pre>
-</div></pre>
-
 <hr>
 <h2 id="deployment" tabindex="-1">Deployment</h2>
 <p>Deploy your documentation to any static hosting platform.</p>
 <h3 id="export-static-site" tabindex="-1">Export Static Site</h3>
 <p>Generate static HTML files:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="npx mdsvr ./docs --export
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -3103,13 +3176,12 @@ Second step content
   </div>
   <pre><code class="hljs language-bash">npx mdsvr ./docs --<span class="hljs-built_in">export</span>
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>npx mdsvr ./docs --export
+</div></div>
 </code></pre>
-</div></pre>
-
 <p>This creates <code>_html/public/</code> with your static site.</p>
 <h4 id="custom-output" tabindex="-1">Custom Output</h4>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="npx mdsvr ./docs --export ./dist
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -3140,10 +3212,8 @@ Second step content
   </div>
   <pre><code class="hljs language-bash">npx mdsvr ./docs --<span class="hljs-built_in">export</span> ./dist
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>npx mdsvr ./docs --export ./dist
+</div></div>
 </code></pre>
-</div></pre>
-
 <h4 id="export-caching" tabindex="-1">Export Caching</h4>
 <p>mdsvr uses intelligent caching to speed up exports:</p>
 <ul>
@@ -3154,7 +3224,12 @@ Second step content
 <p>The export state is stored in <code>_mdsvr/export-state.json</code>.</p>
 <h4 id="force-full-export" tabindex="-1">Force Full Export</h4>
 <p>To bypass cache and force a complete re-export:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="# Delete export state only
+rm _mdsvr/export-state.json
+
+# Then export
+npx mdsvr ./docs --export
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -3189,17 +3264,18 @@ Second step content
 <span class="hljs-comment"># Then export</span>
 npx mdsvr ./docs --<span class="hljs-built_in">export</span>
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code># Delete export state only
-rm _mdsvr/export-state.json
-
-# Then export
-npx mdsvr ./docs --export
+</div></div>
 </code></pre>
-</div></pre>
-
 <p><strong>Note:</strong> Only delete <code>export-state.json</code>, not the entire <code>_mdsvr</code> directory, to preserve your settings.</p>
 <h2 id="firebase-hosting" tabindex="-1">Firebase Hosting</h2>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="# Export
+npx mdsvr ./docs --export
+
+# Deploy
+cd _html
+firebase init
+firebase deploy
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -3236,19 +3312,13 @@ npx mdsvr ./docs --<span class="hljs-built_in">export</span>
 firebase init
 firebase deploy
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code># Export
-npx mdsvr ./docs --export
-
-# Deploy
-cd _html
-firebase init
-firebase deploy
+</div></div>
 </code></pre>
-</div></pre>
-
 <h2 id="netlify" tabindex="-1">Netlify</h2>
 <h3 id="via-cli" tabindex="-1">Via CLI</h3>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="npx mdsvr ./docs --export
+netlify deploy --dir=_html/public --prod
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -3280,11 +3350,8 @@ firebase deploy
   <pre><code class="hljs language-bash">npx mdsvr ./docs --<span class="hljs-built_in">export</span>
 netlify deploy --<span class="hljs-built_in">dir</span>=_html/public --prod
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>npx mdsvr ./docs --export
-netlify deploy --dir=_html/public --prod
+</div></div>
 </code></pre>
-</div></pre>
-
 <h3 id="via-git" tabindex="-1">Via Git</h3>
 <ol>
 <li>Push docs to GitHub</li>
@@ -3293,7 +3360,12 @@ netlify deploy --dir=_html/public --prod
 <li>Publish directory: <code>_html/public</code></li>
 </ol>
 <h3 id="vercel" tabindex="-1">Vercel</h3>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="# vercel.json
+{
+  &quot;buildCommand&quot;: &quot;npx mdsvr . --export _html/public&quot;,
+  &quot;outputDirectory&quot;: &quot;_html/public&quot;
+}
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -3328,16 +3400,14 @@ netlify deploy --dir=_html/public --prod
   <span class="hljs-string">&quot;outputDirectory&quot;</span>: <span class="hljs-string">&quot;_html/public&quot;</span>
 }
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code># vercel.json
-{
-  &quot;buildCommand&quot;: &quot;npx mdsvr . --export _html/public&quot;,
-  &quot;outputDirectory&quot;: &quot;_html/public&quot;
-}
+</div></div>
 </code></pre>
-</div></pre>
-
 <h2 id="github-pages" tabindex="-1">GitHub Pages</h2>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="# Export to docs folder
+npx mdsvr ./src --export ./docs
+
+# Or use GitHub Actions
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -3371,15 +3441,28 @@ npx mdsvr ./src --<span class="hljs-built_in">export</span> ./docs
 
 <span class="hljs-comment"># Or use GitHub Actions</span>
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code># Export to docs folder
-npx mdsvr ./src --export ./docs
-
-# Or use GitHub Actions
+</div></div>
 </code></pre>
-</div></pre>
-
 <h2 id="github-actions-workflow" tabindex="-1">GitHub Actions Workflow</h2>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-yaml"><div class="code-block-wrapper"><div class="code-block-container" data-code="# .github/workflows/deploy.yml
+name: Deploy
+on:
+  push:
+    branches: [main]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npx mdsr . --export
+      - uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_html/public
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -3427,30 +3510,16 @@ npx mdsvr ./src --export ./docs
           <span class="hljs-attr">github_token:</span> <span class="hljs-string">${{</span> <span class="hljs-string">secrets.GITHUB_TOKEN</span> <span class="hljs-string">}}</span>
           <span class="hljs-attr">publish_dir:</span> <span class="hljs-string">./_html/public</span>
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code># .github/workflows/deploy.yml
-name: Deploy
-on:
-  push:
-    branches: [main]
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-      - run: npx mdsr . --export
-      - uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./_html/public
+</div></div>
 </code></pre>
-</div></pre>
-
 <h2 id="docker" tabindex="-1">Docker</h2>
 <h3 id="using-pre-built-image" tabindex="-1">Using Pre-built Image</h3>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="docker pull ghcr.io/satoshiman/mdsvr:latest
+docker run -d \
+  -p 1800:1800 \
+  -v /path/to/docs:/app/docs:ro \
+  ghcr.io/satoshiman/mdsvr:latest
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -3485,19 +3554,15 @@ docker run -d \
   -v /path/to/docs:/app/docs:ro \
   ghcr.io/satoshiman/mdsvr:latest
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>docker pull ghcr.io/satoshiman/mdsvr:latest
-docker run -d \
-  -p 1800:1800 \
-  -v /path/to/docs:/app/docs:ro \
-  ghcr.io/satoshiman/mdsvr:latest
+</div></div>
 </code></pre>
-</div></pre>
-
 <blockquote>
 <p><strong>Note:</strong> Mount your docs read-only (<code>:ro</code>) where possible. mdsvr renders raw HTML in Markdown and executes MDX in the server process — it is designed for trusted content, not as a sandbox for user-supplied documents.</p>
 </blockquote>
 <h3 id="build-your-own" tabindex="-1">Build Your Own</h3>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-dockerfile"><div class="code-block-wrapper"><div class="code-block-container" data-code="FROM ghcr.io/satoshiman/mdsvr:latest
+COPY ./docs /app/docs
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -3529,12 +3594,11 @@ docker run -d \
   <pre><code class="hljs language-dockerfile"><span class="hljs-keyword">FROM</span> ghcr.io/satoshiman/mdsvr:latest
 <span class="hljs-keyword">COPY</span><span class="language-bash"> ./docs /app/docs</span>
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>FROM ghcr.io/satoshiman/mdsvr:latest
-COPY ./docs /app/docs
+</div></div>
 </code></pre>
-</div></pre>
-
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="docker build -t my-docs .
+docker run -d -p 1800:1800 my-docs
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -3566,14 +3630,20 @@ COPY ./docs /app/docs
   <pre><code class="hljs language-bash">docker build -t my-docs .
 docker run -d -p 1800:1800 my-docs
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>docker build -t my-docs .
-docker run -d -p 1800:1800 my-docs
+</div></div>
 </code></pre>
-</div></pre>
-
 <h3 id="vps-self-hosted" tabindex="-1">VPS / Self-Hosted</h3>
 <p>Export and serve with any web server:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="# Export
+npx mdsvr ./docs --export /var/www/docs
+
+# Nginx config
+server {
+    listen 80;
+    root /var/www/docs;
+    try_files $uri $uri/ $uri.html =404;
+}
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -3612,18 +3682,8 @@ server {
     try_files <span class="hljs-variable">$uri</span> <span class="hljs-variable">$uri</span>/ <span class="hljs-variable">$uri</span>.html =404;
 }
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code># Export
-npx mdsvr ./docs --export /var/www/docs
-
-# Nginx config
-server {
-    listen 80;
-    root /var/www/docs;
-    try_files $uri $uri/ $uri.html =404;
-}
+</div></div>
 </code></pre>
-</div></pre>
-
 <h2 id="clean-urls" tabindex="-1">Clean URLs</h2>
 <p>Exported sites use clean URLs:</p>
 <ul>
@@ -3633,9 +3693,9 @@ server {
 <hr>
 <h2 id="related" tabindex="-1">Related</h2>
 <ul>
-<li><a href="../01-getting-started/README">Getting Started</a> — If you’re new to mdsvr</li>
-<li><a href="../03-features/README">Features</a> — Learn about specific features</li>
-<li><a href="../04-reference/README">CLI Reference</a> — Command-line documentation</li>
+<li><a href="/01-getting-started/">Getting Started</a> — If you’re new to mdsvr</li>
+<li><a href="/03-features/">Features</a> — Learn about specific features</li>
+<li><a href="/04-reference/">CLI Reference</a> — Command-line documentation</li>
 </ul>
 
       </article>
@@ -3663,6 +3723,7 @@ server {
 <li class="toc-item"><a href="#navigation">Navigation</a></li>
 <li class="toc-item"><a href="#search">Search</a></li>
 <li class="toc-item"><a href="#seo">SEO</a></li>
+<li class="toc-item"><a href="#analytics">Analytics</a></li>
 <li class="toc-item"><a href="#mdx">MDX</a></li>
 <li class="toc-item"><a href="#files">Files</a></li>
 <li class="toc-item"><a href="#footer">Footer</a></li>
@@ -3776,8 +3837,15 @@ server {
       searchInput.addEventListener('input', debounce(performSearch, 150));
     }
 
-    // Load search index
-    loadSearchIndex();
+    // Load search index, then honor ?q=<query> (SearchAction entry point)
+    loadSearchIndex().then(function() {
+      const initialQuery = new URLSearchParams(window.location.search).get('q');
+      if (initialQuery && searchInput) {
+        searchInput.value = initialQuery;
+        openSearch();
+        performSearch();
+      }
+    });
   }
 
   async function loadSearchIndex() {
@@ -4301,8 +4369,7 @@ function initCodeBlockToolbars() {
     var fullscreenBtn = container.querySelector('.code-block-btn-fullscreen');
 
     function getRawCode() {
-      var rawEl = container.querySelector('.code-block-raw code');
-      return rawEl ? rawEl.textContent : '';
+      return container.getAttribute('data-code') || '';
     }
 
     function fallbackCopy(text) {
@@ -4410,6 +4477,7 @@ function initTableToolbars() {
   }
 
   document.querySelectorAll('.markdown-body table').forEach(function(table) {
+    if (table.closest('.dir-listing')) return;
     var wrapper = table.parentElement;
     if (!wrapper || !wrapper.classList.contains('table-wrapper')) {
       wrapper = document.createElement('div');

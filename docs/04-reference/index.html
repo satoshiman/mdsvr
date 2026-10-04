@@ -22,14 +22,18 @@
     <meta property="og:description" content="API and CLI reference documentation for mdsvr">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="MDSVR | Markdown Documentation Server">
+    <meta property="og:locale" content="en">
     <meta property="og:url" content="https://mdsvr.js.org/docs/04-reference/">
     <meta property="og:image" content="https://mdsvr.js.org/docs/public/assets/og/04-reference/index.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Reference | MDSVR | Markdown Documentation Server">
     <meta name="twitter:description" content="API and CLI reference documentation for mdsvr">
     <meta name="twitter:image" content="https://mdsvr.js.org/docs/public/assets/og/04-reference/index.jpg">
     <link rel="sitemap" type="application/xml" href="/docs/sitemap.xml">
   <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"Reference","description":"API and CLI reference documentation for mdsvr","url":"https://mdsvr.js.org/docs/04-reference/","image":"https://mdsvr.js.org/docs/public/assets/og/04-reference/index.jpg"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://mdsvr.js.org/docs/"},{"@type":"ListItem","position":2,"name":"Reference","item":"https://mdsvr.js.org/docs/04-reference/"}]}]}</script>
+  
   
   
   <style>
@@ -449,10 +453,8 @@ body {
 }
 
 /* Code block wrapper */
-pre.code-block-wrapper {
-  all: unset;
+.code-block-wrapper {
   display: block;
-  padding: 0;
   margin-bottom: 16px;
 }
 .code-block-container {
@@ -472,11 +474,6 @@ pre.code-block-wrapper {
   background: transparent;
   padding: 0;
   border-radius: 0;
-}
-.code-block-raw {
-  display: none;
-  margin: 0;
-  padding: 0;
 }
 .code-block-toolbar {
   position: absolute;
@@ -635,6 +632,27 @@ pre.code-block-wrapper {
 }
 .markdown-body th { background: var(--bg-secondary); font-weight: 600; white-space: nowrap; }
 .markdown-body tr:nth-child(2n) { background: var(--bg-secondary); }
+
+/* Directory listing (auto-index pages) */
+.dir-listing table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 16px;
+}
+.dir-listing th, .dir-listing td {
+  padding: 8px 12px;
+  text-align: left;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+  white-space: normal;
+}
+.dir-listing th { font-weight: 600; color: var(--text-muted); }
+.dir-listing tr { background: transparent; }
+.dir-listing td a { color: var(--accent); text-decoration: none; }
+.dir-listing td a:hover { text-decoration: underline; }
+.dir-listing .size { color: var(--text-muted); text-align: right; width: 100px; }
+.dir-listing .empty { color: var(--text-muted); font-style: italic; }
 .markdown-body img { max-width: 100%; height: auto; }
 .markdown-body hr {
   height: 0.25em;
@@ -1044,16 +1062,11 @@ pre.code-block-wrapper {
   padding: 16px;
 }
 
-/* Mermaid wrapper - reset pre defaults */
+/* Mermaid wrapper */
 .mermaid-wrapper {
-  all: unset;
   display: block;
+  margin-bottom: 16px;
 }
-
-pre.mermaid-wrapper{
-  padding: 0;
-}
-
 
 /* Mermaid container */
 .mermaid-container {
@@ -1465,8 +1478,10 @@ code.hljs {
 :root[data-theme="dark"] .hljs { background: var(--code-bg); }
 
   </style>
+  
 </head>
 <body>
+  
   <header class="site-header">
     <div class="header-left">
       <button class="sidebar-toggle sidebar-toggle-mobile" onclick="document.getElementById('sidebar').classList.toggle('open')" aria-label="Toggle menu">☰</button><button class="sidebar-toggle sidebar-toggle-desktop" onclick="toggleDesktopSidebar()" aria-label="Toggle sidebar">☰</button>
@@ -1512,28 +1527,28 @@ code.hljs {
     <div class="nav-children" data-expanded="false">
     <ul class="sidebar-nav" data-level="1">
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/markdown" class="nav-link">Markdown Formats</a>
+        <a href="/docs/03-features/markdown/" class="nav-link">Markdown Formats</a>
       </li>
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/math" class="nav-link">Mathematical Expressions</a>
+        <a href="/docs/03-features/math/" class="nav-link">Mathematical Expressions</a>
       </li>
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/mdx" class="nav-link">MDX Components</a>
+        <a href="/docs/03-features/mdx/" class="nav-link">MDX Components</a>
       </li>
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/mermaid" class="nav-link">Mermaid Diagrams in mdsvr</a>
+        <a href="/docs/03-features/mermaid/" class="nav-link">Mermaid Diagrams in mdsvr</a>
       </li>
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/navigation" class="nav-link">Navigation</a>
+        <a href="/docs/03-features/navigation/" class="nav-link">Navigation</a>
       </li>
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/search" class="nav-link">Search</a>
+        <a href="/docs/03-features/search/" class="nav-link">Search</a>
       </li>
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/seo" class="nav-link">SEO</a>
+        <a href="/docs/03-features/seo/" class="nav-link">SEO</a>
       </li>
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/theming" class="nav-link">Theming</a>
+        <a href="/docs/03-features/theming/" class="nav-link">Theming</a>
       </li>
     </ul>
     </div>
@@ -1556,22 +1571,22 @@ code.hljs {
         <div class="nav-children" data-expanded="false">
         <ul class="sidebar-nav" data-level="2">
           <li class="nav-item" data-type="file">
-            <a href="/docs/09-architecture/adr/001-file-based-content-storage" class="nav-link">ADR-001: File-based content storage instead of database</a>
+            <a href="/docs/09-architecture/adr/001-file-based-content-storage/" class="nav-link">ADR-001: File-based content storage instead of database</a>
           </li>
           <li class="nav-item" data-type="file">
-            <a href="/docs/09-architecture/adr/002-server-side-mdx-rendering" class="nav-link">ADR-002: Server-side MDX rendering instead of client-side</a>
+            <a href="/docs/09-architecture/adr/002-server-side-mdx-rendering/" class="nav-link">ADR-002: Server-side MDX rendering instead of client-side</a>
           </li>
           <li class="nav-item" data-type="file">
-            <a href="/docs/09-architecture/adr/003-zero-configuration-with-defaults" class="nav-link">ADR-003: Zero configuration with sensible defaults</a>
+            <a href="/docs/09-architecture/adr/003-zero-configuration-with-defaults/" class="nav-link">ADR-003: Zero configuration with sensible defaults</a>
           </li>
           <li class="nav-item" data-type="file">
-            <a href="/docs/09-architecture/adr/004-client-side-search-with-pre-built-index" class="nav-link">ADR-004: Client-side search with pre-built index instead of external service</a>
+            <a href="/docs/09-architecture/adr/004-client-side-search-with-pre-built-index/" class="nav-link">ADR-004: Client-side search with pre-built index instead of external service</a>
           </li>
           <li class="nav-item" data-type="file">
-            <a href="/docs/09-architecture/adr/005-incremental-static-export" class="nav-link">ADR-005: Incremental static export with hash-based caching</a>
+            <a href="/docs/09-architecture/adr/005-incremental-static-export/" class="nav-link">ADR-005: Incremental static export with hash-based caching</a>
           </li>
           <li class="nav-item" data-type="file">
-            <a href="/docs/09-architecture/adr/006-markdown-validation-and-autofix" class="nav-link">ADR-006: Markdown validation and auto-fixing</a>
+            <a href="/docs/09-architecture/adr/006-markdown-validation-and-autofix/" class="nav-link">ADR-006: Markdown validation and auto-fixing</a>
           </li>
         </ul>
         </div>
@@ -1592,7 +1607,8 @@ code.hljs {
 <h2 id="cli-reference" tabindex="-1">CLI Reference</h2>
 <p>Complete reference for all mdsvr CLI commands and options.</p>
 <h3 id="global-usage" tabindex="-1">Global Usage</h3>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="npx mdsvr [dir] [options]
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1623,12 +1639,11 @@ code.hljs {
   </div>
   <pre><code class="hljs language-bash">npx mdsvr [<span class="hljs-built_in">dir</span>] [options]
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>npx mdsvr [dir] [options]
+</div></div>
 </code></pre>
-</div></pre>
-
 <p>Or if installed globally:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="mdsvr [dir] [options]
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1659,10 +1674,8 @@ code.hljs {
   </div>
   <pre><code class="hljs language-bash">mdsvr [<span class="hljs-built_in">dir</span>] [options]
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>mdsvr [dir] [options]
+</div></div>
 </code></pre>
-</div></pre>
-
 <h3 id="arguments" tabindex="-1">Arguments</h3>
 <div class="table-wrapper"><div class="table-toolbar"><button class="table-btn-fullscreen" type="button" title="Fullscreen table" aria-label="Fullscreen table"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m15 15 6 6"/><path d="m15 9 6-6"/><path d="M21 16v5h-5"/><path d="M21 8V3h-5"/><path d="M3 16v5h5"/><path d="m3 21 6-6"/><path d="M3 8V3h5"/><path d="M9 9 3 3"/></svg></button></div><table>
 <thead>
@@ -1773,7 +1786,18 @@ code.hljs {
 </table></div>
 <h3 id="examples" tabindex="-1">Examples</h3>
 <h4 id="basic-server" tabindex="-1">Basic Server</h4>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="# Serve current directory
+npx mdsvr
+
+# Serve specific folder
+npx mdsvr ./docs
+
+# Custom port
+npx mdsvr ./docs --port 3000
+
+# Expose to LAN
+npx mdsvr ./docs --host 0.0.0.0 --port 1800
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1814,22 +1838,11 @@ npx mdsvr ./docs --port 3000
 <span class="hljs-comment"># Expose to LAN</span>
 npx mdsvr ./docs --host 0.0.0.0 --port 1800
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code># Serve current directory
-npx mdsvr
-
-# Serve specific folder
-npx mdsvr ./docs
-
-# Custom port
-npx mdsvr ./docs --port 3000
-
-# Expose to LAN
-npx mdsvr ./docs --host 0.0.0.0 --port 1800
+</div></div>
 </code></pre>
-</div></pre>
-
 <h2 id="with-auto-open" tabindex="-1">With Auto-Open</h2>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="npx mdsvr ./docs --open
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1860,12 +1873,18 @@ npx mdsvr ./docs --host 0.0.0.0 --port 1800
   </div>
   <pre><code class="hljs language-bash">npx mdsvr ./docs --open
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>npx mdsvr ./docs --open
+</div></div>
 </code></pre>
-</div></pre>
-
 <h2 id="export-static-site" tabindex="-1">Export Static Site</h2>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="# Default output (_html/public)
+npx mdsvr ./docs --export
+
+# Custom output
+npx mdsvr ./docs --export ./dist
+
+# Force full OG image regeneration
+npx mdsvr ./docs --export --force-og
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1903,19 +1922,11 @@ npx mdsvr ./docs --<span class="hljs-built_in">export</span> ./dist
 <span class="hljs-comment"># Force full OG image regeneration</span>
 npx mdsvr ./docs --<span class="hljs-built_in">export</span> --force-og
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code># Default output (_html/public)
-npx mdsvr ./docs --export
-
-# Custom output
-npx mdsvr ./docs --export ./dist
-
-# Force full OG image regeneration
-npx mdsvr ./docs --export --force-og
+</div></div>
 </code></pre>
-</div></pre>
-
 <h2 id="initialize-config" tabindex="-1">Initialize Config</h2>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="npx mdsvr ./docs --init
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1946,13 +1957,12 @@ npx mdsvr ./docs --export --force-og
   </div>
   <pre><code class="hljs language-bash">npx mdsvr ./docs --init
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>npx mdsvr ./docs --init
+</div></div>
 </code></pre>
-</div></pre>
-
 <p>Creates <code>_mdsvr/settings.json</code> with starter configuration.</p>
 <h2 id="validate-settings" tabindex="-1">Validate Settings</h2>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="npx mdsvr ./docs --validate
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1983,13 +1993,16 @@ npx mdsvr ./docs --export --force-og
   </div>
   <pre><code class="hljs language-bash">npx mdsvr ./docs --validate
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>npx mdsvr ./docs --validate
+</div></div>
 </code></pre>
-</div></pre>
-
 <p>Checks <code>_mdsvr/settings.json</code> for errors without starting server.</p>
 <h2 id="validate-markdown-files" tabindex="-1">Validate Markdown Files</h2>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="# Validate all markdown files
+npx mdsvr ./docs --validate-md
+
+# Validate with auto-fix
+npx mdsvr ./docs --validate-md --autofix
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2024,14 +2037,8 @@ npx mdsvr ./docs --validate-md
 <span class="hljs-comment"># Validate with auto-fix</span>
 npx mdsvr ./docs --validate-md --autofix
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code># Validate all markdown files
-npx mdsvr ./docs --validate-md
-
-# Validate with auto-fix
-npx mdsvr ./docs --validate-md --autofix
+</div></div>
 </code></pre>
-</div></pre>
-
 <p>Checks all markdown files for:</p>
 <ul>
 <li>🔗 Broken internal links (with fuzzy matching suggestions)</li>
@@ -2096,14 +2103,14 @@ npx mdsvr ./docs --validate-md --autofix
 <hr>
 <h2 id="related" tabindex="-1">Related</h2>
 <ul>
-<li><a href="../02-settings/README">Configuration</a> — Practical configuration guide</li>
-<li><a href="../03-features/README">Features</a> — Feature documentation</li>
-<li><a href="../01-getting-started/README">Getting Started</a> — Quick start guides</li>
+<li><a href="/02-settings/">Configuration</a> — Practical configuration guide</li>
+<li><a href="/03-features/">Features</a> — Feature documentation</li>
+<li><a href="/01-getting-started/">Getting Started</a> — Quick start guides</li>
 </ul>
 
       </article>
       <nav class="prev-next-nav">
-        <a href="/docs/03-features/theming" class="prev-next-card prev-card"><span class="prev-next-label">← Prev</span><span class="prev-next-title">Theming</span></a>
+        <a href="/docs/03-features/theming/" class="prev-next-card prev-card"><span class="prev-next-label">← Prev</span><span class="prev-next-title">Theming</span></a>
         <a href="/docs/09-architecture/" class="prev-next-card next-card"><span class="prev-next-label">Next →</span><span class="prev-next-title">Architecture</span></a>
       </nav>
       <footer class="footer">
@@ -2210,8 +2217,15 @@ npx mdsvr ./docs --validate-md --autofix
       searchInput.addEventListener('input', debounce(performSearch, 150));
     }
 
-    // Load search index
-    loadSearchIndex();
+    // Load search index, then honor ?q=<query> (SearchAction entry point)
+    loadSearchIndex().then(function() {
+      const initialQuery = new URLSearchParams(window.location.search).get('q');
+      if (initialQuery && searchInput) {
+        searchInput.value = initialQuery;
+        openSearch();
+        performSearch();
+      }
+    });
   }
 
   async function loadSearchIndex() {
@@ -2735,8 +2749,7 @@ function initCodeBlockToolbars() {
     var fullscreenBtn = container.querySelector('.code-block-btn-fullscreen');
 
     function getRawCode() {
-      var rawEl = container.querySelector('.code-block-raw code');
-      return rawEl ? rawEl.textContent : '';
+      return container.getAttribute('data-code') || '';
     }
 
     function fallbackCopy(text) {
@@ -2844,6 +2857,7 @@ function initTableToolbars() {
   }
 
   document.querySelectorAll('.markdown-body table').forEach(function(table) {
+    if (table.closest('.dir-listing')) return;
     var wrapper = table.parentElement;
     if (!wrapper || !wrapper.classList.contains('table-wrapper')) {
       wrapper = document.createElement('div');

@@ -22,14 +22,18 @@
     <meta property="og:description" content="Full-featured documentation website server with MDX support, site settings, SEO, and navigation">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="MDSVR | Markdown Documentation Server">
+    <meta property="og:locale" content="en">
     <meta property="og:url" content="https://mdsvr.js.org/docs/">
     <meta property="og:image" content="https://mdsvr.js.org/docs/public/assets/og/index.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Welcome | MDSVR | Markdown Documentation Server">
     <meta name="twitter:description" content="Full-featured documentation website server with MDX support, site settings, SEO, and navigation">
     <meta name="twitter:image" content="https://mdsvr.js.org/docs/public/assets/og/index.jpg">
     <link rel="sitemap" type="application/xml" href="/docs/sitemap.xml">
-  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"MDSVR | Markdown Documentation Server","url":"https://mdsvr.js.org/docs/","description":"Full-featured documentation website server with MDX support, site settings, SEO, and navigation"}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"MDSVR | Markdown Documentation Server","url":"https://mdsvr.js.org/docs/","description":"Full-featured documentation website server with MDX support, site settings, SEO, and navigation","potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://mdsvr.js.org/docs/?q={search_term_string}"},"query-input":"required name=search_term_string"}}]}</script>
+  
   
   
   <style>
@@ -449,10 +453,8 @@ body {
 }
 
 /* Code block wrapper */
-pre.code-block-wrapper {
-  all: unset;
+.code-block-wrapper {
   display: block;
-  padding: 0;
   margin-bottom: 16px;
 }
 .code-block-container {
@@ -472,11 +474,6 @@ pre.code-block-wrapper {
   background: transparent;
   padding: 0;
   border-radius: 0;
-}
-.code-block-raw {
-  display: none;
-  margin: 0;
-  padding: 0;
 }
 .code-block-toolbar {
   position: absolute;
@@ -635,6 +632,27 @@ pre.code-block-wrapper {
 }
 .markdown-body th { background: var(--bg-secondary); font-weight: 600; white-space: nowrap; }
 .markdown-body tr:nth-child(2n) { background: var(--bg-secondary); }
+
+/* Directory listing (auto-index pages) */
+.dir-listing table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 16px;
+}
+.dir-listing th, .dir-listing td {
+  padding: 8px 12px;
+  text-align: left;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+  white-space: normal;
+}
+.dir-listing th { font-weight: 600; color: var(--text-muted); }
+.dir-listing tr { background: transparent; }
+.dir-listing td a { color: var(--accent); text-decoration: none; }
+.dir-listing td a:hover { text-decoration: underline; }
+.dir-listing .size { color: var(--text-muted); text-align: right; width: 100px; }
+.dir-listing .empty { color: var(--text-muted); font-style: italic; }
 .markdown-body img { max-width: 100%; height: auto; }
 .markdown-body hr {
   height: 0.25em;
@@ -1044,16 +1062,11 @@ pre.code-block-wrapper {
   padding: 16px;
 }
 
-/* Mermaid wrapper - reset pre defaults */
+/* Mermaid wrapper */
 .mermaid-wrapper {
-  all: unset;
   display: block;
+  margin-bottom: 16px;
 }
-
-pre.mermaid-wrapper{
-  padding: 0;
-}
-
 
 /* Mermaid container */
 .mermaid-container {
@@ -1465,8 +1478,10 @@ code.hljs {
 :root[data-theme="dark"] .hljs { background: var(--code-bg); }
 
   </style>
+  
 </head>
 <body>
+  
   <header class="site-header">
     <div class="header-left">
       <button class="sidebar-toggle sidebar-toggle-mobile" onclick="document.getElementById('sidebar').classList.toggle('open')" aria-label="Toggle menu">☰</button><button class="sidebar-toggle sidebar-toggle-desktop" onclick="toggleDesktopSidebar()" aria-label="Toggle sidebar">☰</button>
@@ -1512,28 +1527,28 @@ code.hljs {
     <div class="nav-children" data-expanded="false">
     <ul class="sidebar-nav" data-level="1">
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/markdown" class="nav-link">Markdown Formats</a>
+        <a href="/docs/03-features/markdown/" class="nav-link">Markdown Formats</a>
       </li>
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/math" class="nav-link">Mathematical Expressions</a>
+        <a href="/docs/03-features/math/" class="nav-link">Mathematical Expressions</a>
       </li>
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/mdx" class="nav-link">MDX Components</a>
+        <a href="/docs/03-features/mdx/" class="nav-link">MDX Components</a>
       </li>
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/mermaid" class="nav-link">Mermaid Diagrams in mdsvr</a>
+        <a href="/docs/03-features/mermaid/" class="nav-link">Mermaid Diagrams in mdsvr</a>
       </li>
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/navigation" class="nav-link">Navigation</a>
+        <a href="/docs/03-features/navigation/" class="nav-link">Navigation</a>
       </li>
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/search" class="nav-link">Search</a>
+        <a href="/docs/03-features/search/" class="nav-link">Search</a>
       </li>
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/seo" class="nav-link">SEO</a>
+        <a href="/docs/03-features/seo/" class="nav-link">SEO</a>
       </li>
       <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/theming" class="nav-link">Theming</a>
+        <a href="/docs/03-features/theming/" class="nav-link">Theming</a>
       </li>
     </ul>
     </div>
@@ -1556,22 +1571,22 @@ code.hljs {
         <div class="nav-children" data-expanded="false">
         <ul class="sidebar-nav" data-level="2">
           <li class="nav-item" data-type="file">
-            <a href="/docs/09-architecture/adr/001-file-based-content-storage" class="nav-link">ADR-001: File-based content storage instead of database</a>
+            <a href="/docs/09-architecture/adr/001-file-based-content-storage/" class="nav-link">ADR-001: File-based content storage instead of database</a>
           </li>
           <li class="nav-item" data-type="file">
-            <a href="/docs/09-architecture/adr/002-server-side-mdx-rendering" class="nav-link">ADR-002: Server-side MDX rendering instead of client-side</a>
+            <a href="/docs/09-architecture/adr/002-server-side-mdx-rendering/" class="nav-link">ADR-002: Server-side MDX rendering instead of client-side</a>
           </li>
           <li class="nav-item" data-type="file">
-            <a href="/docs/09-architecture/adr/003-zero-configuration-with-defaults" class="nav-link">ADR-003: Zero configuration with sensible defaults</a>
+            <a href="/docs/09-architecture/adr/003-zero-configuration-with-defaults/" class="nav-link">ADR-003: Zero configuration with sensible defaults</a>
           </li>
           <li class="nav-item" data-type="file">
-            <a href="/docs/09-architecture/adr/004-client-side-search-with-pre-built-index" class="nav-link">ADR-004: Client-side search with pre-built index instead of external service</a>
+            <a href="/docs/09-architecture/adr/004-client-side-search-with-pre-built-index/" class="nav-link">ADR-004: Client-side search with pre-built index instead of external service</a>
           </li>
           <li class="nav-item" data-type="file">
-            <a href="/docs/09-architecture/adr/005-incremental-static-export" class="nav-link">ADR-005: Incremental static export with hash-based caching</a>
+            <a href="/docs/09-architecture/adr/005-incremental-static-export/" class="nav-link">ADR-005: Incremental static export with hash-based caching</a>
           </li>
           <li class="nav-item" data-type="file">
-            <a href="/docs/09-architecture/adr/006-markdown-validation-and-autofix" class="nav-link">ADR-006: Markdown validation and auto-fixing</a>
+            <a href="/docs/09-architecture/adr/006-markdown-validation-and-autofix/" class="nav-link">ADR-006: Markdown validation and auto-fixing</a>
           </li>
         </ul>
         </div>
@@ -1585,7 +1600,8 @@ code.hljs {
       <article class="markdown-body">
         <h1 id="welcome-to-mdsvr" tabindex="-1">Welcome to mdsvr</h1>
 <p>Transform any folder of Markdown/Markdown files into a beautiful documentation website — zero config required.</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="npx mdsvr ./docs
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1616,10 +1632,8 @@ code.hljs {
   </div>
   <pre><code class="hljs language-bash">npx mdsvr ./docs
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>npx mdsvr ./docs
+</div></div>
 </code></pre>
-</div></pre>
-
 <blockquote>
 <p>ℹ️ <strong>Info:</strong> This documentation itself is served by <strong>mdsvr</strong>! Explore the files in this directory to see how everything works.</p>
 </blockquote>
@@ -1630,7 +1644,8 @@ code.hljs {
 <li>
 <p><strong>Install</strong></p>
 <p>No installation needed! Just use <code>npx</code>:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="npx mdsvr ./docs
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1661,15 +1676,15 @@ code.hljs {
   </div>
   <pre><code class="hljs language-bash">npx mdsvr ./docs
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>npx mdsvr ./docs
+</div></div>
 </code></pre>
-</div></pre>
-
 </li>
 <li>
 <p><strong>Create your docs</strong></p>
 <p>Create a folder with some <code>.md</code> files:</p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="mkdir docs
+echo &quot;# Hello World&quot; &gt; docs/readme.md
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1701,15 +1716,13 @@ code.hljs {
   <pre><code class="hljs language-bash"><span class="hljs-built_in">mkdir</span> docs
 <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;# Hello World&quot;</span> &gt; docs/readme.md
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>mkdir docs
-echo &quot;# Hello World&quot; &gt; docs/readme.md
+</div></div>
 </code></pre>
-</div></pre>
-
 </li>
 <li>
 <p><strong>Start the server</strong></p>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="npx mdsvr ./docs --open
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1740,10 +1753,8 @@ echo &quot;# Hello World&quot; &gt; docs/readme.md
   </div>
   <pre><code class="hljs language-bash">npx mdsvr ./docs --open
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>npx mdsvr ./docs --open
+</div></div>
 </code></pre>
-</div></pre>
-
 </li>
 </ol>
 <h2 id="key-features" tabindex="-1">Key Features</h2>
@@ -1756,33 +1767,52 @@ echo &quot;# Hello World&quot; &gt; docs/readme.md
 </thead>
 <tbody>
 <tr>
-<td>📝 <a href="./03-features/README">Markdown &amp; MDX</a></td>
+<td>📝 <a href="/03-features/">Markdown &amp; MDX</a></td>
 <td>Render .md and .mdx files with built-in interactive components</td>
 </tr>
 <tr>
-<td>🎨 <a href="./03-features/theming">Themes</a></td>
+<td>🎨 <a href="/03-features/theming/">Themes</a></td>
 <td>Dark/light mode with customizable accent colors</td>
 </tr>
 <tr>
-<td>🔍 <a href="./03-features/search">Search</a></td>
+<td>🔍 <a href="/03-features/search/">Search</a></td>
 <td>Built-in full-text search with keyboard shortcut (⌘K)</td>
 </tr>
 <tr>
-<td>📑 <a href="./03-features/navigation">Navigation</a></td>
+<td>📑 <a href="/03-features/navigation/">Navigation</a></td>
 <td>Auto-generated sidebar and table of contents</td>
 </tr>
 <tr>
-<td>🔎 <a href="./03-features/seo">SEO</a></td>
+<td>🔎 <a href="/03-features/seo/">SEO</a></td>
 <td>Sitemap, RSS feed, Open Graph, and Twitter Cards</td>
 </tr>
 <tr>
-<td>⚙️ <a href="./02-settings/README">Settings</a></td>
+<td>⚙️ <a href="/02-settings/">Settings</a></td>
 <td>Configure everything via settings.json</td>
 </tr>
 </tbody>
 </table></div>
 <h2 id="this-docs-structure-for-reference" tabindex="-1">This docs structure for reference</h2>
-<pre class="code-block-wrapper"><div class="code-block-container">
+<pre><code><div class="code-block-wrapper"><div class="code-block-container" data-code="docs/
+├── _mdsvr/
+│   └── settings.json            # Site configuration (optional)
+├── README.md                    # Homepage (this file)
+├── 01-getting-started/          # Getting started guides
+│   └── README.md              # Quick start &amp; installation
+├── 02-settings/                 # Settings &amp; configuration
+│   └── README.md              # Configuration, writing &amp; deployment
+├── 03-features/                 # Feature documentation
+│   ├── README.md             # Features overview
+│   ├── markdown.md           # Markdown support
+│   ├── mdx.mdx               # MDX components demo
+│   ├── theming.md            # Theme customization
+│   ├── search.md             # Search functionality
+│   ├── navigation.md         # Navigation features
+│   ├── seo.md                # SEO features
+│   └── mermaid.md            # Mermaid diagrams
+└── 04-reference/                # API/Reference
+    └── README.md             # CLI reference
+">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1831,38 +1861,18 @@ echo &quot;# Hello World&quot; &gt; docs/readme.md
 └── 04-reference/                # API/Reference
     └── README.md             # CLI reference
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>docs/
-├── _mdsvr/
-│   └── settings.json            # Site configuration (optional)
-├── README.md                    # Homepage (this file)
-├── 01-getting-started/          # Getting started guides
-│   └── README.md              # Quick start &amp; installation
-├── 02-settings/                 # Settings &amp; configuration
-│   └── README.md              # Configuration, writing &amp; deployment
-├── 03-features/                 # Feature documentation
-│   ├── README.md             # Features overview
-│   ├── markdown.md           # Markdown support
-│   ├── mdx.mdx               # MDX components demo
-│   ├── theming.md            # Theme customization
-│   ├── search.md             # Search functionality
-│   ├── navigation.md         # Navigation features
-│   ├── seo.md                # SEO features
-│   └── mermaid.md            # Mermaid diagrams
-└── 04-reference/                # API/Reference
-    └── README.md             # CLI reference
+</div></div>
 </code></pre>
-</div></pre>
-
 <h2 id="next-steps" tabindex="-1">Next Steps</h2>
 <ul>
-<li><strong><a href="./01-getting-started/README">Quick Start</a></strong> — Get running in 30 seconds</li>
-<li><strong><a href="./01-getting-started/README">Installation</a></strong> — Install options</li>
-<li><strong><a href="./03-features/mdx">MDX Components</a></strong> — Make your docs interactive</li>
-<li><strong><a href="./02-settings/README">Configuration</a></strong> — Customize your site</li>
-<li><strong><a href="./02-settings/README">Writing Content</a></strong> — Best practices</li>
-<li><strong><a href="./02-settings/README">Deployment</a></strong> — Go live</li>
-<li><strong><a href="./03-features/README">Features</a></strong> — See all features</li>
-<li><strong><a href="./04-reference/README">CLI Reference</a></strong> — Command reference</li>
+<li><strong><a href="/01-getting-started/">Quick Start</a></strong> — Get running in 30 seconds</li>
+<li><strong><a href="/01-getting-started/">Installation</a></strong> — Install options</li>
+<li><strong><a href="/03-features/mdx/">MDX Components</a></strong> — Make your docs interactive</li>
+<li><strong><a href="/02-settings/">Configuration</a></strong> — Customize your site</li>
+<li><strong><a href="/02-settings/">Writing Content</a></strong> — Best practices</li>
+<li><strong><a href="/02-settings/">Deployment</a></strong> — Go live</li>
+<li><strong><a href="/03-features/">Features</a></strong> — See all features</li>
+<li><strong><a href="/04-reference/">CLI Reference</a></strong> — Command reference</li>
 </ul>
 <hr>
 <blockquote>
@@ -1965,8 +1975,15 @@ echo &quot;# Hello World&quot; &gt; docs/readme.md
       searchInput.addEventListener('input', debounce(performSearch, 150));
     }
 
-    // Load search index
-    loadSearchIndex();
+    // Load search index, then honor ?q=<query> (SearchAction entry point)
+    loadSearchIndex().then(function() {
+      const initialQuery = new URLSearchParams(window.location.search).get('q');
+      if (initialQuery && searchInput) {
+        searchInput.value = initialQuery;
+        openSearch();
+        performSearch();
+      }
+    });
   }
 
   async function loadSearchIndex() {
@@ -2490,8 +2507,7 @@ function initCodeBlockToolbars() {
     var fullscreenBtn = container.querySelector('.code-block-btn-fullscreen');
 
     function getRawCode() {
-      var rawEl = container.querySelector('.code-block-raw code');
-      return rawEl ? rawEl.textContent : '';
+      return container.getAttribute('data-code') || '';
     }
 
     function fallbackCopy(text) {
@@ -2599,6 +2615,7 @@ function initTableToolbars() {
   }
 
   document.querySelectorAll('.markdown-body table').forEach(function(table) {
+    if (table.closest('.dir-listing')) return;
     var wrapper = table.parentElement;
     if (!wrapper || !wrapper.classList.contains('table-wrapper')) {
       wrapper = document.createElement('div');
