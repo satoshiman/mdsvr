@@ -15,18 +15,21 @@
   document.documentElement.setAttribute('data-content-view', contentView);
 })();
 </script>
-  <title>Guides</title>
+  <title>Guides | MDSVR | Markdown Documentation Server</title>
     <meta name="description" content="Detailed guides for configuring, writing, and deploying your mdsvr documentation">
-    <meta property="og:title" content="Guides">
+    <link rel="canonical" href="https://mdsvr.js.org/docs/02-settings/">
+    <meta property="og:title" content="Guides | MDSVR | Markdown Documentation Server">
     <meta property="og:description" content="Detailed guides for configuring, writing, and deploying your mdsvr documentation">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="/02-settings/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="MDSVR | Markdown Documentation Server">
+    <meta property="og:url" content="https://mdsvr.js.org/docs/02-settings/">
     <meta property="og:image" content="https://mdsvr.js.org/docs/public/assets/og/02-settings/index.jpg">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Guides">
+    <meta name="twitter:title" content="Guides | MDSVR | Markdown Documentation Server">
+    <meta name="twitter:description" content="Detailed guides for configuring, writing, and deploying your mdsvr documentation">
     <meta name="twitter:image" content="https://mdsvr.js.org/docs/public/assets/og/02-settings/index.jpg">
-    <link rel="canonical" href="/02-settings/">
     <link rel="sitemap" type="application/xml" href="/docs/sitemap.xml">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"Guides","description":"Detailed guides for configuring, writing, and deploying your mdsvr documentation","url":"https://mdsvr.js.org/docs/02-settings/","image":"https://mdsvr.js.org/docs/public/assets/og/02-settings/index.jpg"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://mdsvr.js.org/docs/"},{"@type":"ListItem","position":2,"name":"Guides","item":"https://mdsvr.js.org/docs/02-settings/"}]}]}</script>
   
   
   <style>
@@ -1714,7 +1717,11 @@ code.hljs {
       <span class="hljs-attr">&quot;alt&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;My Project&quot;</span><span class="hljs-punctuation">,</span>
       <span class="hljs-attr">&quot;href&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;/&quot;</span>
     <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
-    <span class="hljs-attr">&quot;favicon&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;./assets/favicon.ico&quot;</span>
+    <span class="hljs-attr">&quot;favicon&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;./assets/favicon.ico&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;author&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Acme Docs Team&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;url&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;https://acme.example&quot;</span>
+    <span class="hljs-punctuation">}</span>
   <span class="hljs-punctuation">}</span>
 <span class="hljs-punctuation">}</span>
 </code></pre>
@@ -1729,12 +1736,20 @@ code.hljs {
       &quot;alt&quot;: &quot;My Project&quot;,
       &quot;href&quot;: &quot;/&quot;
     },
-    &quot;favicon&quot;: &quot;./assets/favicon.ico&quot;
+    &quot;favicon&quot;: &quot;./assets/favicon.ico&quot;,
+    &quot;author&quot;: {
+      &quot;name&quot;: &quot;Acme Docs Team&quot;,
+      &quot;url&quot;: &quot;https://acme.example&quot;
+    }
   }
 }
 </code></pre>
 </div></pre>
 
+<ul>
+<li><code>author</code> — optional site-wide default author (string or <code>{ name, url }</code> object); emitted as <code>&lt;meta name=&quot;author&quot;&gt;</code> and JSON-LD <code>author</code> on document pages unless page frontmatter overrides it</li>
+<li><code>baseUrl</code> — required for absolute canonical URLs, <code>og:url</code>, exported <code>sitemap.xml</code>, and the <code>robots.txt</code> <code>Sitemap:</code> line; without it those URL-dependent tags/files are omitted rather than emitted as relative URLs</li>
+</ul>
 <h3 id="appearance" tabindex="-1">Appearance</h3>
 <p>Control the look and feel of your documentation:</p>
 <pre class="code-block-wrapper"><div class="code-block-container">
@@ -1949,7 +1964,9 @@ code.hljs {
     <span class="hljs-attr">&quot;twitterCard&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;summary_large_image&quot;</span><span class="hljs-punctuation">,</span>
     <span class="hljs-attr">&quot;twitterSite&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;@myhandle&quot;</span><span class="hljs-punctuation">,</span>
     <span class="hljs-attr">&quot;generateSitemap&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;generateRobotsTxt&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
     <span class="hljs-attr">&quot;generateRssFeed&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;structuredData&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
     <span class="hljs-attr">&quot;og&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
       <span class="hljs-attr">&quot;enabled&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
       <span class="hljs-attr">&quot;imageFormat&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;jpg&quot;</span><span class="hljs-punctuation">,</span>
@@ -1974,7 +1991,9 @@ code.hljs {
     &quot;twitterCard&quot;: &quot;summary_large_image&quot;,
     &quot;twitterSite&quot;: &quot;@myhandle&quot;,
     &quot;generateSitemap&quot;: true,
+    &quot;generateRobotsTxt&quot;: true,
     &quot;generateRssFeed&quot;: true,
+    &quot;structuredData&quot;: true,
     &quot;og&quot;: {
       &quot;enabled&quot;: true,
       &quot;imageFormat&quot;: &quot;jpg&quot;,
@@ -1996,8 +2015,12 @@ code.hljs {
 
 <p>When enabled, these endpoints are automatically generated:</p>
 <ul>
-<li><code>/sitemap.xml</code> — XML sitemap for search engines</li>
+<li><code>/sitemap.xml</code> — XML sitemap for search engines (requires <code>site.baseUrl</code> for static export; uses request origin in serve mode)</li>
+<li><code>/robots.txt</code> — crawler rules; a custom <code>robots.txt</code> in the docs root takes precedence</li>
 <li><code>/feed.xml</code> — RSS feed for blog posts (files with <code>date</code> in frontmatter)</li>
+<li><code>titleTemplate</code> — optional; defaults to <code>%s | &lt;site title&gt;</code> when unset, <code>%s</code> alone when <code>site.title</code> is empty</li>
+<li><code>structuredData</code> — emit JSON-LD <code>Article</code>/<code>WebSite</code>/<code>BreadcrumbList</code> per page (default <code>true</code>)</li>
+<li>Page frontmatter: <code>seoTitle</code>, <code>noindex</code>/<code>noIndex</code>, <code>datePublished</code>, <code>dateModified</code> — see <a href="../03-features/seo">SEO</a></li>
 </ul>
 <h3 id="mdx" tabindex="-1">MDX</h3>
 <p>Enable MDX support and configure available components:</p>
@@ -2100,7 +2123,7 @@ code.hljs {
   <pre><code class="hljs language-json"><span class="hljs-punctuation">{</span>
   <span class="hljs-attr">&quot;files&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
     <span class="hljs-attr">&quot;extensions&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
-      <span class="hljs-attr">&quot;serve&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;.md&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;.mdx&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;.png&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;.jpg&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;.svg&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;.css&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;.js&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;serve&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;.md&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;.mdx&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;.png&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;.jpg&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;.svg&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;.css&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;.js&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;.html&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
       <span class="hljs-attr">&quot;block&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;.env&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;.key&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;.pem&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
       <span class="hljs-attr">&quot;hidden&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;settings.json&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;.git&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;node_modules&quot;</span><span class="hljs-punctuation">]</span>
     <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
@@ -2113,7 +2136,7 @@ code.hljs {
   <pre class="code-block-raw" style="display:none;"><code>{
   &quot;files&quot;: {
     &quot;extensions&quot;: {
-      &quot;serve&quot;: [&quot;.md&quot;, &quot;.mdx&quot;, &quot;.png&quot;, &quot;.jpg&quot;, &quot;.svg&quot;, &quot;.css&quot;, &quot;.js&quot;],
+      &quot;serve&quot;: [&quot;.md&quot;, &quot;.mdx&quot;, &quot;.png&quot;, &quot;.jpg&quot;, &quot;.svg&quot;, &quot;.css&quot;, &quot;.js&quot;, &quot;.html&quot;],
       &quot;block&quot;: [&quot;.env&quot;, &quot;.key&quot;, &quot;.pem&quot;],
       &quot;hidden&quot;: [&quot;settings.json&quot;, &quot;.git&quot;, &quot;node_modules&quot;]
     },
@@ -2126,7 +2149,9 @@ code.hljs {
 </div></pre>
 
 <ul>
-<li>Files starting with <code>_</code> are automatically hidden</li>
+<li>Files and folders starting with <code>_</code> or <code>.</code> are automatically hidden</li>
+<li>Only web-servable extensions in <code>extensions.serve</code> are copied during static export</li>
+<li><code>robots.txt</code> is generated or copied when <code>seo.generateRobotsTxt</code> is enabled</li>
 <li>Blocked extensions return 403 Forbidden</li>
 <li>Hidden files return 404 Not Found (as if they don’t exist)</li>
 <li><code>staticFolders</code>: Array of folder names to serve as static assets (all files in these folders are served directly)</li>
@@ -2384,6 +2409,7 @@ code.hljs {
     <span class="hljs-attr">&quot;defaultImage&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;./assets/og-default.png&quot;</span><span class="hljs-punctuation">,</span>
     <span class="hljs-attr">&quot;twitterCard&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;summary_large_image&quot;</span><span class="hljs-punctuation">,</span>
     <span class="hljs-attr">&quot;generateSitemap&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;generateRobotsTxt&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
     <span class="hljs-attr">&quot;generateRssFeed&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span>
     <span class="hljs-attr">&quot;og&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
       <span class="hljs-attr">&quot;enabled&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
@@ -2395,14 +2421,13 @@ code.hljs {
       <span class="hljs-attr">&quot;serve&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
         <span class="hljs-string">&quot;.md&quot;</span><span class="hljs-punctuation">,</span>
         <span class="hljs-string">&quot;.mdx&quot;</span><span class="hljs-punctuation">,</span>
-        <span class="hljs-string">&quot;.txt&quot;</span><span class="hljs-punctuation">,</span>
         <span class="hljs-string">&quot;.pdf&quot;</span><span class="hljs-punctuation">,</span>
         <span class="hljs-string">&quot;.png&quot;</span><span class="hljs-punctuation">,</span>
         <span class="hljs-string">&quot;.jpg&quot;</span><span class="hljs-punctuation">,</span>
         <span class="hljs-string">&quot;.svg&quot;</span><span class="hljs-punctuation">,</span>
         <span class="hljs-string">&quot;.css&quot;</span><span class="hljs-punctuation">,</span>
         <span class="hljs-string">&quot;.js&quot;</span><span class="hljs-punctuation">,</span>
-        <span class="hljs-string">&quot;.json&quot;</span>
+        <span class="hljs-string">&quot;.html&quot;</span>
       <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
       <span class="hljs-attr">&quot;block&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;.env&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;.key&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;.pem&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;.p12&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
       <span class="hljs-attr">&quot;hidden&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;_mdsvr&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;settings.json&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;.git&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;node_modules&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;.DS_Store&quot;</span><span class="hljs-punctuation">]</span>
@@ -2470,6 +2495,7 @@ code.hljs {
     &quot;defaultImage&quot;: &quot;./assets/og-default.png&quot;,
     &quot;twitterCard&quot;: &quot;summary_large_image&quot;,
     &quot;generateSitemap&quot;: true,
+    &quot;generateRobotsTxt&quot;: true,
     &quot;generateRssFeed&quot;: false,
     &quot;og&quot;: {
       &quot;enabled&quot;: true,
@@ -2481,14 +2507,13 @@ code.hljs {
       &quot;serve&quot;: [
         &quot;.md&quot;,
         &quot;.mdx&quot;,
-        &quot;.txt&quot;,
         &quot;.pdf&quot;,
         &quot;.png&quot;,
         &quot;.jpg&quot;,
         &quot;.svg&quot;,
         &quot;.css&quot;,
         &quot;.js&quot;,
-        &quot;.json&quot;
+        &quot;.html&quot;
       ],
       &quot;block&quot;: [&quot;.env&quot;, &quot;.key&quot;, &quot;.pem&quot;, &quot;.p12&quot;],
       &quot;hidden&quot;: [&quot;_mdsvr&quot;, &quot;settings.json&quot;, &quot;.git&quot;, &quot;node_modules&quot;, &quot;.DS_Store&quot;]
@@ -2642,19 +2667,25 @@ description: Brief description for SEO
   <pre><code class="hljs language-markdown">---
 title: Page Title
 description: Description
-date: 2025-01-15 # For RSS feed
-author: John Doe # Attribution
+date: 2025-01-15 # For RSS feed / article datePublished
+author: John Doe # Attribution (or { name, url })
 tags: [setup, guide] # For organization
-<span class="hljs-section">noIndex: true # Exclude from search
+seoTitle: Title Override # Wins over <span class="hljs-code">`title`</span> for SEO output
+datePublished: 2025-01-15 # Article published date
+dateModified: 2025-01-20 # Article last update (also sitemap lastmod)
+<span class="hljs-section">noindex: true # Exclude from search + sitemap (noIndex also works)
 ---</span>
 </code></pre>
   <pre class="code-block-raw" style="display:none;"><code>---
 title: Page Title
 description: Description
-date: 2025-01-15 # For RSS feed
-author: John Doe # Attribution
+date: 2025-01-15 # For RSS feed / article datePublished
+author: John Doe # Attribution (or { name, url })
 tags: [setup, guide] # For organization
-noIndex: true # Exclude from search
+seoTitle: Title Override # Wins over `title` for SEO output
+datePublished: 2025-01-15 # Article published date
+dateModified: 2025-01-20 # Article last update (also sitemap lastmod)
+noindex: true # Exclude from search + sitemap (noIndex also works)
 ---
 </code></pre>
 </div></pre>

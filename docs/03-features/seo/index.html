@@ -15,19 +15,22 @@
   document.documentElement.setAttribute('data-content-view', contentView);
 })();
 </script>
-  <title>SEO</title>
+  <title>SEO | MDSVR | Markdown Documentation Server</title>
     <meta name="description" content="Search engine optimization features">
-    <meta property="og:title" content="SEO">
+    <link rel="canonical" href="https://mdsvr.js.org/docs/03-features/seo/">
+    <meta property="og:title" content="SEO | MDSVR | Markdown Documentation Server">
     <meta property="og:description" content="Search engine optimization features">
     <meta property="og:type" content="article">
-    <meta property="og:url" content="/03-features/seo">
+    <meta property="og:site_name" content="MDSVR | Markdown Documentation Server">
+    <meta property="og:url" content="https://mdsvr.js.org/docs/03-features/seo/">
     <meta property="og:image" content="https://mdsvr.js.org/docs/public/assets/og/03-features/seo/index.jpg">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="SEO">
+    <meta name="twitter:title" content="SEO | MDSVR | Markdown Documentation Server">
+    <meta name="twitter:description" content="Search engine optimization features">
     <meta name="twitter:image" content="https://mdsvr.js.org/docs/public/assets/og/03-features/seo/index.jpg">
-    <meta property="article:published_time" content="Wed Jan 15 2025 07:00:00 GMT+0700 (Indochina Time)">
-    <link rel="canonical" href="/03-features/seo">
+    <meta property="article:published_time" content="2025-01-15">
     <link rel="sitemap" type="application/xml" href="/docs/sitemap.xml">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"SEO","description":"Search engine optimization features","url":"https://mdsvr.js.org/docs/03-features/seo/","image":"https://mdsvr.js.org/docs/public/assets/og/03-features/seo/index.jpg","datePublished":"2025-01-15"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://mdsvr.js.org/docs/"},{"@type":"ListItem","position":2,"name":"Features","item":"https://mdsvr.js.org/docs/03-features/"},{"@type":"ListItem","position":3,"name":"SEO","item":"https://mdsvr.js.org/docs/03-features/seo/"}]}]}</script>
   
   
   <style>
@@ -1635,6 +1638,7 @@ code.hljs {
 <ul>
 <li><code>%s</code> is replaced with the page title</li>
 <li>Example: <code>Installation | My Docs</code></li>
+<li>When <code>titleTemplate</code> is <strong>not set</strong>, titles default to <code>&lt;page title&gt; | &lt;site title&gt;</code> (or just the page title when <code>site.title</code> is empty). Set <code>titleTemplate: &quot;%s&quot;</code> to keep bare titles.</li>
 </ul>
 <h3 id="page-level-titles" tabindex="-1">Page-Level Titles</h3>
 <p>Override the title for individual pages using frontmatter:</p>
@@ -1670,6 +1674,7 @@ code.hljs {
   <pre><code class="hljs">---
 title: Custom Page Title
 description: A description for SEO and social sharing
+seoTitle: Custom Page Title | Keyword-Rich Suffix
 ---
 
 # Page Heading
@@ -1679,6 +1684,7 @@ Content...
   <pre class="code-block-raw" style="display:none;"><code>---
 title: Custom Page Title
 description: A description for SEO and social sharing
+seoTitle: Custom Page Title | Keyword-Rich Suffix
 ---
 
 # Page Heading
@@ -1687,6 +1693,18 @@ Content...
 </code></pre>
 </div></pre>
 
+<ul>
+<li><code>title</code> — used for the <code>&lt;title&gt;</code> tag, <code>og:title</code>, and <code>twitter:title</code></li>
+<li><code>seoTitle</code> — optional; wins over <code>title</code> for SEO output when present</li>
+<li>Without either, the first <code>#</code> heading (then the humanized filename) is used</li>
+</ul>
+<h3 id="meta-descriptions" tabindex="-1">Meta Descriptions</h3>
+<p>Every page gets a <code>&lt;meta name=&quot;description&quot;&gt;</code> resolved in this order:</p>
+<ol>
+<li><code>description</code> in frontmatter</li>
+<li>The first meaningful paragraph of the page (code blocks, headings, HTML, and nav-like lines are skipped; truncated to ~160 characters)</li>
+<li><code>site.description</code> as the last fallback</li>
+</ol>
 <h2 id="open-graph" tabindex="-1">Open Graph</h2>
 <p>Open Graph tags ensure your pages look great when shared on Facebook, LinkedIn, and other platforms.</p>
 <pre class="code-block-wrapper"><div class="code-block-container">
@@ -1736,9 +1754,10 @@ Content...
 <ul>
 <li><code>og:title</code> — Page title</li>
 <li><code>og:description</code> — Page or site description</li>
-<li><code>og:type</code> — <code>website</code> or <code>article</code></li>
-<li><code>og:url</code> — Canonical URL</li>
-<li><code>og:image</code> — Featured image</li>
+<li><code>og:type</code> — <code>article</code> for document pages, <code>website</code> for the homepage and directory/auto-index pages</li>
+<li><code>og:url</code> — Absolute canonical URL (only when <code>site.baseUrl</code> is set)</li>
+<li><code>og:site_name</code> — Site title</li>
+<li><code>og:image</code> — Featured image, resolved to an absolute URL against <code>site.baseUrl</code> + <code>generate.basePath</code> when possible</li>
 </ul>
 <h2 id="og-image-generation" tabindex="-1">OG Image Generation</h2>
 <p>mdsvr can automatically generate beautiful OG images for every page. This feature is <strong>enabled by default</strong>.</p>
@@ -2022,6 +2041,7 @@ image: ./assets/article-image.png
 <li><code>summary</code> — Small square image + text</li>
 <li><code>summary_large_image</code> — Large featured image (recommended)</li>
 </ul>
+<p>Generated tags: <code>twitter:card</code>, <code>twitter:site</code>, <code>twitter:title</code>, <code>twitter:description</code>, and <code>twitter:image</code>.</p>
 <h2 id="sitemap" tabindex="-1">Sitemap</h2>
 <p>Generate an XML sitemap for search engines.</p>
 <h3 id="enabling" tabindex="-1">Enabling</h3>
@@ -2108,9 +2128,17 @@ image: ./assets/article-image.png
 <h3 id="sitemap-contents" tabindex="-1">Sitemap Contents</h3>
 <p>The sitemap includes:</p>
 <ul>
-<li>All <code>.md</code> and <code>.mdx</code> files</li>
-<li>Last modified date (from file mtime or frontmatter <code>date</code>)</li>
+<li>All rendered <code>.md</code>/<code>.mdx</code> pages <strong>and</strong> auto-generated directory index pages</li>
+<li>Canonical trailing-slash URLs, percent-encoded and deduplicated</li>
+<li><code>lastmod</code> from frontmatter <code>dateModified</code> (then <code>date</code>, then file mtime)</li>
 <li>Change frequency (<code>weekly</code>)</li>
+<li><code>noindex</code> pages are excluded</li>
+</ul>
+<h3 id="absolute-urls-required" tabindex="-1">Absolute URLs required</h3>
+<p>A sitemap must contain absolute URLs, so behavior depends on <code>site.baseUrl</code>:</p>
+<ul>
+<li><strong>Export</strong>: <code>sitemap.xml</code> is only written when <code>site.baseUrl</code> is configured — otherwise generation is skipped with a warning.</li>
+<li><strong>Serve mode</strong>: <code>/sitemap.xml</code> uses <code>site.baseUrl</code> when set, otherwise the actual request origin (e.g. <code>http://localhost:1800</code>).</li>
 </ul>
 <h3 id="example-output" tabindex="-1">Example Output</h3>
 <pre class="code-block-wrapper"><div class="code-block-container">
@@ -2150,7 +2178,7 @@ image: ./assets/article-image.png
     <span class="hljs-tag">&lt;<span class="hljs-name">changefreq</span>&gt;</span>weekly<span class="hljs-tag">&lt;/<span class="hljs-name">changefreq</span>&gt;</span>
   <span class="hljs-tag">&lt;/<span class="hljs-name">url</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-name">url</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">loc</span>&gt;</span>https://docs.example.com/configuration<span class="hljs-tag">&lt;/<span class="hljs-name">loc</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">loc</span>&gt;</span>https://docs.example.com/configuration/<span class="hljs-tag">&lt;/<span class="hljs-name">loc</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-name">lastmod</span>&gt;</span>2025-01-10<span class="hljs-tag">&lt;/<span class="hljs-name">lastmod</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-name">changefreq</span>&gt;</span>weekly<span class="hljs-tag">&lt;/<span class="hljs-name">changefreq</span>&gt;</span>
   <span class="hljs-tag">&lt;/<span class="hljs-name">url</span>&gt;</span>
@@ -2164,7 +2192,7 @@ image: ./assets/article-image.png
     &lt;changefreq&gt;weekly&lt;/changefreq&gt;
   &lt;/url&gt;
   &lt;url&gt;
-    &lt;loc&gt;https://docs.example.com/configuration&lt;/loc&gt;
+    &lt;loc&gt;https://docs.example.com/configuration/&lt;/loc&gt;
     &lt;lastmod&gt;2025-01-10&lt;/lastmod&gt;
     &lt;changefreq&gt;weekly&lt;/changefreq&gt;
   &lt;/url&gt;
@@ -2364,7 +2392,7 @@ Content...
 </code></pre>
 </div></pre>
 
-<p>With <code>baseUrl</code> set, every page includes:</p>
+<p>With <code>baseUrl</code> set, every page includes an absolute canonical in the canonical trailing-slash form (<code>baseUrl</code> + <code>generate.basePath</code> + page URL):</p>
 <pre class="code-block-wrapper"><div class="code-block-container">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -2394,12 +2422,13 @@ Content...
       </svg>
     </button>
   </div>
-  <pre><code class="hljs language-html"><span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;canonical&quot;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;https://docs.example.com/page-path&quot;</span> /&gt;</span>
+  <pre><code class="hljs language-html"><span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;canonical&quot;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;https://docs.example.com/page-path/&quot;</span> /&gt;</span>
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>&lt;link rel=&quot;canonical&quot; href=&quot;https://docs.example.com/page-path&quot; /&gt;
+  <pre class="code-block-raw" style="display:none;"><code>&lt;link rel=&quot;canonical&quot; href=&quot;https://docs.example.com/page-path/&quot; /&gt;
 </code></pre>
 </div></pre>
 
+<p>The same absolute URL is used for <code>og:url</code> and JSON-LD. When <code>baseUrl</code> is <strong>not</strong> configured, <code>canonical</code> and <code>og:url</code> are omitted entirely — relative canonicals are never emitted.</p>
 <h2 id="no-index" tabindex="-1">No-Index</h2>
 <p>Prevent specific pages from being indexed:</p>
 <h3 id="site-wide" tabindex="-1">Site-Wide</h3>
@@ -2477,7 +2506,7 @@ Content...
     </button>
   </div>
   <pre><code class="hljs">---
-noIndex: true
+noindex: true
 ---
 
 # Draft Page
@@ -2485,7 +2514,7 @@ noIndex: true
 This page won't be indexed by search engines.
 </code></pre>
   <pre class="code-block-raw" style="display:none;"><code>---
-noIndex: true
+noindex: true
 ---
 
 # Draft Page
@@ -2524,14 +2553,58 @@ This page won't be indexed by search engines.
       </svg>
     </button>
   </div>
-  <pre><code class="hljs language-html"><span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;robots&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;noindex&quot;</span> /&gt;</span>
+  <pre><code class="hljs language-html"><span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;robots&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;noindex, nofollow&quot;</span> /&gt;</span>
 </code></pre>
-  <pre class="code-block-raw" style="display:none;"><code>&lt;meta name=&quot;robots&quot; content=&quot;noindex&quot; /&gt;
+  <pre class="code-block-raw" style="display:none;"><code>&lt;meta name=&quot;robots&quot; content=&quot;noindex, nofollow&quot; /&gt;
 </code></pre>
 </div></pre>
 
+<ul>
+<li><code>noindex</code> is the canonical spelling; the older <code>noIndex</code> alias still works (<code>noindex</code> wins if both are set)</li>
+<li><code>noindex</code> pages are also excluded from <code>sitemap.xml</code></li>
+</ul>
 <h2 id="robotstxt" tabindex="-1">robots.txt</h2>
-<p>While mdsvr doesn’t generate <code>robots.txt</code> automatically, you can create one in your docs root:</p>
+<p>By default, mdsvr exports a permissive <code>robots.txt</code> for static sites:</p>
+<pre class="code-block-wrapper"><div class="code-block-container">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs">User-agent: *
+Allow: /
+Sitemap: https://docs.example.com/sitemap.xml
+</code></pre>
+  <pre class="code-block-raw" style="display:none;"><code>User-agent: *
+Allow: /
+Sitemap: https://docs.example.com/sitemap.xml
+</code></pre>
+</div></pre>
+
+<p>Place a non-empty <code>robots.txt</code> in your docs root to override the generated file:</p>
 <pre class="code-block-wrapper"><div class="code-block-container">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -2573,7 +2646,51 @@ This page won't be indexed by search engines.
 </code></pre>
 </div></pre>
 
-<p>Example <code>robots.txt</code>:</p>
+<p>To keep <code>robots.txt</code> entirely under your own control, disable generation:</p>
+<pre class="code-block-wrapper"><div class="code-block-container">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;seo&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;generateRobotsTxt&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+  <pre class="code-block-raw" style="display:none;"><code>{
+  &quot;seo&quot;: {
+    &quot;generateRobotsTxt&quot;: false
+  }
+}
+</code></pre>
+</div></pre>
+
+<p>Example custom <code>robots.txt</code>:</p>
 <pre class="code-block-wrapper"><div class="code-block-container">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -2613,6 +2730,255 @@ Sitemap: https://docs.example.com/sitemap.xml
 </code></pre>
 </div></pre>
 
+<p>The generated <code>Sitemap:</code> line is only included when an absolute sitemap URL can be derived (<code>site.baseUrl</code>, or the request origin in serve mode) — relative <code>Sitemap:</code> URLs are invalid.</p>
+<h2 id="structured-data-json-ld" tabindex="-1">Structured Data (JSON-LD)</h2>
+<p>Every page emits one <code>&lt;script type=&quot;application/ld+json&quot;&gt;</code> block with a <a href="http://schema.org">schema.org</a> <code>@graph</code>:</p>
+<ul>
+<li><strong>Document pages</strong> → <code>Article</code> (<code>headline</code>, <code>description</code>, <code>url</code>, <code>image</code>, <code>author</code>, <code>datePublished</code>, <code>dateModified</code> — only fields with real data, never invented)</li>
+<li><strong>Homepage</strong> → <code>WebSite</code> (<code>name</code>, <code>url</code>, <code>description</code>)</li>
+<li><strong>Nested routes</strong> → <code>BreadcrumbList</code> when breadcrumbs are enabled (built from the route path and sidebar titles)</li>
+</ul>
+<p>Disable with:</p>
+<pre class="code-block-wrapper"><div class="code-block-container">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;seo&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;structuredData&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+  <pre class="code-block-raw" style="display:none;"><code>{
+  &quot;seo&quot;: {
+    &quot;structuredData&quot;: false
+  }
+}
+</code></pre>
+</div></pre>
+
+<h3 id="author-dates" tabindex="-1">Author &amp; dates</h3>
+<p>Article metadata comes from frontmatter and site settings:</p>
+<pre class="code-block-wrapper"><div class="code-block-container">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs">---
+title: My Article
+author: Jane Doe # string, or { name: &quot;Jane&quot;, url: &quot;https://...&quot; }
+date: 2026-10-01 # treated as datePublished
+datePublished: 2026-09-30 # wins over `date` when set
+dateModified: 2026-10-04
+---
+</code></pre>
+  <pre class="code-block-raw" style="display:none;"><code>---
+title: My Article
+author: Jane Doe # string, or { name: &quot;Jane&quot;, url: &quot;https://...&quot; }
+date: 2026-10-01 # treated as datePublished
+datePublished: 2026-09-30 # wins over `date` when set
+dateModified: 2026-10-04
+---
+</code></pre>
+</div></pre>
+
+<p>A site-wide default author can be configured and emits <code>&lt;meta name=&quot;author&quot;&gt;</code> plus JSON-LD <code>author</code> (as an <code>Organization</code>):</p>
+<pre class="code-block-wrapper"><div class="code-block-container">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;site&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;author&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Acme Docs Team&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;url&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;https://acme.example/about&quot;</span> <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+  <pre class="code-block-raw" style="display:none;"><code>{
+  &quot;site&quot;: {
+    &quot;author&quot;: { &quot;name&quot;: &quot;Acme Docs Team&quot;, &quot;url&quot;: &quot;https://acme.example/about&quot; }
+  }
+}
+</code></pre>
+</div></pre>
+
+<p>Frontmatter <code>author</code> (a <code>Person</code>) wins over <code>site.author</code>.</p>
+<h2 id="deployment" tabindex="-1">Deployment</h2>
+<h3 id="firebase-hosting" tabindex="-1">Firebase Hosting</h3>
+<p>The export works with zero special configuration — point <code>public</code> at the output directory:</p>
+<pre class="code-block-wrapper"><div class="code-block-container">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;hosting&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;public&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;dist&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;cleanUrls&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;trailingSlash&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+  <pre class="code-block-raw" style="display:none;"><code>{
+  &quot;hosting&quot;: {
+    &quot;public&quot;: &quot;dist&quot;,
+    &quot;cleanUrls&quot;: true,
+    &quot;trailingSlash&quot;: true
+  }
+}
+</code></pre>
+</div></pre>
+
+<p>Set <code>site.baseUrl</code> to your public origin so canonical URLs, <code>og:url</code>, <code>sitemap.xml</code>, and the <code>robots.txt</code> <code>Sitemap:</code> line are absolute.</p>
+<h3 id="github-pages" tabindex="-1">GitHub Pages</h3>
+<p>For <code>https://&lt;user&gt;.github.io/&lt;repo&gt;/</code> project sites, set both <code>baseUrl</code> and <code>basePath</code>:</p>
+<pre class="code-block-wrapper"><div class="code-block-container">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;site&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;baseUrl&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;https://user.github.io&quot;</span>
+  <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;generate&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;basePath&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;/repo&quot;</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+  <pre class="code-block-raw" style="display:none;"><code>{
+  &quot;site&quot;: {
+    &quot;baseUrl&quot;: &quot;https://user.github.io&quot;
+  },
+  &quot;generate&quot;: {
+    &quot;basePath&quot;: &quot;/repo&quot;
+  }
+}
+</code></pre>
+</div></pre>
+
+<p>All generated links, canonicals, sitemap entries, and <code>og:image</code> URLs are prefixed with <code>basePath</code> automatically.</p>
 <h2 id="social-sharing-preview" tabindex="-1">Social Sharing Preview</h2>
 <p>To get the best social sharing previews:</p>
 <ol>
@@ -2661,7 +3027,8 @@ Sitemap: https://docs.example.com/sitemap.xml
     <span class="hljs-attr">&quot;title&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;My Documentation&quot;</span><span class="hljs-punctuation">,</span>
     <span class="hljs-attr">&quot;description&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Comprehensive documentation for My Project&quot;</span><span class="hljs-punctuation">,</span>
     <span class="hljs-attr">&quot;baseUrl&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;https://docs.example.com&quot;</span><span class="hljs-punctuation">,</span>
-    <span class="hljs-attr">&quot;language&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;en&quot;</span>
+    <span class="hljs-attr">&quot;language&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;en&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;author&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Acme Docs Team&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;url&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;https://acme.example&quot;</span> <span class="hljs-punctuation">}</span>
   <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
   <span class="hljs-attr">&quot;seo&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
     <span class="hljs-attr">&quot;titleTemplate&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;%s | My Docs&quot;</span><span class="hljs-punctuation">,</span>
@@ -2670,7 +3037,9 @@ Sitemap: https://docs.example.com/sitemap.xml
     <span class="hljs-attr">&quot;twitterSite&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;@myhandle&quot;</span><span class="hljs-punctuation">,</span>
     <span class="hljs-attr">&quot;noIndex&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span>
     <span class="hljs-attr">&quot;generateSitemap&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;generateRobotsTxt&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
     <span class="hljs-attr">&quot;generateRssFeed&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;structuredData&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
     <span class="hljs-attr">&quot;rss&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
       <span class="hljs-attr">&quot;title&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;My Docs Blog&quot;</span><span class="hljs-punctuation">,</span>
       <span class="hljs-attr">&quot;feedUrl&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;/feed.xml&quot;</span><span class="hljs-punctuation">,</span>
@@ -2684,7 +3053,8 @@ Sitemap: https://docs.example.com/sitemap.xml
     &quot;title&quot;: &quot;My Documentation&quot;,
     &quot;description&quot;: &quot;Comprehensive documentation for My Project&quot;,
     &quot;baseUrl&quot;: &quot;https://docs.example.com&quot;,
-    &quot;language&quot;: &quot;en&quot;
+    &quot;language&quot;: &quot;en&quot;,
+    &quot;author&quot;: { &quot;name&quot;: &quot;Acme Docs Team&quot;, &quot;url&quot;: &quot;https://acme.example&quot; }
   },
   &quot;seo&quot;: {
     &quot;titleTemplate&quot;: &quot;%s | My Docs&quot;,
@@ -2693,7 +3063,9 @@ Sitemap: https://docs.example.com/sitemap.xml
     &quot;twitterSite&quot;: &quot;@myhandle&quot;,
     &quot;noIndex&quot;: false,
     &quot;generateSitemap&quot;: true,
+    &quot;generateRobotsTxt&quot;: true,
     &quot;generateRssFeed&quot;: true,
+    &quot;structuredData&quot;: true,
     &quot;rss&quot;: {
       &quot;title&quot;: &quot;My Docs Blog&quot;,
       &quot;feedUrl&quot;: &quot;/feed.xml&quot;,
@@ -2733,6 +3105,7 @@ Sitemap: https://docs.example.com/sitemap.xml
 <ul class="toc-list toc-level-3">
 <li class="toc-item"><a href="#title-template">Title Template</a></li>
 <li class="toc-item"><a href="#page-level-titles">Page-Level Titles</a></li>
+<li class="toc-item"><a href="#meta-descriptions">Meta Descriptions</a></li>
 </ul>
 <li class="toc-item"><a href="#open-graph">Open Graph</a></li>
 <li class="toc-item"><a href="#og-image-generation">OG Image Generation</a></li>
@@ -2753,6 +3126,7 @@ Sitemap: https://docs.example.com/sitemap.xml
 <li class="toc-item"><a href="#enabling">Enabling</a></li>
 <li class="toc-item"><a href="#endpoint">Endpoint</a></li>
 <li class="toc-item"><a href="#sitemap-contents">Sitemap Contents</a></li>
+<li class="toc-item"><a href="#absolute-urls-required">Absolute URLs required</a></li>
 <li class="toc-item"><a href="#example-output">Example Output</a></li>
 </ul>
 <li class="toc-item"><a href="#rss-feed">RSS Feed</a></li>
@@ -2768,6 +3142,15 @@ Sitemap: https://docs.example.com/sitemap.xml
 <li class="toc-item"><a href="#per-page">Per Page</a></li>
 </ul>
 <li class="toc-item"><a href="#robotstxt">robots.txt</a></li>
+<li class="toc-item"><a href="#structured-data-json-ld">Structured Data (JSON-LD)</a></li>
+<ul class="toc-list toc-level-3">
+<li class="toc-item"><a href="#author-dates">Author &amp;amp; dates</a></li>
+</ul>
+<li class="toc-item"><a href="#deployment">Deployment</a></li>
+<ul class="toc-list toc-level-3">
+<li class="toc-item"><a href="#firebase-hosting">Firebase Hosting</a></li>
+<li class="toc-item"><a href="#github-pages">GitHub Pages</a></li>
+</ul>
 <li class="toc-item"><a href="#social-sharing-preview">Social Sharing Preview</a></li>
 <ul class="toc-list toc-level-3">
 <li class="toc-item"><a href="#recommended-image-sizes">Recommended Image Sizes</a></li>
