@@ -74,6 +74,8 @@ export interface TemplateParams {
   sidebar?: NavItem[];
   urlPath?: string;
   isStaticExport?: boolean;
+  /** Source-file dates — fallback for `article:*` times and JSON-LD dates. */
+  fileDates?: { published?: Date; modified?: Date };
 }
 
 export function renderPage(params: TemplateParams): string {
@@ -114,6 +116,7 @@ export function renderPage(params: TemplateParams): string {
     settings,
     sidebar,
     isStaticExport,
+    fileDates: params.fileDates,
   });
 
   const seoTags = buildSeoTags(seoData, settings);

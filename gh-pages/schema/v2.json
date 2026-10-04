@@ -196,6 +196,11 @@
           "default": false,
           "description": "Generate RSS feed"
         },
+        "generateLlmsTxt": {
+          "type": "boolean",
+          "default": true,
+          "description": "Generate llms.txt and llms-full.txt for LLM consumers (custom files in docs root take precedence)"
+        },
         "rss": {
           "type": "object",
           "description": "RSS feed configuration",

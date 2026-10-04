@@ -266,6 +266,99 @@ describe("seo", () => {
         ),
       );
     });
+
+    it("falls back to fileDates when frontmatter omits dates", () => {
+      const html = render({
+        fileDates: {
+          published: new Date("2026-01-02T00:00:00Z"),
+          modified: new Date("2026-03-04T00:00:00Z"),
+        },
+      });
+      assert.ok(
+        html.includes(
+          '<meta property="article:published_time" content="2026-01-02">',
+        ),
+      );
+      assert.ok(
+        html.includes(
+          '<meta property="article:modified_time" content="2026-03-04">',
+        ),
+      );
+    });
+
+    it("frontmatter dates win over fileDates", () => {
+      const html = render({
+        frontmatter: { date: "2025-05-05" },
+        fileDates: { published: new Date("2026-01-02T00:00:00Z") },
+      });
+      assert.ok(
+        html.includes(
+          '<meta property="article:published_time" content="2025-05-05">',
+        ),
+      );
+      assert.ok(!html.includes('content="2026-01-02"'));
+    });
+  });
+
+  describe("og:locale", () => {
+    it("maps bare language codes to language_TERRITORY form", () => {
+      const vi = render({
+        settings: makeSettings({ site: { language: "vi" } }),
+      });
+      assert.ok(
+        vi.includes('<meta property="og:locale" content="vi_VN">'),
+        "vi should become vi_VN",
+      );
+
+      const en = render({
+        settings: makeSettings({ site: { language: "en" } }),
+      });
+      assert.ok(en.includes('<meta property="og:locale" content="en_US">'));
+    });
+
+    it("normalizes region subtags to uppercase", () => {
+      const br = render({
+        settings: makeSettings({ site: { language: "pt-br" } }),
+      });
+      assert.ok(br.includes('<meta property="og:locale" content="pt_BR">'));
+
+      const zh = render({
+        settings: makeSettings({ site: { language: "zh-Hant-TW" } }),
+      });
+      assert.ok(zh.includes('<meta property="og:locale" content="zh_TW">'));
+    });
+  });
+
+  describe("og:image:alt", () => {
+    it("emits og:image:alt and twitter:image:alt with the page title", () => {
+      const html = render({
+        settings: makeSettings({
+          site: { baseUrl: "https://docs.example.com" },
+        }),
+        frontmatter: { image: "/images/og.png" },
+        title: "My Guide",
+      });
+      assert.ok(
+        html.includes('<meta property="og:image:alt" content="My Guide">'),
+      );
+      assert.ok(
+        html.includes('<meta name="twitter:image:alt" content="My Guide">'),
+      );
+    });
+
+    it("prefers imageAlt frontmatter for alt text", () => {
+      const html = render({
+        frontmatter: {
+          image: "/images/og.png",
+          imageAlt: "Architecture diagram",
+        },
+      });
+      assert.ok(
+        html.includes(
+          '<meta property="og:image:alt" content="Architecture diagram">',
+        ),
+      );
+    });
   });
 
   describe("noindex", () => {

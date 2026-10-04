@@ -5,11 +5,76 @@ import { normalizeBasePath, toAbsoluteAssetUrl } from "../seo/url.js";
 export type { SeoData } from "../seo/metadata.js";
 
 /**
- * Convert `site.language` to the Open Graph locale form:
- * `pt-BR` → `pt_BR`; bare codes like `en`/`vi` pass through unchanged.
+ * Default territory per language (CLDR likely-subtags) used when
+ * `site.language` is a bare code without a region.
+ */
+const DEFAULT_LOCALE_TERRITORY: Record<string, string> = {
+  ar: "SA",
+  bg: "BG",
+  bn: "BD",
+  ca: "ES",
+  cs: "CZ",
+  da: "DK",
+  de: "DE",
+  el: "GR",
+  en: "US",
+  es: "ES",
+  et: "EE",
+  eu: "ES",
+  fa: "IR",
+  fi: "FI",
+  fil: "PH",
+  fr: "FR",
+  gl: "ES",
+  he: "IL",
+  hi: "IN",
+  hr: "HR",
+  hu: "HU",
+  id: "ID",
+  it: "IT",
+  ja: "JP",
+  ko: "KR",
+  lt: "LT",
+  lv: "LV",
+  mr: "IN",
+  ms: "MY",
+  nb: "NO",
+  nl: "NL",
+  pa: "IN",
+  pl: "PL",
+  pt: "BR",
+  ro: "RO",
+  ru: "RU",
+  sk: "SK",
+  sl: "SI",
+  sr: "RS",
+  sv: "SE",
+  sw: "TZ",
+  ta: "IN",
+  te: "IN",
+  th: "TH",
+  tr: "TR",
+  uk: "UA",
+  ur: "PK",
+  vi: "VN",
+  zh: "CN",
+};
+
+/**
+ * Convert `site.language` to the Open Graph `language_TERRITORY` form:
+ * `pt-BR`/`pt_br` → `pt_BR`, `zh-Hant-TW` → `zh_TW`; bare codes resolve a
+ * default territory (`en` → `en_US`, `vi` → `vi_VN`) with an `xx_XX`
+ * heuristic fallback for unlisted languages.
  */
 function toOgLocale(language: string): string {
-  return language.trim().replace(/-/g, "_");
+  const parts = language.trim().split(/[-_]/).filter(Boolean);
+  if (parts.length === 0) return language.trim();
+  const lang = parts[0].toLowerCase();
+  const last = parts[parts.length - 1];
+  if (parts.length > 1 && /^([a-zA-Z]{2}|\d{3})$/.test(last)) {
+    return `${lang}_${last.toUpperCase()}`;
+  }
+  return `${lang}_${DEFAULT_LOCALE_TERRITORY[lang] ?? lang.toUpperCase()}`;
 }
 
 function escapeHtml(text: string): string {
@@ -81,6 +146,9 @@ export function buildSeoTags(data: SeoData, settings: Settings): string {
 
   if (image) {
     tags.push(`<meta property="og:image" content="${escapeHtml(image)}">`);
+    tags.push(
+      `<meta property="og:image:alt" content="${escapeHtml(data.imageAlt ?? data.title)}">`,
+    );
     if (data.imageWidth) {
       tags.push(
         `<meta property="og:image:width" content="${data.imageWidth}">`,
@@ -109,6 +177,9 @@ export function buildSeoTags(data: SeoData, settings: Settings): string {
 
   if (image) {
     tags.push(`<meta name="twitter:image" content="${escapeHtml(image)}">`);
+    tags.push(
+      `<meta name="twitter:image:alt" content="${escapeHtml(data.imageAlt ?? data.title)}">`,
+    );
   }
 
   // Article meta
