@@ -6,6 +6,7 @@ import {
   type TocItem,
 } from "./renderer/markdown.js";
 import { renderMdx, type MdxRenderResult } from "./renderer/mdx.js";
+import { extractFirstHeading } from "./seo/extract.js";
 import { renderPage } from "./template/index.js";
 import { buildSidebar, type NavItem } from "./template/sidebar.js";
 import { renderDirectory } from "./directory.js";
@@ -76,6 +77,8 @@ export async function renderPageService(
     filePath: urlPath,
     settings,
     frontmatter: result.frontmatter,
+    content,
+    kind: "document",
     toc: result.toc,
     sidebar,
     urlPath,
@@ -152,6 +155,7 @@ export async function renderDirectoryPage(
     body: renderDirectory({ urlPath, entries: entriesWithSize }),
     filePath: urlPath,
     settings,
+    kind: "directory",
     urlPath,
     sidebar,
     isStaticExport: isStatic,
@@ -166,7 +170,7 @@ export function isHidden(filename: string, settings: Settings): boolean {
     if (pattern.startsWith("*") && filename.endsWith(pattern.slice(1)))
       return true;
   }
-  if (filename.startsWith("_")) return true;
+  if (filename.startsWith("_") || filename.startsWith(".")) return true;
   return false;
 }
 
@@ -178,13 +182,7 @@ export function isAllowedExtension(ext: string, settings: Settings): boolean {
   return settings.files.extensions.serve.includes(ext);
 }
 
-export function extractFirstHeading(content: string): string | null {
-  const h1Match = content.match(/^#\s+(.+)$/m);
-  if (h1Match) {
-    return h1Match[1].trim();
-  }
-  return null;
-}
+export { extractFirstHeading } from "./seo/extract.js";
 
 export function humanizeFilename(filename: string): string {
   return filename

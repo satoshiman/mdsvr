@@ -59,7 +59,17 @@ export async function route(
 
   // Special routes
   if (urlPath === "/sitemap.xml" && settings.seo.generateSitemap) {
-    const sitemap = await generateSitemap(rootDir, settings);
+    const proto = ((req.headers["x-forwarded-proto"] as string) || "http")
+      .split(",")[0]
+      .trim();
+    const origin = req.headers.host
+      ? `${proto}://${req.headers.host}`
+      : undefined;
+    const sitemap = await generateSitemap(rootDir, settings, origin);
+    if (sitemap === null) {
+      sendError(res, 404, "Not Found", settings);
+      return;
+    }
     res.writeHead(200, { "Content-Type": "application/xml" });
     res.end(sitemap);
     return;
@@ -345,6 +355,7 @@ function sendError(
 </div>`,
     filePath: "",
     settings,
+    kind: "generic",
     isStaticExport: false,
   });
 

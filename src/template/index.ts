@@ -1,8 +1,7 @@
 import type { Settings } from "../settings/index.js";
 import type { TocItem, MarkdownResult } from "../renderer/markdown.js";
-import { extractSeoData } from "../renderer/markdown.js";
-import { getOgImageUrl } from "../og/index.js";
-import { buildSeoTags, type SeoData } from "./seo.js";
+import { buildJsonLd, resolveSeoData, type PageKind } from "../seo/index.js";
+import { buildSeoTags } from "./seo.js";
 import {
   renderSidebar,
   renderToc,
@@ -62,6 +61,10 @@ export interface TemplateParams {
   filePath: string;
   settings: Settings;
   frontmatter?: Record<string, unknown>;
+  /** Raw markdown/MDX source — enables meta description auto-extraction. */
+  content?: string;
+  /** Page kind for SEO/JSON-LD ("document" default). */
+  kind?: PageKind;
   toc?: TocItem[];
   sidebar?: NavItem[];
   urlPath?: string;
@@ -96,54 +99,20 @@ export function renderPage(params: TemplateParams): string {
 })();
 </script>`;
 
-  // Read the raw markdown content for SEO extraction if needed
-  let rawContent = "";
-  try {
-    if (params.isStaticExport && body) {
-      // In static export, we need to access the original markdown content
-      // This is passed through the render process, but we'll try to extract from frontmatter fallback
-    }
-  } catch {
-    // Ignore errors
-  }
-
-  // Build SEO data from frontmatter with fallbacks
-  // Priority: frontmatter > auto-extracted > site defaults
-  const extractedSeo = rawContent
-    ? extractSeoData(rawContent)
-    : { title: null, description: null };
-
-  const seoData: SeoData = {
-    title: (frontmatter.title as string) || title,
-    description:
-      (frontmatter.description as string) ||
-      extractedSeo.description ||
-      settings.site.description,
-    image: (frontmatter.image as string) || undefined,
-    url: urlPath,
-    type: frontmatter.date ? "article" : "website",
-    date: (frontmatter.date as string) || undefined,
-    author: (frontmatter.author as string) || undefined,
-    noIndex: (frontmatter.noIndex as boolean) || false,
-  };
-
-  // Add OG image URL if enabled in static export
-  if (params.isStaticExport && settings.seo.og?.enabled && !seoData.image) {
-    const ogUrl = getOgImageUrl(
-      urlPath,
-      settings.generate.basePath || "",
-      settings.seo.og.imageFormat,
-    );
-    seoData.image = ogUrl;
-  }
-
-  // Fall back to defaultImage if no image was set
-  if (!seoData.image) {
-    seoData.image = settings.seo.defaultImage;
-  }
+  // Resolve SEO data: frontmatter → auto-extracted → site defaults
+  const seoData = resolveSeoData({
+    frontmatter,
+    content: params.content,
+    title,
+    urlPath,
+    kind: params.kind,
+    settings,
+    sidebar,
+    isStaticExport,
+  });
 
   const seoTags = buildSeoTags(seoData, settings);
-  const pageTitle = settings.seo.titleTemplate.replace("%s", seoData.title);
+  const jsonLd = buildJsonLd(seoData, settings);
 
   // Render sidebar if enabled
   const hasSidebar = settings.navigation.sidebar.enabled && sidebar.length > 0;
@@ -225,6 +194,7 @@ export function renderPage(params: TemplateParams): string {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   ${themeScript}
   ${seoTags}
+  ${jsonLd}
   ${settings.site.favicon ? `<link rel="icon" href="${settings.site.favicon}">` : ""}
   ${body.includes('class="katex') ? '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css" crossorigin="anonymous">' : ""}
   <style>

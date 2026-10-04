@@ -13,6 +13,11 @@ export const LogoSchema = z.object({
   href: z.string().default("/"),
 });
 
+export const SiteAuthorSchema = z.object({
+  name: z.string(),
+  url: z.string().optional(),
+});
+
 export const SiteSchema = z.object({
   title: z.string().default("mdsvr Docs"),
   description: z.string().default(""),
@@ -20,6 +25,7 @@ export const SiteSchema = z.object({
   language: z.string().default("en"),
   logo: LogoSchema.optional(),
   favicon: z.string().optional(),
+  author: SiteAuthorSchema.optional(),
 });
 
 export const AppearanceSchema = z.object({
@@ -93,7 +99,8 @@ export const OgSchema = z.object({
 });
 
 export const SeoSchema = z.object({
-  titleTemplate: z.string().default("%s"),
+  // Optional. When unset, titles render as "<page title> | <site title>".
+  titleTemplate: z.string().optional(),
   defaultImage: z.string().optional(),
   twitterCard: z
     .enum(["summary", "summary_large_image"])
@@ -101,7 +108,9 @@ export const SeoSchema = z.object({
   twitterSite: z.string().optional(),
   noIndex: z.boolean().default(false),
   generateSitemap: z.boolean().default(true),
+  generateRobotsTxt: z.boolean().default(true),
   generateRssFeed: z.boolean().default(false),
+  structuredData: z.boolean().default(true),
   rss: z
     .object({
       title: z.string(),
@@ -167,6 +176,7 @@ export const SettingsSchema = z.object({
 
 export type Settings = z.infer<typeof SettingsSchema>;
 export type Logo = z.infer<typeof LogoSchema>;
+export type SiteAuthor = z.infer<typeof SiteAuthorSchema>;
 export type Site = z.infer<typeof SiteSchema>;
 export type Appearance = z.infer<typeof AppearanceSchema>;
 export type Navigation = z.infer<typeof NavigationSchema>;

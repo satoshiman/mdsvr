@@ -24,6 +24,7 @@ Every page includes optimized meta tags based on your `_mdsvr/settings.json` and
 
 - `%s` is replaced with the page title
 - Example: `Installation | My Docs`
+- When `titleTemplate` is **not set**, titles default to `<page title> | <site title>` (or just the page title when `site.title` is empty). Set `titleTemplate: "%s"` to keep bare titles.
 
 ### Page-Level Titles
 
@@ -33,12 +34,25 @@ Override the title for individual pages using frontmatter:
 ---
 title: Custom Page Title
 description: A description for SEO and social sharing
+seoTitle: Custom Page Title | Keyword-Rich Suffix
 ---
 
 # Page Heading
 
 Content...
 ```
+
+- `title` — used for the `<title>` tag, `og:title`, and `twitter:title`
+- `seoTitle` — optional; wins over `title` for SEO output when present
+- Without either, the first `#` heading (then the humanized filename) is used
+
+### Meta Descriptions
+
+Every page gets a `<meta name="description">` resolved in this order:
+
+1. `description` in frontmatter
+2. The first meaningful paragraph of the page (code blocks, headings, HTML, and nav-like lines are skipped; truncated to ~160 characters)
+3. `site.description` as the last fallback
 
 ## Open Graph
 
@@ -56,9 +70,10 @@ Generated tags:
 
 - `og:title` — Page title
 - `og:description` — Page or site description
-- `og:type` — `website` or `article`
-- `og:url` — Canonical URL
-- `og:image` — Featured image
+- `og:type` — `article` for document pages, `website` for the homepage and directory/auto-index pages
+- `og:url` — Absolute canonical URL (only when `site.baseUrl` is set)
+- `og:site_name` — Site title
+- `og:image` — Featured image, resolved to an absolute URL against `site.baseUrl` + `generate.basePath` when possible
 
 ## OG Image Generation
 
@@ -170,6 +185,8 @@ Twitter Cards make your links stand out on Twitter/X.
 - `summary` — Small square image + text
 - `summary_large_image` — Large featured image (recommended)
 
+Generated tags: `twitter:card`, `twitter:site`, `twitter:title`, `twitter:description`, and `twitter:image`.
+
 ## Sitemap
 
 Generate an XML sitemap for search engines.
@@ -196,9 +213,18 @@ https://yoursite.com/sitemap.xml
 
 The sitemap includes:
 
-- All `.md` and `.mdx` files
-- Last modified date (from file mtime or frontmatter `date`)
+- All rendered `.md`/`.mdx` pages **and** auto-generated directory index pages
+- Canonical trailing-slash URLs, percent-encoded and deduplicated
+- `lastmod` from frontmatter `dateModified` (then `date`, then file mtime)
 - Change frequency (`weekly`)
+- `noindex` pages are excluded
+
+### Absolute URLs required
+
+A sitemap must contain absolute URLs, so behavior depends on `site.baseUrl`:
+
+- **Export**: `sitemap.xml` is only written when `site.baseUrl` is configured — otherwise generation is skipped with a warning.
+- **Serve mode**: `/sitemap.xml` uses `site.baseUrl` when set, otherwise the actual request origin (e.g. `http://localhost:1800`).
 
 ### Example Output
 
@@ -211,7 +237,7 @@ The sitemap includes:
     <changefreq>weekly</changefreq>
   </url>
   <url>
-    <loc>https://docs.example.com/configuration</loc>
+    <loc>https://docs.example.com/configuration/</loc>
     <lastmod>2025-01-10</lastmod>
     <changefreq>weekly</changefreq>
   </url>
@@ -275,11 +301,13 @@ Canonical URLs help search engines understand the primary version of a page.
 }
 ```
 
-With `baseUrl` set, every page includes:
+With `baseUrl` set, every page includes an absolute canonical in the canonical trailing-slash form (`baseUrl` + `generate.basePath` + page URL):
 
 ```html
-<link rel="canonical" href="https://docs.example.com/page-path" />
+<link rel="canonical" href="https://docs.example.com/page-path/" />
 ```
+
+The same absolute URL is used for `og:url` and JSON-LD. When `baseUrl` is **not** configured, `canonical` and `og:url` are omitted entirely — relative canonicals are never emitted.
 
 ## No-Index
 
@@ -299,7 +327,7 @@ Prevent specific pages from being indexed:
 
 ```mdx
 ---
-noIndex: true
+noindex: true
 ---
 
 # Draft Page
@@ -310,12 +338,23 @@ This page won't be indexed by search engines.
 This adds:
 
 ```html
-<meta name="robots" content="noindex" />
+<meta name="robots" content="noindex, nofollow" />
 ```
+
+- `noindex` is the canonical spelling; the older `noIndex` alias still works (`noindex` wins if both are set)
+- `noindex` pages are also excluded from `sitemap.xml`
 
 ## robots.txt
 
-While mdsvr doesn't generate `robots.txt` automatically, you can create one in your docs root:
+By default, mdsvr exports a permissive `robots.txt` for static sites:
+
+```
+User-agent: *
+Allow: /
+Sitemap: https://docs.example.com/sitemap.xml
+```
+
+Place a non-empty `robots.txt` in your docs root to override the generated file:
 
 ```
 docs/
@@ -324,13 +363,104 @@ docs/
 └── ...
 ```
 
-Example `robots.txt`:
+To keep `robots.txt` entirely under your own control, disable generation:
+
+```json
+{
+  "seo": {
+    "generateRobotsTxt": false
+  }
+}
+```
+
+Example custom `robots.txt`:
 
 ```
 User-agent: *
 Allow: /
 Sitemap: https://docs.example.com/sitemap.xml
 ```
+
+The generated `Sitemap:` line is only included when an absolute sitemap URL can be derived (`site.baseUrl`, or the request origin in serve mode) — relative `Sitemap:` URLs are invalid.
+
+## Structured Data (JSON-LD)
+
+Every page emits one `<script type="application/ld+json">` block with a schema.org `@graph`:
+
+- **Document pages** → `Article` (`headline`, `description`, `url`, `image`, `author`, `datePublished`, `dateModified` — only fields with real data, never invented)
+- **Homepage** → `WebSite` (`name`, `url`, `description`)
+- **Nested routes** → `BreadcrumbList` when breadcrumbs are enabled (built from the route path and sidebar titles)
+
+Disable with:
+
+```json
+{
+  "seo": {
+    "structuredData": false
+  }
+}
+```
+
+### Author & dates
+
+Article metadata comes from frontmatter and site settings:
+
+```mdx
+---
+title: My Article
+author: Jane Doe # string, or { name: "Jane", url: "https://..." }
+date: 2026-10-01 # treated as datePublished
+datePublished: 2026-09-30 # wins over `date` when set
+dateModified: 2026-10-04
+---
+```
+
+A site-wide default author can be configured and emits `<meta name="author">` plus JSON-LD `author` (as an `Organization`):
+
+```json
+{
+  "site": {
+    "author": { "name": "Acme Docs Team", "url": "https://acme.example/about" }
+  }
+}
+```
+
+Frontmatter `author` (a `Person`) wins over `site.author`.
+
+## Deployment
+
+### Firebase Hosting
+
+The export works with zero special configuration — point `public` at the output directory:
+
+```json
+{
+  "hosting": {
+    "public": "dist",
+    "cleanUrls": true,
+    "trailingSlash": true
+  }
+}
+```
+
+Set `site.baseUrl` to your public origin so canonical URLs, `og:url`, `sitemap.xml`, and the `robots.txt` `Sitemap:` line are absolute.
+
+### GitHub Pages
+
+For `https://<user>.github.io/<repo>/` project sites, set both `baseUrl` and `basePath`:
+
+```json
+{
+  "site": {
+    "baseUrl": "https://user.github.io"
+  },
+  "generate": {
+    "basePath": "/repo"
+  }
+}
+```
+
+All generated links, canonicals, sitemap entries, and `og:image` URLs are prefixed with `basePath` automatically.
 
 ## Social Sharing Preview
 
@@ -354,7 +484,8 @@ To get the best social sharing previews:
     "title": "My Documentation",
     "description": "Comprehensive documentation for My Project",
     "baseUrl": "https://docs.example.com",
-    "language": "en"
+    "language": "en",
+    "author": { "name": "Acme Docs Team", "url": "https://acme.example" }
   },
   "seo": {
     "titleTemplate": "%s | My Docs",
@@ -363,7 +494,9 @@ To get the best social sharing previews:
     "twitterSite": "@myhandle",
     "noIndex": false,
     "generateSitemap": true,
+    "generateRobotsTxt": true,
     "generateRssFeed": true,
+    "structuredData": true,
     "rss": {
       "title": "My Docs Blog",
       "feedUrl": "/feed.xml",
