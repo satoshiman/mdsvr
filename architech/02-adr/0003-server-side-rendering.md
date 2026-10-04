@@ -52,5 +52,5 @@ Renderer phải trả `{ html, frontmatter, toc }`; router và exporter đều �
 
 ## Liên quan
 
-- [Luồng HTTP và render](../01-architecture/03-request-rendering-flow)
-- [ADR-0008](./0008-trusted-content-policy)
+- [Luồng HTTP và render](../01-architecture/03-request-rendering-flow.md)
+- [ADR-0008](./0008-trusted-content-policy.md)

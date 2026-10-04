@@ -95,5 +95,5 @@ Pipeline dùng remark GFM/frontmatter/math và rehype slug/autolink/KaTeX. Kết
 
 ## Liên quan
 
-- [Mô hình bảo mật](./06-security-model)
-- [ADR-0003: Render phía server](../02-adr/0003-server-side-rendering)
+- [Mô hình bảo mật](./06-security-model.md)
+- [ADR-0003: Render phía server](../02-adr/0003-server-side-rendering.md)

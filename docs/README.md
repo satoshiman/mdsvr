@@ -46,12 +46,12 @@ npx mdsvr ./docs
 
 | Feature                                   | Description                                                    |
 | ----------------------------------------- | -------------------------------------------------------------- |
-| 📝 [Markdown & MDX](./03-features)        | Render .md and .mdx files with built-in interactive components |
-| 🎨 [Themes](./03-features/theming)        | Dark/light mode with customizable accent colors                |
-| 🔍 [Search](./03-features/search)         | Built-in full-text search with keyboard shortcut (⌘K)          |
-| 📑 [Navigation](./03-features/navigation) | Auto-generated sidebar and table of contents                   |
-| 🔎 [SEO](./03-features/seo)               | Sitemap, RSS feed, Open Graph, and Twitter Cards               |
-| ⚙️ [Settings](./02-settings)              | Configure everything via settings.json                         |
+| 📝 [Markdown & MDX](./03-features/README.md)        | Render .md and .mdx files with built-in interactive components |
+| 🎨 [Themes](./03-features/theming.md)        | Dark/light mode with customizable accent colors                |
+| 🔍 [Search](./03-features/search.md)         | Built-in full-text search with keyboard shortcut (⌘K)          |
+| 📑 [Navigation](./03-features/navigation.md) | Auto-generated sidebar and table of contents                   |
+| 🔎 [SEO](./03-features/seo.md)               | Sitemap, RSS feed, Open Graph, and Twitter Cards               |
+| ⚙️ [Settings](./02-settings/README.md)              | Configure everything via settings.json                         |
 
 ## This docs structure for reference
 
@@ -79,14 +79,14 @@ docs/
 
 ## Next Steps
 
-- **[Quick Start](./01-getting-started)** — Get running in 30 seconds
-- **[Installation](./01-getting-started)** — Install options
-- **[MDX Components](./03-features/mdx)** — Make your docs interactive
-- **[Configuration](./02-settings)** — Customize your site
-- **[Writing Content](./02-settings)** — Best practices
-- **[Deployment](./02-settings)** — Go live
-- **[Features](./03-features)** — See all features
-- **[CLI Reference](./04-reference)** — Command reference
+- **[Quick Start](./01-getting-started/README.md)** — Get running in 30 seconds
+- **[Installation](./01-getting-started/README.md)** — Install options
+- **[MDX Components](./03-features/mdx.mdx)** — Make your docs interactive
+- **[Configuration](./02-settings/README.md)** — Customize your site
+- **[Writing Content](./02-settings/README.md)** — Best practices
+- **[Deployment](./02-settings/README.md)** — Go live
+- **[Features](./03-features/README.md)** — See all features
+- **[CLI Reference](./04-reference/README.md)** — Command reference
 
 ---
 

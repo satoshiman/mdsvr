@@ -54,5 +54,5 @@ Static output phải hoạt động trên các nhà cung cấp hosting phổ bi�
 
 ## Liên quan
 
-- [Luồng static export](../01-architecture/04-static-export-flow)
-- [ADR-0009: Source content tương thích GitHub](./0009-github-compatible-source-format)
+- [Luồng static export](../01-architecture/04-static-export-flow.md)
+- [ADR-0009: Source content tương thích GitHub](./0009-github-compatible-source-format.md)

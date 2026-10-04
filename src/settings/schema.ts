@@ -147,6 +147,9 @@ export const FooterSchema = z.object({
 export const GenerateSchema = z.object({
   basePath: z.string().default(""),
   outputDir: z.string().default("dist"),
+  // When true, dynamic serve rewrites .md/.mdx links to clean URLs
+  // (matching static export) and redirects .md/.mdx URLs to clean URLs.
+  cleanUrls: z.boolean().default(false),
 });
 
 export const SettingsSchema = z.object({

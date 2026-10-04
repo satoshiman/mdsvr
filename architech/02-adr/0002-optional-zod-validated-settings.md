@@ -53,4 +53,4 @@ Dùng `SettingsSchema` bằng Zod làm model settings. `_mdsvr/settings.json` l�
 
 ## Liên quan
 
-- [Cấu hình và dữ liệu](../01-architecture/05-configuration-and-data)
+- [Cấu hình và dữ liệu](../01-architecture/05-configuration-and-data.md)

@@ -75,5 +75,5 @@ Router hiện tập trung vào `Content-Type`; các header như CSP, `X-Content-
 
 ## Liên quan
 
-- [ADR-0004: Kiểm soát truy cập filesystem nhiều lớp](../02-adr/0004-layered-filesystem-access-control)
-- [ADR-0008: Chính sách nội dung tin cậy](../02-adr/0008-trusted-content-policy)
+- [ADR-0004: Kiểm soát truy cập filesystem nhiều lớp](../02-adr/0004-layered-filesystem-access-control.md)
+- [ADR-0008: Chính sách nội dung tin cậy](../02-adr/0008-trusted-content-policy.md)

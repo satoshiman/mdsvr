@@ -73,5 +73,5 @@ Router và exporter cùng thực hiện các bước chọn renderer, chọn tit
 
 ## Liên quan
 
-- [ADR-0005: Clean URL cho static export](../02-adr/0005-clean-urls-for-static-export)
-- [ADR-0007: Hợp nhất pipeline render](../02-adr/0007-unify-page-rendering-pipeline)
+- [ADR-0005: Clean URL cho static export](../02-adr/0005-clean-urls-for-static-export.md)
+- [ADR-0007: Hợp nhất pipeline render](../02-adr/0007-unify-page-rendering-pipeline.md)

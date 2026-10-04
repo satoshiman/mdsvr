@@ -64,7 +64,7 @@ ADR chuyển sang Accepted khi link `.md` trong source hoạt động trên GitH
 
 ## Liên quan
 
-- [ADR-0005: Clean URL cho static export](./0005-clean-urls-for-static-export)
-- [ADR-0007: Hợp nhất pipeline render](./0007-unify-page-rendering-pipeline)
-- [Luồng HTTP và render](../01-architecture/03-request-rendering-flow)
-- [Luồng static export](../01-architecture/04-static-export-flow)
+- [ADR-0005: Clean URL cho static export](./0005-clean-urls-for-static-export.md)
+- [ADR-0007: Hợp nhất pipeline render](./0007-unify-page-rendering-pipeline.md)
+- [Luồng HTTP và render](../01-architecture/03-request-rendering-flow.md)
+- [Luồng static export](../01-architecture/04-static-export-flow.md)

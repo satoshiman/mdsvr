@@ -64,5 +64,5 @@ ADR chuyển sang Accepted khi policy xuất hiện nhất quán trong tài li�
 
 ## Liên quan
 
-- [Mô hình bảo mật](../01-architecture/06-security-model)
-- [ADR-0003](./0003-server-side-rendering)
+- [Mô hình bảo mật](../01-architecture/06-security-model.md)
+- [ADR-0003](./0003-server-side-rendering.md)

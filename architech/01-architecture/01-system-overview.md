@@ -64,6 +64,6 @@ MDX được compile rồi thực thi trong Node.js, vì vậy chỉ nên dùng 
 
 ## Liên quan
 
-- [Cấu trúc module](./02-module-map)
-- [Mô hình bảo mật](./06-security-model)
-- [ADR-0001: Filesystem là nguồn nội dung](../02-adr/0001-filesystem-as-content-source)
+- [Cấu trúc module](./02-module-map.md)
+- [Mô hình bảo mật](./06-security-model.md)
+- [ADR-0001: Filesystem là nguồn nội dung](../02-adr/0001-filesystem-as-content-source.md)

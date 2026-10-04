@@ -18,6 +18,7 @@ describe("renderer", () => {
     generate: {
       basePath: "",
       outputDir: "dist",
+      cleanUrls: false,
     },
     navigation: {
       sidebar: {

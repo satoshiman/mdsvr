@@ -91,5 +91,5 @@ flowchart TD
 
 ## Liên quan
 
-- [Luồng HTTP và render](./03-request-rendering-flow)
-- [Luồng static export](./04-static-export-flow)
+- [Luồng HTTP và render](./03-request-rendering-flow.md)
+- [Luồng static export](./04-static-export-flow.md)
