@@ -1,0 +1,7 @@
+{
+  "workspace_root": "/Users/apple",
+  "repos": {
+    "md-serve": "md-serve"
+  },
+  "fallback_repo": "md-serve"
+}
