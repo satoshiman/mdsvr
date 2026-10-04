@@ -1,8 +1,7 @@
 import http from "node:http";
 import path from "node:path";
-import { promises as fs } from "node:fs";
+import { promises as fs, type FSWatcher } from "node:fs";
 import os from "node:os";
-import { fileURLToPath } from "node:url";
 import type { ServeOptions, ServerInstance } from "./types.js";
 import { route } from "./router.js";
 import {
@@ -12,9 +11,12 @@ import {
 } from "./settings/index.js";
 import { buildSearchIndex } from "./generators/search-index.js";
 
-// Global state for the server
-let currentSettings: Settings;
-let searchIndexCache: unknown = null;
+// Per-instance server state (ADR-0006): each createServer() call owns its own
+// context so concurrent instances never share settings or caches.
+export interface ServerContext {
+  settings: Settings;
+  searchIndexCache: unknown;
+}
 
 export async function createServer(
   rootDir: string,
@@ -33,12 +35,14 @@ export async function createServer(
     throw new Error(`Directory does not exist: ${absoluteRoot}`);
   }
 
-  // Load settings
-  currentSettings = await loadSettings(absoluteRoot);
+  const ctx: ServerContext = {
+    settings: await loadSettings(absoluteRoot),
+    searchIndexCache: null,
+  };
 
   // Build search index
-  if (currentSettings.search.enabled) {
-    searchIndexCache = await buildSearchIndex(absoluteRoot, currentSettings);
+  if (ctx.settings.search.enabled) {
+    ctx.searchIndexCache = await buildSearchIndex(absoluteRoot, ctx.settings);
   }
 
   const port = options.port ?? 1800;
@@ -49,10 +53,11 @@ export async function createServer(
   return new Promise((resolve, reject) => {
     let currentPort = port;
     let retryCount = 0;
+    let settingsWatcher: FSWatcher | null = null;
 
     const tryListen = () => {
       const server = http.createServer((req, res) => {
-        route(req, res, absoluteRoot, currentSettings, searchIndexCache).catch(
+        route(req, res, absoluteRoot, ctx.settings, ctx.searchIndexCache).catch(
           (err) => {
             console.error("Routing error:", err);
             res.writeHead(500, { "Content-Type": "text/plain" });
@@ -109,18 +114,21 @@ export async function createServer(
                     "_mdsvr/settings.json",
                   );
                   await fs.access(settingsPath);
-                  watchSettings(absoluteRoot, async (newSettings) => {
-                    currentSettings = newSettings;
-                    if (currentSettings.search.enabled) {
-                      searchIndexCache = await buildSearchIndex(
-                        absoluteRoot,
-                        currentSettings,
-                      );
-                    }
-                    if (!options.silent) {
-                      console.log("[mdsvr] Settings reloaded");
-                    }
-                  });
+                  settingsWatcher = watchSettings(
+                    absoluteRoot,
+                    async (newSettings) => {
+                      ctx.settings = newSettings;
+                      if (ctx.settings.search.enabled) {
+                        ctx.searchIndexCache = await buildSearchIndex(
+                          absoluteRoot,
+                          ctx.settings,
+                        );
+                      }
+                      if (!options.silent) {
+                        console.log("[mdsvr] Settings reloaded");
+                      }
+                    },
+                  );
                 } catch {
                   // No _mdsvr/settings.json to watch, that's fine
                 }
@@ -131,20 +139,23 @@ export async function createServer(
               port: actualPort,
               host,
               url,
-              settings: currentSettings,
+              get settings() {
+                return ctx.settings;
+              },
               close: () =>
                 new Promise((res, rej) => {
+                  settingsWatcher?.close();
                   server.close((err) => {
                     if (err) rej(err);
                     else res();
                   });
                 }),
               reloadSettings: async () => {
-                currentSettings = await loadSettings(absoluteRoot);
-                if (currentSettings.search.enabled) {
-                  searchIndexCache = await buildSearchIndex(
+                ctx.settings = await loadSettings(absoluteRoot);
+                if (ctx.settings.search.enabled) {
+                  ctx.searchIndexCache = await buildSearchIndex(
                     absoluteRoot,
-                    currentSettings,
+                    ctx.settings,
                   );
                 }
               },
@@ -192,6 +203,3 @@ export function getNetworkAddress(): string | undefined {
   }
   return undefined;
 }
-
-// Export for use by router
-export { currentSettings, searchIndexCache };
