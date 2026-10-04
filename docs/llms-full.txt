@@ -1,0 +1,4487 @@
+# MDSVR | Markdown Documentation Server
+
+Full-featured documentation website server with MDX support, site settings, SEO, and navigation
+
+---
+
+# Getting Started
+
+Source: https://mdsvr.js.org/docs/01-getting-started/
+
+# Getting Started
+
+New to mdsvr? Start here to get up and running in minutes.
+
+## Quick Start
+
+Get your documentation site running in under 30 seconds.
+
+### One-Command Setup
+
+```bash
+npx mdsvr ./docs --open
+```
+
+That's it! No configuration needed, no build step required.
+
+### Step-by-Step
+
+#### 1. Create a Docs Folder
+
+```bash
+mkdir docs
+echo "# Hello World" > docs/README.md
+```
+
+#### 2. Start the Server
+
+```bash
+npx mdsvr ./docs --open
+```
+
+The `--open` flag automatically opens your browser to `http://localhost:1800`.
+
+### What Just Happened?
+
+mdsvr:
+
+1. Scanned your `docs/` folder
+2. Found `README.md`, and all your other markdown files, and rendered them as individual pages
+3. Generated navigation from your folder structure (sorted alphabetically)
+4. Started a server on port 1800
+
+---
+
+## Installation
+
+mdsvr requires **Node.js 18+**. Check your version:
+
+```bash
+node --version
+```
+
+### Option 1: npx (Recommended)
+
+No installation needed. Run directly:
+
+```bash
+npx mdsvr ./docs
+```
+
+### Option 2: Global Install
+
+Install once, use anywhere:
+
+```bash
+npm install -g mdsvr
+mdsvr ./docs
+```
+
+### Option 3: Local Install
+
+Add to a specific project:
+
+```bash
+npm install --save-dev mdsvr
+```
+
+Then add to your `package.json`:
+
+```json
+{
+  "scripts": {
+    "docs": "mdsvr ./docs --open"
+  }
+}
+```
+
+Run with:
+
+```bash
+npm run docs
+```
+
+### Verify Installation
+
+```bash
+mdsvr --version
+```
+
+### Docker
+
+Pull and run:
+
+```bash
+docker pull ghcr.io/satoshiman/mdsvr:latest
+docker run -d -p 1800:1800 -v /path/to/docs:/app/docs:ro ghcr.io/satoshiman/mdsvr:latest
+```
+
+See [Docker deployment](../02-settings/#docker) for more details.
+
+---
+
+## Next Steps
+
+- Learn about [MDX components](../03-features/mdx) for interactive docs
+- [Configure](../02-settings/) your site with `_mdsvr/settings.json`
+- See all [features](../03-features/) mdsvr offers
+
+---
+
+# Guides
+
+Source: https://mdsvr.js.org/docs/02-settings/
+
+# Guides
+
+In-depth guides for configuring, writing, and deploying your documentation.
+
+---
+
+## Configuration
+
+mdsvr can be configured via a `settings.json` file in the `_mdsvr/` directory in your docs root. All settings are optional — the server works out of the box with sensible defaults.
+
+### Creating settings.json
+
+Use the CLI to create a starter configuration:
+
+```bash
+npx mdsvr . --init
+```
+
+Or create it manually:
+
+```json
+{
+  "$schema": "https://mdsvr.js.org/schema/v2.json",
+  "site": {
+    "title": "My Docs",
+    "description": "Project documentation"
+  }
+}
+```
+
+### Site Settings
+
+```json
+{
+  "site": {
+    "title": "My Documentation",
+    "description": "A great documentation site",
+    "baseUrl": "https://docs.example.com",
+    "language": "en",
+    "logo": {
+      "src": "./assets/logo.svg",
+      "alt": "My Project",
+      "href": "/"
+    },
+    "favicon": "./assets/favicon.ico",
+    "author": {
+      "name": "Acme Docs Team",
+      "url": "https://acme.example"
+    }
+  }
+}
+```
+
+- `author` — optional site-wide default author (string or `{ name, url }` object); emitted as `<meta name="author">` and JSON-LD `author` on document pages unless page frontmatter overrides it
+- `baseUrl` — required for absolute canonical URLs, `og:url`, exported `sitemap.xml`, and the `robots.txt` `Sitemap:` line; without it those URL-dependent tags/files are omitted rather than emitted as relative URLs
+
+### Appearance
+
+Control the look and feel of your documentation:
+
+```json
+{
+  "appearance": {
+    "defaultTheme": "system",
+    "allowThemeToggle": true,
+    "accentColor": "#0969da",
+    "codeTheme": {
+      "light": "github",
+      "dark": "github-dark"
+    }
+  }
+}
+```
+
+**Theme Options:**
+
+- `defaultTheme`: `"light"`, `"dark"`, or `"system"` (follows OS preference)
+- `allowThemeToggle`: Show/hide the theme toggle button in the header
+- `accentColor`: Primary color for links, buttons, and accents
+
+### Navigation
+
+Configure the sidebar, breadcrumbs, and table of contents:
+
+```json
+{
+  "navigation": {
+    "sidebar": {
+      "enabled": true,
+      "autoGenerate": true,
+      "collapsible": true,
+      "defaultOpen": true
+    },
+    "breadcrumbs": true,
+    "prevNextLinks": true,
+    "tocEnabled": true,
+    "tocMaxDepth": 3
+  }
+}
+```
+
+### Search
+
+Enable and configure the built-in search:
+
+```json
+{
+  "search": {
+    "enabled": true,
+    "placeholder": "Search docs...",
+    "maxResults": 10
+  }
+}
+```
+
+Press `⌘+K` (or `Ctrl+K`) to open the search modal.
+
+### SEO
+
+Configure search engine optimization features:
+
+```json
+{
+  "seo": {
+    "titleTemplate": "%s | My Docs",
+    "defaultImage": "./assets/og-image.png",
+    "twitterCard": "summary_large_image",
+    "twitterSite": "@myhandle",
+    "generateSitemap": true,
+    "generateRobotsTxt": true,
+    "generateRssFeed": true,
+    "generateLlmsTxt": true,
+    "structuredData": true,
+    "noIndex": false,
+    "noIndexDirectoryPages": false,
+    "verification": {
+      "google": "google-site-verification-token",
+      "bing": "msvalidate-token"
+    },
+    "og": {
+      "enabled": true,
+      "imageFormat": "jpg",
+      "fontFamily": "Inter",
+      "colors": {
+        "background": "#0a0a0f",
+        "text": "#ffffff"
+      }
+    },
+    "rss": {
+      "title": "My Docs Updates",
+      "feedUrl": "/feed.xml",
+      "siteUrl": "https://docs.example.com"
+    }
+  }
+}
+```
+
+When enabled, these endpoints are automatically generated:
+
+- `/sitemap.xml` — XML sitemap for search engines (requires `site.baseUrl` for static export; uses request origin in serve mode)
+- `/robots.txt` — crawler rules; a custom `robots.txt` in the docs root takes precedence
+- `/feed.xml` — RSS feed for blog posts (files with `date` in frontmatter)
+- `/llms.txt` + `/llms-full.txt` — LLM-facing page index and full Markdown corpus; custom files in the docs root take precedence (see [SEO](../03-features/seo))
+- `titleTemplate` — optional; defaults to `%s | <site title>` when unset, `%s` alone when `site.title` is empty
+- `structuredData` — emit JSON-LD `Article`/`WebSite`/`BreadcrumbList` per page (default `true`)
+- `noIndexDirectoryPages` — emit `noindex, nofollow` on auto-generated directory listing pages and exclude them from the sitemap (default `false`)
+- `verification` — emit site-verification meta tags; keys: `google`, `bing`, `yandex`, `pinterest`, `naver`. (For Google you can also drop the `googleXXXX.html` file into the docs root — it is served/exported as-is.)
+- Page frontmatter: `seoTitle`, `noindex`/`noIndex`, `datePublished`, `dateModified` — see [SEO](../03-features/seo)
+
+### Analytics
+
+Emit analytics snippets in `<head>` (and the GTM `<noscript>` right after `<body>`) on every page, in both serve and export modes:
+
+```json
+{
+  "analytics": {
+    "googleAnalytics": "G-XXXXXXXXXX",
+    "googleTagManager": "GTM-XXXXXXX",
+    "clarity": "clarity-project-id",
+    "plausible": {
+      "domain": "docs.example.com",
+      "scriptSrc": "https://plausible.io/js/script.js"
+    },
+    "umami": {
+      "websiteId": "xxxx-xxxx",
+      "scriptSrc": "https://cloud.umami.is/script.js"
+    },
+    "customHead": ["<script>/* any provider snippet */</script>"]
+  }
+}
+```
+
+All fields are optional — nothing is emitted when absent. Malformed GA/GTM IDs log a warning at startup but never fail. `customHead` entries are appended verbatim to the end of `<head>`; they come from your own `settings.json`, so only add snippets you trust. Note that local preview also fires analytics hits — filter the preview origin on the provider side if needed.
+
+### MDX
+
+Enable MDX support and configure available components:
+
+```json
+{
+  "mdx": {
+    "enabled": true,
+    "components": {
+      "Callout": true,
+      "CodeGroup": true,
+      "Steps": true,
+      "Card": true,
+      "CardGroup": true,
+      "Tabs": true,
+      "Accordion": true,
+      "Badge": true,
+      "Mermaid": true
+    }
+  }
+}
+```
+
+### Files
+
+Control which files are served, blocked, or hidden:
+
+```json
+{
+  "files": {
+    "extensions": {
+      "serve": [".md", ".mdx", ".png", ".jpg", ".svg", ".css", ".js", ".html"],
+      "block": [".env", ".key", ".pem"],
+      "hidden": ["settings.json", ".git", "node_modules"]
+    },
+    "indexFiles": ["README.md", "index.md", "index.html"],
+    "ignorePatterns": ["**/node_modules/**", "**/.git/**"],
+    "staticFolders": ["assets", "public", "images"]
+  }
+}
+```
+
+- Files and folders starting with `_` or `.` are automatically hidden
+- Only web-servable extensions in `extensions.serve` are copied during static export
+- `robots.txt` is generated or copied when `seo.generateRobotsTxt` is enabled
+- `llms.txt`/`llms-full.txt` are generated or copied when `seo.generateLlmsTxt` is enabled
+- Blocked extensions return 403 Forbidden
+- Hidden files return 404 Not Found (as if they don't exist)
+- `staticFolders`: Array of folder names to serve as static assets (all files in these folders are served directly)
+
+### Footer
+
+Customize the site footer:
+
+```json
+{
+  "footer": {
+    "text": "Built with mdsvr",
+    "links": [
+      { "label": "GitHub", "href": "https://github.com/..." },
+      { "label": "Twitter", "href": "https://twitter.com/..." }
+    ]
+  }
+}
+```
+
+### Hot Reload
+
+Settings are automatically reloaded when `_mdsvr/settings.json` changes (except when using `--no-watch` flag). You'll see a message in the console:
+
+```
+[mdsvr] Settings reloaded
+```
+
+### Validation
+
+Validate your settings.json:
+
+```bash
+npx mdsvr . --validate
+```
+
+This will check your configuration and report any errors.
+
+### Generate Settings
+
+Configure static export generation options:
+
+```json
+{
+  "generate": {
+    "basePath": "/docs",
+    "outputDir": "dist"
+  }
+}
+```
+
+**Options:**
+
+- `basePath`: Base path for generated URLs (default: `""`). Useful when deploying to a subdirectory (e.g., `/docs`)
+- `outputDir`: Default output directory for static exports (default: `"dist"`)
+
+These settings are used during static export with the `--export` flag.
+
+### Complete Example
+
+Here's a complete `_mdsvr/settings.json` with all available options:
+
+```json
+{
+  "$schema": "https://mdsvr.js.org/schema/v2.json",
+  "site": {
+    "title": "My Docs",
+    "description": "Project documentation",
+    "baseUrl": "https://docs.example.com",
+    "language": "en",
+    "logo": {
+      "src": "./assets/logo.svg",
+      "alt": "My Project",
+      "href": "/"
+    },
+    "favicon": "./assets/favicon.ico"
+  },
+  "appearance": {
+    "defaultTheme": "system",
+    "allowThemeToggle": true,
+    "accentColor": "#0969da"
+  },
+  "navigation": {
+    "sidebar": {
+      "enabled": true,
+      "autoGenerate": true,
+      "collapsible": true,
+      "defaultOpen": true
+    },
+    "breadcrumbs": true,
+    "prevNextLinks": true,
+    "tocEnabled": true,
+    "tocMaxDepth": 3
+  },
+  "search": {
+    "enabled": true,
+    "placeholder": "Search docs...",
+    "maxResults": 10
+  },
+  "seo": {
+    "titleTemplate": "%s | My Docs",
+    "defaultImage": "./assets/og-default.png",
+    "twitterCard": "summary_large_image",
+    "generateSitemap": true,
+    "generateRobotsTxt": true,
+    "generateRssFeed": false,
+    "og": {
+      "enabled": true,
+      "imageFormat": "jpg"
+    }
+  },
+  "files": {
+    "extensions": {
+      "serve": [
+        ".md",
+        ".mdx",
+        ".pdf",
+        ".png",
+        ".jpg",
+        ".svg",
+        ".css",
+        ".js",
+        ".html"
+      ],
+      "block": [".env", ".key", ".pem", ".p12"],
+      "hidden": ["_mdsvr", "settings.json", ".git", "node_modules", ".DS_Store"]
+    },
+    "indexFiles": ["README.md", "index.md", "INDEX.md"]
+  },
+  "mdx": {
+    "enabled": true,
+    "components": {
+      "Callout": true,
+      "CodeGroup": true,
+      "Steps": true,
+      "Card": true,
+      "CardGroup": true,
+      "Tabs": true,
+      "Accordion": true,
+      "Badge": true,
+      "Mermaid": true
+    }
+  },
+  "footer": {
+    "text": "Built with mdsvr",
+    "links": [{ "label": "GitHub", "href": "https://github.com/..." }]
+  }
+}
+```
+
+---
+
+## Writing Content
+
+Tips and best practices for creating great documentation.
+
+### File Organization
+
+```
+docs/
+├── README.md              # Homepage
+├── 01-getting-started/    # Getting started guides
+├── 02-settings/           # Settings & configuration
+├── 03-features/           # Feature documentation
+└── 04-reference/          # API/reference docs
+```
+
+### Frontmatter
+
+Every page should have frontmatter:
+
+```markdown
+---
+title: Page Title
+description: Brief description for SEO
+---
+```
+
+Optional fields:
+
+```markdown
+---
+title: Page Title
+description: Description
+date: 2025-01-15 # For RSS feed / article datePublished
+author: John Doe # Attribution (or { name, url })
+tags: [setup, guide] # For organization
+seoTitle: Title Override # Wins over `title` for SEO output
+datePublished: 2025-01-15 # Article published date
+dateModified: 2025-01-20 # Article last update (also sitemap lastmod)
+noindex: true # Exclude from search + sitemap (noIndex also works)
+---
+```
+
+### Markdown Tips
+
+#### Use Descriptive Headings
+
+```markdown
+<!-- Good -->
+
+## Installing via npm
+
+<!-- Less clear -->
+
+## Installation
+```
+
+### Cross-Reference Links
+
+Use relative paths:
+
+```markdown
+See [configuration guide](./)
+```
+
+#### Code Blocks
+
+Always specify language:
+
+````markdown
+```javascript
+const x = 1;
+```
+````
+
+### MDX Components
+
+Use components for interactive content:
+
+```mdx
+<Callout type="warning">Important information here</Callout>
+
+<Steps>
+  ### Step 1
+  First step content
+
+### Step 2
+
+Second step content
+
+</Steps>
+```
+
+See [MDX Components](../03-features/mdx) for all available components.
+
+### Images & Assets
+
+Place assets in `docs/assets/`:
+
+```markdown
+![Alt text](../assets/screenshot.png)
+```
+
+> Note: The assets folder is optional - create it if you need to include images in your documentation.
+
+### Best Practices
+
+Follow these guidelines to ensure your documentation passes validation and works correctly in both server mode and static export.
+
+#### File Naming
+
+- **Avoid dots in filenames** — Don't use dots in the middle of filenames (except for the extension)
+  - ❌ `0.1.quickstart.md` or `config.v2.md`
+  - ✅ `01-quickstart.md` or `config-v2.md`
+- **Use descriptive names** — `quickstart.md` not `page1.md`
+- **Use kebab-case** — Separate words with hyphens for clean URLs
+- **Numbered prefixes** — Use `01-`, `02-` for ordering in sidebar
+
+#### Link Structure
+
+- **Use relative paths** — Never use absolute paths starting with `/`
+  - ❌ `[Guide](/docs/guide)`
+  - ✅ `[Guide](./guide.md)` or `[Guide](../guide.md)`
+- **Include file extensions** — `.md`/`.mdx` links resolve on GitHub and in IDE previews; mdsvr converts them to clean URLs when serving (with `generate.cleanUrls`) and in static export
+  - ❌ `[Setup](./setup)`
+  - ✅ `[Setup](./setup.md)`
+- **Link to index files explicitly** — Point at `README.md` so links work on GitHub; directory links are converted to clean directory URLs
+  - ❌ `[Getting Started](./01-getting-started)`
+  - ✅ `[Getting Started](./01-getting-started/)`
+- **Validate anchors** — Ensure `#section` links match actual headings
+
+#### Heading Structure
+
+- **Always include an H1** — Every page must have a top-level heading (`# Title`)
+- **Maintain hierarchy** — Don't skip heading levels
+  - ❌ H1 → H3 (skips H2)
+  - ✅ H1 → H2 → H3
+- **Use descriptive headings** — Make them searchable and meaningful
+
+#### Assets & Images
+
+- **Use relative paths for assets** — Same rules as links
+  - ❌ `![Screenshot](/assets/screenshot.png)`
+  - ✅ `![Screenshot](../assets/screenshot.png)`
+- **Ensure files exist** — Validator checks for missing images and assets
+- **Use supported formats** — PNG, JPG, SVG, WebP, GIF, ICO
+
+#### General Guidelines
+
+1. **Start with a README.md** — Required for homepage
+2. **Keep pages focused** — One topic per page
+3. **Link liberally** — Help users navigate between related topics
+4. **Use MDX components** — Callouts for warnings, Steps for procedures
+5. **Add frontmatter** — Include title and description for SEO
+6. **Test with validator** — Run `npx mdsvr . --validate` to check your docs
+
+#### Validation
+
+Run the validator to check your documentation:
+
+```bash
+npx mdsvr ./docs --validate
+```
+
+The validator checks for:
+
+- 🔗 Broken internal links
+- ⚠️ Absolute paths (should use relative)
+- ⚠️ Links with .md/.mdx extensions
+- ⚠️ Links to index files (use directory paths)
+- 🔗 Broken anchor links
+- 🖼️ Missing assets
+- 📁 Filenames with dots in the middle
+- 📌 Missing H1 headings
+- 📝 Heading hierarchy violations
+
+Use `--autofix` to automatically fix some issues:
+
+```bash
+npx mdsvr ./docs --validate --autofix
+```
+
+---
+
+## Deployment
+
+Deploy your documentation to any static hosting platform.
+
+### Export Static Site
+
+Generate static HTML files:
+
+```bash
+npx mdsvr ./docs --export
+```
+
+This creates `_html/public/` with your static site.
+
+#### Custom Output
+
+```bash
+npx mdsvr ./docs --export ./dist
+```
+
+#### Export Caching
+
+mdsvr uses intelligent caching to speed up exports:
+
+- **File-level caching**: Only re-renders pages whose source files changed
+- **OG image caching**: Only regenerates OG images when content changes
+- **Settings tracking**: Detects when `_mdsvr/settings.json` changes and forces full re-export
+
+The export state is stored in `_mdsvr/export-state.json`.
+
+#### Force Full Export
+
+To bypass cache and force a complete re-export:
+
+```bash
+# Delete export state only
+rm _mdsvr/export-state.json
+
+# Then export
+npx mdsvr ./docs --export
+```
+
+**Note:** Only delete `export-state.json`, not the entire `_mdsvr` directory, to preserve your settings.
+
+## Firebase Hosting
+
+```bash
+# Export
+npx mdsvr ./docs --export
+
+# Deploy
+cd _html
+firebase init
+firebase deploy
+```
+
+## Netlify
+
+### Via CLI
+
+```bash
+npx mdsvr ./docs --export
+netlify deploy --dir=_html/public --prod
+```
+
+### Via Git
+
+1. Push docs to GitHub
+2. Connect repo to Netlify
+3. Set build command: `npx mdsvr . --export _html/public`
+4. Publish directory: `_html/public`
+
+### Vercel
+
+```bash
+# vercel.json
+{
+  "buildCommand": "npx mdsvr . --export _html/public",
+  "outputDirectory": "_html/public"
+}
+```
+
+## GitHub Pages
+
+```bash
+# Export to docs folder
+npx mdsvr ./src --export ./docs
+
+# Or use GitHub Actions
+```
+
+## GitHub Actions Workflow
+
+```yaml
+# .github/workflows/deploy.yml
+name: Deploy
+on:
+  push:
+    branches: [main]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npx mdsr . --export
+      - uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_html/public
+```
+
+## Docker
+
+### Using Pre-built Image
+
+```bash
+docker pull ghcr.io/satoshiman/mdsvr:latest
+docker run -d \
+  -p 1800:1800 \
+  -v /path/to/docs:/app/docs:ro \
+  ghcr.io/satoshiman/mdsvr:latest
+```
+
+> **Note:** Mount your docs read-only (`:ro`) where possible. mdsvr renders raw HTML in Markdown and executes MDX in the server process — it is designed for trusted content, not as a sandbox for user-supplied documents.
+
+### Build Your Own
+
+```dockerfile
+FROM ghcr.io/satoshiman/mdsvr:latest
+COPY ./docs /app/docs
+```
+
+```bash
+docker build -t my-docs .
+docker run -d -p 1800:1800 my-docs
+```
+
+### VPS / Self-Hosted
+
+Export and serve with any web server:
+
+```bash
+# Export
+npx mdsvr ./docs --export /var/www/docs
+
+# Nginx config
+server {
+    listen 80;
+    root /var/www/docs;
+    try_files $uri $uri/ $uri.html =404;
+}
+```
+
+## Clean URLs
+
+Exported sites use clean URLs:
+
+- `/guide/setup/` instead of `/guide/setup.html`
+- Works on all modern static hosts
+
+---
+
+## Related
+
+- [Getting Started](../01-getting-started/) — If you're new to mdsvr
+- [Features](../03-features/) — Learn about specific features
+- [CLI Reference](../04-reference/) — Command-line documentation
+
+---
+
+# Markdown Formats
+
+Source: https://mdsvr.js.org/docs/03-features/markdown/
+
+# Markdown Formats
+
+This page demonstrates all supported Markdown formats.
+
+## Headings
+
+# Heading 1
+
+## Heading 2
+
+### Heading 3
+
+#### Heading 4
+
+##### Heading 5
+
+###### Heading 6
+
+## Text Formatting
+
+**Bold text** using `**text**`
+
+_Italic text_ using `*text*`
+
+**_Bold and italic_** using `***text***`
+
+~~Strikethrough~~ using `~~text~~`
+
+`Inline code` using backticks
+
+## Links
+
+[External link](https://example.com)
+
+[Link with title](https://example.com "Example Site")
+
+[Relative link](../02-settings/)
+
+## Images
+
+![Alt text](https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExbWZkcHFvMDc3YnVjZ3g2cjllMWFiZnZpODYzMjFraXNlZWJneHQxbSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/kd9BlRovbPOykLBMqX/giphy.gif)
+
+## Lists
+
+### Unordered Lists
+
+- Item 1
+- Item 2
+  - Nested item 2.1
+  - Nested item 2.2
+- Item 3
+
+### Ordered Lists
+
+1. First item
+2. Second item
+   1. Nested item 2.1
+   2. Nested item 2.2
+3. Third item
+
+### Task Lists
+
+- [x] Completed task
+- [ ] Incomplete task
+- [ ] Another incomplete task
+
+## Code Blocks
+
+### JavaScript
+
+```javascript
+function greet(name) {
+  console.log(`Hello, ${name}!`);
+}
+greet("World");
+```
+
+### Python
+
+```python
+def greet(name):
+    print(f"Hello, {name}!")
+
+greet("World")
+```
+
+### Shell
+
+```bash
+npm install
+npm run dev
+```
+
+### Without syntax highlighting
+
+```
+Plain code block
+without language
+```
+
+## Blockquotes
+
+> This is a blockquote.
+>
+> It can span multiple lines.
+>
+> > Nested blockquote
+>
+> Back to first level
+
+## Horizontal Rules
+
+---
+
+---
+
+---
+
+## Tables
+
+| Name | Age | Occupation |
+| ---- | --- | ---------- |
+| John | 30  | Engineer   |
+| Jane | 25  | Designer   |
+| Bob  | 35  | Manager    |
+
+### Table with alignment
+
+| Left | Center | Right |
+| :--- | :----: | ----: |
+| L1   |   C1   |    R1 |
+| L2   |   C2   |    R2 |
+
+## HTML
+
+You can use <strong>inline HTML</strong> within Markdown.
+
+<div style="background: #f0f0f0; padding: 10px;">
+  This is a div with inline styles.
+</div>
+
+## Escaping Characters
+
+Use backslash to escape special characters: \*not italic\*, \`not code\`
+
+## Line Breaks
+
+Line break with two spaces at the end.  
+New line starts here.
+
+Or use double line break for new paragraph.
+
+## Emojis
+
+:smile: :heart: :star: (if GFM is enabled)
+
+## Automatic Links
+
+<https://example.com>
+
+<user@example.com>
+
+## Definition Lists (if supported)
+
+Term 1
+: Definition 1
+
+Term 2
+: Definition 2a
+: Definition 2b
+
+## Footnotes (if supported)
+
+This is a reference[^1].
+
+[^1]: This is the footnote content.
+
+## Callouts
+
+mdsvr supports two callout syntaxes:
+
+### GitHub-style Callouts
+
+Use `[!TYPE]` in blockquotes:
+
+example:
+
+```markdown
+> [!NOTE]
+> This is a note callout.
+
+> [!TIP]
+> This is a tip callout.
+
+> [!WARNING]
+> This is a warning callout.
+
+> [!CAUTION]
+> This is a caution callout.
+
+> [!IMPORTANT]
+> This is an important callout.
+
+> [!SUCCESS]
+> This is a success callout.
+```
+
+renders as:
+
+> [!NOTE]
+> This is a note callout.
+
+> [!TIP]
+> This is a tip callout.
+
+> [!WARNING]
+> This is a warning callout.
+
+> [!CAUTION]
+> This is a caution callout.
+
+> [!IMPORTANT]
+> This is an important callout.
+
+> [!SUCCESS]
+> This is a success callout.
+
+### Triple-colon Callouts
+
+Use `:::type content :::` syntax:
+
+example:
+
+```markdown
+:::note This is a note callout using triple-colon syntax. :::
+
+:::tip This is a tip callout using triple-colon syntax. :::
+
+:::warning This is a warning callout using triple-colon syntax. :::
+
+:::danger This is a danger callout using triple-colon syntax. :::
+
+:::info This is an info callout using triple-colon syntax. :::
+
+:::success This is a success callout using triple-colon syntax. :::
+```
+
+renders as:
+
+:::note This is a note callout using triple-colon syntax. :::
+
+:::tip This is a tip callout using triple-colon syntax. :::
+
+:::warning This is a warning callout using triple-colon syntax. :::
+
+:::danger This is a danger callout using triple-colon syntax. :::
+
+:::info This is an info callout using triple-colon syntax. :::
+
+:::success This is a success callout using triple-colon syntax. :::
+
+### Supported Types
+
+- `note` / `NOTE` → Info (ℹ️)
+- `tip` / `TIP` → Tip (💡)
+- `warning` / `WARNING` → Warning (⚠️)
+- `caution` / `CAUTION` → Danger (🚫)
+- `important` / `IMPORTANT` → Info (ℹ️)
+- `info` / `INFO` → Info (ℹ️)
+- `danger` / `DANGER` → Danger (🚫)
+- `success` / `SUCCESS` → Success (✅)
+
+## Mermaid Diagrams
+
+mdsvr supports Mermaid diagrams via the `mermaid` code block:
+
+### Database Schema Diagram
+
+```mermaid
+erDiagram
+    USER {
+        int id PK
+        string email
+        string username
+        datetime created_at
+    }
+    POST {
+        int id PK
+        string title
+        text content
+        int author_id FK
+        datetime published_at
+    }
+    COMMENT {
+        int id PK
+        text body
+        int post_id FK
+        int author_id FK
+        datetime created_at
+    }
+    TAG {
+        int id PK
+        string name
+        string slug
+    }
+    POST_TAG {
+        int post_id FK
+        int tag_id FK
+    }
+
+    USER ||--o{ POST : writes
+    USER ||--o{ COMMENT : writes
+    POST ||--o{ COMMENT : has
+    POST ||--o{ POST_TAG : tagged
+    TAG ||--o{ POST_TAG : assigned
+
+```
+
+---
+
+# Mathematical Expressions
+
+Source: https://mdsvr.js.org/docs/03-features/math/
+
+# Mathematical Expressions
+
+mdsvr supports rendering mathematical expressions using LaTeX syntax, following the [GitHub standard](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/writing-mathematical-expressions) for writing math in Markdown.
+
+Math rendering is powered by LaTeX syntax — a widely used markup language for mathematical notation.
+
+## Inline Expressions
+
+To include a math expression inline within your text, delimit the expression with a dollar symbol `$`:
+
+```markdown
+This sentence uses `$` delimiters to show math inline: $\sqrt{3x-1}+(1+x)^2$
+```
+
+renders as:
+
+This sentence uses `$` delimiters to show math inline: $\sqrt{3x-1}+(1+x)^2$
+
+Alternatively, you can use the <code>$\`...\`$</code> syntax to explicitly declare inline math, which is useful when the expression contains characters that overlap with Markdown syntax:
+
+```markdown
+This sentence uses $` and `$ delimiters to show math inline: $`\sqrt{3x-1}+(1+x)^2`$
+```
+
+renders as:
+
+This sentence uses $` and `$ delimiters to show math inline: $`E = mc^2`$
+
+## Block Expressions
+
+To add a math expression as a block, start a new line and delimit the expression with two dollar symbols `$$`:
+
+```markdown
+**The Cauchy-Schwarz Inequality**
+
+$$\left( \sum_{k=1}^n a_k b_k \right)^2 \leq \left( \sum_{k=1}^n a_k^2 \right) \left( \sum_{k=1}^n b_k^2 \right)$$
+```
+
+renders as:
+
+**The Cauchy-Schwarz Inequality**
+
+$$\left( \sum_{k=1}^n a_k b_k \right)^2 \leq \left( \sum_{k=1}^n a_k^2 \right) \left( \sum_{k=1}^n b_k^2 \right)$$
+
+Alternatively, you can use the `math` code block syntax to display a math expression as a block. With this syntax, you don't need to use `$$` delimiters:
+
+````markdown
+**The Cauchy-Schwarz Inequality**
+
+```math
+\left( \sum_{k=1}^n a_k b_k \right)^2 \leq \left( \sum_{k=1}^n a_k^2 \right) \left( \sum_{k=1}^n b_k^2 \right)
+```
+````
+
+renders as:
+
+**The Cauchy-Schwarz Inequality**
+
+```math
+\left( \sum_{k=1}^n a_k b_k \right)^2 \leq \left( \sum_{k=1}^n a_k^2 \right) \left( \sum_{k=1}^n b_k^2 \right)
+```
+
+## Writing Dollar Signs in Line with and Within Mathematical Expressions
+
+To display a dollar sign as a character in the same line as a mathematical expression, you need to escape the non-delimiter `$` to ensure the line renders correctly.
+
+Within a math expression, add a `\` symbol before the explicit `$`:
+
+```markdown
+This expression uses `\$` to display a dollar sign: $\sqrt{\$4}$
+```
+
+renders as:
+
+This expression uses `\$` to display a dollar sign: $\sqrt{\$4}$
+
+Outside a math expression, but on the same line, use span tags around the explicit `$`:
+
+```markdown
+To split <span>$</span>100 in half, we calculate \$100/2
+```
+
+renders as:
+
+To split <span>$</span>100 in half, we calculate $100/2$
+
+## Common Examples
+
+### Fractions and Roots
+
+```markdown
+$$x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$
+```
+
+$$x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$
+
+### Summations and Integrals
+
+```markdown
+$$\sum_{i=1}^{n} i = \frac{n(n+1)}{2}$$
+
+$$\int_{-\infty}^{\infty} e^{-x^2} \, dx = \sqrt{\pi}$$
+```
+
+$$\sum_{i=1}^{n} i = \frac{n(n+1)}{2}$$
+
+$$\int_{-\infty}^{\infty} e^{-x^2} \, dx = \sqrt{\pi}$$
+
+### Matrices
+
+```markdown
+$$
+\begin{pmatrix}
+a & b \\
+c & d
+\end{pmatrix}
+\begin{pmatrix}
+x \\
+y
+\end{pmatrix}
+=
+\begin{pmatrix}
+ax + by \\
+cx + dy
+\end{pmatrix}
+$$
+```
+
+$$
+\begin{pmatrix}
+a & b \\
+c & d
+\end{pmatrix}
+\begin{pmatrix}
+x \\
+y
+\end{pmatrix}
+=
+\begin{pmatrix}
+ax + by \\
+cx + dy
+\end{pmatrix}
+$$
+
+### Greek Letters and Symbols
+
+```markdown
+$\alpha, \beta, \gamma, \delta, \epsilon, \theta, \lambda, \mu, \pi, \sigma, \phi, \omega$
+
+$\leq, \geq, \neq, \approx, \equiv, \infty, \partial, \nabla, \in, \subset, \cup, \cap$
+```
+
+$\alpha, \beta, \gamma, \delta, \epsilon, \theta, \lambda, \mu, \pi, \sigma, \phi, \omega$
+
+$\leq, \geq, \neq, \approx, \equiv, \infty, \partial, \nabla, \in, \subset, \cup, \cap$
+
+### Aligned Equations
+
+```markdown
+$$
+\begin{aligned}
+(a+b)^2 &= (a+b)(a+b) \\
+        &= a^2 + ab + ba + b^2 \\
+        &= a^2 + 2ab + b^2
+\end{aligned}
+$$
+```
+
+$$
+\begin{aligned}
+(a+b)^2 &= (a+b)(a+b) \\
+        &= a^2 + ab + ba + b^2 \\
+        &= a^2 + 2ab + b^2
+\end{aligned}
+$$
+
+## Syntax Summary
+
+| Syntax                 | Type   | Example                         |
+| ---------------------- | ------ | ------------------------------- |
+| `$...$`                | Inline | `$E = mc^2$`                    |
+| <code>$\`...\`$</code> | Inline | <code>$\`E = mc^2\`$</code>     |
+| `$$...$$`              | Block  | `$$E = mc^2$$`                  |
+| ` ```math `            | Block  | Code block with `math` language |
+
+## Further Reading
+
+- [Writing mathematical expressions on GitHub](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/writing-mathematical-expressions)
+- [LaTeX/Mathematics on Wikibooks](https://en.wikibooks.org/wiki/LaTeX/Mathematics)
+
+---
+
+# MDX Components
+
+Source: https://mdsvr.js.org/docs/03-features/mdx/
+
+# MDX Components
+
+mdsvr supports **MDX** — Markdown with JSX. This allows you to use interactive components directly in your documentation.
+
+<Callout type="info">
+  MDX must be enabled in `_mdsvr/settings.json` with `"mdx.enabled": true`.
+</Callout>
+
+## Callout
+
+Use callouts to highlight important information:
+
+```mdx
+<Callout type="info">This is an informational callout.</Callout>
+
+<Callout type="warning" title="Important">
+  This will delete all your data.
+</Callout>
+```
+
+### Types
+
+<Callout type="info">**Info** — General information and tips</Callout>
+
+<Callout type="warning">**Warning** — Caution about potential issues</Callout>
+
+<Callout type="danger">
+  **Danger** — Critical warnings about destructive actions
+</Callout>
+
+<Callout type="success">
+  **Success** — Positive confirmation or success states
+</Callout>
+
+<Callout type="tip">**Tip** — Helpful suggestions and best practices</Callout>
+
+## Steps
+
+Create step-by-step guides:
+
+```mdx
+<Steps>
+  ### Step 1: Install
+  Run `npm install mdsvr`
+
+### Step 2: Configure
+
+Create your `_mdsvr/settings.json`
+
+### Step 3: Launch
+
+Run `npx mdsvr ./docs`
+
+</Steps>
+```
+
+<Steps>
+  ### Install the package
+  Run `npm install mdsvr`
+
+### Create your docs folder
+
+Create a `./docs` directory with some `.md` files
+
+### Start the server
+
+Run `npx mdsvr ./docs --open`
+
+</Steps>
+
+## Cards
+
+Display links as beautiful cards:
+
+```mdx
+<Card title="Quick Start" icon="⚡" href="#">
+  Get up and running in 5 minutes
+</Card>
+```
+
+<Card title="Configuration" icon="⚙️" href="#">
+  Full settings reference
+</Card>
+
+### Card Groups
+
+<CardGroup cols={2}>
+  <Card title="Markdown" icon="📝" href="#">
+    Standard Markdown support
+  </Card>
+  <Card title="MDX" icon="⚛️" href="#">
+    React components in docs
+  </Card>
+  <Card title="Themes" icon="🎨" href="#">
+    Dark and light mode
+  </Card>
+  <Card title="Search" icon="🔍" href="#">
+    Full-text search
+  </Card>
+</CardGroup>
+
+## Tabs
+
+Organize content in tabs:
+
+````mdx
+<Tabs items={["npm", "yarn", "pnpm"]}>
+  <Tab>```bash npm install mdsvr ```</Tab>
+  <Tab>```bash yarn add mdsvr ```</Tab>
+  <Tab>```bash pnpm add mdsvr ```</Tab>
+</Tabs>
+````
+
+## Code Groups
+
+Group related code blocks:
+
+````mdx
+<CodeGroup title="Installation">
+  ```bash npm npm install mdsvr ``` ```bash yarn yarn add mdsvr ``` ```bash pnpm
+  pnpm add mdsvr ```
+</CodeGroup>
+````
+
+<CodeGroup title="Configuration">
+
+```json settings.json
+{
+  "site": {
+    "title": "My Docs"
+  }
+}
+```
+
+```js mdsvr.config.js
+module.exports = {
+  site: {
+    title: "My Docs",
+  },
+};
+```
+
+</CodeGroup>
+
+## Accordion
+
+Create collapsible sections:
+
+```mdx
+<Accordion title="Is this free?">
+  Yes, mdsvr is open source under MIT license.
+</Accordion>
+```
+
+<Accordion title="What are the system requirements?">
+  Node.js 18+ is required to run mdsvr.
+</Accordion>
+
+<Accordion title="Can I use custom components?">
+  Built-in components are available. Custom components coming in v3!
+</Accordion>
+
+## Badge
+
+Add status badges inline:
+
+```mdx
+New feature <Badge color="green">New</Badge>
+
+Beta feature <Badge color="orange">Beta</Badge>
+
+Deprecated <Badge color="red">Deprecated</Badge>
+```
+
+Available colors: `green`, `orange`, `red`, `blue`, `purple`, `gray`
+
+- <Badge color="green">New</Badge> — New features
+- <Badge color="orange">Beta</Badge> — Beta features
+- <Badge color="red">Deprecated</Badge> — Deprecated features
+- <Badge color="blue">Info</Badge> — Informational
+- <Badge color="purple">Tip</Badge> — Tips and tricks
+- <Badge color="gray">Note</Badge> — General notes
+
+## Mermaid
+
+Create diagrams with Mermaid syntax:
+
+```mdx
+<Mermaid>
+  graph TD
+    A[Start] --> B{Is it working?}
+    B -->|Yes| C[Great!]
+    B -->|No| D[Debug]
+    D --> E[Fix Issues]
+    E --> B
+</Mermaid>
+```
+
+<Callout type="tip">
+  Mermaid diagrams are rendered client-side, so they work without any
+  server-side dependencies.
+</Callout>
+
+## Frontmatter
+
+All MDX files support YAML frontmatter for metadata:
+
+```mdx
+---
+title: Page Title
+description: Page description for SEO
+image: ./assets/og-image.png
+date: 2025-01-15
+author: John Doe
+tags: [setup, quickstart]
+noIndex: false
+---
+
+# Your Content
+```
+
+This metadata is used for:
+
+- SEO `<title>` and meta tags
+- Open Graph / Twitter Cards
+- RSS feed entries (when `date` is present)
+- Search index weighting
+
+## MDX Plugins
+
+You can add custom remark and rehype plugins to extend MDX functionality:
+
+```json
+{
+  "mdx": {
+    "enabled": true,
+    "remarkPlugins": ["remark-gfm"],
+    "rehypePlugins": ["rehype-slug"]
+  }
+}
+```
+
+**Options:**
+
+- `remarkPlugins`: Array of remark plugin names for markdown transformations
+- `rehypePlugins`: Array of rehype plugin names for HTML transformations
+
+Currently, mdsvr includes these built-in plugins by default:
+
+- `remark-frontmatter` - Parse YAML frontmatter
+- `remark-gfm` - GitHub Flavored Markdown support
+- `remark-mdx-frontmatter` - MDX frontmatter support
+- `rehype-slug` - Generate heading IDs for anchors
+- `rehype-autolink-headings` - Auto-link headings
+
+You can add additional plugins by installing them and adding their names to the arrays.
+
+---
+
+# Mermaid Diagrams in mdsvr
+
+Source: https://mdsvr.js.org/docs/03-features/mermaid/
+
+# Mermaid Diagrams in mdsvr
+
+mdsvr supports **Mermaid.js** for creating beautiful diagrams directly in your Markdown files. Simply wrap your Mermaid code in triple backticks with the `mermaid` language identifier, and mdsvr will render it as an interactive diagram.
+
+## Quick Start
+
+```mermaid
+flowchart LR
+    A[Write Markdown] --> B[Add Mermaid Code]
+    B --> C[mdsvr Renders]
+    C --> D[Beautiful Diagram]
+```
+
+**Syntax:** All Mermaid diagrams start with a diagram type keyword, followed by the content.
+
+```mermaid
+flowchart TD
+    A[Diagram Type] --> B[Content]
+    B --> C[End]
+```
+
+**Comments:** Use `%%` to add comments that won't be rendered.
+
+---
+
+## Supported Diagram Types
+
+mdsvr supports all 19 Mermaid diagram types. Below is a complete showcase with practical examples.
+
+---
+
+## 1. Flowchart
+
+**Best for:** Process flows, workflows, decision trees, algorithms.
+
+### Example: User Authentication Flow
+
+```mermaid
+flowchart TD
+    A["User visits site"] --> B{"Logged in?"}
+    B -->|"Yes"| C["Show dashboard"]
+    B -->|"No"| D["Show login form"]
+    D --> E{"Valid credentials?"}
+    E -->|"Yes"| F["Create session"]
+    E -->|"No"| G["Show error"]
+    F --> C
+    G --> D
+
+    subgraph Auth["Authentication System"]
+        D
+        E
+        F
+        G
+    end
+```
+
+### Syntax Guide
+
+**Directions:** `TD` (top-down), `LR` (left-right), `BT` (bottom-up), `RL` (right-left)
+
+**Node shapes:**
+
+- `A["Text"]` - Rectangle
+- `B("Text")` - Rounded
+- `C{"Text"}` - Diamond (decision)
+- `D(("Text"))` - Circle
+- `E(["Text"])` - Stadium
+
+**Arrows:** `-->` (arrow), `---` (line), `-.->` (dotted), `==>` (thick)
+
+**Labels:** `A -->|"label"| B`
+
+---
+
+## 2. Sequence Diagram
+
+**Best for:** API documentation, authentication flows, message exchanges between systems.
+
+### Example: API Authentication Flow
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Browser
+    participant API as "API Server"
+    participant DB as "Database"
+
+    User->>Browser: Enter credentials
+    Browser->>+API: POST /auth/login
+    API->>+DB: Query user
+    DB-->>-API: User data
+    alt Valid credentials
+        API-->>-Browser: JWT token
+        Browser-->>User: Redirect to dashboard
+    else Invalid
+        API-->>Browser: 401 error
+        Browser-->>User: Show error message
+    end
+```
+
+### Syntax Guide
+
+**Participants:** `participant Name as "Display Name"`
+
+**Arrows:**
+
+- `->>` - Solid (request)
+- `-->>` - Dashed (response)
+- `->>+` - Activate
+- `-->>-` - Deactivate
+
+**Blocks:** `loop`, `alt/else`, `opt`, `par/and`, `critical`
+
+---
+
+## 3. Class Diagram
+
+**Best for:** Software architecture, OOP structure, data models.
+
+### Example: E-commerce System
+
+```mermaid
+classDiagram
+    class User {
+        +int id
+        +string email
+        +string name
+        +login() bool
+        +logout() void
+    }
+
+    class Order {
+        +int id
+        +float total
+        +string status
+        +addItem() void
+        +checkout() void
+    }
+
+    class Product {
+        +int id
+        +string name
+        +float price
+        +int stock
+    }
+
+    User "1" --> "*" Order : places
+    Order "*" --> "*" Product : contains
+```
+
+### Syntax Guide
+
+**Visibility:** `+` (public), `-` (private), `#` (protected), `~` (package)
+
+**Relationships:**
+
+- `<|--` - Inheritance
+- `*--` - Composition
+- `o--` - Aggregation
+- `-->` - Association
+
+**Cardinality:** `"1"`, `"0..1"`, `"*"`, `"1..*"`
+
+---
+
+## 4. State Diagram
+
+**Best for:** State machines, lifecycles, process states.
+
+### Example: Document Lifecycle
+
+```mermaid
+stateDiagram-v2
+    [*] --> Draft
+    Draft --> Review : Submit
+    Review --> Published : Approve
+    Review --> Draft : Reject
+    Published --> Archived : Archive
+    Archived --> [*]
+
+    state Review {
+        [*] --> Pending
+        Pending --> Approved
+        Pending --> Rejected
+    }
+```
+
+---
+
+## 5. ER Diagram
+
+**Best for:** Database schemas, data modeling.
+
+### Example: Blog Database Schema
+
+```mermaid
+erDiagram
+    USER {
+        int id PK
+        string email UK
+        string name
+        datetime created_at
+    }
+
+    POST {
+        int id PK
+        int user_id FK
+        string title
+        text content
+        string status
+    }
+
+    COMMENT {
+        int id PK
+        int post_id FK
+        int user_id FK
+        text body
+    }
+
+    USER ||--o{ POST : writes
+    POST ||--o{ COMMENT : has
+    USER ||--o{ COMMENT : writes
+```
+
+### Syntax Guide
+
+**Relationships:**
+
+- `||--||` - One to one
+- `||--o{` - One to zero or more
+- `||--|{` - One to one or more
+- `}o--o{` - Zero or more to zero or more
+
+**Keys:** `PK` (primary), `FK` (foreign), `UK` (unique)
+
+---
+
+## 6. Gantt Chart
+
+**Best for:** Project planning, timelines, sprint schedules.
+
+### Example: Project Timeline
+
+```mermaid
+gantt
+    title Website Development
+    dateFormat YYYY-MM-DD
+    excludes weekends
+
+    section Planning
+        Requirements :done, p1, 2024-01-01, 5d
+        Design :done, p2, after p1, 7d
+
+    section Development
+        Backend :active, dev1, after p2, 14d
+        Frontend :crit, dev2, after p2, 14d
+
+    section Launch
+        Testing :test, after dev1, 7d
+        Deploy :milestone, deploy, after test, 1d
+```
+
+### Syntax Guide
+
+**Status:** `done`, `active`, `crit` (critical), `milestone`
+
+**Duration:** `5d` (days), `2w` (weeks), `after task_id`
+
+---
+
+## 7. User Journey
+
+**Best for:** UX design, customer experience mapping.
+
+### Example: E-commerce Checkout
+
+```mermaid
+journey
+    title Shopping Experience
+    section Discovery
+        Search products: 5: Customer
+        View product details: 4: Customer
+    section Purchase
+        Add to cart: 5: Customer
+        Checkout process: 3: Customer
+        Payment: 4: Customer
+    section Post-purchase
+        Order confirmation: 5: Customer
+        Delivery tracking: 4: Customer
+```
+
+### Syntax Guide
+
+**Score:** 1 (very bad) to 5 (very good)
+
+**Format:** `Step name: score: Actor`
+
+---
+
+## 8. Git Graph
+
+**Best for:** Visualizing Git workflows, branching strategies.
+
+### Example: Feature Branch Workflow
+
+```mermaid
+gitGraph
+    commit id: "init"
+    branch develop
+    checkout develop
+    commit id: "feat-a"
+    commit id: "feat-b"
+    branch feature/auth
+    checkout feature/auth
+    commit id: "login"
+    commit id: "register"
+    checkout develop
+    merge feature/auth
+    checkout main
+    merge develop tag: "v1.0"
+    commit id: "hotfix"
+```
+
+### Syntax Guide
+
+**Commands:** `commit`, `branch`, `checkout`, `merge`, `cherry-pick`
+
+**Tags:** `commit tag: "v1.0"`
+
+---
+
+## 9. Mindmap
+
+**Best for:** Brainstorming, knowledge organization, hierarchical ideas.
+
+### Example: Web Development Stack
+
+```mermaid
+mindmap
+  root((Web Dev))
+    Frontend
+      React
+      Vue
+      Angular
+      Styling
+        CSS
+        Tailwind
+    Backend
+      Node.js
+      Python
+      Go
+      APIs
+        REST
+        GraphQL
+    DevOps
+      Docker
+      CI/CD
+      Cloud
+        AWS
+        GCP
+```
+
+---
+
+## 10. Pie Chart
+
+**Best for:** Showing percentages, data distribution.
+
+### Example: Budget Allocation
+
+```mermaid
+pie showData title Budget Distribution
+    "Development" : 40
+    "Marketing" : 25
+    "Operations" : 20
+    "Design" : 15
+```
+
+### Syntax Guide
+
+`pie showData title "Title"` - Shows values on chart
+
+---
+
+## 11. Timeline
+
+**Best for:** Chronological events, product roadmaps, history.
+
+### Example: Product Roadmap
+
+```mermaid
+timeline
+    title Product Roadmap 2024
+    section Q1
+        January : MVP launch
+        February : User feedback
+        March : v1.1 release
+    section Q2
+        April : Mobile app
+        May : API v2
+        June : Enterprise features
+    section Q3
+        July : Internationalization
+        August : Performance optimization
+        September : v2.0 launch
+```
+
+---
+
+## 12. Kanban Board
+
+**Best for:** Agile task management, sprint boards.
+
+### Example: Sprint Board
+
+```mermaid
+kanban
+  Backlog
+    [Dark mode]@{ assigned: 'Alice', priority: 'High' }
+    [API docs]@{ assigned: 'Bob', priority: 'Medium' }
+  In Progress
+    [User auth]@{ assigned: 'Carol', priority: 'High' }
+    [Dashboard]@{ assigned: 'Dave', priority: 'High' }
+  Review
+    [Settings page]@{ assigned: 'Eve', priority: 'Medium' }
+  Done
+    [Landing page]@{ assigned: 'Frank', priority: 'High' }
+```
+
+### Syntax Guide
+
+**Metadata:** `@{ assigned: 'name', priority: 'High' }`
+
+---
+
+## 13. Quadrant Chart
+
+**Best for:** Feature prioritization, strategic analysis, 2x2 matrices.
+
+### Example: Feature Priority Matrix
+
+```mermaid
+quadrantChart
+    title Feature Priority
+    x-axis Low Effort --> High Effort
+    y-axis Low Impact --> High Impact
+    quadrant-1 Quick Wins
+    quadrant-2 Major Projects
+    quadrant-3 Fill Ins
+    quadrant-4 Thankless Tasks
+    Dark mode: [0.2, 0.8]
+    SSO login: [0.7, 0.9]
+    CSV export: [0.3, 0.4]
+    Animations: [0.8, 0.2]
+```
+
+### Syntax Guide
+
+**Coordinates:** Range from 0.0 to 1.0 for both x and y
+
+---
+
+## 14. Sankey Diagram
+
+**Best for:** Flow quantities, conversion funnels, budget allocation.
+
+### Example: User Conversion Funnel
+
+```mermaid
+sankey-beta
+
+Visitors,Sign up,1000
+Visitors,Bounce,2000
+Sign up,Trial,600
+Sign up,Free,400
+Trial,Paid,200
+Trial,Churn,400
+```
+
+---
+
+## 15. XY Chart
+
+**Best for:** Bar charts, line charts with numerical data.
+
+### Example: Monthly Revenue
+
+```mermaid
+xychart-beta
+    title "Monthly Revenue 2024"
+    x-axis ["Jan", "Feb", "Mar", "Apr", "May", "Jun"]
+    y-axis "Revenue ($)" 0 --> 100000
+    bar [45000, 52000, 48000, 61000, 55000, 72000]
+    line [45000, 52000, 48000, 61000, 55000, 72000]
+```
+
+### Syntax Guide
+
+**Types:** `bar` (bar chart), `line` (line chart)
+
+---
+
+## 16. Block Diagram
+
+**Best for:** Custom layouts, grid-style arrangements.
+
+### Example: System Architecture
+
+```mermaid
+block-beta
+    columns 3
+    Frontend["Frontend\nReact"]
+    space
+    Backend["Backend\nNode.js"]
+    space:2
+    DB[("Database\nPostgreSQL")]
+
+    Frontend --> Backend
+    Backend --> DB
+```
+
+### Syntax Guide
+
+**Layout:** `columns N` defines grid width
+
+**Spanning:** `Block:2` spans 2 columns
+
+---
+
+## 17. Architecture Diagram
+
+**Best for:** Cloud architecture, infrastructure topology.
+
+### Example: AWS Infrastructure
+
+```mermaid
+architecture-beta
+    group aws(cloud)[AWS Cloud]
+
+    service lb(server)[Load Balancer] in aws
+    service api(server)[API Gateway] in aws
+    service app(server)[App Server] in aws
+    service db(database)[Database] in aws
+    service cache(database)[Redis] in aws
+
+    lb:R --> L:api
+    api:R --> L:app
+    app:B --> T:db
+    app:B --> T:cache
+```
+
+### Syntax Guide
+
+**Icons:** `server`, `database`, `disk`, `cloud`
+
+**Directions:** `L` (left), `R` (right), `T` (top), `B` (bottom)
+
+---
+
+## 18. Packet Diagram
+
+**Best for:** Network packet structures, protocol headers.
+
+### Example: IPv4 Header
+
+```mermaid
+packet-beta
+    0-3: "Version"
+    4-7: "IHL"
+    8-15: "DSCP/ECN"
+    16-31: "Total Length"
+    32-47: "Identification"
+    48-63: "Flags & Offset"
+    64-71: "TTL"
+    72-79: "Protocol"
+    80-95: "Checksum"
+    96-127: "Source IP"
+    128-159: "Dest IP"
+```
+
+### Syntax Guide
+
+**Format:** `start-end: "Field name"`
+
+---
+
+## 19. Requirement Diagram
+
+**Best for:** Requirements traceability, systems engineering.
+
+### Example: System Requirements
+
+```mermaid
+requirementDiagram
+
+requirement uptime_req {
+    id: 1
+    text: System uptime must be 99.9 percent
+    risk: high
+    verifymethod: analysis
+}
+
+FunctionalRequirement auth_req {
+    id: 2
+    text: Users must authenticate before accessing data
+    risk: high
+    verifymethod: test
+}
+
+PerformanceRequirement perf_req {
+    id: 3
+    text: Page load under 200ms
+    risk: medium
+    verifymethod: test
+}
+
+element auth_service {
+    type: service
+    docref: "auth-spec.pdf"
+}
+
+element perf_monitor {
+    type: "unit test"
+    docref: "LoadTest.cs"
+}
+
+auth_service - satisfies -> auth_req
+perf_monitor - verifies -> perf_req
+auth_req - traces -> uptime_req
+```
+
+### Syntax Guide
+
+**Types:** `requirement`, `FunctionalRequirement`, `PerformanceRequirement`
+
+**Risk:** `low`, `medium`, `high`
+
+**Verify method:** `test`, `analysis`, `inspection`, `demonstration`
+
+---
+
+## Quick Reference: Choosing the Right Diagram
+
+| Need                            | Use                  |
+| ------------------------------- | -------------------- |
+| Process flow, workflow          | `flowchart`          |
+| API documentation, message flow | `sequenceDiagram`    |
+| Database schema                 | `erDiagram`          |
+| Class structure, OOP            | `classDiagram`       |
+| State machine, lifecycle        | `stateDiagram-v2`    |
+| Project timeline                | `gantt`              |
+| Git branching strategy          | `gitGraph`           |
+| Cloud infrastructure            | `architecture-beta`  |
+| Brainstorming, ideas            | `mindmap`            |
+| Task board, agile               | `kanban`             |
+| Prioritization matrix           | `quadrantChart`      |
+| Conversion funnel               | `sankey-beta`        |
+| Bar/line charts                 | `xychart-beta`       |
+| Percentages                     | `pie`                |
+| Chronological events            | `timeline`           |
+| User experience                 | `journey`            |
+| Network packets                 | `packet-beta`        |
+| Requirements                    | `requirementDiagram` |
+| Custom layout                   | `block-beta`         |
+
+---
+
+## Tips for Best Results
+
+1. **Use double quotes for labels with spaces**: `A["Label with spaces"]`
+2. **Avoid special characters in node IDs**: Use underscores instead of hyphens
+3. **Always declare direction in flowcharts**: `flowchart TD` or `flowchart LR`
+4. **Keep labels concise**: Long labels make diagrams hard to read
+5. **Use emoji for visual cues**: ✅ Success, ❌ Error, ⚠️ Warning
+6. **Test in Mermaid Live Editor**: [mermaid.live](https://mermaid.live) for debugging
+
+---
+
+## Configuration
+
+You can add YAML frontmatter to customize diagram appearance:
+
+```mermaid
+---
+config:
+  theme: dark
+  look: handDrawn
+---
+flowchart LR
+    A --> B
+```
+
+**Themes:** `default`, `dark`, `forest`, `base`, `neutral`
+
+**Looks:** `default`, `handDrawn`, `classic`
+
+---
+
+# Navigation
+
+Source: https://mdsvr.js.org/docs/03-features/navigation/
+
+# Navigation
+
+mdsvr provides multiple navigation systems to help users find their way around your documentation.
+
+## Sidebar Navigation
+
+The sidebar is automatically generated from your file structure.
+
+### Enabling the Sidebar
+
+```json
+{
+  "navigation": {
+    "sidebar": {
+      "enabled": true,
+      "autoGenerate": true,
+      "collapsible": true,
+      "defaultOpen": true
+    }
+  }
+}
+```
+
+### Sidebar Options
+
+```json
+{
+  "navigation": {
+    "sidebar": {
+      "enabled": true,
+      "autoGenerate": true,
+      "showFileCount": false,
+      "collapsible": true,
+      "defaultOpen": true,
+      "depth": 2,
+      "docsOnly": false,
+      "orderBy": "alphabetical",
+      "manualOrder": []
+    }
+  }
+}
+```
+
+**Options:**
+
+- `enabled`: Enable/disable sidebar (default: `true`)
+- `autoGenerate`: Auto-generate from file structure (default: `true`)
+- `showFileCount`: Show file count next to folders (default: `false`)
+- `collapsible`: Allow folders to collapse/expand (default: `true`)
+- `defaultOpen`: Folders open by default (default: `true`)
+- `depth`: Maximum nesting depth to show (default: `2`)
+- `docsOnly`: Show only markdown files, hide other types (default: `false`)
+- `orderBy`: Sort order - `alphabetical`, `prior-dir`, or `manual` (default: `alphabetical`)
+- `manualOrder`: Array of paths for manual ordering when `orderBy: "manual"`
+
+### How It Works
+
+- **Folders** become collapsible groups
+- **Files** become links
+- **Hidden files** (starting with `_`) are excluded
+- **Sort order**: Folders first, then files (alphabetically)
+
+### Page Titles
+
+Titles are determined by (in priority order):
+
+1. `title` in frontmatter
+2. First H1 heading in the file
+3. Filename (humanized)
+
+```mdx
+---
+title: Custom Page Title
+---
+
+# This heading is used if no frontmatter title
+
+Content...
+```
+
+## Active State
+
+The current page is highlighted in the sidebar. Parent folders are also marked as active when viewing nested pages.
+
+## Breadcrumbs
+
+Breadcrumbs show the current location in the documentation hierarchy.
+
+```json
+{
+  "navigation": {
+    "breadcrumbs": true
+  }
+}
+```
+
+Example breadcrumb:
+
+```
+Home / Features / Navigation
+```
+
+## Table of Contents
+
+The TOC (right sidebar) shows headings from the current page.
+
+```json
+{
+  "navigation": {
+    "tocEnabled": true,
+    "tocMaxDepth": 3
+  }
+}
+```
+
+### Max Depth
+
+Control how many heading levels to show:
+
+- `tocMaxDepth: 2` — Show H2 only
+- `tocMaxDepth: 3` — Show H2 and H3 (default)
+- `tocMaxDepth: 6` — Show all headings
+
+### Smooth Scrolling
+
+Clicking a TOC link smoothly scrolls to the heading with a subtle highlight effect.
+
+## Previous/Next Links
+
+Navigate between pages with previous/next links at the bottom of each page.
+
+```json
+{
+  "navigation": {
+    "prevNextLinks": true
+  }
+}
+```
+
+The links follow the sidebar order, making it easy to read through documentation sequentially.
+
+## File Structure Example
+
+Given this file structure:
+
+```
+docs/
+├── README.md
+├── getting-started/
+│   ├── installation.md
+│   └── quickstart.md
+├── features/
+│   ├── mdx.mdx
+│   ├── theming.md
+│   └── search.md
+└── configuration.md
+```
+
+The sidebar will show:
+
+- Home (README.md)
+- Getting Started (folder)
+  - Installation
+  - Quickstart
+- Features (folder)
+  - MDX Components
+  - Theming
+  - Search
+- Configuration
+
+## Hidden Files
+
+Hide files from the sidebar by:
+
+1. **Prefix with underscore**: `_draft.md`
+2. **Add to `_mdsvr/settings.json`**:
+   ```json
+   {
+     "files": {
+       "extensions": {
+         "hidden": ["draft.md", "*.tmp"]
+       }
+     }
+   }
+   ```
+
+Hidden files are also excluded from:
+
+- Search index
+- Sitemap
+- RSS feed
+- Directory listings
+
+## Customizing Order
+
+### Alphabetical (Default)
+
+Files and folders are sorted alphabetically with folders first.
+
+### Prior-Dir
+
+Sorts directories before files, maintaining directory priority.
+
+### Manual
+
+Use `manualOrder` to specify exact ordering:
+
+```json
+{
+  "navigation": {
+    "sidebar": {
+      "orderBy": "manual",
+      "manualOrder": [
+        "README.md",
+        "getting-started",
+        "features",
+        "configuration"
+      ]
+    }
+  }
+}
+```
+
+Paths in `manualOrder` are relative to the docs root and can include both files and directories.
+
+## Responsive Design
+
+Navigation adapts to different screen sizes:
+
+| Breakpoint          | Behavior                     |
+| ------------------- | ---------------------------- |
+| Desktop (>1024px)   | Sidebar + TOC visible        |
+| Tablet (768-1024px) | Sidebar visible, TOC hidden  |
+| Mobile (<768px)     | Sidebar becomes overlay menu |
+
+### Mobile Navigation
+
+On mobile devices:
+
+- The sidebar is hidden by default
+- A hamburger menu button appears in the header
+- Clicking the menu opens the sidebar as an overlay
+- The overlay can be closed by clicking outside or the X button
+
+## Accessibility
+
+All navigation features are keyboard accessible:
+
+- **Tab**: Navigate between links
+- **Enter**: Activate links
+- **Space**: Toggle collapsible sections
+- **Escape**: Close mobile sidebar or search modal
+
+ARIA labels are included for screen readers:
+
+- `aria-current="page"` on active links
+- `aria-expanded` on collapsible sections
+- `aria-label` on navigation landmarks
+
+## Complete Configuration
+
+```json
+{
+  "navigation": {
+    "sidebar": {
+      "enabled": true,
+      "autoGenerate": true,
+      "showFileCount": false,
+      "collapsible": true,
+      "defaultOpen": true
+    },
+    "breadcrumbs": true,
+    "prevNextLinks": true,
+    "tocEnabled": true,
+    "tocMaxDepth": 3,
+    "editOnGithub": {
+      "enabled": false,
+      "repo": "https://github.com/user/repo",
+      "branch": "main",
+      "docsDir": "docs/"
+    }
+  }
+}
+```
+
+---
+
+# Features
+
+Source: https://mdsvr.js.org/docs/03-features/
+
+# Features
+
+mdsvr comes with everything you need for modern documentation sites:
+
+## Core Features
+
+| Feature      | Description                           | Link                   |
+| ------------ | ------------------------------------- | ---------------------- |
+| **Markdown** | Full GitHub-flavored Markdown support | [markdown](./markdown) |
+| **MDX**      | React components in your docs         | [mdx](./mdx)           |
+| **Mermaid**  | Diagrams and flowcharts               | [mermaid](./mermaid)   |
+| **Math**     | LaTeX mathematical expressions        | [math](./math)         |
+
+## Navigation & UX
+
+| Feature        | Description                    | Link                       |
+| -------------- | ------------------------------ | -------------------------- |
+| **Navigation** | Auto-generated sidebar and TOC | [navigation](./navigation) |
+| **Search**     | Built-in full-text search      | [search](./search)         |
+| **Theming**    | Dark/light mode                | [theming](./theming)       |
+
+## SEO & Sharing
+
+| Feature | Description             | Link         |
+| ------- | ----------------------- | ------------ |
+| **SEO** | Meta tags, sitemap, RSS | [seo](./seo) |
+
+## Why These Features?
+
+Every feature in mdsvr is:
+
+- **Zero-config by default** — works out of the box
+- **Opt-in customization** — configure when you need to
+- **Performance-focused** — no bloat, fast loading
+
+## Quick Comparison
+
+|        | mdsvr         | Docusaurus | Nextra    |
+| ------ | ------------- | ---------- | --------- |
+| Setup  | 10 seconds    | 5 minutes  | 3 minutes |
+| Config | None required | Required   | Required  |
+| Build  | None          | Required   | Required  |
+| Search | Built-in      | Algolia    | Built-in  |
+
+Start exploring any feature from the sidebar! The numbered folders ensure logical ordering: Getting Started → Settings → Features → Reference.
+
+---
+
+# Search
+
+Source: https://mdsvr.js.org/docs/03-features/search/
+
+# Search
+
+mdsvr includes a **built-in full-text search** that works entirely client-side. No external services or databases required.
+
+## Enabling Search
+
+Search is enabled by default. Configure it in `_mdsvr/settings.json`:
+
+```json
+{
+  "search": {
+    "enabled": true,
+    "placeholder": "Search docs...",
+    "maxResults": 10
+  }
+}
+```
+
+## Using Search
+
+### Keyboard Shortcut
+
+Press `⌘+K` (Mac) or `Ctrl+K` (Windows/Linux) to open the search modal from anywhere.
+
+### Search Trigger
+
+Click the search icon in the header to open the search modal.
+
+### Search Modal
+
+The search modal includes:
+
+- **Instant results** as you type
+- **Fuzzy matching** for typo tolerance
+- **Result highlighting** with matching terms marked
+- **Keyboard navigation** with ↑/↓ arrows
+- **Quick selection** with Enter key
+
+## How It Works
+
+1. **Index Generation**: When the server starts, it crawls all `.md` and `.mdx` files and builds a search index
+2. **JSON Endpoint**: The index is served at `/search-index.json`
+3. **Client-Side Search**: A lightweight (~3KB) JavaScript library performs fuzzy matching in the browser
+4. **No Server Load**: All search processing happens on the client
+
+## Search Index
+
+The search index includes:
+
+- **Title** — Page titles (highest weight)
+- **Headings** — All H1-H6 headings
+- **Content** — Full text content (stripped of markdown)
+- **Excerpt** — First 200 characters for previews
+
+## Scoring
+
+Results are ranked by relevance:
+
+| Match Type              | Score |
+| ----------------------- | ----- |
+| Exact title match       | +100  |
+| Title starts with query | +50   |
+| Title contains query    | +25   |
+| Heading contains query  | +15   |
+| Content contains query  | +10   |
+
+## Disabling Search
+
+To disable search entirely:
+
+```json
+{
+  "search": {
+    "enabled": false
+  }
+}
+```
+
+This will:
+
+- Hide the search trigger in the header
+- Remove the ⌘K keyboard shortcut
+- Skip building the search index at startup
+- Return empty array at `/search-index.json`
+
+## Search Data Structure
+
+Each entry in the search index:
+
+```typescript
+{
+  title: string;      // Page title
+  href: string;       // URL path
+  excerpt: string;    // First 200 chars
+  headings: string[]; // All H1-H6 text
+  content: string;    // Full plain text
+}
+```
+
+## Tips for Better Search
+
+1. **Use descriptive titles** — They have the highest search weight
+2. **Use headings** — They help users find specific sections
+3. **Frontmatter title** — Set `title:` in frontmatter for better control
+
+Example:
+
+```mdx
+---
+title: Authentication Guide
+---
+
+# Authentication
+
+## JWT Tokens
+
+How to use JWT tokens for authentication...
+
+## OAuth
+
+Setting up OAuth providers...
+```
+
+## Accessibility
+
+The search modal is fully accessible:
+
+- Keyboard navigation (Tab, Arrow keys, Enter, Escape)
+- ARIA labels for screen readers
+- Focus trap while modal is open
+- Focus restoration when closed
+
+## Performance
+
+- Search index is generated **once at server startup**
+- Index is cached and served as static JSON
+- Fuzzy matching uses a lightweight algorithm
+- No external dependencies (no Algolia, Elasticsearch, etc.)
+
+For large documentation sites (1000+ pages), the index generation and search performance remain fast.
+
+---
+
+# SEO
+
+Source: https://mdsvr.js.org/docs/03-features/seo/
+
+# SEO Features
+
+mdsvr includes built-in SEO features to help your documentation rank better in search engines and look great when shared on social media.
+
+## Meta Tags
+
+Every page includes optimized meta tags based on your `_mdsvr/settings.json` and page frontmatter.
+
+### Title Template
+
+```json
+{
+  "seo": {
+    "titleTemplate": "%s | My Docs"
+  }
+}
+```
+
+- `%s` is replaced with the page title
+- Example: `Installation | My Docs`
+- When `titleTemplate` is **not set**, titles default to `<page title> | <site title>` (or just the page title when `site.title` is empty). Set `titleTemplate: "%s"` to keep bare titles.
+
+### Page-Level Titles
+
+Override the title for individual pages using frontmatter:
+
+```mdx
+---
+title: Custom Page Title
+description: A description for SEO and social sharing
+seoTitle: Custom Page Title | Keyword-Rich Suffix
+---
+
+# Page Heading
+
+Content...
+```
+
+- `title` — used for the `<title>` tag, `og:title`, and `twitter:title`
+- `seoTitle` — optional; wins over `title` for SEO output when present
+- Without either, the first `#` heading (then the humanized filename) is used
+
+## Meta Descriptions
+
+Every page gets a `<meta name="description">` resolved in this order:
+
+1. `description` in frontmatter
+2. The first meaningful paragraph of the page (code blocks, headings, HTML, and nav-like lines are skipped; truncated to ~160 characters)
+3. `site.description` as the last fallback
+
+## Open Graph
+
+Open Graph tags ensure your pages look great when shared on Facebook, LinkedIn, and other platforms.
+
+```json
+{
+  "seo": {
+    "defaultImage": "./assets/og-image.png"
+  }
+}
+```
+
+Generated tags:
+
+- `og:title` — Page title
+- `og:description` — Page or site description
+- `og:type` — `article` for document pages, `website` for the homepage and directory/auto-index pages
+- `og:url` — Absolute canonical URL (only when `site.baseUrl` is set)
+- `og:site_name` — Site title
+- `og:locale` — Derived from `site.language` in `language_TERRITORY` form (`en` → `en_US`, `vi` → `vi_VN`, `pt-BR` → `pt_BR`)
+- `og:image` — Featured image, resolved to an absolute URL against `site.baseUrl` + `generate.basePath` when possible
+- `og:image:alt` — `imageAlt` frontmatter, falling back to the page title (also emitted as `twitter:image:alt`)
+- `og:image:width` / `og:image:height` — `1200`×`630`, emitted for generated OG images
+
+## OG Image Generation
+
+mdsvr can automatically generate beautiful OG images for every page. This feature is **enabled by default**.
+
+## Enabling/Disabling
+
+```json
+{
+  "seo": {
+    "og": {
+      "enabled": true
+    }
+  }
+}
+```
+
+Set `enabled: false` to disable automatic OG image generation.
+
+## Customization
+
+```json
+{
+  "seo": {
+    "og": {
+      "enabled": true,
+      "template": "default",
+      "imageFormat": "jpg",
+      "generateOnServe": false,
+      "fontFamily": "Inter",
+      "colors": {
+        "background": "#0a0a0f",
+        "text": "#ffffff",
+        "accent": "#0969da"
+      }
+    }
+  }
+}
+```
+
+**Options:**
+
+- `enabled`: Enable/disable OG image generation (default: `true`)
+- `template`: OG image template to use (default: `"default"`)
+- `imageFormat`: Output format - `jpg` or `png` (default: `jpg`)
+- `generateOnServe`: Generate OG images on server requests (default: `false`)
+- `fontFamily`: Font family for text (default: `Inter`)
+- `colors.background`: Background color (default: `#0a0a0f`)
+- `colors.text`: Text color (default: `#ffffff`)
+- `colors.accent`: Accent color for highlights (default: `#0969da`)
+
+## Output Location
+
+OG images are generated at:
+
+- Static export: `_html/public/assets/og/{path}/index.jpg`
+- Live server: `public/assets/og/{path}/index.jpg`
+
+## Caching
+
+OG images are cached and only regenerated when:
+
+- The source markdown file changes
+- Settings change (forcing full re-export)
+- The export state is deleted
+- Using `--force-og` flag during export
+
+See [Export Caching](../02-settings/#export-caching) for details.
+
+## Force Regeneration
+
+To force regenerate all OG images during export:
+
+```bash
+npx mdsvr ./docs --export --force-og
+```
+
+This bypasses the cache and regenerates all OG images, useful when:
+
+- OG image template changes
+- Font files are updated
+- You want to refresh all social media preview images
+
+## Custom Images Per Page
+
+```mdx
+---
+title: My Article
+description: Article description
+image: ./assets/article-image.png
+imageAlt: Diagram of the deployment pipeline # optional og:image:alt / twitter:image:alt
+---
+```
+
+## Twitter Cards
+
+Twitter Cards make your links stand out on Twitter/X.
+
+```json
+{
+  "seo": {
+    "twitterCard": "summary_large_image",
+    "twitterSite": "@myhandle"
+  }
+}
+```
+
+## Card Types
+
+- `summary` — Small square image + text
+- `summary_large_image` — Large featured image (recommended)
+
+Generated tags: `twitter:card`, `twitter:site`, `twitter:title`, `twitter:description`, and `twitter:image`.
+
+## Sitemap
+
+Generate an XML sitemap for search engines.
+
+## Enabling
+
+```json
+{
+  "seo": {
+    "generateSitemap": true
+  }
+}
+```
+
+## Endpoint
+
+Access your sitemap at:
+
+```
+https://yoursite.com/sitemap.xml
+```
+
+## Sitemap Contents
+
+The sitemap includes:
+
+- All rendered `.md`/`.mdx` pages **and** auto-generated directory index pages
+- Canonical trailing-slash URLs, percent-encoded and deduplicated
+- `lastmod` from frontmatter `dateModified` (then `date`, then file mtime)
+- Change frequency (`weekly`)
+- `noindex` pages are excluded
+
+## Absolute URLs required
+
+A sitemap must contain absolute URLs, so behavior depends on `site.baseUrl`:
+
+- **Export**: `sitemap.xml` is only written when `site.baseUrl` is configured — otherwise generation is skipped with a warning.
+- **Serve mode**: `/sitemap.xml` uses `site.baseUrl` when set, otherwise the actual request origin (e.g. `http://localhost:1800`).
+
+## Example Output
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://docs.example.com/</loc>
+    <lastmod>2025-01-15</lastmod>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>https://docs.example.com/configuration/</loc>
+    <lastmod>2025-01-10</lastmod>
+    <changefreq>weekly</changefreq>
+  </url>
+</urlset>
+```
+
+## RSS Feed
+
+Generate an RSS feed for blog posts or changelogs.
+
+## Enabling
+
+```json
+{
+  "seo": {
+    "generateRssFeed": true,
+    "rss": {
+      "title": "My Docs Updates",
+      "feedUrl": "/feed.xml",
+      "siteUrl": "https://docs.example.com"
+    }
+  }
+}
+```
+
+## Endpoint
+
+Access the feed at:
+
+```
+https://yoursite.com/feed.xml
+```
+
+## Including Posts
+
+Pages are included in the RSS feed when they have a `date` in their frontmatter:
+
+```mdx
+---
+title: New Feature Released
+description: We just shipped a great new feature
+date: 2025-01-15
+---
+
+# New Feature Released
+
+Content...
+```
+
+Posts are sorted by date (newest first) and limited to the 20 most recent entries.
+
+## Canonical URLs
+
+Canonical URLs help search engines understand the primary version of a page.
+
+```json
+{
+  "site": {
+    "baseUrl": "https://docs.example.com"
+  }
+}
+```
+
+With `baseUrl` set, every page includes an absolute canonical in the canonical trailing-slash form (`baseUrl` + `generate.basePath` + page URL):
+
+```html
+<link rel="canonical" href="https://docs.example.com/page-path/" />
+```
+
+The same absolute URL is used for `og:url` and JSON-LD. When `baseUrl` is **not** configured, `canonical` and `og:url` are omitted entirely — relative canonicals are never emitted.
+
+## No-Index
+
+Prevent specific pages from being indexed:
+
+## Site-Wide
+
+```json
+{
+  "seo": {
+    "noIndex": true
+  }
+}
+```
+
+## Per Page
+
+```mdx
+---
+noindex: true
+---
+
+# Draft Page
+
+This page won't be indexed by search engines.
+```
+
+This adds:
+
+```html
+<meta name="robots" content="noindex, nofollow" />
+```
+
+- `noindex` is the canonical spelling; the older `noIndex` alias still works (`noindex` wins if both are set)
+- `noindex` pages are also excluded from `sitemap.xml`
+
+## Directory Listing Pages
+
+Auto-generated index pages for directories without a `README.md`/`index.md` are `website`-type pages with a humanized title and a `Directory listing for …` description. To keep them out of search results, set:
+
+```json
+{
+  "seo": {
+    "noIndexDirectoryPages": true
+  }
+}
+```
+
+They then emit `noindex, nofollow` and are excluded from `sitemap.xml`.
+
+## robots.txt
+
+By default, mdsvr exports a permissive `robots.txt` for static sites:
+
+```
+User-agent: *
+Allow: /
+Sitemap: https://docs.example.com/sitemap.xml
+```
+
+Place a non-empty `robots.txt` in your docs root to override the generated file:
+
+```
+docs/
+├── robots.txt
+├── README.md
+└── ...
+```
+
+To keep `robots.txt` entirely under your own control, disable generation:
+
+```json
+{
+  "seo": {
+    "generateRobotsTxt": false
+  }
+}
+```
+
+Example custom `robots.txt`:
+
+```
+User-agent: *
+Allow: /
+Sitemap: https://docs.example.com/sitemap.xml
+```
+
+The generated `Sitemap:` line is only included when an absolute sitemap URL can be derived (`site.baseUrl`, or the request origin in serve mode) — relative `Sitemap:` URLs are invalid.
+
+## llms.txt
+
+mdsvr generates two files for LLM consumers (see [llmstxt.org](https://llmstxt.org)), enabled by default:
+
+- `/llms.txt` — a Markdown index of every page: the site title, a blockquote summary, then link lists grouped by top-level section with page descriptions. Links are absolute when `site.baseUrl` (or the request origin in serve mode) is available.
+- `/llms-full.txt` — the full Markdown source of every page, each preceded by its title and canonical URL so chunks stay attributable.
+
+`noindex` pages are excluded from both files. To write your own, place a non-empty `llms.txt` or `llms-full.txt` in the docs root — custom files always win (same convention as `robots.txt`).
+
+Disable generation entirely:
+
+```json
+{
+  "seo": {
+    "generateLlmsTxt": false
+  }
+}
+```
+
+## Structured Data (JSON-LD)
+
+Every page emits one `<script type="application/ld+json">` block with a schema.org `@graph`:
+
+- **Document pages** → `Article` (`headline`, `description`, `url`, `image`, `author`, `datePublished`, `dateModified` — only fields with real data, never invented)
+- **Homepage** → `WebSite` (`name`, `url`, `description`)
+- **Nested routes** → `BreadcrumbList` when breadcrumbs are enabled (built from the route path and sidebar titles)
+
+Disable with:
+
+```json
+{
+  "seo": {
+    "structuredData": false
+  }
+}
+```
+
+## Author & dates
+
+Article metadata comes from frontmatter and site settings:
+
+```mdx
+---
+title: My Article
+author: Jane Doe # string, or { name: "Jane", url: "https://..." }
+date: 2026-10-01 # treated as datePublished
+datePublished: 2026-09-30 # wins over `date` when set
+dateModified: 2026-10-04
+---
+```
+
+When frontmatter omits the dates, the source file's filesystem timestamps are used as fallback (creation time for `datePublished`, modification time for `dateModified`), so `og:type="article"` pages always carry `article:published_time`/`article:modified_time` and JSON-LD dates.
+
+A site-wide default author can be configured and emits `<meta name="author">` plus JSON-LD `author` (as an `Organization`):
+
+```json
+{
+  "site": {
+    "author": { "name": "Acme Docs Team", "url": "https://acme.example/about" }
+  }
+}
+```
+
+Frontmatter `author` (a `Person`) wins over `site.author`.
+
+## Deployment
+
+## Firebase Hosting
+
+The export works with zero special configuration — point `public` at the output directory:
+
+```json
+{
+  "hosting": {
+    "public": "dist",
+    "cleanUrls": true,
+    "trailingSlash": true
+  }
+}
+```
+
+Set `site.baseUrl` to your public origin so canonical URLs, `og:url`, `sitemap.xml`, and the `robots.txt` `Sitemap:` line are absolute.
+
+## GitHub Pages
+
+For `https://<user>.github.io/<repo>/` project sites, set both `baseUrl` and `basePath`:
+
+```json
+{
+  "site": {
+    "baseUrl": "https://user.github.io"
+  },
+  "generate": {
+    "basePath": "/repo"
+  }
+}
+```
+
+All generated links, canonicals, sitemap entries, and `og:image` URLs are prefixed with `basePath` automatically.
+
+## Social Sharing Preview
+
+To get the best social sharing previews:
+
+1. **Set a default image** in `_mdsvr/settings.json`
+2. **Use custom images** for important pages
+3. **Write good descriptions** in frontmatter
+4. **Keep titles concise** (under 60 characters)
+
+## Recommended Image Sizes
+
+- **Open Graph**: 1200×630 pixels
+- **Twitter Cards**: 1200×600 pixels (large image)
+
+## Complete SEO Configuration
+
+```json
+{
+  "site": {
+    "title": "My Documentation",
+    "description": "Comprehensive documentation for My Project",
+    "baseUrl": "https://docs.example.com",
+    "language": "en",
+    "author": { "name": "Acme Docs Team", "url": "https://acme.example" }
+  },
+  "seo": {
+    "titleTemplate": "%s | My Docs",
+    "defaultImage": "./assets/og-default.png",
+    "twitterCard": "summary_large_image",
+    "twitterSite": "@myhandle",
+    "noIndex": false,
+    "generateSitemap": true,
+    "generateRobotsTxt": true,
+    "generateRssFeed": true,
+    "generateLlmsTxt": true,
+    "structuredData": true,
+    "rss": {
+      "title": "My Docs Blog",
+      "feedUrl": "/feed.xml",
+      "siteUrl": "https://docs.example.com"
+    }
+  }
+}
+```
+
+## Testing
+
+Test your SEO implementation with these tools:
+
+- [Facebook Sharing Debugger](https://developers.facebook.com/tools/debug/)
+- [Twitter Card Validator](https://cards-dev.twitter.com/validator)
+- [Google Rich Results Test](https://search.google.com/test/rich-results)
+
+---
+
+# Theming
+
+Source: https://mdsvr.js.org/docs/03-features/theming/
+
+# Theming
+
+mdsvr supports **dark mode**, **light mode**, and **automatic theme detection** based on the user's system preferences.
+
+## Theme Modes
+
+Configure the default theme in `_mdsvr/settings.json`:
+
+```json
+{
+  "appearance": {
+    "defaultTheme": "system",
+    "allowThemeToggle": true
+  }
+}
+```
+
+### Options
+
+| Mode     | Behavior                         |
+| -------- | -------------------------------- |
+| `system` | Follows the user's OS preference |
+| `light`  | Always uses light theme          |
+| `dark`   | Always uses dark theme           |
+
+## Theme Toggle
+
+When `allowThemeToggle` is enabled, users can switch themes using the button in the header:
+
+<Callout type="tip">
+  The user's preference is saved to `localStorage` and persists across sessions.
+</Callout>
+
+## Accent Color
+
+Customize the primary color used for links, buttons, and accents:
+
+```json
+{
+  "appearance": {
+    "accentColor": "#0969da"
+  }
+}
+```
+
+This affects:
+
+- Links in content
+- Sidebar active state
+- Button hover states
+- Search highlight
+- Badges with accent color
+
+### Recommended Colors
+
+| Color       | Hex Value |
+| ----------- | --------- |
+| GitHub Blue | `#0969da` |
+| Purple      | `#8250df` |
+| Green       | `#1a7f37` |
+| Red         | `#cf222e` |
+| Orange      | `#9a6700` |
+
+## Code Themes
+
+Configure syntax highlighting themes for light and dark modes:
+
+```json
+{
+  "appearance": {
+    "codeTheme": {
+      "light": "github",
+      "dark": "github-dark"
+    }
+  }
+}
+```
+
+Currently supported:
+
+- `github`
+- `github-dark`
+
+## Font Family
+
+Customize fonts for different content types:
+
+```json
+{
+  "appearance": {
+    "fontFamily": {
+      "body": "Inter, system-ui, sans-serif",
+      "code": "Fira Code, monospace",
+      "heading": "Inter, system-ui, sans-serif"
+    }
+  }
+}
+```
+
+**Options:**
+
+- `body`: Font for body text (optional)
+- `code`: Font for code blocks (optional)
+- `heading`: Font for headings (optional, defaults to body font)
+
+If not specified, the system default fonts are used.
+
+## CSS Variables
+
+The following CSS variables are available for custom styling:
+
+```css
+:root[data-theme="light"] {
+  --bg: #ffffff;
+  --bg-secondary: #f6f8fa;
+  --border: #d1d9e0;
+  --text: #1f2328;
+  --text-muted: #636c76;
+  --accent: var(--accent-color, #0969da);
+  --code-bg: #f6f8fa;
+}
+
+:root[data-theme="dark"] {
+  --bg: #0d1117;
+  --bg-secondary: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --text-muted: #8d96a0;
+  --accent: var(--accent-color, #58a6ff);
+  --code-bg: #161b22;
+}
+```
+
+You can use these variables in custom CSS if needed (custom CSS injection coming in a future release).
+
+## System Preference Detection
+
+When using `defaultTheme: "system"`, mdsvr automatically detects the user's OS preference:
+
+```javascript
+// Runs before paint to prevent flash
+const theme =
+  localStorage.getItem("theme") ||
+  (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+document.documentElement.setAttribute("data-theme", theme);
+```
+
+The theme also updates automatically when the system preference changes (no page reload needed).
+
+## No-Flash Theme Loading
+
+To prevent a flash of unstyled content (FOUC) when the page loads, mdsvr injects a small script in the `<head>` that:
+
+1. Checks `localStorage` for a saved preference
+2. Falls back to system preference if no saved preference
+3. Sets the `data-theme` attribute before the page renders
+
+This ensures the correct theme is applied immediately without any visible flash.
+
+## Example Configuration
+
+```json
+{
+  "appearance": {
+    "defaultTheme": "system",
+    "allowThemeToggle": true,
+    "accentColor": "#8250df",
+    "codeTheme": {
+      "light": "github",
+      "dark": "github-dark"
+    },
+    "fontFamily": {
+      "body": "Inter, system-ui, sans-serif",
+      "code": "Fira Code, monospace"
+    }
+  }
+}
+```
+
+---
+
+# Reference
+
+Source: https://mdsvr.js.org/docs/04-reference/
+
+# Reference
+
+Technical reference documentation for mdsvr.
+
+---
+
+## CLI Reference
+
+Complete reference for all mdsvr CLI commands and options.
+
+### Global Usage
+
+```bash
+npx mdsvr [dir] [options]
+```
+
+Or if installed globally:
+
+```bash
+mdsvr [dir] [options]
+```
+
+### Arguments
+
+| Argument | Description             | Default                 |
+| -------- | ----------------------- | ----------------------- |
+| `[dir]`  | Root directory to serve | `.` (current directory) |
+
+### Options
+
+#### Server Options
+
+| Option         | Description             | Default     |
+| -------------- | ----------------------- | ----------- |
+| `-p, --port N` | Port number             | `1800`      |
+| `--host H`     | Bind address            | `localhost` |
+| `-o, --open`   | Auto-open browser       | `false`     |
+| `-s, --silent` | Suppress console output | `false`     |
+
+#### Export Options
+
+| Option                | Description                                   |
+| --------------------- | --------------------------------------------- |
+| `-e, --export [PATH]` | Export static HTML (default: `_html/public`)  |
+| `--force-og`          | Force full OG image regeneration (skip cache) |
+
+#### Utility Options
+
+| Option          | Description                                                  |
+| --------------- | ------------------------------------------------------------ |
+| `--init`        | Create starter `settings.json`                               |
+| `--validate`    | Validate `settings.json` and exit                            |
+| `--validate-md` | Validate all markdown files and exit                         |
+| `--autofix`     | Auto-fix markdown validation errors (use with --validate-md) |
+| `--no-watch`    | Disable `settings.json` hot-reload                           |
+| `-v, --version` | Print version                                                |
+| `-h, --help`    | Print help                                                   |
+
+### Examples
+
+#### Basic Server
+
+```bash
+# Serve current directory
+npx mdsvr
+
+# Serve specific folder
+npx mdsvr ./docs
+
+# Custom port
+npx mdsvr ./docs --port 3000
+
+# Expose to LAN
+npx mdsvr ./docs --host 0.0.0.0 --port 1800
+```
+
+## With Auto-Open
+
+```bash
+npx mdsvr ./docs --open
+```
+
+## Export Static Site
+
+```bash
+# Default output (_html/public)
+npx mdsvr ./docs --export
+
+# Custom output
+npx mdsvr ./docs --export ./dist
+
+# Force full OG image regeneration
+npx mdsvr ./docs --export --force-og
+```
+
+## Initialize Config
+
+```bash
+npx mdsvr ./docs --init
+```
+
+Creates `_mdsvr/settings.json` with starter configuration.
+
+## Validate Settings
+
+```bash
+npx mdsvr ./docs --validate
+```
+
+Checks `_mdsvr/settings.json` for errors without starting server.
+
+## Validate Markdown Files
+
+```bash
+# Validate all markdown files
+npx mdsvr ./docs --validate-md
+
+# Validate with auto-fix
+npx mdsvr ./docs --validate-md --autofix
+```
+
+Checks all markdown files for:
+
+- 🔗 Broken internal links (with fuzzy matching suggestions)
+- 📝 Heading hierarchy issues
+- 📌 Missing H1 headings
+- 🖼️ Missing assets (images, fonts, etc.)
+
+The `--autofix` flag automatically fixes broken links using fuzzy matching (e.g., `traget.md` → `target.md`).
+
+## Environment Variables
+
+| Variable | Description                                   |
+| -------- | --------------------------------------------- |
+| `PORT`   | Default port (if not specified with `--port`) |
+| `HOST`   | Default host (if not specified with `--host`) |
+
+### Exit Codes
+
+| Code | Meaning                    |
+| ---- | -------------------------- |
+| `0`  | Success                    |
+| `1`  | General error              |
+| `2`  | Invalid arguments          |
+| `3`  | Settings validation failed |
+
+---
+
+## Coming Soon
+
+- JavaScript API reference
+- Configuration schema documentation
+- Component API reference
+
+---
+
+## Related
+
+- [Configuration](../02-settings/) — Practical configuration guide
+- [Features](../03-features/) — Feature documentation
+- [Getting Started](../01-getting-started/) — Quick start guides
+
+---
+
+# ADR-001: File-based content storage instead of database
+
+Source: https://mdsvr.js.org/docs/09-architecture/adr/001-file-based-content-storage/
+
+# ADR-001: File-based content storage instead of database
+
+## Status: Accepted
+
+## Context
+
+Documentation content needs to be stored and served efficiently. Common approaches include:
+- Database storage (PostgreSQL, MongoDB, etc.)
+- Headless CMS (Contentful, Strapi, etc.)
+- File-based storage (Markdown files in filesystem)
+
+Database solutions require:
+- Database server setup and maintenance
+- Migration scripts for schema changes
+- Authentication and access control
+- Backup and recovery procedures
+- Additional infrastructure complexity
+
+## Decision
+
+Store all content as Markdown/MDX files in the filesystem. No database is used.
+
+### Implementation
+
+- Content files are stored directly in the docs directory
+- File structure determines URL structure
+- Frontmatter in files provides metadata
+- Settings stored in `_mdsvr/settings.json`
+- Export state stored in `_mdsvr/export-state.json`
+
+## Consequences
+
+### Positive
+
+- **Zero setup**: No database server required, just Node.js
+- **Git-friendly**: Content can be version controlled with Git
+- **Portable**: Copy the entire directory to move or backup
+- **Fast**: No database queries, direct file reads
+- **Simple**: No ORM, no migrations, no connection pooling
+- **Transparent**: Content is human-readable plain text
+- **Offline editing**: Edit files directly with any text editor
+
+### Negative
+
+- **No query language**: Cannot run complex queries on content
+- **No built-in search**: Must implement custom search (solved with search-index.json)
+- **No user authentication**: Must implement at server level if needed
+- **No content versioning**: Relies on Git for history
+- **Scalability limits**: Filesystem performance at very large scale
+- **No collaborative editing**: No real-time collaboration features
+
+### Mitigations
+
+- Search implemented via pre-built `/search-index.json`
+- Authentication can be added via reverse proxy (nginx, etc.)
+- Git provides content history and collaboration
+- Static export enables CDN deployment for scale
+
+---
+
+# ADR-002: Server-side MDX rendering instead of client-side
+
+Source: https://mdsvr.js.org/docs/09-architecture/adr/002-server-side-mdx-rendering/
+
+# ADR-002: Server-side MDX rendering instead of client-side
+
+## Status: Accepted
+
+## Context
+
+MDX (Markdown + JSX) enables interactive components in documentation. Common rendering approaches:
+- **Client-side rendering**: Browser processes MDX with React/Next.js
+- **Server-side rendering**: Server processes MDX to HTML before sending to client
+
+Client-side MDX requires:
+- JavaScript framework in the browser (React, Vue, etc.)
+- Bundle size increase (MDX runtime, React, components)
+- Initial page load delay (hydration)
+- Client-side processing power
+- Potential SEO issues (content not in initial HTML)
+
+## Decision
+
+Process MDX server-side using `@mdx-js/mdx` and React. Send fully rendered HTML to the client.
+
+### Implementation
+
+- MDX files processed by `renderer/mdx.ts` using `@mdx-js/mdx`
+- React components rendered server-side to HTML
+- Built-in components (Callout, Steps, Tabs, etc.) defined in renderer
+- Resulting HTML embedded in page template
+- No client-side framework required for basic functionality
+
+## Consequences
+
+### Positive
+
+- **No client-side framework**: Pages work without JavaScript
+- **Faster initial load**: No hydration delay, content in HTML
+- **Better SEO**: Search engines see full content immediately
+- **Smaller bundles**: No React/MDX runtime sent to client
+- **Simpler deployment**: No build step for client-side code
+- **Works offline**: Once loaded, no additional processing needed
+- **Better performance**: Server handles rendering, client just displays
+
+### Negative
+
+- **Server load**: Rendering happens on server, not distributed to clients
+- **No interactivity**: Components are static HTML after rendering
+- **Hot reload complexity**: MDX changes require server re-processing
+- **Limited dynamic behavior**: Cannot use React hooks or state
+- **Component limitations**: Only server-safe components allowed
+
+### Mitigations
+
+- Server is lightweight (Node.js), rendering is fast
+- Interactive features (search, theme toggle) use vanilla JS
+- Settings hot-reload handles configuration changes
+- Static export pre-renders all content for CDN deployment
+- Components designed for static output (no state/hooks)
+
+---
+
+# ADR-003: Zero configuration with sensible defaults
+
+Source: https://mdsvr.js.org/docs/09-architecture/adr/003-zero-configuration-with-defaults/
+
+# ADR-003: Zero configuration with sensible defaults
+
+## Status: Accepted
+
+## Context
+
+Documentation tools often require extensive configuration files (Docusaurus config.js, Nextra config, MkDocs config, etc.). This creates:
+- Steep learning curve for new users
+- Boilerplate setup time
+- Configuration drift across projects
+- Documentation maintenance burden
+- Barrier to entry for simple use cases
+
+Users want to serve documentation quickly without understanding complex configuration options.
+
+## Decision
+
+The system works without any configuration file. Sensible defaults are built-in. Optional `_mdsvr/settings.json` allows customization.
+
+### Implementation
+
+- All features work out-of-the-box with defaults
+- `_mdsvr/settings.json` is optional
+- Settings validated against Zod schema with JSON Schema reference
+- Missing settings use defaults from `settings/defaults.ts`
+- Settings hot-reloaded on file changes (no server restart)
+- CLI `--init` generates starter settings file
+
+### Default Behavior
+
+- Port: 1800
+- Theme: System preference (dark/light)
+- Sidebar: Auto-generated from file structure
+- Search: Enabled with client-side index
+- MDX: Enabled
+- SEO: OG images enabled
+- Index files: README.md, index.md, index.html
+
+## Consequences
+
+### Positive
+
+- **10-second setup**: Run `npx mdsvr ./docs` and it works
+- **No learning curve**: Start using immediately, learn features later
+- **Progressive enhancement**: Add configuration only when needed
+- **Consistent defaults**: All projects start with best practices
+- **Less maintenance**: No config file to update or break
+- **Portable settings**: Copy docs folder, settings travel with it
+- **Hot-reload**: Change settings without restarting server
+
+### Negative
+
+- **Less discoverability**: Users may not know customization options exist
+- **Defaults may not fit all**: Some projects need different defaults
+- **Schema complexity**: Validation errors can be confusing
+- **Breaking changes**: Changing defaults affects existing users
+- **Limited flexibility**: Some advanced features may require config
+
+### Mitigations
+
+- CLI `--init` generates documented starter config
+- JSON Schema provides IDE autocomplete and validation
+- Documentation clearly lists all options
+- Settings hot-reload encourages experimentation
+- Version defaults tied to package version
+
+---
+
+# ADR-004: Client-side search with pre-built index instead of external service
+
+Source: https://mdsvr.js.org/docs/09-architecture/adr/004-client-side-search-with-pre-built-index/
+
+# ADR-004: Client-side search with pre-built index instead of external service
+
+## Status: Accepted
+
+## Context
+
+Documentation sites need full-text search functionality. Common approaches:
+- **External services**: Algolia, Elasticsearch, Meilisearch
+- **Server-side search**: Database queries, server-side indexing
+- **Client-side search**: Pre-built index searched in browser
+
+External search services require:
+- API keys and authentication
+- External service dependency
+- Network requests for every search
+- Service costs at scale
+- Privacy concerns (content sent to third party)
+- Additional infrastructure setup
+
+## Decision
+
+Implement client-side search using a pre-built `/search-index.json` file. Search happens entirely in the browser.
+
+### Implementation
+
+- `generators/search-index.ts` builds index from all markdown files
+- Index includes: title, content, URL, headings
+- Index served as `/search-index.json` endpoint
+- Client-side JavaScript performs search (fuzzy matching)
+- Search triggered by ⌘K / Ctrl+K keyboard shortcut
+- Index rebuilt on settings change or during static export
+
+## Consequences
+
+### Positive
+
+- **No external dependency**: Works offline, no service required
+- **Fast**: Pre-indexed, no network latency
+- **Privacy**: Content never leaves user's browser
+- **Free**: No API costs, no service limits
+- **Simple**: No infrastructure setup
+- **Instant**: No API calls, immediate results
+- **Scalable**: Search load distributed to clients
+
+### Negative
+
+- **Index size**: Large docs sites have large index files
+- **Initial load**: Index file must be downloaded
+- **Limited features**: No advanced search (filters, facets, etc.)
+- **Update delay**: Index rebuilds on server restart/settings change
+- **Browser memory**: Index loaded into browser memory
+- **No analytics**: Cannot track search queries server-side
+
+### Mitigations
+
+- Index compressed and minified
+- Incremental rebuild during static export
+- Fuzzy matching provides good basic search
+- Settings hot-reload triggers index rebuild
+- Typical documentation sites have manageable index sizes (< 1MB)
+- Can add client-side analytics if needed
+
+---
+
+# ADR-005: Incremental static export with hash-based caching
+
+Source: https://mdsvr.js.org/docs/09-architecture/adr/005-incremental-static-export/
+
+# ADR-005: Incremental static export with hash-based caching
+
+## Status: Accepted
+
+## Context
+
+Static HTML export is used for deploying documentation to static hosting (Firebase, Netlify, GitHub Pages). Common approaches:
+- **Full rebuild**: Regenerate all files on every export
+- **Timestamp-based**: Compare file modification times
+- **Hash-based**: Compare content hashes to detect changes
+
+Full rebuild on every export is inefficient:
+- Slow for large documentation sites
+- Unnecessary regeneration of unchanged content
+- Wasted computational resources (especially OG images)
+- Longer deployment times
+
+Timestamp-based comparison has issues:
+- Doesn't detect content changes if timestamp is modified
+- Can miss changes from git operations
+- Doesn't handle settings changes properly
+
+## Decision
+
+Implement hash-based incremental export. Only regenerate files when content or settings change.
+
+### Implementation
+
+- Calculate SHA-256 hash for each source file
+- Store hash in `_mdsvr/export-state.json`
+- Compare current hash with stored hash
+- Only regenerate files with changed hashes
+- OG images use same hash-based caching
+- Settings changes trigger full rebuild (settings hash stored separately)
+- Export state includes: file hashes, OG image paths, settings hash
+
+### Hash Calculation
+
+- **Markdown/MDX files**: Hash of file content
+- **Auto-index pages**: Hash of directory contents (file names + sizes)
+- **Settings**: Hash of `_mdsvr/settings.json`
+- **OG images**: Hash of source file (or directory for auto-index)
+
+## Consequences
+
+### Positive
+
+- **Fast exports**: Only changed files regenerated
+- **Efficient OG generation**: OG images only regenerated when source changes
+- **Reliable**: Hash-based detection is accurate (content-based, not time-based)
+- **Settings-aware**: Settings changes trigger full rebuild automatically
+- **Orphan cleanup**: Old files removed when source deleted
+- **Scalable**: Handles large documentation sites efficiently
+
+### Negative
+
+- **State file dependency**: Export state must be maintained
+- **Hash computation overhead**: Must calculate hashes for all files
+- **State corruption risk**: Corrupted state can cause issues
+- **Complexity**: More complex than full rebuild
+- **Initial export**: First export is slower (no state to compare)
+
+### Mitigations
+
+- State file stored in `_mdsvr/` (git-ignored, not served)
+- Hash computation is fast (SHA-256, streaming)
+- State validation on load, fallback to full rebuild if corrupted
+- Clear error messages for state issues
+- Initial export is acceptable one-time cost
+
+---
+
+# ADR-006: Markdown validation and auto-fixing
+
+Source: https://mdsvr.js.org/docs/09-architecture/adr/006-markdown-validation-and-autofix/
+
+# ADR-006: Markdown validation and auto-fixing
+
+## Status: Accepted
+
+## Context
+
+Documentation sites often have markdown quality issues that affect user experience:
+- Broken internal and external links
+- Missing or invalid frontmatter
+- Inconsistent heading hierarchy
+- Empty sections or orphaned headings
+- Duplicate anchors
+- Malformed markdown syntax
+
+Common approaches to handle this:
+- **Manual review**: Time-consuming, error-prone
+- **CI/CD linting**: Blocks deployment, requires fixes
+- **Runtime errors**: Poor user experience
+- **Ignore issues**: Accumulates technical debt
+
+Users need a way to detect and fix markdown issues before deployment.
+
+## Decision
+
+Implement markdown validation with optional auto-fixing via CLI commands `--validate-md` and `--autofix`.
+
+### Implementation
+
+- **Validator module** (`validator/index.ts`) checks all markdown files
+- **Validation checks**:
+  - Broken internal links (point to non-existent files)
+  - Broken external links (HTTP HEAD request)
+  - Missing or invalid frontmatter
+  - Inconsistent heading hierarchy (skipped levels)
+  - Empty sections (headings with no content)
+  - Duplicate anchors (same heading text)
+  - Malformed markdown syntax
+- **Auto-fix capabilities**:
+  - Add missing frontmatter with defaults
+  - Fix heading hierarchy (renumber levels)
+  - Remove empty sections
+  - Fix duplicate anchors (add suffixes)
+  - Fix common syntax errors
+- **CLI integration**: `--validate-md` to check, `--autofix` to fix
+
+## Consequences
+
+### Positive
+
+- **Quality assurance**: Catches issues before deployment
+- **Developer-friendly**: Auto-fix reduces manual work
+- **Consistent**: Enforces markdown standards across project
+- **Prevents broken links**: Detects broken internal/external links
+- **Better UX**: Users see well-formatted documentation
+- **CI/CD ready**: Can be integrated in build pipeline
+
+### Negative
+
+- **False positives**: May flag intentional deviations
+- **Auto-fix risk**: Automatic changes may not be desired
+- **External link checks**: Requires network, can be slow
+- **Limited scope**: Cannot catch all markdown issues
+- **Opinionated**: Enforces specific style (heading hierarchy, etc.)
+
+### Mitigations
+
+- Validation is optional (not required for serving)
+- Auto-fix requires explicit `--autofix` flag
+- External link checks can be disabled
+- Validation rules are documented
+- Users can review changes before committing
+- False positives can be ignored manually
+
+---
+
+# Architecture
+
+Source: https://mdsvr.js.org/docs/09-architecture/
+
+# Architecture
+
+> **Note**: This documentation is intended for contributors to mdsvr, not for end users. If you're looking for user documentation, see the [main docs](../).
+
+## Overview
+
+mdsvr is a zero-configuration documentation server built with Node.js and TypeScript. It transforms a directory of Markdown/MDX files into a full-featured documentation website with no build step required.
+
+## Core Principles
+
+1. **File-based content storage** - No database, all content stored as files
+2. **Server-side rendering** - MDX processed server-side, no client-side framework
+3. **Zero configuration** - Sensible defaults, optional settings via JSON
+4. **Incremental exports** - Smart caching for static HTML generation
+5. **Security-first** - Path traversal protection, blocked extensions, read-only
+
+## System Architecture
+
+```mermaid
+graph TD
+    A[HTTP Server<br/>Node.js http] --> B[Router<br/>Path resolution & validation<br/>Security checks<br/>Route dispatching]
+    B --> C[Markdown Renderer]
+    B --> D[MDX Renderer]
+    B --> E[Static Files]
+    B --> F[Directory Listing]
+    B --> G[Special Routes]
+    C --> H[Template Engine<br/>HTML page rendering<br/>Sidebar navigation<br/>Table of contents<br/>SEO meta tags]
+    D --> H
+    E --> H
+    F --> H
+    G --> H
+```
+
+## Module Structure
+
+### Core Modules
+
+- **`server.ts`** - HTTP server creation, port management, settings hot-reload
+- **`router.ts`** - Request routing, path validation, security checks
+- **`cli.ts`** - Command-line interface, argument parsing
+
+### Rendering Pipeline
+
+- **`renderer/markdown.ts`** - Markdown to HTML conversion with frontmatter parsing
+- **`renderer/mdx.ts`** - MDX to HTML conversion with React component rendering
+- **`template/index.ts`** - Full HTML page rendering with layout
+- **`template/sidebar.ts`** - Auto-generated sidebar navigation
+- **`template/seo.ts`** - Open Graph and Twitter Card meta tags
+- **`template/search.ts`** - Client-side search UI
+
+### Configuration
+
+- **`settings/schema.ts`** - Zod schema for settings validation
+- **`settings/index.ts`** - Settings loading, validation, and hot-reload
+- **`settings/defaults.ts`** - Default configuration values
+
+### Generators
+
+- **`generators/sitemap.ts`** - XML sitemap generation
+- **`generators/feed.ts`** - RSS feed generation
+- **`generators/search-index.ts`** - Client-side search index builder
+- **`generators/static-export.ts`** - Static HTML export with incremental caching
+
+### Open Graph Images
+
+- **`og/generator.ts`** - OG image generation using Satori and Resvg
+- **`og/incremental.ts`** - Incremental OG image generation with hash-based caching
+- **`og/types.ts`** - OG image data types
+
+### Utilities
+
+- **`directory.ts`** - Directory listing rendering
+- **`export-state.ts`** - Export state management for incremental builds
+- **`validator/index.ts`** - Markdown validation and auto-fixing
+
+## Data Flow
+
+### Request Flow (Dynamic Server)
+
+```mermaid
+graph LR
+    A[HTTP Request] --> B[Router<br/>Path validation<br/>Security checks]
+    B --> C{File Type Detection}
+    C -->|md/mdx| D[Renderers]
+    C -->|Directory| E[Directory Listing]
+    C -->|Static files| F[Direct Serve]
+    C -->|Special routes| G[Generators]
+    D --> H[Template Engine<br/>Layout, Sidebar, TOC, SEO]
+    E --> H
+    F --> H
+    G --> H
+    H --> I[HTML Response]
+```
+
+### Static Export Flow
+
+```mermaid
+graph TD
+    A[Export Command] --> B[Scan directory tree]
+    B --> C[Process markdown/MDX files]
+    C --> D[Generate HTML with clean URLs]
+    D --> E[Generate auto-index for directories without README]
+    E --> F[Generate OG images<br/>Incremental]
+    F --> G[Generate search-index.json]
+    G --> H[Generate sitemap.xml & feed.xml]
+    H --> I[Save export state<br/>For incremental builds]
+```
+
+## Key Design Decisions
+
+### File-Based Content Storage
+
+Content is stored as plain Markdown/MDX files in the filesystem. No database is used, making the system:
+
+- Simple to deploy (no database setup)
+- Easy to version control (Git-friendly)
+- Portable (just copy the directory)
+- Fast (no database queries)
+
+### Server-Side MDX Rendering
+
+MDX is processed server-side using `@mdx-js/mdx` and React. This means:
+
+- No client-side framework required
+- Faster initial page load
+- Better SEO (content in HTML)
+- Interactive components work without JavaScript
+
+### Zero Configuration
+
+The system works without any configuration file. When `_mdsvr/settings.json` is present:
+
+- Validated against JSON Schema
+- Hot-reloaded on changes (no server restart)
+- Merges with defaults
+
+### Client-Side Search
+
+Search is implemented client-side using a pre-built `/search-index.json`:
+
+- No external service (Algolia, etc.)
+- Fast (pre-indexed)
+- Works offline
+- Triggered by ⌘K / Ctrl+K
+
+### Incremental Static Export
+
+Static export uses hash-based caching:
+
+- Only regenerates files that changed
+- OG images regenerated only when source changes
+- Settings changes trigger full rebuild
+- State stored in `_mdsvr/export-state.json`
+
+## Security Model
+
+### Path Traversal Protection
+
+Request paths first pass a component-aware lexical containment check. The root
+and candidate are then resolved with `realpath`, and the canonical target must
+pass the same check before it is read or served:
+
+```typescript
+const relativePath = path.relative(rootPath, candidatePath);
+if (
+  relativePath === ".." ||
+  relativePath.startsWith(`..${path.sep}`) ||
+  path.isAbsolute(relativePath)
+) {
+  return 403 Forbidden;
+}
+```
+
+### Hidden Files
+
+Files and folders starting with `_` or `.`, or matching patterns in `settings.files.extensions.hidden`, are not served.
+
+### Blocked Extensions
+
+Sensitive extensions (`.env`, `.key`, `.pem`, etc.) are blocked by default via `settings.files.extensions.block`.
+
+### Read-Only Operation
+
+The server only reads files - no write operations are exposed through the HTTP API.
+
+## Performance Characteristics
+
+- **Startup time**: ~150ms (no build step)
+- **Memory usage**: Low (content loaded on-demand)
+- **Static export**: Incremental (only changed files)
+- **Search**: Client-side with pre-built index
+
+## Extension Points
+
+The system can be extended through:
+
+- Custom MDX components (via settings)
+- Custom themes (via CSS variables)
+- Custom static folders (via `settings.files.staticFolders`)
+- Custom index files (via `settings.files.indexFiles`)
+
+---
+
+# Welcome
+
+Source: https://mdsvr.js.org/docs/
+
+# Welcome to mdsvr
+
+Transform any folder of Markdown/Markdown files into a beautiful documentation website — zero config required.
+
+```bash
+npx mdsvr ./docs
+```
+
+> ℹ️ **Info:** This documentation itself is served by **mdsvr**! Explore the files in this directory to see how everything works.
+
+## What is mdsvr?
+
+**mdsvr** is a static file server that automatically renders Markdown and MDX files as beautiful HTML. It's similar to Vercel's `serve` but understands `.md` and `.mdx` files.
+
+## Quick Start
+
+1. **Install**
+
+   No installation needed! Just use `npx`:
+
+   ```bash
+   npx mdsvr ./docs
+   ```
+
+2. **Create your docs**
+
+   Create a folder with some `.md` files:
+
+   ```bash
+   mkdir docs
+   echo "# Hello World" > docs/readme.md
+   ```
+
+3. **Start the server**
+
+   ```bash
+   npx mdsvr ./docs --open
+   ```
+
+## Key Features
+
+| Feature                                   | Description                                                    |
+| ----------------------------------------- | -------------------------------------------------------------- |
+| 📝 [Markdown & MDX](./03-features/)        | Render .md and .mdx files with built-in interactive components |
+| 🎨 [Themes](./03-features/theming)        | Dark/light mode with customizable accent colors                |
+| 🔍 [Search](./03-features/search)         | Built-in full-text search with keyboard shortcut (⌘K)          |
+| 📑 [Navigation](./03-features/navigation) | Auto-generated sidebar and table of contents                   |
+| 🔎 [SEO](./03-features/seo)               | Sitemap, RSS feed, Open Graph, and Twitter Cards               |
+| ⚙️ [Settings](./02-settings/)              | Configure everything via settings.json                         |
+
+## This docs structure for reference
+
+```
+docs/
+├── _mdsvr/
+│   └── settings.json            # Site configuration (optional)
+├── README.md                    # Homepage (this file)
+├── 01-getting-started/          # Getting started guides
+│   └── README.md              # Quick start & installation
+├── 02-settings/                 # Settings & configuration
+│   └── README.md              # Configuration, writing & deployment
+├── 03-features/                 # Feature documentation
+│   ├── README.md             # Features overview
+│   ├── markdown.md           # Markdown support
+│   ├── mdx.mdx               # MDX components demo
+│   ├── theming.md            # Theme customization
+│   ├── search.md             # Search functionality
+│   ├── navigation.md         # Navigation features
+│   ├── seo.md                # SEO features
+│   └── mermaid.md            # Mermaid diagrams
+└── 04-reference/                # API/Reference
+    └── README.md             # CLI reference
+```
+
+## Next Steps
+
+- **[Quick Start](./01-getting-started/)** — Get running in 30 seconds
+- **[Installation](./01-getting-started/)** — Install options
+- **[MDX Components](./03-features/mdx)** — Make your docs interactive
+- **[Configuration](./02-settings/)** — Customize your site
+- **[Writing Content](./02-settings/)** — Best practices
+- **[Deployment](./02-settings/)** — Go live
+- **[Features](./03-features/)** — See all features
+- **[CLI Reference](./04-reference/)** — Command reference
+
+---
+
+> 💡 **Tip:** Press `⌘+K` (or `Ctrl+K`) to open the search modal and find anything in this documentation!

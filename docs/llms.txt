@@ -1,0 +1,41 @@
+# MDSVR | Markdown Documentation Server
+
+> Full-featured documentation website server with MDX support, site settings, SEO, and navigation
+
+## Docs
+
+- [Welcome](https://mdsvr.js.org/docs/): Full-featured documentation website server with MDX support, site settings, SEO, and navigation
+
+## 01 getting started
+
+- [Getting Started](https://mdsvr.js.org/docs/01-getting-started/): Get up and running with mdsvr - installation and quick start guide
+
+## 02 settings
+
+- [Guides](https://mdsvr.js.org/docs/02-settings/): Detailed guides for configuring, writing, and deploying your mdsvr documentation
+
+## 03 features
+
+- [Markdown Formats](https://mdsvr.js.org/docs/03-features/markdown/): Test all supported Markdown formats
+- [Mathematical Expressions](https://mdsvr.js.org/docs/03-features/math/): Write and render mathematical expressions using LaTeX syntax
+- [MDX Components](https://mdsvr.js.org/docs/03-features/mdx/): Interactive components for your documentation
+- [Mermaid Diagrams in mdsvr](https://mdsvr.js.org/docs/03-features/mermaid/): mdsvr supports Mermaid.js for creating beautiful diagrams directly in your Markdown files. Simply wrap your Mermaid code in triple backticks with the mermaid...
+- [Navigation](https://mdsvr.js.org/docs/03-features/navigation/): Sidebar, breadcrumbs, and table of contents
+- [Features](https://mdsvr.js.org/docs/03-features/): Overview of all mdsvr features
+- [Search](https://mdsvr.js.org/docs/03-features/search/): Full-text search for your documentation
+- [SEO](https://mdsvr.js.org/docs/03-features/seo/): Search engine optimization features
+- [Theming](https://mdsvr.js.org/docs/03-features/theming/): Customize the appearance of your documentation
+
+## 04 reference
+
+- [Reference](https://mdsvr.js.org/docs/04-reference/): API and CLI reference documentation for mdsvr
+
+## 09 architecture
+
+- [ADR-001: File-based content storage instead of database](https://mdsvr.js.org/docs/09-architecture/adr/001-file-based-content-storage/): Documentation content needs to be stored and served efficiently. Common approaches include:
+- [ADR-002: Server-side MDX rendering instead of client-side](https://mdsvr.js.org/docs/09-architecture/adr/002-server-side-mdx-rendering/): MDX (Markdown + JSX) enables interactive components in documentation. Common rendering approaches:
+- [ADR-003: Zero configuration with sensible defaults](https://mdsvr.js.org/docs/09-architecture/adr/003-zero-configuration-with-defaults/): Documentation tools often require extensive configuration files (Docusaurus config.js, Nextra config, MkDocs config, etc.). This creates:
+- [ADR-004: Client-side search with pre-built index instead of external service](https://mdsvr.js.org/docs/09-architecture/adr/004-client-side-search-with-pre-built-index/): Documentation sites need full-text search functionality. Common approaches:
+- [ADR-005: Incremental static export with hash-based caching](https://mdsvr.js.org/docs/09-architecture/adr/005-incremental-static-export/): Static HTML export is used for deploying documentation to static hosting (Firebase, Netlify, GitHub Pages). Common approaches:
+- [ADR-006: Markdown validation and auto-fixing](https://mdsvr.js.org/docs/09-architecture/adr/006-markdown-validation-and-autofix/): Documentation sites often have markdown quality issues that affect user experience:
+- [Architecture](https://mdsvr.js.org/docs/09-architecture/): mdsvr is a zero-configuration documentation server built with Node.js and TypeScript. It transforms a directory of Markdown/MDX files into a full-featured...

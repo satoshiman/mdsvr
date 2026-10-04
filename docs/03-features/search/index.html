@@ -22,17 +22,21 @@
     <meta property="og:description" content="Full-text search for your documentation">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="MDSVR | Markdown Documentation Server">
-    <meta property="og:locale" content="en">
+    <meta property="og:locale" content="en_US">
     <meta property="og:url" content="https://mdsvr.js.org/docs/03-features/search/">
     <meta property="og:image" content="https://mdsvr.js.org/docs/public/assets/og/03-features/search/index.jpg">
+    <meta property="og:image:alt" content="Search">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Search | MDSVR | Markdown Documentation Server">
     <meta name="twitter:description" content="Full-text search for your documentation">
     <meta name="twitter:image" content="https://mdsvr.js.org/docs/public/assets/og/03-features/search/index.jpg">
+    <meta name="twitter:image:alt" content="Search">
+    <meta property="article:published_time" content="2026-10-04">
+    <meta property="article:modified_time" content="2026-10-04">
     <link rel="sitemap" type="application/xml" href="/docs/sitemap.xml">
-  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"Search","description":"Full-text search for your documentation","url":"https://mdsvr.js.org/docs/03-features/search/","image":"https://mdsvr.js.org/docs/public/assets/og/03-features/search/index.jpg"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://mdsvr.js.org/docs/"},{"@type":"ListItem","position":2,"name":"Features","item":"https://mdsvr.js.org/docs/03-features/"},{"@type":"ListItem","position":3,"name":"Search","item":"https://mdsvr.js.org/docs/03-features/search/"}]}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"Search","description":"Full-text search for your documentation","url":"https://mdsvr.js.org/docs/03-features/search/","image":"https://mdsvr.js.org/docs/public/assets/og/03-features/search/index.jpg","datePublished":"2026-10-04","dateModified":"2026-10-04"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://mdsvr.js.org/docs/"},{"@type":"ListItem","position":2,"name":"Features","item":"https://mdsvr.js.org/docs/03-features/"},{"@type":"ListItem","position":3,"name":"Search","item":"https://mdsvr.js.org/docs/03-features/search/"}]}]}</script>
   
   
   
@@ -1605,7 +1609,7 @@ code.hljs {
 <p>mdsvr includes a <strong>built-in full-text search</strong> that works entirely client-side. No external services or databases required.</p>
 <h2 id="enabling-search" tabindex="-1">Enabling Search</h2>
 <p>Search is enabled by default. Configure it in <code>_mdsvr/settings.json</code>:</p>
-<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+<div class="code-block-wrapper"><div class="code-block-container" data-code="{
   &quot;search&quot;: {
     &quot;enabled&quot;: true,
     &quot;placeholder&quot;: &quot;Search docs...&quot;,
@@ -1650,7 +1654,7 @@ code.hljs {
 <span class="hljs-punctuation">}</span>
 </code></pre>
 </div></div>
-</code></pre>
+
 <h2 id="using-search" tabindex="-1">Using Search</h2>
 <h3 id="keyboard-shortcut" tabindex="-1">Keyboard Shortcut</h3>
 <p>Press <code>⌘+K</code> (Mac) or <code>Ctrl+K</code> (Windows/Linux) to open the search modal from anywhere.</p>
@@ -1714,7 +1718,7 @@ code.hljs {
 </table></div>
 <h2 id="disabling-search" tabindex="-1">Disabling Search</h2>
 <p>To disable search entirely:</p>
-<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+<div class="code-block-wrapper"><div class="code-block-container" data-code="{
   &quot;search&quot;: {
     &quot;enabled&quot;: false
   }
@@ -1755,7 +1759,7 @@ code.hljs {
 <span class="hljs-punctuation">}</span>
 </code></pre>
 </div></div>
-</code></pre>
+
 <p>This will:</p>
 <ul>
 <li>Hide the search trigger in the header</li>
@@ -1765,7 +1769,7 @@ code.hljs {
 </ul>
 <h2 id="search-data-structure" tabindex="-1">Search Data Structure</h2>
 <p>Each entry in the search index:</p>
-<pre><code class="language-typescript"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+<div class="code-block-wrapper"><div class="code-block-container" data-code="{
   title: string;      // Page title
   href: string;       // URL path
   excerpt: string;    // First 200 chars
@@ -1810,7 +1814,7 @@ code.hljs {
 }
 </code></pre>
 </div></div>
-</code></pre>
+
 <h2 id="tips-for-better-search" tabindex="-1">Tips for Better Search</h2>
 <ol>
 <li><strong>Use descriptive titles</strong> — They have the highest search weight</li>
@@ -1818,7 +1822,7 @@ code.hljs {
 <li><strong>Frontmatter title</strong> — Set <code>title:</code> in frontmatter for better control</li>
 </ol>
 <p>Example:</p>
-<pre><code class="language-mdx"><div class="code-block-wrapper"><div class="code-block-container" data-code="---
+<div class="code-block-wrapper"><div class="code-block-container" data-code="---
 title: Authentication Guide
 ---
 
@@ -1875,7 +1879,7 @@ How to use JWT tokens for authentication...
 Setting up OAuth providers...
 </code></pre>
 </div></div>
-</code></pre>
+
 <h2 id="accessibility" tabindex="-1">Accessibility</h2>
 <p>The search modal is fully accessible:</p>
 <ul>

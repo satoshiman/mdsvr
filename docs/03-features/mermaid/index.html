@@ -22,17 +22,21 @@
     <meta property="og:description" content="mdsvr supports Mermaid.js for creating beautiful diagrams directly in your Markdown files. Simply wrap your Mermaid code in triple backticks with the mermaid...">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="MDSVR | Markdown Documentation Server">
-    <meta property="og:locale" content="en">
+    <meta property="og:locale" content="en_US">
     <meta property="og:url" content="https://mdsvr.js.org/docs/03-features/mermaid/">
     <meta property="og:image" content="https://mdsvr.js.org/docs/public/assets/og/03-features/mermaid/index.jpg">
+    <meta property="og:image:alt" content="Mermaid Diagrams in mdsvr">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Mermaid Diagrams in mdsvr | MDSVR | Markdown Documentation Server">
     <meta name="twitter:description" content="mdsvr supports Mermaid.js for creating beautiful diagrams directly in your Markdown files. Simply wrap your Mermaid code in triple backticks with the mermaid...">
     <meta name="twitter:image" content="https://mdsvr.js.org/docs/public/assets/og/03-features/mermaid/index.jpg">
+    <meta name="twitter:image:alt" content="Mermaid Diagrams in mdsvr">
+    <meta property="article:published_time" content="2026-10-04">
+    <meta property="article:modified_time" content="2026-10-04">
     <link rel="sitemap" type="application/xml" href="/docs/sitemap.xml">
-  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"Mermaid Diagrams in mdsvr","description":"mdsvr supports Mermaid.js for creating beautiful diagrams directly in your Markdown files. Simply wrap your Mermaid code in triple backticks with the mermaid...","url":"https://mdsvr.js.org/docs/03-features/mermaid/","image":"https://mdsvr.js.org/docs/public/assets/og/03-features/mermaid/index.jpg"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://mdsvr.js.org/docs/"},{"@type":"ListItem","position":2,"name":"Features","item":"https://mdsvr.js.org/docs/03-features/"},{"@type":"ListItem","position":3,"name":"Mermaid Diagrams in mdsvr","item":"https://mdsvr.js.org/docs/03-features/mermaid/"}]}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"Mermaid Diagrams in mdsvr","description":"mdsvr supports Mermaid.js for creating beautiful diagrams directly in your Markdown files. Simply wrap your Mermaid code in triple backticks with the mermaid...","url":"https://mdsvr.js.org/docs/03-features/mermaid/","image":"https://mdsvr.js.org/docs/public/assets/og/03-features/mermaid/index.jpg","datePublished":"2026-10-04","dateModified":"2026-10-04"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://mdsvr.js.org/docs/"},{"@type":"ListItem","position":2,"name":"Features","item":"https://mdsvr.js.org/docs/03-features/"},{"@type":"ListItem","position":3,"name":"Mermaid Diagrams in mdsvr","item":"https://mdsvr.js.org/docs/03-features/mermaid/"}]}]}</script>
   
   
   
@@ -1604,7 +1608,7 @@ code.hljs {
         <h1 id="mermaid-diagrams-in-mdsvr" tabindex="-1">Mermaid Diagrams in mdsvr</h1>
 <p>mdsvr supports <strong>Mermaid.js</strong> for creating beautiful diagrams directly in your Markdown files. Simply wrap your Mermaid code in triple backticks with the <code>mermaid</code> language identifier, and mdsvr will render it as an interactive diagram.</p>
 <h2 id="quick-start" tabindex="-1">Quick Start</h2>
-<pre><code class="language-mermaid"><div class="mermaid-wrapper"><div class="mermaid-container">
+<div class="mermaid-wrapper"><div class="mermaid-container">
   <div class="mermaid-toolbar">
     <button class="mermaid-btn mermaid-btn-chart" title="Chart view"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z"/><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/></svg></button>
     <button class="mermaid-btn mermaid-btn-code" title="Show code"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg></button>
@@ -1612,7 +1616,7 @@ code.hljs {
   </div>
   <div class="mermaid-zoom-controls">
     <button class="mermaid-btn mermaid-btn-zoom-in" title="Zoom in"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
   </div>
   <div class="mermaid-chart">
     <div class="mermaid">flowchart LR
@@ -1625,9 +1629,9 @@ code.hljs {
     B --&gt; C[mdsvr Renders]
     C --&gt; D[Beautiful Diagram]</code></pre>
 </div></div>
-</code></pre>
+
 <p><strong>Syntax:</strong> All Mermaid diagrams start with a diagram type keyword, followed by the content.</p>
-<pre><code class="language-mermaid"><div class="mermaid-wrapper"><div class="mermaid-container">
+<div class="mermaid-wrapper"><div class="mermaid-container">
   <div class="mermaid-toolbar">
     <button class="mermaid-btn mermaid-btn-chart" title="Chart view"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z"/><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/></svg></button>
     <button class="mermaid-btn mermaid-btn-code" title="Show code"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg></button>
@@ -1635,7 +1639,7 @@ code.hljs {
   </div>
   <div class="mermaid-zoom-controls">
     <button class="mermaid-btn mermaid-btn-zoom-in" title="Zoom in"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
   </div>
   <div class="mermaid-chart">
     <div class="mermaid">flowchart TD
@@ -1646,7 +1650,7 @@ code.hljs {
     A[Diagram Type] --&gt; B[Content]
     B --&gt; C[End]</code></pre>
 </div></div>
-</code></pre>
+
 <p><strong>Comments:</strong> Use <code>%%</code> to add comments that won’t be rendered.</p>
 <hr>
 <h2 id="supported-diagram-types" tabindex="-1">Supported Diagram Types</h2>
@@ -1655,7 +1659,7 @@ code.hljs {
 <h2 id="1-flowchart" tabindex="-1">1. Flowchart</h2>
 <p><strong>Best for:</strong> Process flows, workflows, decision trees, algorithms.</p>
 <h3 id="example-user-authentication-flow" tabindex="-1">Example: User Authentication Flow</h3>
-<pre><code class="language-mermaid"><div class="mermaid-wrapper"><div class="mermaid-container">
+<div class="mermaid-wrapper"><div class="mermaid-container">
   <div class="mermaid-toolbar">
     <button class="mermaid-btn mermaid-btn-chart" title="Chart view"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z"/><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/></svg></button>
     <button class="mermaid-btn mermaid-btn-code" title="Show code"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg></button>
@@ -1663,7 +1667,7 @@ code.hljs {
   </div>
   <div class="mermaid-zoom-controls">
     <button class="mermaid-btn mermaid-btn-zoom-in" title="Zoom in"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
   </div>
   <div class="mermaid-chart">
     <div class="mermaid">flowchart TD
@@ -1700,7 +1704,7 @@ code.hljs {
         G
     end</code></pre>
 </div></div>
-</code></pre>
+
 <h3 id="syntax-guide" tabindex="-1">Syntax Guide</h3>
 <p><strong>Directions:</strong> <code>TD</code> (top-down), <code>LR</code> (left-right), <code>BT</code> (bottom-up), <code>RL</code> (right-left)</p>
 <p><strong>Node shapes:</strong></p>
@@ -1717,7 +1721,7 @@ code.hljs {
 <h2 id="2-sequence-diagram" tabindex="-1">2. Sequence Diagram</h2>
 <p><strong>Best for:</strong> API documentation, authentication flows, message exchanges between systems.</p>
 <h3 id="example-api-authentication-flow" tabindex="-1">Example: API Authentication Flow</h3>
-<pre><code class="language-mermaid"><div class="mermaid-wrapper"><div class="mermaid-container">
+<div class="mermaid-wrapper"><div class="mermaid-container">
   <div class="mermaid-toolbar">
     <button class="mermaid-btn mermaid-btn-chart" title="Chart view"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z"/><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/></svg></button>
     <button class="mermaid-btn mermaid-btn-code" title="Show code"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg></button>
@@ -1725,7 +1729,7 @@ code.hljs {
   </div>
   <div class="mermaid-zoom-controls">
     <button class="mermaid-btn mermaid-btn-zoom-in" title="Zoom in"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
   </div>
   <div class="mermaid-chart">
     <div class="mermaid">sequenceDiagram
@@ -1764,7 +1768,7 @@ code.hljs {
         Browser--&gt;&gt;User: Show error message
     end</code></pre>
 </div></div>
-</code></pre>
+
 <h3 id="syntax-guide-1" tabindex="-1">Syntax Guide</h3>
 <p><strong>Participants:</strong> <code>participant Name as &quot;Display Name&quot;</code></p>
 <p><strong>Arrows:</strong></p>
@@ -1779,7 +1783,7 @@ code.hljs {
 <h2 id="3-class-diagram" tabindex="-1">3. Class Diagram</h2>
 <p><strong>Best for:</strong> Software architecture, OOP structure, data models.</p>
 <h3 id="example-e-commerce-system" tabindex="-1">Example: E-commerce System</h3>
-<pre><code class="language-mermaid"><div class="mermaid-wrapper"><div class="mermaid-container">
+<div class="mermaid-wrapper"><div class="mermaid-container">
   <div class="mermaid-toolbar">
     <button class="mermaid-btn mermaid-btn-chart" title="Chart view"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z"/><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/></svg></button>
     <button class="mermaid-btn mermaid-btn-code" title="Show code"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg></button>
@@ -1787,7 +1791,7 @@ code.hljs {
   </div>
   <div class="mermaid-zoom-controls">
     <button class="mermaid-btn mermaid-btn-zoom-in" title="Zoom in"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
   </div>
   <div class="mermaid-chart">
     <div class="mermaid">classDiagram
@@ -1844,7 +1848,7 @@ code.hljs {
     User "1" --&gt; "*" Order : places
     Order "*" --&gt; "*" Product : contains</code></pre>
 </div></div>
-</code></pre>
+
 <h3 id="syntax-guide-2" tabindex="-1">Syntax Guide</h3>
 <p><strong>Visibility:</strong> <code>+</code> (public), <code>-</code> (private), <code>#</code> (protected), <code>~</code> (package)</p>
 <p><strong>Relationships:</strong></p>
@@ -1859,7 +1863,7 @@ code.hljs {
 <h2 id="4-state-diagram" tabindex="-1">4. State Diagram</h2>
 <p><strong>Best for:</strong> State machines, lifecycles, process states.</p>
 <h3 id="example-document-lifecycle" tabindex="-1">Example: Document Lifecycle</h3>
-<pre><code class="language-mermaid"><div class="mermaid-wrapper"><div class="mermaid-container">
+<div class="mermaid-wrapper"><div class="mermaid-container">
   <div class="mermaid-toolbar">
     <button class="mermaid-btn mermaid-btn-chart" title="Chart view"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z"/><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/></svg></button>
     <button class="mermaid-btn mermaid-btn-code" title="Show code"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg></button>
@@ -1867,7 +1871,7 @@ code.hljs {
   </div>
   <div class="mermaid-zoom-controls">
     <button class="mermaid-btn mermaid-btn-zoom-in" title="Zoom in"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
   </div>
   <div class="mermaid-chart">
     <div class="mermaid">stateDiagram-v2
@@ -1898,12 +1902,12 @@ code.hljs {
         Pending --&gt; Rejected
     }</code></pre>
 </div></div>
-</code></pre>
+
 <hr>
 <h2 id="5-er-diagram" tabindex="-1">5. ER Diagram</h2>
 <p><strong>Best for:</strong> Database schemas, data modeling.</p>
 <h3 id="example-blog-database-schema" tabindex="-1">Example: Blog Database Schema</h3>
-<pre><code class="language-mermaid"><div class="mermaid-wrapper"><div class="mermaid-container">
+<div class="mermaid-wrapper"><div class="mermaid-container">
   <div class="mermaid-toolbar">
     <button class="mermaid-btn mermaid-btn-chart" title="Chart view"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z"/><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/></svg></button>
     <button class="mermaid-btn mermaid-btn-code" title="Show code"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg></button>
@@ -1911,7 +1915,7 @@ code.hljs {
   </div>
   <div class="mermaid-zoom-controls">
     <button class="mermaid-btn mermaid-btn-zoom-in" title="Zoom in"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
   </div>
   <div class="mermaid-chart">
     <div class="mermaid">erDiagram
@@ -1968,7 +1972,7 @@ code.hljs {
     POST ||--o{ COMMENT : has
     USER ||--o{ COMMENT : writes</code></pre>
 </div></div>
-</code></pre>
+
 <h3 id="syntax-guide-3" tabindex="-1">Syntax Guide</h3>
 <p><strong>Relationships:</strong></p>
 <ul>
@@ -1982,7 +1986,7 @@ code.hljs {
 <h2 id="6-gantt-chart" tabindex="-1">6. Gantt Chart</h2>
 <p><strong>Best for:</strong> Project planning, timelines, sprint schedules.</p>
 <h3 id="example-project-timeline" tabindex="-1">Example: Project Timeline</h3>
-<pre><code class="language-mermaid"><div class="mermaid-wrapper"><div class="mermaid-container">
+<div class="mermaid-wrapper"><div class="mermaid-container">
   <div class="mermaid-toolbar">
     <button class="mermaid-btn mermaid-btn-chart" title="Chart view"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z"/><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/></svg></button>
     <button class="mermaid-btn mermaid-btn-code" title="Show code"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg></button>
@@ -1990,7 +1994,7 @@ code.hljs {
   </div>
   <div class="mermaid-zoom-controls">
     <button class="mermaid-btn mermaid-btn-zoom-in" title="Zoom in"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
   </div>
   <div class="mermaid-chart">
     <div class="mermaid">gantt
@@ -2027,7 +2031,7 @@ code.hljs {
         Testing :test, after dev1, 7d
         Deploy :milestone, deploy, after test, 1d</code></pre>
 </div></div>
-</code></pre>
+
 <h3 id="syntax-guide-4" tabindex="-1">Syntax Guide</h3>
 <p><strong>Status:</strong> <code>done</code>, <code>active</code>, <code>crit</code> (critical), <code>milestone</code></p>
 <p><strong>Duration:</strong> <code>5d</code> (days), <code>2w</code> (weeks), <code>after task_id</code></p>
@@ -2035,7 +2039,7 @@ code.hljs {
 <h2 id="7-user-journey" tabindex="-1">7. User Journey</h2>
 <p><strong>Best for:</strong> UX design, customer experience mapping.</p>
 <h3 id="example-e-commerce-checkout" tabindex="-1">Example: E-commerce Checkout</h3>
-<pre><code class="language-mermaid"><div class="mermaid-wrapper"><div class="mermaid-container">
+<div class="mermaid-wrapper"><div class="mermaid-container">
   <div class="mermaid-toolbar">
     <button class="mermaid-btn mermaid-btn-chart" title="Chart view"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z"/><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/></svg></button>
     <button class="mermaid-btn mermaid-btn-code" title="Show code"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg></button>
@@ -2043,7 +2047,7 @@ code.hljs {
   </div>
   <div class="mermaid-zoom-controls">
     <button class="mermaid-btn mermaid-btn-zoom-in" title="Zoom in"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
   </div>
   <div class="mermaid-chart">
     <div class="mermaid">journey
@@ -2072,7 +2076,7 @@ code.hljs {
         Order confirmation: 5: Customer
         Delivery tracking: 4: Customer</code></pre>
 </div></div>
-</code></pre>
+
 <h3 id="syntax-guide-5" tabindex="-1">Syntax Guide</h3>
 <p><strong>Score:</strong> 1 (very bad) to 5 (very good)</p>
 <p><strong>Format:</strong> <code>Step name: score: Actor</code></p>
@@ -2080,7 +2084,7 @@ code.hljs {
 <h2 id="8-git-graph" tabindex="-1">8. Git Graph</h2>
 <p><strong>Best for:</strong> Visualizing Git workflows, branching strategies.</p>
 <h3 id="example-feature-branch-workflow" tabindex="-1">Example: Feature Branch Workflow</h3>
-<pre><code class="language-mermaid"><div class="mermaid-wrapper"><div class="mermaid-container">
+<div class="mermaid-wrapper"><div class="mermaid-container">
   <div class="mermaid-toolbar">
     <button class="mermaid-btn mermaid-btn-chart" title="Chart view"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z"/><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/></svg></button>
     <button class="mermaid-btn mermaid-btn-code" title="Show code"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg></button>
@@ -2088,7 +2092,7 @@ code.hljs {
   </div>
   <div class="mermaid-zoom-controls">
     <button class="mermaid-btn mermaid-btn-zoom-in" title="Zoom in"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
   </div>
   <div class="mermaid-chart">
     <div class="mermaid">gitGraph
@@ -2123,7 +2127,7 @@ code.hljs {
     merge develop tag: "v1.0"
     commit id: "hotfix"</code></pre>
 </div></div>
-</code></pre>
+
 <h3 id="syntax-guide-6" tabindex="-1">Syntax Guide</h3>
 <p><strong>Commands:</strong> <code>commit</code>, <code>branch</code>, <code>checkout</code>, <code>merge</code>, <code>cherry-pick</code></p>
 <p><strong>Tags:</strong> <code>commit tag: &quot;v1.0&quot;</code></p>
@@ -2131,7 +2135,7 @@ code.hljs {
 <h2 id="9-mindmap" tabindex="-1">9. Mindmap</h2>
 <p><strong>Best for:</strong> Brainstorming, knowledge organization, hierarchical ideas.</p>
 <h3 id="example-web-development-stack" tabindex="-1">Example: Web Development Stack</h3>
-<pre><code class="language-mermaid"><div class="mermaid-wrapper"><div class="mermaid-container">
+<div class="mermaid-wrapper"><div class="mermaid-container">
   <div class="mermaid-toolbar">
     <button class="mermaid-btn mermaid-btn-chart" title="Chart view"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z"/><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/></svg></button>
     <button class="mermaid-btn mermaid-btn-code" title="Show code"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg></button>
@@ -2139,7 +2143,7 @@ code.hljs {
   </div>
   <div class="mermaid-zoom-controls">
     <button class="mermaid-btn mermaid-btn-zoom-in" title="Zoom in"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
   </div>
   <div class="mermaid-chart">
     <div class="mermaid">mindmap
@@ -2188,12 +2192,12 @@ code.hljs {
         AWS
         GCP</code></pre>
 </div></div>
-</code></pre>
+
 <hr>
 <h2 id="10-pie-chart" tabindex="-1">10. Pie Chart</h2>
 <p><strong>Best for:</strong> Showing percentages, data distribution.</p>
 <h3 id="example-budget-allocation" tabindex="-1">Example: Budget Allocation</h3>
-<pre><code class="language-mermaid"><div class="mermaid-wrapper"><div class="mermaid-container">
+<div class="mermaid-wrapper"><div class="mermaid-container">
   <div class="mermaid-toolbar">
     <button class="mermaid-btn mermaid-btn-chart" title="Chart view"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z"/><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/></svg></button>
     <button class="mermaid-btn mermaid-btn-code" title="Show code"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg></button>
@@ -2201,7 +2205,7 @@ code.hljs {
   </div>
   <div class="mermaid-zoom-controls">
     <button class="mermaid-btn mermaid-btn-zoom-in" title="Zoom in"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
   </div>
   <div class="mermaid-chart">
     <div class="mermaid">pie showData title Budget Distribution
@@ -2216,14 +2220,14 @@ code.hljs {
     "Operations" : 20
     "Design" : 15</code></pre>
 </div></div>
-</code></pre>
+
 <h3 id="syntax-guide-7" tabindex="-1">Syntax Guide</h3>
 <p><code>pie showData title &quot;Title&quot;</code> - Shows values on chart</p>
 <hr>
 <h2 id="11-timeline" tabindex="-1">11. Timeline</h2>
 <p><strong>Best for:</strong> Chronological events, product roadmaps, history.</p>
 <h3 id="example-product-roadmap" tabindex="-1">Example: Product Roadmap</h3>
-<pre><code class="language-mermaid"><div class="mermaid-wrapper"><div class="mermaid-container">
+<div class="mermaid-wrapper"><div class="mermaid-container">
   <div class="mermaid-toolbar">
     <button class="mermaid-btn mermaid-btn-chart" title="Chart view"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z"/><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/></svg></button>
     <button class="mermaid-btn mermaid-btn-code" title="Show code"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg></button>
@@ -2231,7 +2235,7 @@ code.hljs {
   </div>
   <div class="mermaid-zoom-controls">
     <button class="mermaid-btn mermaid-btn-zoom-in" title="Zoom in"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
   </div>
   <div class="mermaid-chart">
     <div class="mermaid">timeline
@@ -2264,12 +2268,12 @@ code.hljs {
         August : Performance optimization
         September : v2.0 launch</code></pre>
 </div></div>
-</code></pre>
+
 <hr>
 <h2 id="12-kanban-board" tabindex="-1">12. Kanban Board</h2>
 <p><strong>Best for:</strong> Agile task management, sprint boards.</p>
 <h3 id="example-sprint-board" tabindex="-1">Example: Sprint Board</h3>
-<pre><code class="language-mermaid"><div class="mermaid-wrapper"><div class="mermaid-container">
+<div class="mermaid-wrapper"><div class="mermaid-container">
   <div class="mermaid-toolbar">
     <button class="mermaid-btn mermaid-btn-chart" title="Chart view"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z"/><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/></svg></button>
     <button class="mermaid-btn mermaid-btn-code" title="Show code"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg></button>
@@ -2277,7 +2281,7 @@ code.hljs {
   </div>
   <div class="mermaid-zoom-controls">
     <button class="mermaid-btn mermaid-btn-zoom-in" title="Zoom in"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
   </div>
   <div class="mermaid-chart">
     <div class="mermaid">kanban
@@ -2304,14 +2308,14 @@ code.hljs {
   Done
     [Landing page]@{ assigned: 'Frank', priority: 'High' }</code></pre>
 </div></div>
-</code></pre>
+
 <h3 id="syntax-guide-8" tabindex="-1">Syntax Guide</h3>
 <p><strong>Metadata:</strong> <code>@{ assigned: 'name', priority: 'High' }</code></p>
 <hr>
 <h2 id="13-quadrant-chart" tabindex="-1">13. Quadrant Chart</h2>
 <p><strong>Best for:</strong> Feature prioritization, strategic analysis, 2x2 matrices.</p>
 <h3 id="example-feature-priority-matrix" tabindex="-1">Example: Feature Priority Matrix</h3>
-<pre><code class="language-mermaid"><div class="mermaid-wrapper"><div class="mermaid-container">
+<div class="mermaid-wrapper"><div class="mermaid-container">
   <div class="mermaid-toolbar">
     <button class="mermaid-btn mermaid-btn-chart" title="Chart view"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z"/><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/></svg></button>
     <button class="mermaid-btn mermaid-btn-code" title="Show code"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg></button>
@@ -2319,7 +2323,7 @@ code.hljs {
   </div>
   <div class="mermaid-zoom-controls">
     <button class="mermaid-btn mermaid-btn-zoom-in" title="Zoom in"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
   </div>
   <div class="mermaid-chart">
     <div class="mermaid">quadrantChart
@@ -2348,14 +2352,14 @@ code.hljs {
     CSV export: [0.3, 0.4]
     Animations: [0.8, 0.2]</code></pre>
 </div></div>
-</code></pre>
+
 <h3 id="syntax-guide-9" tabindex="-1">Syntax Guide</h3>
 <p><strong>Coordinates:</strong> Range from 0.0 to 1.0 for both x and y</p>
 <hr>
 <h2 id="14-sankey-diagram" tabindex="-1">14. Sankey Diagram</h2>
 <p><strong>Best for:</strong> Flow quantities, conversion funnels, budget allocation.</p>
 <h3 id="example-user-conversion-funnel" tabindex="-1">Example: User Conversion Funnel</h3>
-<pre><code class="language-mermaid"><div class="mermaid-wrapper"><div class="mermaid-container">
+<div class="mermaid-wrapper"><div class="mermaid-container">
   <div class="mermaid-toolbar">
     <button class="mermaid-btn mermaid-btn-chart" title="Chart view"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z"/><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/></svg></button>
     <button class="mermaid-btn mermaid-btn-code" title="Show code"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg></button>
@@ -2363,7 +2367,7 @@ code.hljs {
   </div>
   <div class="mermaid-zoom-controls">
     <button class="mermaid-btn mermaid-btn-zoom-in" title="Zoom in"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
   </div>
   <div class="mermaid-chart">
     <div class="mermaid">sankey-beta
@@ -2384,12 +2388,12 @@ Sign up,Free,400
 Trial,Paid,200
 Trial,Churn,400</code></pre>
 </div></div>
-</code></pre>
+
 <hr>
 <h2 id="15-xy-chart" tabindex="-1">15. XY Chart</h2>
 <p><strong>Best for:</strong> Bar charts, line charts with numerical data.</p>
 <h3 id="example-monthly-revenue" tabindex="-1">Example: Monthly Revenue</h3>
-<pre><code class="language-mermaid"><div class="mermaid-wrapper"><div class="mermaid-container">
+<div class="mermaid-wrapper"><div class="mermaid-container">
   <div class="mermaid-toolbar">
     <button class="mermaid-btn mermaid-btn-chart" title="Chart view"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z"/><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/></svg></button>
     <button class="mermaid-btn mermaid-btn-code" title="Show code"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg></button>
@@ -2397,7 +2401,7 @@ Trial,Churn,400</code></pre>
   </div>
   <div class="mermaid-zoom-controls">
     <button class="mermaid-btn mermaid-btn-zoom-in" title="Zoom in"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
   </div>
   <div class="mermaid-chart">
     <div class="mermaid">xychart-beta
@@ -2414,14 +2418,14 @@ Trial,Churn,400</code></pre>
     bar [45000, 52000, 48000, 61000, 55000, 72000]
     line [45000, 52000, 48000, 61000, 55000, 72000]</code></pre>
 </div></div>
-</code></pre>
+
 <h3 id="syntax-guide-10" tabindex="-1">Syntax Guide</h3>
 <p><strong>Types:</strong> <code>bar</code> (bar chart), <code>line</code> (line chart)</p>
 <hr>
 <h2 id="16-block-diagram" tabindex="-1">16. Block Diagram</h2>
 <p><strong>Best for:</strong> Custom layouts, grid-style arrangements.</p>
 <h3 id="example-system-architecture" tabindex="-1">Example: System Architecture</h3>
-<pre><code class="language-mermaid"><div class="mermaid-wrapper"><div class="mermaid-container">
+<div class="mermaid-wrapper"><div class="mermaid-container">
   <div class="mermaid-toolbar">
     <button class="mermaid-btn mermaid-btn-chart" title="Chart view"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z"/><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/></svg></button>
     <button class="mermaid-btn mermaid-btn-code" title="Show code"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg></button>
@@ -2429,7 +2433,7 @@ Trial,Churn,400</code></pre>
   </div>
   <div class="mermaid-zoom-controls">
     <button class="mermaid-btn mermaid-btn-zoom-in" title="Zoom in"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
   </div>
   <div class="mermaid-chart">
     <div class="mermaid">block-beta
@@ -2454,7 +2458,7 @@ Trial,Churn,400</code></pre>
     Frontend --&gt; Backend
     Backend --&gt; DB</code></pre>
 </div></div>
-</code></pre>
+
 <h3 id="syntax-guide-11" tabindex="-1">Syntax Guide</h3>
 <p><strong>Layout:</strong> <code>columns N</code> defines grid width</p>
 <p><strong>Spanning:</strong> <code>Block:2</code> spans 2 columns</p>
@@ -2462,7 +2466,7 @@ Trial,Churn,400</code></pre>
 <h2 id="17-architecture-diagram" tabindex="-1">17. Architecture Diagram</h2>
 <p><strong>Best for:</strong> Cloud architecture, infrastructure topology.</p>
 <h3 id="example-aws-infrastructure" tabindex="-1">Example: AWS Infrastructure</h3>
-<pre><code class="language-mermaid"><div class="mermaid-wrapper"><div class="mermaid-container">
+<div class="mermaid-wrapper"><div class="mermaid-container">
   <div class="mermaid-toolbar">
     <button class="mermaid-btn mermaid-btn-chart" title="Chart view"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z"/><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/></svg></button>
     <button class="mermaid-btn mermaid-btn-code" title="Show code"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg></button>
@@ -2470,7 +2474,7 @@ Trial,Churn,400</code></pre>
   </div>
   <div class="mermaid-zoom-controls">
     <button class="mermaid-btn mermaid-btn-zoom-in" title="Zoom in"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
   </div>
   <div class="mermaid-chart">
     <div class="mermaid">architecture-beta
@@ -2501,7 +2505,7 @@ Trial,Churn,400</code></pre>
     app:B --&gt; T:db
     app:B --&gt; T:cache</code></pre>
 </div></div>
-</code></pre>
+
 <h3 id="syntax-guide-12" tabindex="-1">Syntax Guide</h3>
 <p><strong>Icons:</strong> <code>server</code>, <code>database</code>, <code>disk</code>, <code>cloud</code></p>
 <p><strong>Directions:</strong> <code>L</code> (left), <code>R</code> (right), <code>T</code> (top), <code>B</code> (bottom)</p>
@@ -2509,7 +2513,7 @@ Trial,Churn,400</code></pre>
 <h2 id="18-packet-diagram" tabindex="-1">18. Packet Diagram</h2>
 <p><strong>Best for:</strong> Network packet structures, protocol headers.</p>
 <h3 id="example-ipv4-header" tabindex="-1">Example: IPv4 Header</h3>
-<pre><code class="language-mermaid"><div class="mermaid-wrapper"><div class="mermaid-container">
+<div class="mermaid-wrapper"><div class="mermaid-container">
   <div class="mermaid-toolbar">
     <button class="mermaid-btn mermaid-btn-chart" title="Chart view"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z"/><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/></svg></button>
     <button class="mermaid-btn mermaid-btn-code" title="Show code"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg></button>
@@ -2517,7 +2521,7 @@ Trial,Churn,400</code></pre>
   </div>
   <div class="mermaid-zoom-controls">
     <button class="mermaid-btn mermaid-btn-zoom-in" title="Zoom in"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
   </div>
   <div class="mermaid-chart">
     <div class="mermaid">packet-beta
@@ -2546,14 +2550,14 @@ Trial,Churn,400</code></pre>
     96-127: "Source IP"
     128-159: "Dest IP"</code></pre>
 </div></div>
-</code></pre>
+
 <h3 id="syntax-guide-13" tabindex="-1">Syntax Guide</h3>
 <p><strong>Format:</strong> <code>start-end: &quot;Field name&quot;</code></p>
 <hr>
 <h2 id="19-requirement-diagram" tabindex="-1">19. Requirement Diagram</h2>
 <p><strong>Best for:</strong> Requirements traceability, systems engineering.</p>
 <h3 id="example-system-requirements" tabindex="-1">Example: System Requirements</h3>
-<pre><code class="language-mermaid"><div class="mermaid-wrapper"><div class="mermaid-container">
+<div class="mermaid-wrapper"><div class="mermaid-container">
   <div class="mermaid-toolbar">
     <button class="mermaid-btn mermaid-btn-chart" title="Chart view"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z"/><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/></svg></button>
     <button class="mermaid-btn mermaid-btn-code" title="Show code"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg></button>
@@ -2561,7 +2565,7 @@ Trial,Churn,400</code></pre>
   </div>
   <div class="mermaid-zoom-controls">
     <button class="mermaid-btn mermaid-btn-zoom-in" title="Zoom in"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
   </div>
   <div class="mermaid-chart">
     <div class="mermaid">requirementDiagram
@@ -2638,7 +2642,7 @@ auth_service - satisfies -&gt; auth_req
 perf_monitor - verifies -&gt; perf_req
 auth_req - traces -&gt; uptime_req</code></pre>
 </div></div>
-</code></pre>
+
 <h3 id="syntax-guide-14" tabindex="-1">Syntax Guide</h3>
 <p><strong>Types:</strong> <code>requirement</code>, <code>FunctionalRequirement</code>, <code>PerformanceRequirement</code></p>
 <p><strong>Risk:</strong> <code>low</code>, <code>medium</code>, <code>high</code></p>
@@ -2744,7 +2748,7 @@ auth_req - traces -&gt; uptime_req</code></pre>
 <hr>
 <h2 id="configuration" tabindex="-1">Configuration</h2>
 <p>You can add YAML frontmatter to customize diagram appearance:</p>
-<pre><code class="language-mermaid"><div class="mermaid-wrapper"><div class="mermaid-container">
+<div class="mermaid-wrapper"><div class="mermaid-container">
   <div class="mermaid-toolbar">
     <button class="mermaid-btn mermaid-btn-chart" title="Chart view"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z"/><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/></svg></button>
     <button class="mermaid-btn mermaid-btn-code" title="Show code"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg></button>
@@ -2752,7 +2756,7 @@ auth_req - traces -&gt; uptime_req</code></pre>
   </div>
   <div class="mermaid-zoom-controls">
     <button class="mermaid-btn mermaid-btn-zoom-in" title="Zoom in"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
   </div>
   <div class="mermaid-chart">
     <div class="mermaid">---
@@ -2771,7 +2775,7 @@ config:
 flowchart LR
     A --&gt; B</code></pre>
 </div></div>
-</code></pre>
+
 <p><strong>Themes:</strong> <code>default</code>, <code>dark</code>, <code>forest</code>, <code>base</code>, <code>neutral</code></p>
 <p><strong>Looks:</strong> <code>default</code>, <code>handDrawn</code>, <code>classic</code></p>
 

@@ -22,17 +22,21 @@
     <meta property="og:description" content="Test all supported Markdown formats">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="MDSVR | Markdown Documentation Server">
-    <meta property="og:locale" content="en">
+    <meta property="og:locale" content="en_US">
     <meta property="og:url" content="https://mdsvr.js.org/docs/03-features/markdown/">
     <meta property="og:image" content="https://mdsvr.js.org/docs/public/assets/og/03-features/markdown/index.jpg">
+    <meta property="og:image:alt" content="Markdown Formats">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Markdown Formats | MDSVR | Markdown Documentation Server">
     <meta name="twitter:description" content="Test all supported Markdown formats">
     <meta name="twitter:image" content="https://mdsvr.js.org/docs/public/assets/og/03-features/markdown/index.jpg">
+    <meta name="twitter:image:alt" content="Markdown Formats">
+    <meta property="article:published_time" content="2026-10-04">
+    <meta property="article:modified_time" content="2026-10-04">
     <link rel="sitemap" type="application/xml" href="/docs/sitemap.xml">
-  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"Markdown Formats","description":"Test all supported Markdown formats","url":"https://mdsvr.js.org/docs/03-features/markdown/","image":"https://mdsvr.js.org/docs/public/assets/og/03-features/markdown/index.jpg"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://mdsvr.js.org/docs/"},{"@type":"ListItem","position":2,"name":"Features","item":"https://mdsvr.js.org/docs/03-features/"},{"@type":"ListItem","position":3,"name":"Markdown Formats","item":"https://mdsvr.js.org/docs/03-features/markdown/"}]}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"Markdown Formats","description":"Test all supported Markdown formats","url":"https://mdsvr.js.org/docs/03-features/markdown/","image":"https://mdsvr.js.org/docs/public/assets/og/03-features/markdown/index.jpg","datePublished":"2026-10-04","dateModified":"2026-10-04"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://mdsvr.js.org/docs/"},{"@type":"ListItem","position":2,"name":"Features","item":"https://mdsvr.js.org/docs/03-features/"},{"@type":"ListItem","position":3,"name":"Markdown Formats","item":"https://mdsvr.js.org/docs/03-features/markdown/"}]}]}</script>
   
   
   
@@ -1653,7 +1657,7 @@ code.hljs {
 </ul>
 <h2 id="code-blocks" tabindex="-1">Code Blocks</h2>
 <h3 id="javascript" tabindex="-1">JavaScript</h3>
-<pre><code class="language-javascript"><div class="code-block-wrapper"><div class="code-block-container" data-code="function greet(name) {
+<div class="code-block-wrapper"><div class="code-block-container" data-code="function greet(name) {
   console.log(`Hello, ${name}!`);
 }
 greet(&quot;World&quot;);
@@ -1692,9 +1696,9 @@ greet(&quot;World&quot;);
 <span class="hljs-title function_">greet</span>(<span class="hljs-string">&quot;World&quot;</span>);
 </code></pre>
 </div></div>
-</code></pre>
+
 <h3 id="python" tabindex="-1">Python</h3>
-<pre><code class="language-python"><div class="code-block-wrapper"><div class="code-block-container" data-code="def greet(name):
+<div class="code-block-wrapper"><div class="code-block-container" data-code="def greet(name):
     print(f&quot;Hello, {name}!&quot;)
 
 greet(&quot;World&quot;)
@@ -1733,9 +1737,9 @@ greet(&quot;World&quot;)
 greet(<span class="hljs-string">&quot;World&quot;</span>)
 </code></pre>
 </div></div>
-</code></pre>
+
 <h3 id="shell" tabindex="-1">Shell</h3>
-<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="npm install
+<div class="code-block-wrapper"><div class="code-block-container" data-code="npm install
 npm run dev
 ">
   <div class="code-block-toolbar">
@@ -1770,9 +1774,9 @@ npm run dev
 npm run dev
 </code></pre>
 </div></div>
-</code></pre>
+
 <h3 id="without-syntax-highlighting" tabindex="-1">Without syntax highlighting</h3>
-<pre><code><div class="code-block-wrapper"><div class="code-block-container" data-code="Plain code block
+<div class="code-block-wrapper"><div class="code-block-container" data-code="Plain code block
 without language
 ">
   <div class="code-block-toolbar">
@@ -1807,7 +1811,7 @@ without language
 without language
 </code></pre>
 </div></div>
-</code></pre>
+
 <h2 id="blockquotes" tabindex="-1">Blockquotes</h2>
 <blockquote>
 <p>This is a blockquote.</p>
@@ -1900,7 +1904,7 @@ New line starts here.</p>
 <h3 id="github-style-callouts" tabindex="-1">GitHub-style Callouts</h3>
 <p>Use <code>[!TYPE]</code> in blockquotes:</p>
 <p>example:</p>
-<pre><code class="language-markdown"><div class="code-block-wrapper"><div class="code-block-container" data-code="&gt; [!NOTE]
+<div class="code-block-wrapper"><div class="code-block-container" data-code="&gt; [!NOTE]
 &gt; This is a note callout.
 
 &gt; [!TIP]
@@ -1965,7 +1969,7 @@ New line starts here.</p>
 <span class="hljs-quote">&gt; This is a success callout.</span>
 </code></pre>
 </div></div>
-</code></pre>
+
 <p>renders as:</p>
 <div class="callout callout-info"><strong style="display: block; margin-bottom: 8px;">📝 Note</strong><div>This is a note callout.</div></div>
 <div class="callout callout-tip"><strong style="display: block; margin-bottom: 8px;">💡 Tip</strong><div>This is a tip callout.</div></div>
@@ -1976,7 +1980,7 @@ New line starts here.</p>
 <h3 id="triple-colon-callouts" tabindex="-1">Triple-colon Callouts</h3>
 <p>Use <code>:::type content :::</code> syntax:</p>
 <p>example:</p>
-<pre><code class="language-markdown"><div class="code-block-wrapper"><div class="code-block-container" data-code=":::note This is a note callout using triple-colon syntax. :::
+<div class="code-block-wrapper"><div class="code-block-container" data-code=":::note This is a note callout using triple-colon syntax. :::
 
 :::tip This is a tip callout using triple-colon syntax. :::
 
@@ -2029,7 +2033,7 @@ New line starts here.</p>
 :::success This is a success callout using triple-colon syntax. :::
 </code></pre>
 </div></div>
-</code></pre>
+
 <p>renders as:</p>
 <div class="callout callout-info"><strong style="display: block; margin-bottom: 8px;">📝 Note</strong><div>This is a note callout using triple-colon syntax.</div></div>
 <div class="callout callout-tip"><strong style="display: block; margin-bottom: 8px;">💡 Tip</strong><div>This is a tip callout using triple-colon syntax.</div></div>
@@ -2051,7 +2055,7 @@ New line starts here.</p>
 <h2 id="mermaid-diagrams" tabindex="-1">Mermaid Diagrams</h2>
 <p>mdsvr supports Mermaid diagrams via the <code>mermaid</code> code block:</p>
 <h3 id="database-schema-diagram" tabindex="-1">Database Schema Diagram</h3>
-<pre><code class="language-mermaid"><div class="mermaid-wrapper"><div class="mermaid-container">
+<div class="mermaid-wrapper"><div class="mermaid-container">
   <div class="mermaid-toolbar">
     <button class="mermaid-btn mermaid-btn-chart" title="Chart view"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z"/><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/></svg></button>
     <button class="mermaid-btn mermaid-btn-code" title="Show code"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg></button>
@@ -2059,7 +2063,7 @@ New line starts here.</p>
   </div>
   <div class="mermaid-zoom-controls">
     <button class="mermaid-btn mermaid-btn-zoom-in" title="Zoom in"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
   </div>
   <div class="mermaid-chart">
     <div class="mermaid">erDiagram
@@ -2136,7 +2140,7 @@ New line starts here.</p>
     POST ||--o{ POST_TAG : tagged
     TAG ||--o{ POST_TAG : assigned</code></pre>
 </div></div>
-</code></pre>
+
 
       </article>
       <nav class="prev-next-nav">

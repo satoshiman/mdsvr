@@ -22,17 +22,21 @@
     <meta property="og:description" content="mdsvr is a zero-configuration documentation server built with Node.js and TypeScript. It transforms a directory of Markdown/MDX files into a full-featured...">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="MDSVR | Markdown Documentation Server">
-    <meta property="og:locale" content="en">
+    <meta property="og:locale" content="en_US">
     <meta property="og:url" content="https://mdsvr.js.org/docs/09-architecture/">
     <meta property="og:image" content="https://mdsvr.js.org/docs/public/assets/og/09-architecture/index.jpg">
+    <meta property="og:image:alt" content="Architecture">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Architecture | MDSVR | Markdown Documentation Server">
     <meta name="twitter:description" content="mdsvr is a zero-configuration documentation server built with Node.js and TypeScript. It transforms a directory of Markdown/MDX files into a full-featured...">
     <meta name="twitter:image" content="https://mdsvr.js.org/docs/public/assets/og/09-architecture/index.jpg">
+    <meta name="twitter:image:alt" content="Architecture">
+    <meta property="article:published_time" content="2026-10-04">
+    <meta property="article:modified_time" content="2026-10-04">
     <link rel="sitemap" type="application/xml" href="/docs/sitemap.xml">
-  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"Architecture","description":"mdsvr is a zero-configuration documentation server built with Node.js and TypeScript. It transforms a directory of Markdown/MDX files into a full-featured...","url":"https://mdsvr.js.org/docs/09-architecture/","image":"https://mdsvr.js.org/docs/public/assets/og/09-architecture/index.jpg"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://mdsvr.js.org/docs/"},{"@type":"ListItem","position":2,"name":"Architecture","item":"https://mdsvr.js.org/docs/09-architecture/"}]}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"Architecture","description":"mdsvr is a zero-configuration documentation server built with Node.js and TypeScript. It transforms a directory of Markdown/MDX files into a full-featured...","url":"https://mdsvr.js.org/docs/09-architecture/","image":"https://mdsvr.js.org/docs/public/assets/og/09-architecture/index.jpg","datePublished":"2026-10-04","dateModified":"2026-10-04"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://mdsvr.js.org/docs/"},{"@type":"ListItem","position":2,"name":"Architecture","item":"https://mdsvr.js.org/docs/09-architecture/"}]}]}</script>
   
   
   
@@ -1616,7 +1620,7 @@ code.hljs {
 <li><strong>Security-first</strong> - Path traversal protection, blocked extensions, read-only</li>
 </ol>
 <h2 id="system-architecture" tabindex="-1">System Architecture</h2>
-<pre><code class="language-mermaid"><div class="mermaid-wrapper"><div class="mermaid-container">
+<div class="mermaid-wrapper"><div class="mermaid-container">
   <div class="mermaid-toolbar">
     <button class="mermaid-btn mermaid-btn-chart" title="Chart view"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z"/><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/></svg></button>
     <button class="mermaid-btn mermaid-btn-code" title="Show code"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg></button>
@@ -1624,7 +1628,7 @@ code.hljs {
   </div>
   <div class="mermaid-zoom-controls">
     <button class="mermaid-btn mermaid-btn-zoom-in" title="Zoom in"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
   </div>
   <div class="mermaid-chart">
     <div class="mermaid">graph TD
@@ -1653,7 +1657,7 @@ code.hljs {
     F --&gt; H
     G --&gt; H</code></pre>
 </div></div>
-</code></pre>
+
 <h2 id="module-structure" tabindex="-1">Module Structure</h2>
 <h3 id="core-modules" tabindex="-1">Core Modules</h3>
 <ul>
@@ -1697,7 +1701,7 @@ code.hljs {
 </ul>
 <h2 id="data-flow" tabindex="-1">Data Flow</h2>
 <h3 id="request-flow-dynamic-server" tabindex="-1">Request Flow (Dynamic Server)</h3>
-<pre><code class="language-mermaid"><div class="mermaid-wrapper"><div class="mermaid-container">
+<div class="mermaid-wrapper"><div class="mermaid-container">
   <div class="mermaid-toolbar">
     <button class="mermaid-btn mermaid-btn-chart" title="Chart view"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z"/><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/></svg></button>
     <button class="mermaid-btn mermaid-btn-code" title="Show code"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg></button>
@@ -1705,7 +1709,7 @@ code.hljs {
   </div>
   <div class="mermaid-zoom-controls">
     <button class="mermaid-btn mermaid-btn-zoom-in" title="Zoom in"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
   </div>
   <div class="mermaid-chart">
     <div class="mermaid">graph LR
@@ -1734,9 +1738,9 @@ code.hljs {
     G --&gt; H
     H --&gt; I[HTML Response]</code></pre>
 </div></div>
-</code></pre>
+
 <h3 id="static-export-flow" tabindex="-1">Static Export Flow</h3>
-<pre><code class="language-mermaid"><div class="mermaid-wrapper"><div class="mermaid-container">
+<div class="mermaid-wrapper"><div class="mermaid-container">
   <div class="mermaid-toolbar">
     <button class="mermaid-btn mermaid-btn-chart" title="Chart view"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z"/><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/></svg></button>
     <button class="mermaid-btn mermaid-btn-code" title="Show code"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg></button>
@@ -1744,7 +1748,7 @@ code.hljs {
   </div>
   <div class="mermaid-zoom-controls">
     <button class="mermaid-btn mermaid-btn-zoom-in" title="Zoom in"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
   </div>
   <div class="mermaid-chart">
     <div class="mermaid">graph TD
@@ -1767,7 +1771,7 @@ code.hljs {
     G --&gt; H[Generate sitemap.xml & feed.xml]
     H --&gt; I[Save export state&lt;br/&gt;For incremental builds]</code></pre>
 </div></div>
-</code></pre>
+
 <h2 id="key-design-decisions" tabindex="-1">Key Design Decisions</h2>
 <h3 id="file-based-content-storage" tabindex="-1">File-Based Content Storage</h3>
 <p>Content is stored as plain Markdown/MDX files in the filesystem. No database is used, making the system:</p>
@@ -1813,7 +1817,7 @@ code.hljs {
 <p>Request paths first pass a component-aware lexical containment check. The root
 and candidate are then resolved with <code>realpath</code>, and the canonical target must
 pass the same check before it is read or served:</p>
-<pre><code class="language-typescript"><div class="code-block-wrapper"><div class="code-block-container" data-code="const relativePath = path.relative(rootPath, candidatePath);
+<div class="code-block-wrapper"><div class="code-block-container" data-code="const relativePath = path.relative(rootPath, candidatePath);
 if (
   relativePath === &quot;..&quot; ||
   relativePath.startsWith(`..${path.sep}`) ||
@@ -1860,7 +1864,7 @@ if (
 }
 </code></pre>
 </div></div>
-</code></pre>
+
 <h3 id="hidden-files" tabindex="-1">Hidden Files</h3>
 <p>Files and folders starting with <code>_</code> or <code>.</code>, or matching patterns in <code>settings.files.extensions.hidden</code>, are not served.</p>
 <h3 id="blocked-extensions" tabindex="-1">Blocked Extensions</h3>

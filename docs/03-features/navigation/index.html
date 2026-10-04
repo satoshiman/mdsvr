@@ -22,17 +22,21 @@
     <meta property="og:description" content="Sidebar, breadcrumbs, and table of contents">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="MDSVR | Markdown Documentation Server">
-    <meta property="og:locale" content="en">
+    <meta property="og:locale" content="en_US">
     <meta property="og:url" content="https://mdsvr.js.org/docs/03-features/navigation/">
     <meta property="og:image" content="https://mdsvr.js.org/docs/public/assets/og/03-features/navigation/index.jpg">
+    <meta property="og:image:alt" content="Navigation">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Navigation | MDSVR | Markdown Documentation Server">
     <meta name="twitter:description" content="Sidebar, breadcrumbs, and table of contents">
     <meta name="twitter:image" content="https://mdsvr.js.org/docs/public/assets/og/03-features/navigation/index.jpg">
+    <meta name="twitter:image:alt" content="Navigation">
+    <meta property="article:published_time" content="2026-10-04">
+    <meta property="article:modified_time" content="2026-10-04">
     <link rel="sitemap" type="application/xml" href="/docs/sitemap.xml">
-  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"Navigation","description":"Sidebar, breadcrumbs, and table of contents","url":"https://mdsvr.js.org/docs/03-features/navigation/","image":"https://mdsvr.js.org/docs/public/assets/og/03-features/navigation/index.jpg"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://mdsvr.js.org/docs/"},{"@type":"ListItem","position":2,"name":"Features","item":"https://mdsvr.js.org/docs/03-features/"},{"@type":"ListItem","position":3,"name":"Navigation","item":"https://mdsvr.js.org/docs/03-features/navigation/"}]}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"Navigation","description":"Sidebar, breadcrumbs, and table of contents","url":"https://mdsvr.js.org/docs/03-features/navigation/","image":"https://mdsvr.js.org/docs/public/assets/og/03-features/navigation/index.jpg","datePublished":"2026-10-04","dateModified":"2026-10-04"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://mdsvr.js.org/docs/"},{"@type":"ListItem","position":2,"name":"Features","item":"https://mdsvr.js.org/docs/03-features/"},{"@type":"ListItem","position":3,"name":"Navigation","item":"https://mdsvr.js.org/docs/03-features/navigation/"}]}]}</script>
   
   
   
@@ -1606,7 +1610,7 @@ code.hljs {
 <h2 id="sidebar-navigation" tabindex="-1">Sidebar Navigation</h2>
 <p>The sidebar is automatically generated from your file structure.</p>
 <h3 id="enabling-the-sidebar" tabindex="-1">Enabling the Sidebar</h3>
-<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+<div class="code-block-wrapper"><div class="code-block-container" data-code="{
   &quot;navigation&quot;: {
     &quot;sidebar&quot;: {
       &quot;enabled&quot;: true,
@@ -1657,9 +1661,9 @@ code.hljs {
 <span class="hljs-punctuation">}</span>
 </code></pre>
 </div></div>
-</code></pre>
+
 <h3 id="sidebar-options" tabindex="-1">Sidebar Options</h3>
-<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+<div class="code-block-wrapper"><div class="code-block-container" data-code="{
   &quot;navigation&quot;: {
     &quot;sidebar&quot;: {
       &quot;enabled&quot;: true,
@@ -1720,7 +1724,7 @@ code.hljs {
 <span class="hljs-punctuation">}</span>
 </code></pre>
 </div></div>
-</code></pre>
+
 <p><strong>Options:</strong></p>
 <ul>
 <li><code>enabled</code>: Enable/disable sidebar (default: <code>true</code>)</li>
@@ -1747,7 +1751,7 @@ code.hljs {
 <li>First H1 heading in the file</li>
 <li>Filename (humanized)</li>
 </ol>
-<pre><code class="language-mdx"><div class="code-block-wrapper"><div class="code-block-container" data-code="---
+<div class="code-block-wrapper"><div class="code-block-container" data-code="---
 title: Custom Page Title
 ---
 
@@ -1792,12 +1796,12 @@ title: Custom Page Title
 Content...
 </code></pre>
 </div></div>
-</code></pre>
+
 <h2 id="active-state" tabindex="-1">Active State</h2>
 <p>The current page is highlighted in the sidebar. Parent folders are also marked as active when viewing nested pages.</p>
 <h2 id="breadcrumbs" tabindex="-1">Breadcrumbs</h2>
 <p>Breadcrumbs show the current location in the documentation hierarchy.</p>
-<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+<div class="code-block-wrapper"><div class="code-block-container" data-code="{
   &quot;navigation&quot;: {
     &quot;breadcrumbs&quot;: true
   }
@@ -1838,9 +1842,9 @@ Content...
 <span class="hljs-punctuation">}</span>
 </code></pre>
 </div></div>
-</code></pre>
+
 <p>Example breadcrumb:</p>
-<pre><code><div class="code-block-wrapper"><div class="code-block-container" data-code="Home / Features / Navigation
+<div class="code-block-wrapper"><div class="code-block-container" data-code="Home / Features / Navigation
 ">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -1873,10 +1877,10 @@ Content...
   <pre><code class="hljs">Home / Features / Navigation
 </code></pre>
 </div></div>
-</code></pre>
+
 <h2 id="table-of-contents" tabindex="-1">Table of Contents</h2>
 <p>The TOC (right sidebar) shows headings from the current page.</p>
-<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+<div class="code-block-wrapper"><div class="code-block-container" data-code="{
   &quot;navigation&quot;: {
     &quot;tocEnabled&quot;: true,
     &quot;tocMaxDepth&quot;: 3
@@ -1919,7 +1923,7 @@ Content...
 <span class="hljs-punctuation">}</span>
 </code></pre>
 </div></div>
-</code></pre>
+
 <h3 id="max-depth" tabindex="-1">Max Depth</h3>
 <p>Control how many heading levels to show:</p>
 <ul>
@@ -1931,7 +1935,7 @@ Content...
 <p>Clicking a TOC link smoothly scrolls to the heading with a subtle highlight effect.</p>
 <h2 id="previousnext-links" tabindex="-1">Previous/Next Links</h2>
 <p>Navigate between pages with previous/next links at the bottom of each page.</p>
-<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+<div class="code-block-wrapper"><div class="code-block-container" data-code="{
   &quot;navigation&quot;: {
     &quot;prevNextLinks&quot;: true
   }
@@ -1972,11 +1976,11 @@ Content...
 <span class="hljs-punctuation">}</span>
 </code></pre>
 </div></div>
-</code></pre>
+
 <p>The links follow the sidebar order, making it easy to read through documentation sequentially.</p>
 <h2 id="file-structure-example" tabindex="-1">File Structure Example</h2>
 <p>Given this file structure:</p>
-<pre><code><div class="code-block-wrapper"><div class="code-block-container" data-code="docs/
+<div class="code-block-wrapper"><div class="code-block-container" data-code="docs/
 ├── README.md
 ├── getting-started/
 │   ├── installation.md
@@ -2027,7 +2031,7 @@ Content...
 └── configuration.md
 </code></pre>
 </div></div>
-</code></pre>
+
 <p>The sidebar will show:</p>
 <ul>
 <li>Home (<a href="http://README.md">README.md</a>)</li>
@@ -2050,7 +2054,7 @@ Content...
 <p>Hide files from the sidebar by:</p>
 <ol>
 <li><strong>Prefix with underscore</strong>: <code>_draft.md</code></li>
-<li><strong>Add to <code>_mdsvr/settings.json</code></strong>:<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+<li><strong>Add to <code>_mdsvr/settings.json</code></strong>:<div class="code-block-wrapper"><div class="code-block-container" data-code="{
   &quot;files&quot;: {
     &quot;extensions&quot;: {
       &quot;hidden&quot;: [&quot;draft.md&quot;, &quot;*.tmp&quot;]
@@ -2095,7 +2099,7 @@ Content...
 <span class="hljs-punctuation">}</span>
 </code></pre>
 </div></div>
-</code></pre>
+
 </li>
 </ol>
 <p>Hidden files are also excluded from:</p>
@@ -2112,7 +2116,7 @@ Content...
 <p>Sorts directories before files, maintaining directory priority.</p>
 <h3 id="manual" tabindex="-1">Manual</h3>
 <p>Use <code>manualOrder</code> to specify exact ordering:</p>
-<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+<div class="code-block-wrapper"><div class="code-block-container" data-code="{
   &quot;navigation&quot;: {
     &quot;sidebar&quot;: {
       &quot;orderBy&quot;: &quot;manual&quot;,
@@ -2169,7 +2173,7 @@ Content...
 <span class="hljs-punctuation">}</span>
 </code></pre>
 </div></div>
-</code></pre>
+
 <p>Paths in <code>manualOrder</code> are relative to the docs root and can include both files and directories.</p>
 <h2 id="responsive-design" tabindex="-1">Responsive Design</h2>
 <p>Navigation adapts to different screen sizes:</p>
@@ -2218,7 +2222,7 @@ Content...
 <li><code>aria-label</code> on navigation landmarks</li>
 </ul>
 <h2 id="complete-configuration" tabindex="-1">Complete Configuration</h2>
-<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+<div class="code-block-wrapper"><div class="code-block-container" data-code="{
   &quot;navigation&quot;: {
     &quot;sidebar&quot;: {
       &quot;enabled&quot;: true,
@@ -2291,7 +2295,7 @@ Content...
 <span class="hljs-punctuation">}</span>
 </code></pre>
 </div></div>
-</code></pre>
+
 
       </article>
       <nav class="prev-next-nav">

@@ -22,17 +22,21 @@
     <meta property="og:description" content="Get up and running with mdsvr - installation and quick start guide">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="MDSVR | Markdown Documentation Server">
-    <meta property="og:locale" content="en">
+    <meta property="og:locale" content="en_US">
     <meta property="og:url" content="https://mdsvr.js.org/docs/01-getting-started/">
     <meta property="og:image" content="https://mdsvr.js.org/docs/public/assets/og/01-getting-started/index.jpg">
+    <meta property="og:image:alt" content="Getting Started">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Getting Started | MDSVR | Markdown Documentation Server">
     <meta name="twitter:description" content="Get up and running with mdsvr - installation and quick start guide">
     <meta name="twitter:image" content="https://mdsvr.js.org/docs/public/assets/og/01-getting-started/index.jpg">
+    <meta name="twitter:image:alt" content="Getting Started">
+    <meta property="article:published_time" content="2026-10-04">
+    <meta property="article:modified_time" content="2026-10-04">
     <link rel="sitemap" type="application/xml" href="/docs/sitemap.xml">
-  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"Getting Started","description":"Get up and running with mdsvr - installation and quick start guide","url":"https://mdsvr.js.org/docs/01-getting-started/","image":"https://mdsvr.js.org/docs/public/assets/og/01-getting-started/index.jpg"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://mdsvr.js.org/docs/"},{"@type":"ListItem","position":2,"name":"Getting Started","item":"https://mdsvr.js.org/docs/01-getting-started/"}]}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"Getting Started","description":"Get up and running with mdsvr - installation and quick start guide","url":"https://mdsvr.js.org/docs/01-getting-started/","image":"https://mdsvr.js.org/docs/public/assets/og/01-getting-started/index.jpg","datePublished":"2026-10-04","dateModified":"2026-10-04"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://mdsvr.js.org/docs/"},{"@type":"ListItem","position":2,"name":"Getting Started","item":"https://mdsvr.js.org/docs/01-getting-started/"}]}]}</script>
   
   
   
@@ -1606,7 +1610,7 @@ code.hljs {
 <h2 id="quick-start" tabindex="-1">Quick Start</h2>
 <p>Get your documentation site running in under 30 seconds.</p>
 <h3 id="one-command-setup" tabindex="-1">One-Command Setup</h3>
-<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="npx mdsvr ./docs --open
+<div class="code-block-wrapper"><div class="code-block-container" data-code="npx mdsvr ./docs --open
 ">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -1639,11 +1643,11 @@ code.hljs {
   <pre><code class="hljs language-bash">npx mdsvr ./docs --open
 </code></pre>
 </div></div>
-</code></pre>
+
 <p>That’s it! No configuration needed, no build step required.</p>
 <h3 id="step-by-step" tabindex="-1">Step-by-Step</h3>
 <h4 id="1-create-a-docs-folder" tabindex="-1">1. Create a Docs Folder</h4>
-<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="mkdir docs
+<div class="code-block-wrapper"><div class="code-block-container" data-code="mkdir docs
 echo &quot;# Hello World&quot; &gt; docs/README.md
 ">
   <div class="code-block-toolbar">
@@ -1678,9 +1682,9 @@ echo &quot;# Hello World&quot; &gt; docs/README.md
 <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;# Hello World&quot;</span> &gt; docs/README.md
 </code></pre>
 </div></div>
-</code></pre>
+
 <h4 id="2-start-the-server" tabindex="-1">2. Start the Server</h4>
-<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="npx mdsvr ./docs --open
+<div class="code-block-wrapper"><div class="code-block-container" data-code="npx mdsvr ./docs --open
 ">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -1713,7 +1717,7 @@ echo &quot;# Hello World&quot; &gt; docs/README.md
   <pre><code class="hljs language-bash">npx mdsvr ./docs --open
 </code></pre>
 </div></div>
-</code></pre>
+
 <p>The <code>--open</code> flag automatically opens your browser to <code>http://localhost:1800</code>.</p>
 <h3 id="what-just-happened" tabindex="-1">What Just Happened?</h3>
 <p>mdsvr:</p>
@@ -1726,7 +1730,7 @@ echo &quot;# Hello World&quot; &gt; docs/README.md
 <hr>
 <h2 id="installation" tabindex="-1">Installation</h2>
 <p>mdsvr requires <strong>Node.js 18+</strong>. Check your version:</p>
-<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="node --version
+<div class="code-block-wrapper"><div class="code-block-container" data-code="node --version
 ">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -1759,10 +1763,10 @@ echo &quot;# Hello World&quot; &gt; docs/README.md
   <pre><code class="hljs language-bash">node --version
 </code></pre>
 </div></div>
-</code></pre>
+
 <h3 id="option-1-npx-recommended" tabindex="-1">Option 1: npx (Recommended)</h3>
 <p>No installation needed. Run directly:</p>
-<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="npx mdsvr ./docs
+<div class="code-block-wrapper"><div class="code-block-container" data-code="npx mdsvr ./docs
 ">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -1795,10 +1799,10 @@ echo &quot;# Hello World&quot; &gt; docs/README.md
   <pre><code class="hljs language-bash">npx mdsvr ./docs
 </code></pre>
 </div></div>
-</code></pre>
+
 <h3 id="option-2-global-install" tabindex="-1">Option 2: Global Install</h3>
 <p>Install once, use anywhere:</p>
-<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="npm install -g mdsvr
+<div class="code-block-wrapper"><div class="code-block-container" data-code="npm install -g mdsvr
 mdsvr ./docs
 ">
   <div class="code-block-toolbar">
@@ -1833,10 +1837,10 @@ mdsvr ./docs
 mdsvr ./docs
 </code></pre>
 </div></div>
-</code></pre>
+
 <h3 id="option-3-local-install" tabindex="-1">Option 3: Local Install</h3>
 <p>Add to a specific project:</p>
-<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="npm install --save-dev mdsvr
+<div class="code-block-wrapper"><div class="code-block-container" data-code="npm install --save-dev mdsvr
 ">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -1869,9 +1873,9 @@ mdsvr ./docs
   <pre><code class="hljs language-bash">npm install --save-dev mdsvr
 </code></pre>
 </div></div>
-</code></pre>
+
 <p>Then add to your <code>package.json</code>:</p>
-<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+<div class="code-block-wrapper"><div class="code-block-container" data-code="{
   &quot;scripts&quot;: {
     &quot;docs&quot;: &quot;mdsvr ./docs --open&quot;
   }
@@ -1912,9 +1916,9 @@ mdsvr ./docs
 <span class="hljs-punctuation">}</span>
 </code></pre>
 </div></div>
-</code></pre>
+
 <p>Run with:</p>
-<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="npm run docs
+<div class="code-block-wrapper"><div class="code-block-container" data-code="npm run docs
 ">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -1947,9 +1951,9 @@ mdsvr ./docs
   <pre><code class="hljs language-bash">npm run docs
 </code></pre>
 </div></div>
-</code></pre>
+
 <h3 id="verify-installation" tabindex="-1">Verify Installation</h3>
-<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="mdsvr --version
+<div class="code-block-wrapper"><div class="code-block-container" data-code="mdsvr --version
 ">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -1982,10 +1986,10 @@ mdsvr ./docs
   <pre><code class="hljs language-bash">mdsvr --version
 </code></pre>
 </div></div>
-</code></pre>
+
 <h3 id="docker" tabindex="-1">Docker</h3>
 <p>Pull and run:</p>
-<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="docker pull ghcr.io/satoshiman/mdsvr:latest
+<div class="code-block-wrapper"><div class="code-block-container" data-code="docker pull ghcr.io/satoshiman/mdsvr:latest
 docker run -d -p 1800:1800 -v /path/to/docs:/app/docs:ro ghcr.io/satoshiman/mdsvr:latest
 ">
   <div class="code-block-toolbar">
@@ -2020,7 +2024,7 @@ docker run -d -p 1800:1800 -v /path/to/docs:/app/docs:ro ghcr.io/satoshiman/mdsv
 docker run -d -p 1800:1800 -v /path/to/docs:/app/docs:ro ghcr.io/satoshiman/mdsvr:latest
 </code></pre>
 </div></div>
-</code></pre>
+
 <p>See <a href="/02-settings/#docker">Docker deployment</a> for more details.</p>
 <hr>
 <h2 id="next-steps" tabindex="-1">Next Steps</h2>

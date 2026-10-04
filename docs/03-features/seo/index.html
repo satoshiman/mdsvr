@@ -22,18 +22,21 @@
     <meta property="og:description" content="Search engine optimization features">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="MDSVR | Markdown Documentation Server">
-    <meta property="og:locale" content="en">
+    <meta property="og:locale" content="en_US">
     <meta property="og:url" content="https://mdsvr.js.org/docs/03-features/seo/">
     <meta property="og:image" content="https://mdsvr.js.org/docs/public/assets/og/03-features/seo/index.jpg">
+    <meta property="og:image:alt" content="SEO">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="SEO | MDSVR | Markdown Documentation Server">
     <meta name="twitter:description" content="Search engine optimization features">
     <meta name="twitter:image" content="https://mdsvr.js.org/docs/public/assets/og/03-features/seo/index.jpg">
+    <meta name="twitter:image:alt" content="SEO">
     <meta property="article:published_time" content="2025-01-15">
+    <meta property="article:modified_time" content="2026-10-04">
     <link rel="sitemap" type="application/xml" href="/docs/sitemap.xml">
-  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"SEO","description":"Search engine optimization features","url":"https://mdsvr.js.org/docs/03-features/seo/","image":"https://mdsvr.js.org/docs/public/assets/og/03-features/seo/index.jpg","datePublished":"2025-01-15"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://mdsvr.js.org/docs/"},{"@type":"ListItem","position":2,"name":"Features","item":"https://mdsvr.js.org/docs/03-features/"},{"@type":"ListItem","position":3,"name":"SEO","item":"https://mdsvr.js.org/docs/03-features/seo/"}]}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"SEO","description":"Search engine optimization features","url":"https://mdsvr.js.org/docs/03-features/seo/","image":"https://mdsvr.js.org/docs/public/assets/og/03-features/seo/index.jpg","datePublished":"2025-01-15","dateModified":"2026-10-04"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://mdsvr.js.org/docs/"},{"@type":"ListItem","position":2,"name":"Features","item":"https://mdsvr.js.org/docs/03-features/"},{"@type":"ListItem","position":3,"name":"SEO","item":"https://mdsvr.js.org/docs/03-features/seo/"}]}]}</script>
   
   
   
@@ -1607,7 +1610,7 @@ code.hljs {
 <h2 id="meta-tags" tabindex="-1">Meta Tags</h2>
 <p>Every page includes optimized meta tags based on your <code>_mdsvr/settings.json</code> and page frontmatter.</p>
 <h3 id="title-template" tabindex="-1">Title Template</h3>
-<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+<div class="code-block-wrapper"><div class="code-block-container" data-code="{
   &quot;seo&quot;: {
     &quot;titleTemplate&quot;: &quot;%s | My Docs&quot;
   }
@@ -1648,7 +1651,7 @@ code.hljs {
 <span class="hljs-punctuation">}</span>
 </code></pre>
 </div></div>
-</code></pre>
+
 <ul>
 <li><code>%s</code> is replaced with the page title</li>
 <li>Example: <code>Installation | My Docs</code></li>
@@ -1656,7 +1659,7 @@ code.hljs {
 </ul>
 <h3 id="page-level-titles" tabindex="-1">Page-Level Titles</h3>
 <p>Override the title for individual pages using frontmatter:</p>
-<pre><code class="language-mdx"><div class="code-block-wrapper"><div class="code-block-container" data-code="---
+<div class="code-block-wrapper"><div class="code-block-container" data-code="---
 title: Custom Page Title
 description: A description for SEO and social sharing
 seoTitle: Custom Page Title | Keyword-Rich Suffix
@@ -1705,7 +1708,7 @@ seoTitle: Custom Page Title | Keyword-Rich Suffix
 Content...
 </code></pre>
 </div></div>
-</code></pre>
+
 <ul>
 <li><code>title</code> — used for the <code>&lt;title&gt;</code> tag, <code>og:title</code>, and <code>twitter:title</code></li>
 <li><code>seoTitle</code> — optional; wins over <code>title</code> for SEO output when present</li>
@@ -1720,7 +1723,7 @@ Content...
 </ol>
 <h2 id="open-graph" tabindex="-1">Open Graph</h2>
 <p>Open Graph tags ensure your pages look great when shared on Facebook, LinkedIn, and other platforms.</p>
-<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+<div class="code-block-wrapper"><div class="code-block-container" data-code="{
   &quot;seo&quot;: {
     &quot;defaultImage&quot;: &quot;./assets/og-image.png&quot;
   }
@@ -1761,7 +1764,7 @@ Content...
 <span class="hljs-punctuation">}</span>
 </code></pre>
 </div></div>
-</code></pre>
+
 <p>Generated tags:</p>
 <ul>
 <li><code>og:title</code> — Page title</li>
@@ -1769,14 +1772,15 @@ Content...
 <li><code>og:type</code> — <code>article</code> for document pages, <code>website</code> for the homepage and directory/auto-index pages</li>
 <li><code>og:url</code> — Absolute canonical URL (only when <code>site.baseUrl</code> is set)</li>
 <li><code>og:site_name</code> — Site title</li>
-<li><code>og:locale</code> — Derived from <code>site.language</code> (<code>pt-BR</code> → <code>pt_BR</code>)</li>
+<li><code>og:locale</code> — Derived from <code>site.language</code> in <code>language_TERRITORY</code> form (<code>en</code> → <code>en_US</code>, <code>vi</code> → <code>vi_VN</code>, <code>pt-BR</code> → <code>pt_BR</code>)</li>
 <li><code>og:image</code> — Featured image, resolved to an absolute URL against <code>site.baseUrl</code> + <code>generate.basePath</code> when possible</li>
+<li><code>og:image:alt</code> — <code>imageAlt</code> frontmatter, falling back to the page title (also emitted as <code>twitter:image:alt</code>)</li>
 <li><code>og:image:width</code> / <code>og:image:height</code> — <code>1200</code>×<code>630</code>, emitted for generated OG images</li>
 </ul>
 <h2 id="og-image-generation" tabindex="-1">OG Image Generation</h2>
 <p>mdsvr can automatically generate beautiful OG images for every page. This feature is <strong>enabled by default</strong>.</p>
 <h2 id="enablingdisabling" tabindex="-1">Enabling/Disabling</h2>
-<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+<div class="code-block-wrapper"><div class="code-block-container" data-code="{
   &quot;seo&quot;: {
     &quot;og&quot;: {
       &quot;enabled&quot;: true
@@ -1821,10 +1825,10 @@ Content...
 <span class="hljs-punctuation">}</span>
 </code></pre>
 </div></div>
-</code></pre>
+
 <p>Set <code>enabled: false</code> to disable automatic OG image generation.</p>
 <h2 id="customization" tabindex="-1">Customization</h2>
-<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+<div class="code-block-wrapper"><div class="code-block-container" data-code="{
   &quot;seo&quot;: {
     &quot;og&quot;: {
       &quot;enabled&quot;: true,
@@ -1887,7 +1891,7 @@ Content...
 <span class="hljs-punctuation">}</span>
 </code></pre>
 </div></div>
-</code></pre>
+
 <p><strong>Options:</strong></p>
 <ul>
 <li><code>enabled</code>: Enable/disable OG image generation (default: <code>true</code>)</li>
@@ -1916,7 +1920,7 @@ Content...
 <p>See <a href="/02-settings/#export-caching">Export Caching</a> for details.</p>
 <h2 id="force-regeneration" tabindex="-1">Force Regeneration</h2>
 <p>To force regenerate all OG images during export:</p>
-<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="npx mdsvr ./docs --export --force-og
+<div class="code-block-wrapper"><div class="code-block-container" data-code="npx mdsvr ./docs --export --force-og
 ">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -1949,7 +1953,7 @@ Content...
   <pre><code class="hljs language-bash">npx mdsvr ./docs --<span class="hljs-built_in">export</span> --force-og
 </code></pre>
 </div></div>
-</code></pre>
+
 <p>This bypasses the cache and regenerates all OG images, useful when:</p>
 <ul>
 <li>OG image template changes</li>
@@ -1957,10 +1961,11 @@ Content...
 <li>You want to refresh all social media preview images</li>
 </ul>
 <h2 id="custom-images-per-page" tabindex="-1">Custom Images Per Page</h2>
-<pre><code class="language-mdx"><div class="code-block-wrapper"><div class="code-block-container" data-code="---
+<div class="code-block-wrapper"><div class="code-block-container" data-code="---
 title: My Article
 description: Article description
 image: ./assets/article-image.png
+imageAlt: Diagram of the deployment pipeline # optional og:image:alt / twitter:image:alt
 ---
 ">
   <div class="code-block-toolbar">
@@ -1995,13 +2000,14 @@ image: ./assets/article-image.png
 title: My Article
 description: Article description
 image: ./assets/article-image.png
+imageAlt: Diagram of the deployment pipeline # optional og:image:alt / twitter:image:alt
 ---
 </code></pre>
 </div></div>
-</code></pre>
+
 <h2 id="twitter-cards" tabindex="-1">Twitter Cards</h2>
 <p>Twitter Cards make your links stand out on Twitter/X.</p>
-<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+<div class="code-block-wrapper"><div class="code-block-container" data-code="{
   &quot;seo&quot;: {
     &quot;twitterCard&quot;: &quot;summary_large_image&quot;,
     &quot;twitterSite&quot;: &quot;@myhandle&quot;
@@ -2044,7 +2050,7 @@ image: ./assets/article-image.png
 <span class="hljs-punctuation">}</span>
 </code></pre>
 </div></div>
-</code></pre>
+
 <h2 id="card-types" tabindex="-1">Card Types</h2>
 <ul>
 <li><code>summary</code> — Small square image + text</li>
@@ -2054,7 +2060,7 @@ image: ./assets/article-image.png
 <h2 id="sitemap" tabindex="-1">Sitemap</h2>
 <p>Generate an XML sitemap for search engines.</p>
 <h2 id="enabling" tabindex="-1">Enabling</h2>
-<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+<div class="code-block-wrapper"><div class="code-block-container" data-code="{
   &quot;seo&quot;: {
     &quot;generateSitemap&quot;: true
   }
@@ -2095,10 +2101,10 @@ image: ./assets/article-image.png
 <span class="hljs-punctuation">}</span>
 </code></pre>
 </div></div>
-</code></pre>
+
 <h2 id="endpoint" tabindex="-1">Endpoint</h2>
 <p>Access your sitemap at:</p>
-<pre><code><div class="code-block-wrapper"><div class="code-block-container" data-code="https://yoursite.com/sitemap.xml
+<div class="code-block-wrapper"><div class="code-block-container" data-code="https://yoursite.com/sitemap.xml
 ">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -2131,7 +2137,7 @@ image: ./assets/article-image.png
   <pre><code class="hljs">https://yoursite.com/sitemap.xml
 </code></pre>
 </div></div>
-</code></pre>
+
 <h2 id="sitemap-contents" tabindex="-1">Sitemap Contents</h2>
 <p>The sitemap includes:</p>
 <ul>
@@ -2148,7 +2154,7 @@ image: ./assets/article-image.png
 <li><strong>Serve mode</strong>: <code>/sitemap.xml</code> uses <code>site.baseUrl</code> when set, otherwise the actual request origin (e.g. <code>http://localhost:1800</code>).</li>
 </ul>
 <h2 id="example-output" tabindex="-1">Example Output</h2>
-<pre><code class="language-xml"><div class="code-block-wrapper"><div class="code-block-container" data-code="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+<div class="code-block-wrapper"><div class="code-block-container" data-code="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
 &lt;urlset xmlns=&quot;http://www.sitemaps.org/schemas/sitemap/0.9&quot;&gt;
   &lt;url&gt;
     &lt;loc&gt;https://docs.example.com/&lt;/loc&gt;
@@ -2205,11 +2211,11 @@ image: ./assets/article-image.png
 <span class="hljs-tag">&lt;/<span class="hljs-name">urlset</span>&gt;</span>
 </code></pre>
 </div></div>
-</code></pre>
+
 <h2 id="rss-feed" tabindex="-1">RSS Feed</h2>
 <p>Generate an RSS feed for blog posts or changelogs.</p>
 <h2 id="enabling-1" tabindex="-1">Enabling</h2>
-<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+<div class="code-block-wrapper"><div class="code-block-container" data-code="{
   &quot;seo&quot;: {
     &quot;generateRssFeed&quot;: true,
     &quot;rss&quot;: {
@@ -2260,10 +2266,10 @@ image: ./assets/article-image.png
 <span class="hljs-punctuation">}</span>
 </code></pre>
 </div></div>
-</code></pre>
+
 <h2 id="endpoint-1" tabindex="-1">Endpoint</h2>
 <p>Access the feed at:</p>
-<pre><code><div class="code-block-wrapper"><div class="code-block-container" data-code="https://yoursite.com/feed.xml
+<div class="code-block-wrapper"><div class="code-block-container" data-code="https://yoursite.com/feed.xml
 ">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -2296,10 +2302,10 @@ image: ./assets/article-image.png
   <pre><code class="hljs">https://yoursite.com/feed.xml
 </code></pre>
 </div></div>
-</code></pre>
+
 <h2 id="including-posts" tabindex="-1">Including Posts</h2>
 <p>Pages are included in the RSS feed when they have a <code>date</code> in their frontmatter:</p>
-<pre><code class="language-mdx"><div class="code-block-wrapper"><div class="code-block-container" data-code="---
+<div class="code-block-wrapper"><div class="code-block-container" data-code="---
 title: New Feature Released
 description: We just shipped a great new feature
 date: 2025-01-15
@@ -2348,11 +2354,11 @@ date: 2025-01-15
 Content...
 </code></pre>
 </div></div>
-</code></pre>
+
 <p>Posts are sorted by date (newest first) and limited to the 20 most recent entries.</p>
 <h2 id="canonical-urls" tabindex="-1">Canonical URLs</h2>
 <p>Canonical URLs help search engines understand the primary version of a page.</p>
-<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+<div class="code-block-wrapper"><div class="code-block-container" data-code="{
   &quot;site&quot;: {
     &quot;baseUrl&quot;: &quot;https://docs.example.com&quot;
   }
@@ -2393,9 +2399,9 @@ Content...
 <span class="hljs-punctuation">}</span>
 </code></pre>
 </div></div>
-</code></pre>
+
 <p>With <code>baseUrl</code> set, every page includes an absolute canonical in the canonical trailing-slash form (<code>baseUrl</code> + <code>generate.basePath</code> + page URL):</p>
-<pre><code class="language-html"><div class="code-block-wrapper"><div class="code-block-container" data-code="&lt;link rel=&quot;canonical&quot; href=&quot;https://docs.example.com/page-path/&quot; /&gt;
+<div class="code-block-wrapper"><div class="code-block-container" data-code="&lt;link rel=&quot;canonical&quot; href=&quot;https://docs.example.com/page-path/&quot; /&gt;
 ">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -2428,12 +2434,12 @@ Content...
   <pre><code class="hljs language-html"><span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;canonical&quot;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;https://docs.example.com/page-path/&quot;</span> /&gt;</span>
 </code></pre>
 </div></div>
-</code></pre>
+
 <p>The same absolute URL is used for <code>og:url</code> and JSON-LD. When <code>baseUrl</code> is <strong>not</strong> configured, <code>canonical</code> and <code>og:url</code> are omitted entirely — relative canonicals are never emitted.</p>
 <h2 id="no-index" tabindex="-1">No-Index</h2>
 <p>Prevent specific pages from being indexed:</p>
 <h2 id="site-wide" tabindex="-1">Site-Wide</h2>
-<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+<div class="code-block-wrapper"><div class="code-block-container" data-code="{
   &quot;seo&quot;: {
     &quot;noIndex&quot;: true
   }
@@ -2474,9 +2480,9 @@ Content...
 <span class="hljs-punctuation">}</span>
 </code></pre>
 </div></div>
-</code></pre>
+
 <h2 id="per-page" tabindex="-1">Per Page</h2>
-<pre><code class="language-mdx"><div class="code-block-wrapper"><div class="code-block-container" data-code="---
+<div class="code-block-wrapper"><div class="code-block-container" data-code="---
 noindex: true
 ---
 
@@ -2521,9 +2527,9 @@ noindex: true
 This page won't be indexed by search engines.
 </code></pre>
 </div></div>
-</code></pre>
+
 <p>This adds:</p>
-<pre><code class="language-html"><div class="code-block-wrapper"><div class="code-block-container" data-code="&lt;meta name=&quot;robots&quot; content=&quot;noindex, nofollow&quot; /&gt;
+<div class="code-block-wrapper"><div class="code-block-container" data-code="&lt;meta name=&quot;robots&quot; content=&quot;noindex, nofollow&quot; /&gt;
 ">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -2556,14 +2562,14 @@ This page won't be indexed by search engines.
   <pre><code class="hljs language-html"><span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;robots&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;noindex, nofollow&quot;</span> /&gt;</span>
 </code></pre>
 </div></div>
-</code></pre>
+
 <ul>
 <li><code>noindex</code> is the canonical spelling; the older <code>noIndex</code> alias still works (<code>noindex</code> wins if both are set)</li>
 <li><code>noindex</code> pages are also excluded from <code>sitemap.xml</code></li>
 </ul>
 <h2 id="directory-listing-pages" tabindex="-1">Directory Listing Pages</h2>
 <p>Auto-generated index pages for directories without a <code>README.md</code>/<code>index.md</code> are <code>website</code>-type pages with a humanized title and a <code>Directory listing for …</code> description. To keep them out of search results, set:</p>
-<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+<div class="code-block-wrapper"><div class="code-block-container" data-code="{
   &quot;seo&quot;: {
     &quot;noIndexDirectoryPages&quot;: true
   }
@@ -2604,11 +2610,11 @@ This page won't be indexed by search engines.
 <span class="hljs-punctuation">}</span>
 </code></pre>
 </div></div>
-</code></pre>
+
 <p>They then emit <code>noindex, nofollow</code> and are excluded from <code>sitemap.xml</code>.</p>
 <h2 id="robotstxt" tabindex="-1">robots.txt</h2>
 <p>By default, mdsvr exports a permissive <code>robots.txt</code> for static sites:</p>
-<pre><code><div class="code-block-wrapper"><div class="code-block-container" data-code="User-agent: *
+<div class="code-block-wrapper"><div class="code-block-container" data-code="User-agent: *
 Allow: /
 Sitemap: https://docs.example.com/sitemap.xml
 ">
@@ -2645,9 +2651,9 @@ Allow: /
 Sitemap: https://docs.example.com/sitemap.xml
 </code></pre>
 </div></div>
-</code></pre>
+
 <p>Place a non-empty <code>robots.txt</code> in your docs root to override the generated file:</p>
-<pre><code><div class="code-block-wrapper"><div class="code-block-container" data-code="docs/
+<div class="code-block-wrapper"><div class="code-block-container" data-code="docs/
 ├── robots.txt
 ├── README.md
 └── ...
@@ -2686,9 +2692,9 @@ Sitemap: https://docs.example.com/sitemap.xml
 └── ...
 </code></pre>
 </div></div>
-</code></pre>
+
 <p>To keep <code>robots.txt</code> entirely under your own control, disable generation:</p>
-<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+<div class="code-block-wrapper"><div class="code-block-container" data-code="{
   &quot;seo&quot;: {
     &quot;generateRobotsTxt&quot;: false
   }
@@ -2729,9 +2735,9 @@ Sitemap: https://docs.example.com/sitemap.xml
 <span class="hljs-punctuation">}</span>
 </code></pre>
 </div></div>
-</code></pre>
+
 <p>Example custom <code>robots.txt</code>:</p>
-<pre><code><div class="code-block-wrapper"><div class="code-block-container" data-code="User-agent: *
+<div class="code-block-wrapper"><div class="code-block-container" data-code="User-agent: *
 Allow: /
 Sitemap: https://docs.example.com/sitemap.xml
 ">
@@ -2768,8 +2774,58 @@ Allow: /
 Sitemap: https://docs.example.com/sitemap.xml
 </code></pre>
 </div></div>
-</code></pre>
+
 <p>The generated <code>Sitemap:</code> line is only included when an absolute sitemap URL can be derived (<code>site.baseUrl</code>, or the request origin in serve mode) — relative <code>Sitemap:</code> URLs are invalid.</p>
+<h2 id="llmstxt" tabindex="-1">llms.txt</h2>
+<p>mdsvr generates two files for LLM consumers (see <a href="https://llmstxt.org">llmstxt.org</a>), enabled by default:</p>
+<ul>
+<li><code>/llms.txt</code> — a Markdown index of every page: the site title, a blockquote summary, then link lists grouped by top-level section with page descriptions. Links are absolute when <code>site.baseUrl</code> (or the request origin in serve mode) is available.</li>
+<li><code>/llms-full.txt</code> — the full Markdown source of every page, each preceded by its title and canonical URL so chunks stay attributable.</li>
+</ul>
+<p><code>noindex</code> pages are excluded from both files. To write your own, place a non-empty <code>llms.txt</code> or <code>llms-full.txt</code> in the docs root — custom files always win (same convention as <code>robots.txt</code>).</p>
+<p>Disable generation entirely:</p>
+<div class="code-block-wrapper"><div class="code-block-container" data-code="{
+  &quot;seo&quot;: {
+    &quot;generateLlmsTxt&quot;: false
+  }
+}
+">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;seo&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;generateLlmsTxt&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+</div></div>
+
 <h2 id="structured-data-json-ld" tabindex="-1">Structured Data (JSON-LD)</h2>
 <p>Every page emits one <code>&lt;script type=&quot;application/ld+json&quot;&gt;</code> block with a <a href="http://schema.org">schema.org</a> <code>@graph</code>:</p>
 <ul>
@@ -2778,7 +2834,7 @@ Sitemap: https://docs.example.com/sitemap.xml
 <li><strong>Nested routes</strong> → <code>BreadcrumbList</code> when breadcrumbs are enabled (built from the route path and sidebar titles)</li>
 </ul>
 <p>Disable with:</p>
-<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+<div class="code-block-wrapper"><div class="code-block-container" data-code="{
   &quot;seo&quot;: {
     &quot;structuredData&quot;: false
   }
@@ -2819,10 +2875,10 @@ Sitemap: https://docs.example.com/sitemap.xml
 <span class="hljs-punctuation">}</span>
 </code></pre>
 </div></div>
-</code></pre>
+
 <h2 id="author-dates" tabindex="-1">Author &amp; dates</h2>
 <p>Article metadata comes from frontmatter and site settings:</p>
-<pre><code class="language-mdx"><div class="code-block-wrapper"><div class="code-block-container" data-code="---
+<div class="code-block-wrapper"><div class="code-block-container" data-code="---
 title: My Article
 author: Jane Doe # string, or { name: &quot;Jane&quot;, url: &quot;https://...&quot; }
 date: 2026-10-01 # treated as datePublished
@@ -2867,9 +2923,10 @@ dateModified: 2026-10-04
 ---
 </code></pre>
 </div></div>
-</code></pre>
+
+<p>When frontmatter omits the dates, the source file’s filesystem timestamps are used as fallback (creation time for <code>datePublished</code>, modification time for <code>dateModified</code>), so <code>og:type=&quot;article&quot;</code> pages always carry <code>article:published_time</code>/<code>article:modified_time</code> and JSON-LD dates.</p>
 <p>A site-wide default author can be configured and emits <code>&lt;meta name=&quot;author&quot;&gt;</code> plus JSON-LD <code>author</code> (as an <code>Organization</code>):</p>
-<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+<div class="code-block-wrapper"><div class="code-block-container" data-code="{
   &quot;site&quot;: {
     &quot;author&quot;: { &quot;name&quot;: &quot;Acme Docs Team&quot;, &quot;url&quot;: &quot;https://acme.example/about&quot; }
   }
@@ -2910,12 +2967,12 @@ dateModified: 2026-10-04
 <span class="hljs-punctuation">}</span>
 </code></pre>
 </div></div>
-</code></pre>
+
 <p>Frontmatter <code>author</code> (a <code>Person</code>) wins over <code>site.author</code>.</p>
 <h2 id="deployment" tabindex="-1">Deployment</h2>
 <h2 id="firebase-hosting" tabindex="-1">Firebase Hosting</h2>
 <p>The export works with zero special configuration — point <code>public</code> at the output directory:</p>
-<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+<div class="code-block-wrapper"><div class="code-block-container" data-code="{
   &quot;hosting&quot;: {
     &quot;public&quot;: &quot;dist&quot;,
     &quot;cleanUrls&quot;: true,
@@ -2960,11 +3017,11 @@ dateModified: 2026-10-04
 <span class="hljs-punctuation">}</span>
 </code></pre>
 </div></div>
-</code></pre>
+
 <p>Set <code>site.baseUrl</code> to your public origin so canonical URLs, <code>og:url</code>, <code>sitemap.xml</code>, and the <code>robots.txt</code> <code>Sitemap:</code> line are absolute.</p>
 <h2 id="github-pages" tabindex="-1">GitHub Pages</h2>
 <p>For <code>https://&lt;user&gt;.github.io/&lt;repo&gt;/</code> project sites, set both <code>baseUrl</code> and <code>basePath</code>:</p>
-<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+<div class="code-block-wrapper"><div class="code-block-container" data-code="{
   &quot;site&quot;: {
     &quot;baseUrl&quot;: &quot;https://user.github.io&quot;
   },
@@ -3011,7 +3068,7 @@ dateModified: 2026-10-04
 <span class="hljs-punctuation">}</span>
 </code></pre>
 </div></div>
-</code></pre>
+
 <p>All generated links, canonicals, sitemap entries, and <code>og:image</code> URLs are prefixed with <code>basePath</code> automatically.</p>
 <h2 id="social-sharing-preview" tabindex="-1">Social Sharing Preview</h2>
 <p>To get the best social sharing previews:</p>
@@ -3027,7 +3084,7 @@ dateModified: 2026-10-04
 <li><strong>Twitter Cards</strong>: 1200×600 pixels (large image)</li>
 </ul>
 <h2 id="complete-seo-configuration" tabindex="-1">Complete SEO Configuration</h2>
-<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+<div class="code-block-wrapper"><div class="code-block-container" data-code="{
   &quot;site&quot;: {
     &quot;title&quot;: &quot;My Documentation&quot;,
     &quot;description&quot;: &quot;Comprehensive documentation for My Project&quot;,
@@ -3044,6 +3101,7 @@ dateModified: 2026-10-04
     &quot;generateSitemap&quot;: true,
     &quot;generateRobotsTxt&quot;: true,
     &quot;generateRssFeed&quot;: true,
+    &quot;generateLlmsTxt&quot;: true,
     &quot;structuredData&quot;: true,
     &quot;rss&quot;: {
       &quot;title&quot;: &quot;My Docs Blog&quot;,
@@ -3098,6 +3156,7 @@ dateModified: 2026-10-04
     <span class="hljs-attr">&quot;generateSitemap&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
     <span class="hljs-attr">&quot;generateRobotsTxt&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
     <span class="hljs-attr">&quot;generateRssFeed&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;generateLlmsTxt&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
     <span class="hljs-attr">&quot;structuredData&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
     <span class="hljs-attr">&quot;rss&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
       <span class="hljs-attr">&quot;title&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;My Docs Blog&quot;</span><span class="hljs-punctuation">,</span>
@@ -3108,7 +3167,7 @@ dateModified: 2026-10-04
 <span class="hljs-punctuation">}</span>
 </code></pre>
 </div></div>
-</code></pre>
+
 <h2 id="testing" tabindex="-1">Testing</h2>
 <p>Test your SEO implementation with these tools:</p>
 <ul>
@@ -3166,6 +3225,7 @@ dateModified: 2026-10-04
 <li class="toc-item"><a href="#per-page">Per Page</a></li>
 <li class="toc-item"><a href="#directory-listing-pages">Directory Listing Pages</a></li>
 <li class="toc-item"><a href="#robotstxt">robots.txt</a></li>
+<li class="toc-item"><a href="#llmstxt">llms.txt</a></li>
 <li class="toc-item"><a href="#structured-data-json-ld">Structured Data (JSON-LD)</a></li>
 <li class="toc-item"><a href="#author-dates">Author &amp;amp; dates</a></li>
 <li class="toc-item"><a href="#deployment">Deployment</a></li>

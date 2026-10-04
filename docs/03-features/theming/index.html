@@ -22,17 +22,21 @@
     <meta property="og:description" content="Customize the appearance of your documentation">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="MDSVR | Markdown Documentation Server">
-    <meta property="og:locale" content="en">
+    <meta property="og:locale" content="en_US">
     <meta property="og:url" content="https://mdsvr.js.org/docs/03-features/theming/">
     <meta property="og:image" content="https://mdsvr.js.org/docs/public/assets/og/03-features/theming/index.jpg">
+    <meta property="og:image:alt" content="Theming">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Theming | MDSVR | Markdown Documentation Server">
     <meta name="twitter:description" content="Customize the appearance of your documentation">
     <meta name="twitter:image" content="https://mdsvr.js.org/docs/public/assets/og/03-features/theming/index.jpg">
+    <meta name="twitter:image:alt" content="Theming">
+    <meta property="article:published_time" content="2026-10-04">
+    <meta property="article:modified_time" content="2026-10-04">
     <link rel="sitemap" type="application/xml" href="/docs/sitemap.xml">
-  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"Theming","description":"Customize the appearance of your documentation","url":"https://mdsvr.js.org/docs/03-features/theming/","image":"https://mdsvr.js.org/docs/public/assets/og/03-features/theming/index.jpg"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://mdsvr.js.org/docs/"},{"@type":"ListItem","position":2,"name":"Features","item":"https://mdsvr.js.org/docs/03-features/"},{"@type":"ListItem","position":3,"name":"Theming","item":"https://mdsvr.js.org/docs/03-features/theming/"}]}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"Theming","description":"Customize the appearance of your documentation","url":"https://mdsvr.js.org/docs/03-features/theming/","image":"https://mdsvr.js.org/docs/public/assets/og/03-features/theming/index.jpg","datePublished":"2026-10-04","dateModified":"2026-10-04"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://mdsvr.js.org/docs/"},{"@type":"ListItem","position":2,"name":"Features","item":"https://mdsvr.js.org/docs/03-features/"},{"@type":"ListItem","position":3,"name":"Theming","item":"https://mdsvr.js.org/docs/03-features/theming/"}]}]}</script>
   
   
   
@@ -1605,7 +1609,7 @@ code.hljs {
 <p>mdsvr supports <strong>dark mode</strong>, <strong>light mode</strong>, and <strong>automatic theme detection</strong> based on the user’s system preferences.</p>
 <h2 id="theme-modes" tabindex="-1">Theme Modes</h2>
 <p>Configure the default theme in <code>_mdsvr/settings.json</code>:</p>
-<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+<div class="code-block-wrapper"><div class="code-block-container" data-code="{
   &quot;appearance&quot;: {
     &quot;defaultTheme&quot;: &quot;system&quot;,
     &quot;allowThemeToggle&quot;: true
@@ -1648,7 +1652,7 @@ code.hljs {
 <span class="hljs-punctuation">}</span>
 </code></pre>
 </div></div>
-</code></pre>
+
 <h3 id="options" tabindex="-1">Options</h3>
 <div class="table-wrapper"><div class="table-toolbar"><button class="table-btn-fullscreen" type="button" title="Fullscreen table" aria-label="Fullscreen table"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m15 15 6 6"/><path d="m15 9 6-6"/><path d="M21 16v5h-5"/><path d="M21 8V3h-5"/><path d="M3 16v5h5"/><path d="m3 21 6-6"/><path d="M3 8V3h5"/><path d="M9 9 3 3"/></svg></button></div><table>
 <thead>
@@ -1679,7 +1683,7 @@ code.hljs {
 </Callout>
 <h2 id="accent-color" tabindex="-1">Accent Color</h2>
 <p>Customize the primary color used for links, buttons, and accents:</p>
-<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+<div class="code-block-wrapper"><div class="code-block-container" data-code="{
   &quot;appearance&quot;: {
     &quot;accentColor&quot;: &quot;#0969da&quot;
   }
@@ -1720,7 +1724,7 @@ code.hljs {
 <span class="hljs-punctuation">}</span>
 </code></pre>
 </div></div>
-</code></pre>
+
 <p>This affects:</p>
 <ul>
 <li>Links in content</li>
@@ -1762,7 +1766,7 @@ code.hljs {
 </table></div>
 <h2 id="code-themes" tabindex="-1">Code Themes</h2>
 <p>Configure syntax highlighting themes for light and dark modes:</p>
-<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+<div class="code-block-wrapper"><div class="code-block-container" data-code="{
   &quot;appearance&quot;: {
     &quot;codeTheme&quot;: {
       &quot;light&quot;: &quot;github&quot;,
@@ -1809,7 +1813,7 @@ code.hljs {
 <span class="hljs-punctuation">}</span>
 </code></pre>
 </div></div>
-</code></pre>
+
 <p>Currently supported:</p>
 <ul>
 <li><code>github</code></li>
@@ -1817,7 +1821,7 @@ code.hljs {
 </ul>
 <h2 id="font-family" tabindex="-1">Font Family</h2>
 <p>Customize fonts for different content types:</p>
-<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+<div class="code-block-wrapper"><div class="code-block-container" data-code="{
   &quot;appearance&quot;: {
     &quot;fontFamily&quot;: {
       &quot;body&quot;: &quot;Inter, system-ui, sans-serif&quot;,
@@ -1866,7 +1870,7 @@ code.hljs {
 <span class="hljs-punctuation">}</span>
 </code></pre>
 </div></div>
-</code></pre>
+
 <p><strong>Options:</strong></p>
 <ul>
 <li><code>body</code>: Font for body text (optional)</li>
@@ -1876,7 +1880,7 @@ code.hljs {
 <p>If not specified, the system default fonts are used.</p>
 <h2 id="css-variables" tabindex="-1">CSS Variables</h2>
 <p>The following CSS variables are available for custom styling:</p>
-<pre><code class="language-css"><div class="code-block-wrapper"><div class="code-block-container" data-code=":root[data-theme=&quot;light&quot;] {
+<div class="code-block-wrapper"><div class="code-block-container" data-code=":root[data-theme=&quot;light&quot;] {
   --bg: #ffffff;
   --bg-secondary: #f6f8fa;
   --border: #d1d9e0;
@@ -1945,11 +1949,11 @@ code.hljs {
 }
 </code></pre>
 </div></div>
-</code></pre>
+
 <p>You can use these variables in custom CSS if needed (custom CSS injection coming in a future release).</p>
 <h2 id="system-preference-detection" tabindex="-1">System Preference Detection</h2>
 <p>When using <code>defaultTheme: &quot;system&quot;</code>, mdsvr automatically detects the user’s OS preference:</p>
-<pre><code class="language-javascript"><div class="code-block-wrapper"><div class="code-block-container" data-code="// Runs before paint to prevent flash
+<div class="code-block-wrapper"><div class="code-block-container" data-code="// Runs before paint to prevent flash
 const theme =
   localStorage.getItem(&quot;theme&quot;) ||
   (matchMedia(&quot;(prefers-color-scheme: dark)&quot;).matches ? &quot;dark&quot; : &quot;light&quot;);
@@ -1990,7 +1994,7 @@ document.documentElement.setAttribute(&quot;data-theme&quot;, theme);
 <span class="hljs-variable language_">document</span>.<span class="hljs-property">documentElement</span>.<span class="hljs-title function_">setAttribute</span>(<span class="hljs-string">&quot;data-theme&quot;</span>, theme);
 </code></pre>
 </div></div>
-</code></pre>
+
 <p>The theme also updates automatically when the system preference changes (no page reload needed).</p>
 <h2 id="no-flash-theme-loading" tabindex="-1">No-Flash Theme Loading</h2>
 <p>To prevent a flash of unstyled content (FOUC) when the page loads, mdsvr injects a small script in the <code>&lt;head&gt;</code> that:</p>
@@ -2001,7 +2005,7 @@ document.documentElement.setAttribute(&quot;data-theme&quot;, theme);
 </ol>
 <p>This ensures the correct theme is applied immediately without any visible flash.</p>
 <h2 id="example-configuration" tabindex="-1">Example Configuration</h2>
-<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+<div class="code-block-wrapper"><div class="code-block-container" data-code="{
   &quot;appearance&quot;: {
     &quot;defaultTheme&quot;: &quot;system&quot;,
     &quot;allowThemeToggle&quot;: true,
@@ -2062,7 +2066,7 @@ document.documentElement.setAttribute(&quot;data-theme&quot;, theme);
 <span class="hljs-punctuation">}</span>
 </code></pre>
 </div></div>
-</code></pre>
+
 
       </article>
       <nav class="prev-next-nav">

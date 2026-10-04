@@ -22,17 +22,21 @@
     <meta property="og:description" content="Detailed guides for configuring, writing, and deploying your mdsvr documentation">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="MDSVR | Markdown Documentation Server">
-    <meta property="og:locale" content="en">
+    <meta property="og:locale" content="en_US">
     <meta property="og:url" content="https://mdsvr.js.org/docs/02-settings/">
     <meta property="og:image" content="https://mdsvr.js.org/docs/public/assets/og/02-settings/index.jpg">
+    <meta property="og:image:alt" content="Guides">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Guides | MDSVR | Markdown Documentation Server">
     <meta name="twitter:description" content="Detailed guides for configuring, writing, and deploying your mdsvr documentation">
     <meta name="twitter:image" content="https://mdsvr.js.org/docs/public/assets/og/02-settings/index.jpg">
+    <meta name="twitter:image:alt" content="Guides">
+    <meta property="article:published_time" content="2026-10-04">
+    <meta property="article:modified_time" content="2026-10-04">
     <link rel="sitemap" type="application/xml" href="/docs/sitemap.xml">
-  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"Guides","description":"Detailed guides for configuring, writing, and deploying your mdsvr documentation","url":"https://mdsvr.js.org/docs/02-settings/","image":"https://mdsvr.js.org/docs/public/assets/og/02-settings/index.jpg"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://mdsvr.js.org/docs/"},{"@type":"ListItem","position":2,"name":"Guides","item":"https://mdsvr.js.org/docs/02-settings/"}]}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"Guides","description":"Detailed guides for configuring, writing, and deploying your mdsvr documentation","url":"https://mdsvr.js.org/docs/02-settings/","image":"https://mdsvr.js.org/docs/public/assets/og/02-settings/index.jpg","datePublished":"2026-10-04","dateModified":"2026-10-04"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://mdsvr.js.org/docs/"},{"@type":"ListItem","position":2,"name":"Guides","item":"https://mdsvr.js.org/docs/02-settings/"}]}]}</script>
   
   
   
@@ -1608,7 +1612,7 @@ code.hljs {
 <p>mdsvr can be configured via a <code>settings.json</code> file in the <code>_mdsvr/</code> directory in your docs root. All settings are optional — the server works out of the box with sensible defaults.</p>
 <h3 id="creating-settingsjson" tabindex="-1">Creating settings.json</h3>
 <p>Use the CLI to create a starter configuration:</p>
-<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="npx mdsvr . --init
+<div class="code-block-wrapper"><div class="code-block-container" data-code="npx mdsvr . --init
 ">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -1641,9 +1645,9 @@ code.hljs {
   <pre><code class="hljs language-bash">npx mdsvr . --init
 </code></pre>
 </div></div>
-</code></pre>
+
 <p>Or create it manually:</p>
-<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+<div class="code-block-wrapper"><div class="code-block-container" data-code="{
   &quot;$schema&quot;: &quot;https://mdsvr.js.org/schema/v2.json&quot;,
   &quot;site&quot;: {
     &quot;title&quot;: &quot;My Docs&quot;,
@@ -1688,9 +1692,9 @@ code.hljs {
 <span class="hljs-punctuation">}</span>
 </code></pre>
 </div></div>
-</code></pre>
+
 <h3 id="site-settings" tabindex="-1">Site Settings</h3>
-<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+<div class="code-block-wrapper"><div class="code-block-container" data-code="{
   &quot;site&quot;: {
     &quot;title&quot;: &quot;My Documentation&quot;,
     &quot;description&quot;: &quot;A great documentation site&quot;,
@@ -1757,14 +1761,14 @@ code.hljs {
 <span class="hljs-punctuation">}</span>
 </code></pre>
 </div></div>
-</code></pre>
+
 <ul>
 <li><code>author</code> — optional site-wide default author (string or <code>{ name, url }</code> object); emitted as <code>&lt;meta name=&quot;author&quot;&gt;</code> and JSON-LD <code>author</code> on document pages unless page frontmatter overrides it</li>
 <li><code>baseUrl</code> — required for absolute canonical URLs, <code>og:url</code>, exported <code>sitemap.xml</code>, and the <code>robots.txt</code> <code>Sitemap:</code> line; without it those URL-dependent tags/files are omitted rather than emitted as relative URLs</li>
 </ul>
 <h3 id="appearance" tabindex="-1">Appearance</h3>
 <p>Control the look and feel of your documentation:</p>
-<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+<div class="code-block-wrapper"><div class="code-block-container" data-code="{
   &quot;appearance&quot;: {
     &quot;defaultTheme&quot;: &quot;system&quot;,
     &quot;allowThemeToggle&quot;: true,
@@ -1817,7 +1821,7 @@ code.hljs {
 <span class="hljs-punctuation">}</span>
 </code></pre>
 </div></div>
-</code></pre>
+
 <p><strong>Theme Options:</strong></p>
 <ul>
 <li><code>defaultTheme</code>: <code>&quot;light&quot;</code>, <code>&quot;dark&quot;</code>, or <code>&quot;system&quot;</code> (follows OS preference)</li>
@@ -1826,7 +1830,7 @@ code.hljs {
 </ul>
 <h3 id="navigation" tabindex="-1">Navigation</h3>
 <p>Configure the sidebar, breadcrumbs, and table of contents:</p>
-<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+<div class="code-block-wrapper"><div class="code-block-container" data-code="{
   &quot;navigation&quot;: {
     &quot;sidebar&quot;: {
       &quot;enabled&quot;: true,
@@ -1885,10 +1889,10 @@ code.hljs {
 <span class="hljs-punctuation">}</span>
 </code></pre>
 </div></div>
-</code></pre>
+
 <h3 id="search" tabindex="-1">Search</h3>
 <p>Enable and configure the built-in search:</p>
-<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+<div class="code-block-wrapper"><div class="code-block-container" data-code="{
   &quot;search&quot;: {
     &quot;enabled&quot;: true,
     &quot;placeholder&quot;: &quot;Search docs...&quot;,
@@ -1933,11 +1937,11 @@ code.hljs {
 <span class="hljs-punctuation">}</span>
 </code></pre>
 </div></div>
-</code></pre>
+
 <p>Press <code>⌘+K</code> (or <code>Ctrl+K</code>) to open the search modal.</p>
 <h3 id="seo" tabindex="-1">SEO</h3>
 <p>Configure search engine optimization features:</p>
-<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+<div class="code-block-wrapper"><div class="code-block-container" data-code="{
   &quot;seo&quot;: {
     &quot;titleTemplate&quot;: &quot;%s | My Docs&quot;,
     &quot;defaultImage&quot;: &quot;./assets/og-image.png&quot;,
@@ -1946,6 +1950,7 @@ code.hljs {
     &quot;generateSitemap&quot;: true,
     &quot;generateRobotsTxt&quot;: true,
     &quot;generateRssFeed&quot;: true,
+    &quot;generateLlmsTxt&quot;: true,
     &quot;structuredData&quot;: true,
     &quot;noIndex&quot;: false,
     &quot;noIndexDirectoryPages&quot;: false,
@@ -2007,6 +2012,7 @@ code.hljs {
     <span class="hljs-attr">&quot;generateSitemap&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
     <span class="hljs-attr">&quot;generateRobotsTxt&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
     <span class="hljs-attr">&quot;generateRssFeed&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;generateLlmsTxt&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
     <span class="hljs-attr">&quot;structuredData&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
     <span class="hljs-attr">&quot;noIndex&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span>
     <span class="hljs-attr">&quot;noIndexDirectoryPages&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span>
@@ -2032,12 +2038,13 @@ code.hljs {
 <span class="hljs-punctuation">}</span>
 </code></pre>
 </div></div>
-</code></pre>
+
 <p>When enabled, these endpoints are automatically generated:</p>
 <ul>
 <li><code>/sitemap.xml</code> — XML sitemap for search engines (requires <code>site.baseUrl</code> for static export; uses request origin in serve mode)</li>
 <li><code>/robots.txt</code> — crawler rules; a custom <code>robots.txt</code> in the docs root takes precedence</li>
 <li><code>/feed.xml</code> — RSS feed for blog posts (files with <code>date</code> in frontmatter)</li>
+<li><code>/llms.txt</code> + <code>/llms-full.txt</code> — LLM-facing page index and full Markdown corpus; custom files in the docs root take precedence (see <a href="/03-features/seo/">SEO</a>)</li>
 <li><code>titleTemplate</code> — optional; defaults to <code>%s | &lt;site title&gt;</code> when unset, <code>%s</code> alone when <code>site.title</code> is empty</li>
 <li><code>structuredData</code> — emit JSON-LD <code>Article</code>/<code>WebSite</code>/<code>BreadcrumbList</code> per page (default <code>true</code>)</li>
 <li><code>noIndexDirectoryPages</code> — emit <code>noindex, nofollow</code> on auto-generated directory listing pages and exclude them from the sitemap (default <code>false</code>)</li>
@@ -2046,7 +2053,7 @@ code.hljs {
 </ul>
 <h3 id="analytics" tabindex="-1">Analytics</h3>
 <p>Emit analytics snippets in <code>&lt;head&gt;</code> (and the GTM <code>&lt;noscript&gt;</code> right after <code>&lt;body&gt;</code>) on every page, in both serve and export modes:</p>
-<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+<div class="code-block-wrapper"><div class="code-block-container" data-code="{
   &quot;analytics&quot;: {
     &quot;googleAnalytics&quot;: &quot;G-XXXXXXXXXX&quot;,
     &quot;googleTagManager&quot;: &quot;GTM-XXXXXXX&quot;,
@@ -2109,11 +2116,11 @@ code.hljs {
 <span class="hljs-punctuation">}</span>
 </code></pre>
 </div></div>
-</code></pre>
+
 <p>All fields are optional — nothing is emitted when absent. Malformed GA/GTM IDs log a warning at startup but never fail. <code>customHead</code> entries are appended verbatim to the end of <code>&lt;head&gt;</code>; they come from your own <code>settings.json</code>, so only add snippets you trust. Note that local preview also fires analytics hits — filter the preview origin on the provider side if needed.</p>
 <h3 id="mdx" tabindex="-1">MDX</h3>
 <p>Enable MDX support and configure available components:</p>
-<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+<div class="code-block-wrapper"><div class="code-block-container" data-code="{
   &quot;mdx&quot;: {
     &quot;enabled&quot;: true,
     &quot;components&quot;: {
@@ -2176,10 +2183,10 @@ code.hljs {
 <span class="hljs-punctuation">}</span>
 </code></pre>
 </div></div>
-</code></pre>
+
 <h3 id="files" tabindex="-1">Files</h3>
 <p>Control which files are served, blocked, or hidden:</p>
-<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+<div class="code-block-wrapper"><div class="code-block-container" data-code="{
   &quot;files&quot;: {
     &quot;extensions&quot;: {
       &quot;serve&quot;: [&quot;.md&quot;, &quot;.mdx&quot;, &quot;.png&quot;, &quot;.jpg&quot;, &quot;.svg&quot;, &quot;.css&quot;, &quot;.js&quot;, &quot;.html&quot;],
@@ -2234,18 +2241,19 @@ code.hljs {
 <span class="hljs-punctuation">}</span>
 </code></pre>
 </div></div>
-</code></pre>
+
 <ul>
 <li>Files and folders starting with <code>_</code> or <code>.</code> are automatically hidden</li>
 <li>Only web-servable extensions in <code>extensions.serve</code> are copied during static export</li>
 <li><code>robots.txt</code> is generated or copied when <code>seo.generateRobotsTxt</code> is enabled</li>
+<li><code>llms.txt</code>/<code>llms-full.txt</code> are generated or copied when <code>seo.generateLlmsTxt</code> is enabled</li>
 <li>Blocked extensions return 403 Forbidden</li>
 <li>Hidden files return 404 Not Found (as if they don’t exist)</li>
 <li><code>staticFolders</code>: Array of folder names to serve as static assets (all files in these folders are served directly)</li>
 </ul>
 <h3 id="footer" tabindex="-1">Footer</h3>
 <p>Customize the site footer:</p>
-<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+<div class="code-block-wrapper"><div class="code-block-container" data-code="{
   &quot;footer&quot;: {
     &quot;text&quot;: &quot;Built with mdsvr&quot;,
     &quot;links&quot;: [
@@ -2294,10 +2302,10 @@ code.hljs {
 <span class="hljs-punctuation">}</span>
 </code></pre>
 </div></div>
-</code></pre>
+
 <h3 id="hot-reload" tabindex="-1">Hot Reload</h3>
 <p>Settings are automatically reloaded when <code>_mdsvr/settings.json</code> changes (except when using <code>--no-watch</code> flag). You’ll see a message in the console:</p>
-<pre><code><div class="code-block-wrapper"><div class="code-block-container" data-code="[mdsvr] Settings reloaded
+<div class="code-block-wrapper"><div class="code-block-container" data-code="[mdsvr] Settings reloaded
 ">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -2330,10 +2338,10 @@ code.hljs {
   <pre><code class="hljs">[mdsvr] Settings reloaded
 </code></pre>
 </div></div>
-</code></pre>
+
 <h3 id="validation" tabindex="-1">Validation</h3>
 <p>Validate your settings.json:</p>
-<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="npx mdsvr . --validate
+<div class="code-block-wrapper"><div class="code-block-container" data-code="npx mdsvr . --validate
 ">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -2366,11 +2374,11 @@ code.hljs {
   <pre><code class="hljs language-bash">npx mdsvr . --validate
 </code></pre>
 </div></div>
-</code></pre>
+
 <p>This will check your configuration and report any errors.</p>
 <h3 id="generate-settings" tabindex="-1">Generate Settings</h3>
 <p>Configure static export generation options:</p>
-<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+<div class="code-block-wrapper"><div class="code-block-container" data-code="{
   &quot;generate&quot;: {
     &quot;basePath&quot;: &quot;/docs&quot;,
     &quot;outputDir&quot;: &quot;dist&quot;
@@ -2413,7 +2421,7 @@ code.hljs {
 <span class="hljs-punctuation">}</span>
 </code></pre>
 </div></div>
-</code></pre>
+
 <p><strong>Options:</strong></p>
 <ul>
 <li><code>basePath</code>: Base path for generated URLs (default: <code>&quot;&quot;</code>). Useful when deploying to a subdirectory (e.g., <code>/docs</code>)</li>
@@ -2422,7 +2430,7 @@ code.hljs {
 <p>These settings are used during static export with the <code>--export</code> flag.</p>
 <h3 id="complete-example" tabindex="-1">Complete Example</h3>
 <p>Here’s a complete <code>_mdsvr/settings.json</code> with all available options:</p>
-<pre><code class="language-json"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
+<div class="code-block-wrapper"><div class="code-block-container" data-code="{
   &quot;$schema&quot;: &quot;https://mdsvr.js.org/schema/v2.json&quot;,
   &quot;site&quot;: {
     &quot;title&quot;: &quot;My Docs&quot;,
@@ -2623,12 +2631,12 @@ code.hljs {
 <span class="hljs-punctuation">}</span>
 </code></pre>
 </div></div>
-</code></pre>
+
 <hr>
 <h2 id="writing-content" tabindex="-1">Writing Content</h2>
 <p>Tips and best practices for creating great documentation.</p>
 <h3 id="file-organization" tabindex="-1">File Organization</h3>
-<pre><code><div class="code-block-wrapper"><div class="code-block-container" data-code="docs/
+<div class="code-block-wrapper"><div class="code-block-container" data-code="docs/
 ├── README.md              # Homepage
 ├── 01-getting-started/    # Getting started guides
 ├── 02-settings/           # Settings &amp; configuration
@@ -2671,10 +2679,10 @@ code.hljs {
 └── 04-reference/          # API/reference docs
 </code></pre>
 </div></div>
-</code></pre>
+
 <h3 id="frontmatter" tabindex="-1">Frontmatter</h3>
 <p>Every page should have frontmatter:</p>
-<pre><code class="language-markdown"><div class="code-block-wrapper"><div class="code-block-container" data-code="---
+<div class="code-block-wrapper"><div class="code-block-container" data-code="---
 title: Page Title
 description: Brief description for SEO
 ---
@@ -2713,9 +2721,9 @@ title: Page Title
 ---</span>
 </code></pre>
 </div></div>
-</code></pre>
+
 <p>Optional fields:</p>
-<pre><code class="language-markdown"><div class="code-block-wrapper"><div class="code-block-container" data-code="---
+<div class="code-block-wrapper"><div class="code-block-container" data-code="---
 title: Page Title
 description: Description
 date: 2025-01-15 # For RSS feed / article datePublished
@@ -2768,10 +2776,10 @@ dateModified: 2025-01-20 # Article last update (also sitemap lastmod)
 ---</span>
 </code></pre>
 </div></div>
-</code></pre>
+
 <h3 id="markdown-tips" tabindex="-1">Markdown Tips</h3>
 <h4 id="use-descriptive-headings" tabindex="-1">Use Descriptive Headings</h4>
-<pre><code class="language-markdown"><div class="code-block-wrapper"><div class="code-block-container" data-code="&lt;!-- Good --&gt;
+<div class="code-block-wrapper"><div class="code-block-container" data-code="&lt;!-- Good --&gt;
 
 ## Installing via npm
 
@@ -2816,10 +2824,10 @@ dateModified: 2025-01-20 # Article last update (also sitemap lastmod)
 <span class="hljs-section">## Installation</span>
 </code></pre>
 </div></div>
-</code></pre>
+
 <h3 id="cross-reference-links" tabindex="-1">Cross-Reference Links</h3>
 <p>Use relative paths:</p>
-<pre><code class="language-markdown"><div class="code-block-wrapper"><div class="code-block-container" data-code="See [configuration guide](./)
+<div class="code-block-wrapper"><div class="code-block-container" data-code="See [configuration guide](/02-settings/)
 ">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -2852,10 +2860,10 @@ dateModified: 2025-01-20 # Article last update (also sitemap lastmod)
   <pre><code class="hljs language-markdown">See [<span class="hljs-string">configuration guide</span>](<span class="hljs-link">./</span>)
 </code></pre>
 </div></div>
-</code></pre>
+
 <h4 id="code-blocks" tabindex="-1">Code Blocks</h4>
 <p>Always specify language:</p>
-<pre><code class="language-markdown"><div class="code-block-wrapper"><div class="code-block-container" data-code="```javascript
+<div class="code-block-wrapper"><div class="code-block-container" data-code="```javascript
 const x = 1;
 ```
 ">
@@ -2892,10 +2900,10 @@ const x = 1;
 ```</span>
 </code></pre>
 </div></div>
-</code></pre>
+
 <h3 id="mdx-components" tabindex="-1">MDX Components</h3>
 <p>Use components for interactive content:</p>
-<pre><code class="language-mdx"><div class="code-block-wrapper"><div class="code-block-container" data-code="&lt;Callout type=&quot;warning&quot;&gt;Important information here&lt;/Callout&gt;
+<div class="code-block-wrapper"><div class="code-block-container" data-code="&lt;Callout type=&quot;warning&quot;&gt;Important information here&lt;/Callout&gt;
 
 &lt;Steps&gt;
   ### Step 1
@@ -2948,11 +2956,11 @@ Second step content
 &lt;/Steps&gt;
 </code></pre>
 </div></div>
-</code></pre>
+
 <p>See <a href="/03-features/mdx/">MDX Components</a> for all available components.</p>
 <h3 id="images-assets" tabindex="-1">Images &amp; Assets</h3>
 <p>Place assets in <code>docs/assets/</code>:</p>
-<pre><code class="language-markdown"><div class="code-block-wrapper"><div class="code-block-container" data-code="![Alt text](../assets/screenshot.png)
+<div class="code-block-wrapper"><div class="code-block-container" data-code="![Alt text](../assets/screenshot.png)
 ">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -2985,7 +2993,7 @@ Second step content
   <pre><code class="hljs language-markdown">![<span class="hljs-string">Alt text</span>](<span class="hljs-link">../assets/screenshot.png</span>)
 </code></pre>
 </div></div>
-</code></pre>
+
 <blockquote>
 <p>Note: The assets folder is optional - create it if you need to include images in your documentation.</p>
 </blockquote>
@@ -3058,7 +3066,7 @@ Second step content
 </ol>
 <h4 id="validation-1" tabindex="-1">Validation</h4>
 <p>Run the validator to check your documentation:</p>
-<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="npx mdsvr ./docs --validate
+<div class="code-block-wrapper"><div class="code-block-container" data-code="npx mdsvr ./docs --validate
 ">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -3091,7 +3099,7 @@ Second step content
   <pre><code class="hljs language-bash">npx mdsvr ./docs --validate
 </code></pre>
 </div></div>
-</code></pre>
+
 <p>The validator checks for:</p>
 <ul>
 <li>🔗 Broken internal links</li>
@@ -3105,7 +3113,7 @@ Second step content
 <li>📝 Heading hierarchy violations</li>
 </ul>
 <p>Use <code>--autofix</code> to automatically fix some issues:</p>
-<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="npx mdsvr ./docs --validate --autofix
+<div class="code-block-wrapper"><div class="code-block-container" data-code="npx mdsvr ./docs --validate --autofix
 ">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -3138,13 +3146,13 @@ Second step content
   <pre><code class="hljs language-bash">npx mdsvr ./docs --validate --autofix
 </code></pre>
 </div></div>
-</code></pre>
+
 <hr>
 <h2 id="deployment" tabindex="-1">Deployment</h2>
 <p>Deploy your documentation to any static hosting platform.</p>
 <h3 id="export-static-site" tabindex="-1">Export Static Site</h3>
 <p>Generate static HTML files:</p>
-<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="npx mdsvr ./docs --export
+<div class="code-block-wrapper"><div class="code-block-container" data-code="npx mdsvr ./docs --export
 ">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -3177,10 +3185,10 @@ Second step content
   <pre><code class="hljs language-bash">npx mdsvr ./docs --<span class="hljs-built_in">export</span>
 </code></pre>
 </div></div>
-</code></pre>
+
 <p>This creates <code>_html/public/</code> with your static site.</p>
 <h4 id="custom-output" tabindex="-1">Custom Output</h4>
-<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="npx mdsvr ./docs --export ./dist
+<div class="code-block-wrapper"><div class="code-block-container" data-code="npx mdsvr ./docs --export ./dist
 ">
   <div class="code-block-toolbar">
     <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
@@ -3213,7 +3221,7 @@ Second step content
   <pre><code class="hljs language-bash">npx mdsvr ./docs --<span class="hljs-built_in">export</span> ./dist
 </code></pre>
 </div></div>
-</code></pre>
+
 <h4 id="export-caching" tabindex="-1">Export Caching</h4>
 <p>mdsvr uses intelligent caching to speed up exports:</p>
 <ul>
@@ -3224,7 +3232,7 @@ Second step content
 <p>The export state is stored in <code>_mdsvr/export-state.json</code>.</p>
 <h4 id="force-full-export" tabindex="-1">Force Full Export</h4>
 <p>To bypass cache and force a complete re-export:</p>
-<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="# Delete export state only
+<div class="code-block-wrapper"><div class="code-block-container" data-code="# Delete export state only
 rm _mdsvr/export-state.json
 
 # Then export
@@ -3265,10 +3273,10 @@ npx mdsvr ./docs --export
 npx mdsvr ./docs --<span class="hljs-built_in">export</span>
 </code></pre>
 </div></div>
-</code></pre>
+
 <p><strong>Note:</strong> Only delete <code>export-state.json</code>, not the entire <code>_mdsvr</code> directory, to preserve your settings.</p>
 <h2 id="firebase-hosting" tabindex="-1">Firebase Hosting</h2>
-<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="# Export
+<div class="code-block-wrapper"><div class="code-block-container" data-code="# Export
 npx mdsvr ./docs --export
 
 # Deploy
@@ -3313,10 +3321,10 @@ firebase init
 firebase deploy
 </code></pre>
 </div></div>
-</code></pre>
+
 <h2 id="netlify" tabindex="-1">Netlify</h2>
 <h3 id="via-cli" tabindex="-1">Via CLI</h3>
-<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="npx mdsvr ./docs --export
+<div class="code-block-wrapper"><div class="code-block-container" data-code="npx mdsvr ./docs --export
 netlify deploy --dir=_html/public --prod
 ">
   <div class="code-block-toolbar">
@@ -3351,7 +3359,7 @@ netlify deploy --dir=_html/public --prod
 netlify deploy --<span class="hljs-built_in">dir</span>=_html/public --prod
 </code></pre>
 </div></div>
-</code></pre>
+
 <h3 id="via-git" tabindex="-1">Via Git</h3>
 <ol>
 <li>Push docs to GitHub</li>
@@ -3360,7 +3368,7 @@ netlify deploy --<span class="hljs-built_in">dir</span>=_html/public --prod
 <li>Publish directory: <code>_html/public</code></li>
 </ol>
 <h3 id="vercel" tabindex="-1">Vercel</h3>
-<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="# vercel.json
+<div class="code-block-wrapper"><div class="code-block-container" data-code="# vercel.json
 {
   &quot;buildCommand&quot;: &quot;npx mdsvr . --export _html/public&quot;,
   &quot;outputDirectory&quot;: &quot;_html/public&quot;
@@ -3401,9 +3409,9 @@ netlify deploy --<span class="hljs-built_in">dir</span>=_html/public --prod
 }
 </code></pre>
 </div></div>
-</code></pre>
+
 <h2 id="github-pages" tabindex="-1">GitHub Pages</h2>
-<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="# Export to docs folder
+<div class="code-block-wrapper"><div class="code-block-container" data-code="# Export to docs folder
 npx mdsvr ./src --export ./docs
 
 # Or use GitHub Actions
@@ -3442,9 +3450,9 @@ npx mdsvr ./src --<span class="hljs-built_in">export</span> ./docs
 <span class="hljs-comment"># Or use GitHub Actions</span>
 </code></pre>
 </div></div>
-</code></pre>
+
 <h2 id="github-actions-workflow" tabindex="-1">GitHub Actions Workflow</h2>
-<pre><code class="language-yaml"><div class="code-block-wrapper"><div class="code-block-container" data-code="# .github/workflows/deploy.yml
+<div class="code-block-wrapper"><div class="code-block-container" data-code="# .github/workflows/deploy.yml
 name: Deploy
 on:
   push:
@@ -3511,10 +3519,10 @@ jobs:
           <span class="hljs-attr">publish_dir:</span> <span class="hljs-string">./_html/public</span>
 </code></pre>
 </div></div>
-</code></pre>
+
 <h2 id="docker" tabindex="-1">Docker</h2>
 <h3 id="using-pre-built-image" tabindex="-1">Using Pre-built Image</h3>
-<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="docker pull ghcr.io/satoshiman/mdsvr:latest
+<div class="code-block-wrapper"><div class="code-block-container" data-code="docker pull ghcr.io/satoshiman/mdsvr:latest
 docker run -d \
   -p 1800:1800 \
   -v /path/to/docs:/app/docs:ro \
@@ -3555,12 +3563,12 @@ docker run -d \
   ghcr.io/satoshiman/mdsvr:latest
 </code></pre>
 </div></div>
-</code></pre>
+
 <blockquote>
 <p><strong>Note:</strong> Mount your docs read-only (<code>:ro</code>) where possible. mdsvr renders raw HTML in Markdown and executes MDX in the server process — it is designed for trusted content, not as a sandbox for user-supplied documents.</p>
 </blockquote>
 <h3 id="build-your-own" tabindex="-1">Build Your Own</h3>
-<pre><code class="language-dockerfile"><div class="code-block-wrapper"><div class="code-block-container" data-code="FROM ghcr.io/satoshiman/mdsvr:latest
+<div class="code-block-wrapper"><div class="code-block-container" data-code="FROM ghcr.io/satoshiman/mdsvr:latest
 COPY ./docs /app/docs
 ">
   <div class="code-block-toolbar">
@@ -3595,8 +3603,8 @@ COPY ./docs /app/docs
 <span class="hljs-keyword">COPY</span><span class="language-bash"> ./docs /app/docs</span>
 </code></pre>
 </div></div>
-</code></pre>
-<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="docker build -t my-docs .
+
+<div class="code-block-wrapper"><div class="code-block-container" data-code="docker build -t my-docs .
 docker run -d -p 1800:1800 my-docs
 ">
   <div class="code-block-toolbar">
@@ -3631,10 +3639,10 @@ docker run -d -p 1800:1800 my-docs
 docker run -d -p 1800:1800 my-docs
 </code></pre>
 </div></div>
-</code></pre>
+
 <h3 id="vps-self-hosted" tabindex="-1">VPS / Self-Hosted</h3>
 <p>Export and serve with any web server:</p>
-<pre><code class="language-bash"><div class="code-block-wrapper"><div class="code-block-container" data-code="# Export
+<div class="code-block-wrapper"><div class="code-block-container" data-code="# Export
 npx mdsvr ./docs --export /var/www/docs
 
 # Nginx config
@@ -3683,7 +3691,7 @@ server {
 }
 </code></pre>
 </div></div>
-</code></pre>
+
 <h2 id="clean-urls" tabindex="-1">Clean URLs</h2>
 <p>Exported sites use clean URLs:</p>
 <ul>
