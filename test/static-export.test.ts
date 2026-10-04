@@ -104,6 +104,31 @@ describe("static export", () => {
     );
   });
 
+  it("generates sitemap.xml when seo.generateSitemap is enabled", async () => {
+    const rootDir = path.join(tempDir, "docs");
+    const settings = await loadSettings(rootDir);
+    await exportStaticSite({
+      rootDir,
+      outputDir,
+      settings,
+      silent: true,
+    });
+
+    const sitemapPath = path.join(outputDir, "sitemap.xml");
+    const sitemap = await fs.readFile(sitemapPath, "utf-8");
+
+    assert.ok(sitemap.includes('<?xml version="1.0" encoding="UTF-8"?>'));
+    assert.ok(sitemap.includes("<urlset"));
+    assert.ok(
+      sitemap.includes("<loc>"),
+      "sitemap should contain at least one URL",
+    );
+    assert.ok(
+      !sitemap.includes("/README</loc>"),
+      "README files should map to directory URLs, not /README",
+    );
+  });
+
   it("prefers generated OG image over defaultImage", async () => {
     const rootDir = path.join(tempDir, "docs");
     const settings = await loadSettings(rootDir);

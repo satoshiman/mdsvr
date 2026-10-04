@@ -3,6 +3,7 @@
   "site": {
     "title": "MDSVR | Markdown Documentation Server",
     "description": "Full-featured documentation website server with MDX support, site settings, SEO, and navigation",
+    "baseUrl": "https://mdsvr.js.org",
     "language": "en"
   },
   "generate": {

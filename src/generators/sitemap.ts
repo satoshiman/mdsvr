@@ -52,7 +52,14 @@ async function readDirRecursive(
       try {
         const relativePath =
           "/" + path.relative(rootDir, fullPath).replace(/\\/g, "/");
-        const urlPath = relativePath.replace(/\.(md|mdx)$/, "");
+        let urlPath = relativePath.replace(/\.(md|mdx)$/, "");
+
+        // README files render at the directory index URL
+        if (path.basename(urlPath).toLowerCase() === "readme") {
+          const dirPath = path.dirname(urlPath);
+          urlPath = dirPath === "/" ? "/" : `${dirPath}/`;
+        }
+
         const fullUrl = `${baseUrl.replace(/\/$/, "")}${urlPath}`;
 
         // Try to get lastmod from frontmatter or file stat
