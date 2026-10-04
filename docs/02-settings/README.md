@@ -646,9 +646,11 @@ jobs:
 docker pull ghcr.io/satoshiman/mdsvr:latest
 docker run -d \
   -p 1800:1800 \
-  -v /path/to/docs:/app/docs \
+  -v /path/to/docs:/app/docs:ro \
   ghcr.io/satoshiman/mdsvr:latest
 ```
+
+> **Note:** Mount your docs read-only (`:ro`) where possible. mdsvr renders raw HTML in Markdown and executes MDX in the server process — it is designed for trusted content, not as a sandbox for user-supplied documents.
 
 ### Build Your Own
 
