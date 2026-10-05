@@ -2276,6 +2276,10 @@ body {
   border-color: #3fb950;
   background: #0f2616;
 }
+.quiz-practice-check,
+.quiz-reveal {
+  margin-top: 8px;
+}
 .quiz-self-mark {
   display: flex;
   gap: 8px;
