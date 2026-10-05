@@ -309,4 +309,37 @@ title: Anchors MDX
     // Cleanup
     await fs.rm(testDir, { recursive: true, force: true });
   });
+
+  it("should flag invalid quiz blocks", async () => {
+    await fs.mkdir(testDir, { recursive: true });
+    await fs.writeFile(
+      path.join(testDir, "quiz-page.md"),
+      `---
+title: Quiz Page
+---
+
+# Quiz Page
+
+\`\`\`quiz
+{"questions": [{"type": "single", "question": "q", "options": ["a"], "answer": 0}]}
+\`\`\`
+`,
+      "utf-8",
+    );
+
+    const result = await validateMarkdown({
+      rootDir: testDir,
+      autofix: false,
+      checkLinks: false,
+      checkStructure: false,
+    });
+
+    const quizErrors = result.errors.filter((e) => e.type === "invalid-quiz");
+    assert.strictEqual(quizErrors.length, 1);
+    assert.strictEqual(quizErrors[0].line, 7);
+    assert.ok(quizErrors[0].message.includes("Invalid quiz schema"));
+
+    // Cleanup
+    await fs.rm(testDir, { recursive: true, force: true });
+  });
 });

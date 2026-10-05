@@ -30,6 +30,8 @@ Before generating files, extract from the user's request:
 3. **Scope** — how many pages / sections are needed?
 4. **Language** — Vietnamese, English, or bilingual?
 5. **Diagrams needed?** — if yes, read `rules/mermaid.md` for syntax rules.
+6. **Quizzes needed?** — if the doc set includes self-check questions or chapter
+   quizzes, read `rules/quiz.md` for the ` ```quiz ` JSON format.
 
 If any of these are unclear, ask ONE focused question before proceeding.
 
@@ -237,3 +239,6 @@ After `present_files`, write a short message in chat containing:
 
 - `rules/mermaid.md` — Full Mermaid v11 syntax reference for all 19 diagram
   types. Read this whenever any diagram is needed in the documentation.
+- `rules/quiz.md` — Interactive ` ```quiz ` block JSON contract: question types,
+  answer format, and authoring rules. Read this whenever a quiz or self-check
+  section is needed.

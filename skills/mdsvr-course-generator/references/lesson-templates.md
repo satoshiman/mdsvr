@@ -5,6 +5,7 @@ section headings in the course language. Callouts use GitHub-style `> [!TYPE]`
 syntax — every line of a callout needs the `>` prefix.
 
 ## Contents
+
 1. Time estimation and ratio check
 2. Course README
 3. Chapter README
@@ -27,7 +28,7 @@ Estimate each lesson in minutes:
 Build a table per chapter and total:
 
 | Lesson | Theory (min) | Practice (min) |
-|--------|--------------|----------------|
+| ------ | ------------ | -------------- |
 
 Overall ratio = sum theory : sum practice. Compare to the confirmed ratio. If off by
 more than about 5 percentage points, add or trim labs/exercises or theory.
@@ -48,17 +49,21 @@ description: "<one sentence: who it is for and what they will be able to do>"
 > **Estimated time:** <total> (theory <x>, practice <y>) | **Level:** <level> | **Language:** <lang>
 
 ## Who this course is for
+
 ...
 
 ## What you will learn
+
 - ...
 
 ## Syllabus
-| Chapter | Topic | Theory | Practice |
-|---------|-------|--------|----------|
-| [1. <name>](./01-<slug>) | ... | ... | ... |
+
+| Chapter                  | Topic | Theory | Practice |
+| ------------------------ | ----- | ------ | -------- |
+| [1. <name>](./01-<slug>) | ...   | ...    | ...      |
 
 ## How to study this course
+
 1. Read the theory, then run the examples yourself.
 2. Do the lab before reading the solution.
 3. Read the Expert Corner: it is the fastest way to build real-world judgment.
@@ -80,11 +85,13 @@ description: "<what this chapter covers>"
 <Why this chapter matters, 2 sentences.>
 
 ## Lessons
-| Lesson | Theory | Practice |
-|--------|--------|----------|
-| [N.1 <name>](./01-<slug>) | ... | ... |
+
+| Lesson                    | Theory | Practice |
+| ------------------------- | ------ | -------- |
+| [N.1 <name>](./01-<slug>) | ...    | ...      |
 
 ## Chapter outcomes
+
 - ...
 
 Also: [Chapter quiz](./98-quiz) | [Chapter cheatsheet](./99-cheatsheet)
@@ -106,25 +113,33 @@ description: "<one sentence>"
 > **Time:** <theory> min theory + <practice> min practice
 
 ## Learning objectives
+
 After this lesson you can:
+
 - ...
 
 ## Quick Review
+
 (Include ONLY if the learner has prior knowledge to skim. Max about 5 minutes.)
 
 > [!NOTE]
 > <Short refresher of the excluded/known topic, just enough to follow this lesson.>
 
 ## Theory
+
 ### <Concept 1>
+
 ...
 (Mermaid diagram where it clarifies; follow mdsvr-rules section 6.)
 
 ## Worked examples
+
 ### Example 1: <name>
+
 <Code or scenario with explanation of WHY each step.>
 
 ## Hands-on lab
+
 **Goal:** ...
 **Prerequisites:** ...
 
@@ -138,24 +153,30 @@ After this lesson you can:
 > (Only for destructive or risky commands.)
 
 ## Exercises
+
 1. <Exercise>
 2. <Exercise>
 
 <Solutions: place under "Solutions" heading, after exercises.>
 
 ### Solutions
+
 1. ...
 
 ## Expert Corner
+
 (see section 5)
 
 ## Quiz
+
 (Only if the learner wanted lesson-level quizzes: 3 to 5 questions, see section 6.)
 
 ## Summary
+
 - ...
 
 ## Next steps
+
 - Next lesson: [N.M+1 <name>](./0X-<slug>)
 ```
 
@@ -185,6 +206,7 @@ Use a heading and mixed callouts. Pick the items that genuinely apply; do not pa
 ```
 
 Quality rules:
+
 - Each item has a "because" (the meaning/impact), not just a directive.
 - Prefer insights that are not obvious from the theory section.
 - No fabricated statistics, quotes, or named-expert attributions.
@@ -192,10 +214,11 @@ Quality rules:
 
 ## 6. Quiz page
 
-Only when the learner asked for quizzes. Mix recall, understanding, and apply-in-scenario
-questions. Questions first, answers in a separate section so the learner can try first.
+Only when the learner asked for quizzes. Quizzes are interactive ` ```quiz ` blocks:
+mdsvr grades them in the browser and remembers the learner's best score. Mix recall,
+understanding, and apply-in-scenario questions.
 
-```markdown
+````markdown
 ---
 title: "Chapter N Quiz"
 description: "Self-check questions for chapter N."
@@ -203,26 +226,45 @@ description: "Self-check questions for chapter N."
 
 # Chapter N Quiz
 
-## Questions
-
-**1.** <Question>
-- A. ...
-- B. ...
-- C. ...
-- D. ...
-
-**2.** <Scenario question>
-...
-
-## Answers
-
-> [!SUCCESS]
-> 1. **B** — <why B is right and why the common wrong choice is wrong>
-> 2. **C** — ...
+```quiz
+{
+  "title": "Chapter N Quiz",
+  "mode": "exam",
+  "questions": [
+    {
+      "type": "single",
+      "question": "<Question>",
+      "options": ["<option A>", "<option B>", "<option C>", "<option D>"],
+      "answer": 1,
+      "explanation": "<why B is right and why the common wrong choice is wrong>"
+    },
+    {
+      "type": "multiple",
+      "question": "<Scenario question: which statements are true?>",
+      "options": ["<s1>", "<s2>", "<s3>"],
+      "answer": [0, 2]
+    },
+    {
+      "type": "true-false",
+      "question": "<Statement that sounds right but is not>",
+      "answer": false
+    },
+    {
+      "type": "self-check",
+      "question": "<Open question the learner answers in words>",
+      "answer": "<Model answer: one key idea, short and checkable>"
+    }
+  ]
+}
 ```
+````
 
 Rules: distractors must be plausible; explanations teach, not just state the letter;
-3 to 5 questions per lesson, 8 to 15 per chapter, adjust for chapter size.
+3 to 5 questions per lesson, 8 to 15 per chapter, adjust for chapter size. Answer
+indices are 0-based; `multiple` answers must list every correct index. Question
+text, options, explanations, and self-check model answers accept inline markdown
+(`code`, **bold**, links). For lesson-level quizzes use `"mode": "practice"` so
+each question is checked immediately; for chapter quizzes use `"mode": "exam"`.
 
 ## 7. Cheatsheet page
 
@@ -238,22 +280,27 @@ description: "Quick reference for chapter N."
 # Chapter N Cheatsheet
 
 ## Key concepts
+
 | Concept | One-line meaning | When to use |
-|---------|------------------|-------------|
+| ------- | ---------------- | ----------- |
 
 ## Commands / syntax
+
 ```<lang>
 # command: what it does
 ```
 
 ## Decision guide
+
 | Situation | Use | Why |
-|-----------|-----|-----|
+| --------- | --- | --- |
 
 ## Expert checklist
+
 - [ ] ...
 
 ## Pitfalls
+
 - ...
 ````
 
@@ -273,10 +320,16 @@ description: "Apply everything in a realistic project."
 # Capstone Project
 
 ## Scenario
+
 ## Requirements
+
 ## Milestones
+
 1. ...
+
 ## Acceptance criteria
+
 ## Hints (spoiler-light)
+
 ## Reference solution outline
 ```

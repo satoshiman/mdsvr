@@ -5,33 +5,35 @@ installed. If `markdown-for-mdsvr` is available, read it as well and prefer it w
 is more detailed (especially `rules/mermaid.md` for the full Mermaid reference).
 
 ## Contents
+
 1. File naming
 2. Links
 3. Headings
 4. Frontmatter
 5. Callouts
 6. Mermaid
-7. Course folder layout
-8. Final checklist
+7. Quiz blocks
+8. Course folder layout
+9. Final checklist
 
 ## 1. File naming
 
-| Rule | Wrong | Correct |
-|------|-------|---------|
+| Rule                            | Wrong                          | Correct                       |
+| ------------------------------- | ------------------------------ | ----------------------------- |
 | No dots in the middle of a name | `0.1.intro.md`, `config.v2.md` | `01-intro.md`, `config-v2.md` |
-| kebab-case | `GettingStarted.md` | `getting-started.md` |
-| Numeric prefix for ordering | `basics.md` | `01-basics.md` |
-| Descriptive names | `page1.md` | `installation.md` |
-| Directory index is README | `index.md` | `README.md` |
+| kebab-case                      | `GettingStarted.md`            | `getting-started.md`          |
+| Numeric prefix for ordering     | `basics.md`                    | `01-basics.md`                |
+| Descriptive names               | `page1.md`                     | `installation.md`             |
+| Directory index is README       | `index.md`                     | `README.md`                   |
 
 ## 2. Links
 
-| Rule | Wrong | Correct |
-|------|-------|---------|
-| Relative paths only | `[Guide](/docs/guide)` | `[Guide](./guide)` |
-| No `.md` extension | `[Setup](./setup.md)` | `[Setup](./setup)` |
+| Rule                                  | Wrong                      | Correct             |
+| ------------------------------------- | -------------------------- | ------------------- |
+| Relative paths only                   | `[Guide](/docs/guide)`     | `[Guide](./guide)`  |
+| No `.md` extension                    | `[Setup](./setup.md)`      | `[Setup](./setup)`  |
 | Link to the directory, not its README | `[Ch1](./01-intro/README)` | `[Ch1](./01-intro)` |
-| Anchors must match a real heading | `[See](#nope)` | match exactly |
+| Anchors must match a real heading     | `[See](#nope)`             | match exactly       |
 
 From a lesson to a sibling lesson: `./02-next-lesson`.
 From a lesson to another chapter: `../02-chapter-name/01-lesson`.
@@ -55,14 +57,14 @@ description: "One sentence describing this page."
 
 GitHub-style alert blockquotes. Every line of the callout starts with `>`.
 
-| Type | Use for in a course |
-|------|---------------------|
-| `> [!NOTE]` | Side information, Quick Review blocks, course meta (time, level) |
-| `> [!TIP]` | Tips, tricks, expert shortcuts |
-| `> [!IMPORTANT]` | Background, clarifications |
-| `> [!WARNING]` | Common mistakes, pitfalls |
-| `> [!CAUTION]` | Destructive commands, security risks |
-| `> [!SUCCESS]` | Expected lab output, quiz answers |
+| Type             | Use for in a course                                              |
+| ---------------- | ---------------------------------------------------------------- |
+| `> [!NOTE]`      | Side information, Quick Review blocks, course meta (time, level) |
+| `> [!TIP]`       | Tips, tricks, expert shortcuts                                   |
+| `> [!IMPORTANT]` | Background, clarifications                                       |
+| `> [!WARNING]`   | Common mistakes, pitfalls                                        |
+| `> [!CAUTION]`   | Destructive commands, security risks                             |
+| `> [!SUCCESS]`   | Expected lab output                                              |
 
 ```markdown
 > [!TIP]
@@ -103,7 +105,20 @@ Use diagrams only when they teach something better than text.
 13. Convey meaning with emoji instead of color: ✅ ❌ ⚠️ 🔒 🔑 🚀 📦 🗄️ 🌐 👤 🤖 💾.
 14. One diagram per code block, valid syntax, split only if the user asks.
 
-## 7. Course folder layout
+## 7. Quiz blocks
+
+Quizzes are ` ```quiz ` fenced blocks containing JSON — interactive and
+client-graded, in `.md` and `.mdx` alike. Follow the template in
+`lesson-templates.md` §6 exactly.
+
+- `mode`: `"exam"` (one Check button) or `"practice"` (per-question check).
+- Types: `single` (`answer: <0-based index>`), `multiple` (`answer: [i, j]`),
+  `true-false` (`answer: true|false`), `self-check` (`answer: "<model answer>"`).
+- `options` needs ≥ 2 entries; every `answer` index must be in range.
+- `explanation` is optional but strongly recommended — it teaches.
+- Strict JSON only: double quotes, no comments, no trailing commas.
+
+## 8. Course folder layout
 
 ```
 <course-slug>/
@@ -122,7 +137,7 @@ Use diagrams only when they teach something better than text.
 
 Adapt freely. Rules from sections 1 to 5 always apply.
 
-## 8. Final checklist
+## 9. Final checklist
 
 - [ ] Root `README.md` exists; every folder has a `README.md` listing its pages
 - [ ] No dots in file names; kebab-case; numeric prefixes
@@ -130,4 +145,5 @@ Adapt freely. Rules from sections 1 to 5 always apply.
 - [ ] Every file has frontmatter and one H1; no skipped heading levels
 - [ ] Callouts use `> [!TYPE]` with `>` on every line; only supported types
 - [ ] Mermaid: IDs safe, labels quoted, directions declared, no styling
+- [ ] Quizzes use ` ```quiz ` JSON blocks; answer indices in range, valid types
 - [ ] Code blocks have a language tag; lab steps are numbered

@@ -214,7 +214,8 @@ Enable MDX support and configure available components:
       "Tabs": true,
       "Accordion": true,
       "Badge": true,
-      "Mermaid": true
+      "Mermaid": true,
+      "Quiz": true
     }
   }
 }
@@ -383,7 +384,8 @@ Here's a complete `_mdsvr/settings.json` with all available options:
       "Tabs": true,
       "Accordion": true,
       "Badge": true,
-      "Mermaid": true
+      "Mermaid": true,
+      "Quiz": true
     }
   },
   "footer": {

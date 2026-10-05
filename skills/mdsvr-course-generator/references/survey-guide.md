@@ -1,6 +1,7 @@
 # Survey Guide
 
 ## Contents
+
 1. Principles
 2. Round 1: foundation questions
 3. Round 2: contextual questions
@@ -22,6 +23,7 @@
 ### Q1. Theory : practice ratio (by learning time)
 
 Options example:
+
 - 80 : 20 (mostly understanding, light practice) (default)
 - 60 : 40 (balanced)
 - 40 : 60 (practice-heavy)
@@ -38,9 +40,15 @@ Example: "Bạn đã rành Redis thì mình chỉ ôn nhanh khi cần, không đ
 ### Q3. Quiz preference
 
 Options:
+
 - Quiz at the end of every lesson
 - Quiz at the end of every chapter (default)
 - No quizzes
+
+Quizzes are emitted as interactive ` ```quiz ` blocks (see
+`lesson-templates.md` §6): mdsvr grades them in the browser and tracks the
+learner's best score. Lesson quizzes default to `"mode": "practice"`; chapter
+quizzes to `"mode": "exam"`.
 
 ### Q4. Language (only if undetermined)
 
@@ -83,12 +91,14 @@ Before asking, silently produce:
 Then write questions that mention concrete names from steps 1 to 3.
 
 Good:
+
 - "Khóa Kafka có 3 mảng: producer/consumer, partition/replication, vận hành. Bạn muốn
   đào sâu mảng nào nhất? Vì bạn rành Redis, mình có thể đối chiếu Kafka với Redis
   Streams ở phần đầu, bạn có muốn không?"
 - "Lab Docker: bạn muốn dựng 1 app web + DB, hay một hệ nhiều service có reverse proxy?"
 
 Bad:
+
 - "Bạn muốn học sâu đến mức nào?" (no topic context)
 - "Bạn thích thực hành nhiều hay ít?" (already covered by Q1)
 
