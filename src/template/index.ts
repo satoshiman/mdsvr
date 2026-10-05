@@ -1552,7 +1552,7 @@ body {
 .markdown-body code {
   font-family: ${settings.appearance.fontFamily.code || "'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace"};
   padding: 0.2em 0.4em;
-  background: var(--code-bg);
+  background: var(--code-inline-bg, var(--code-bg));
   border-radius: 6px;
 }
 .markdown-body pre {
@@ -1568,21 +1568,21 @@ body {
   padding: 0;
   border-radius: 0;
 }
-.markdown-body .callout :not(pre) > code,
-.markdown-body .quiz-explanation :not(pre) > code,
-.markdown-body .quiz-model-answer :not(pre) > code,
-.markdown-body .quiz-option.correct :not(pre) > code,
-.markdown-body .quiz-option.incorrect :not(pre) > code,
-.markdown-body .quiz-error :not(pre) > code {
-  background: rgba(175, 184, 193, 0.4);
+.callout,
+.quiz-explanation,
+.quiz-model-answer,
+.quiz-option.correct,
+.quiz-option.incorrect,
+.quiz-error {
+  --code-inline-bg: rgba(175, 184, 193, 0.4);
 }
-[data-theme="dark"] .markdown-body .callout :not(pre) > code,
-[data-theme="dark"] .markdown-body .quiz-explanation :not(pre) > code,
-[data-theme="dark"] .markdown-body .quiz-model-answer :not(pre) > code,
-[data-theme="dark"] .markdown-body .quiz-option.correct :not(pre) > code,
-[data-theme="dark"] .markdown-body .quiz-option.incorrect :not(pre) > code,
-[data-theme="dark"] .markdown-body .quiz-error :not(pre) > code {
-  background: rgba(110, 118, 129, 0.4);
+[data-theme="dark"] .callout,
+[data-theme="dark"] .quiz-explanation,
+[data-theme="dark"] .quiz-model-answer,
+[data-theme="dark"] .quiz-option.correct,
+[data-theme="dark"] .quiz-option.incorrect,
+[data-theme="dark"] .quiz-error {
+  --code-inline-bg: rgba(110, 118, 129, 0.4);
 }
 
 /* Code block wrapper */
