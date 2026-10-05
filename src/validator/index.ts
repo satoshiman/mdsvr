@@ -1,6 +1,7 @@
 import path from "node:path";
 import { promises as fs } from "node:fs";
 import { readdir } from "node:fs/promises";
+import GithubSlugger, { slug as githubSlug } from "github-slugger";
 import { slugify } from "../renderer/slugify.js";
 
 export interface ValidationError {
@@ -289,24 +290,74 @@ async function fileExists(filePath: string): Promise<boolean> {
 }
 
 /**
- * Extract all heading IDs from markdown content
- * Uses the same slugify function as the markdown renderer
+ * Extract all heading IDs from markdown content.
+ * .md files slug headings via the shared slugify (diacritics stripped,
+ * no dedup); .mdx files go through rehype-slug = github-slugger
+ * (diacritics kept, duplicates get -N suffixes). Using the matching
+ * algorithm per file type is required for correct anchor validation.
  */
-function extractHeadingIds(content: string): Set<string> {
+function extractHeadingIds(content: string, isMdx: boolean): Set<string> {
   const headingIds = new Set<string>();
+  const slugger = isMdx ? new GithubSlugger() : null;
   const lines = content.split("\n");
 
   for (const line of lines) {
     const headingMatch = line.match(/^(#{1,6})\s+(.+)$/);
     if (headingMatch) {
       const headingText = headingMatch[2];
-      // Use the same slugify function as markdown renderer
-      const headingId = slugify(headingText);
-      headingIds.add(headingId);
+      headingIds.add(
+        slugger ? slugger.slug(headingText) : slugify(headingText),
+      );
     }
   }
 
   return headingIds;
+}
+
+/**
+ * Decode a percent-encoded anchor for comparison against heading IDs.
+ * Returns the raw anchor when decoding fails.
+ */
+function decodeAnchor(anchor: string): string {
+  try {
+    return decodeURIComponent(anchor);
+  } catch {
+    return anchor;
+  }
+}
+
+/**
+ * Build a broken-anchor error. When the anchor is just an un-slugified
+ * version of a real heading (e.g. `#link-sai-rồi` vs id `link-sai-roi`),
+ * suggest the correct anchor and offer an autofix.
+ */
+function brokenAnchorError(
+  filePath: string,
+  rootDir: string,
+  line: number,
+  anchor: string,
+  original: string,
+  headingIds: Set<string>,
+  slugForSuggestion: (text: string) => string,
+): ValidationError {
+  const suggested = slugForSuggestion(decodeAnchor(anchor));
+  const canFix = headingIds.has(suggested);
+  const available = Array.from(headingIds).slice(0, 5).join(", ");
+
+  return {
+    file: path.relative(rootDir, filePath),
+    line,
+    type: "broken-anchor",
+    message: `Broken anchor: #${anchor}`,
+    suggestion: canFix
+      ? `Use #${suggested} (or run autofix)`
+      : `Check if heading exists. Available headings: ${available}${headingIds.size > 5 ? "..." : ""}`,
+    autofix: canFix
+      ? original.replace(`#${anchor}`, `#${suggested}`)
+      : undefined,
+    original,
+    icon: "🔗",
+  };
 }
 
 /**
@@ -319,7 +370,11 @@ async function validateInternalLinks(
 ): Promise<ValidationError[]> {
   const errors: ValidationError[] = [];
   const links = extractInternalLinks(content, filePath);
-  const headingIds = extractHeadingIds(content);
+  const isMdx = filePath.toLowerCase().endsWith(".mdx");
+  const headingIds = extractHeadingIds(content, isMdx);
+  const slugForSuggestion = isMdx ? githubSlug : slugify;
+  const anchorExists = (anchor: string): boolean =>
+    headingIds.has(anchor) || headingIds.has(decodeAnchor(anchor));
 
   for (const { link, line, original } of links) {
     // Check for absolute paths
@@ -463,19 +518,22 @@ async function validateInternalLinks(
     const linkWithoutAnchor =
       anchorIndex !== -1 ? link.slice(0, anchorIndex) : link;
 
-    // Handle anchor-only links (e.g., #section)
+    // Handle anchor-only links (e.g., #section). The raw (decoded) anchor
+    // must match the rendered heading id — slugifying it here would hide
+    // mismatches like #link-sai-rồi vs id link-sai-roi.
     if (anchor && linkWithoutAnchor === "") {
-      const slugifiedAnchor = slugify(anchor);
-      if (!headingIds.has(slugifiedAnchor)) {
-        errors.push({
-          file: path.relative(rootDir, filePath),
-          line,
-          type: "broken-anchor",
-          message: `Broken anchor: #${anchor}`,
-          suggestion: `Check if heading exists. Available headings: ${Array.from(headingIds).slice(0, 5).join(", ")}${headingIds.size > 5 ? "..." : ""}`,
-          original,
-          icon: "🔗",
-        });
+      if (!anchorExists(anchor)) {
+        errors.push(
+          brokenAnchorError(
+            filePath,
+            rootDir,
+            line,
+            anchor,
+            original,
+            headingIds,
+            slugForSuggestion,
+          ),
+        );
       }
       continue;
     }
@@ -528,20 +586,19 @@ async function validateInternalLinks(
 
       // Still validate anchors for clean URLs
       if (anchor) {
-        const slugifiedAnchor = slugify(anchor);
         // If link points to same file, check if anchor exists
-        if (resolvedPath === filePath) {
-          if (!headingIds.has(slugifiedAnchor)) {
-            errors.push({
-              file: path.relative(rootDir, filePath),
+        if (resolvedPath === filePath && !anchorExists(anchor)) {
+          errors.push(
+            brokenAnchorError(
+              filePath,
+              rootDir,
               line,
-              type: "broken-anchor",
-              message: `Broken anchor: #${anchor}`,
-              suggestion: `Check if heading exists. Available headings: ${Array.from(headingIds).slice(0, 5).join(", ")}${headingIds.size > 5 ? "..." : ""}`,
+              anchor,
               original,
-              icon: "🔗",
-            });
-          }
+              headingIds,
+              slugForSuggestion,
+            ),
+          );
         }
         // For cross-file anchors with clean URLs, skip validation
         // as it would require loading all linked files
@@ -557,19 +614,20 @@ async function validateInternalLinks(
 
     // Check anchor if present
     if (anchor) {
-      const slugifiedAnchor = slugify(anchor);
       // If link points to same file, check if anchor exists
       if (resolvedPath === filePath) {
-        if (!headingIds.has(slugifiedAnchor)) {
-          errors.push({
-            file: path.relative(rootDir, filePath),
-            line,
-            type: "broken-anchor",
-            message: `Broken anchor: #${anchor}`,
-            suggestion: `Check if heading exists. Available headings: ${Array.from(headingIds).slice(0, 5).join(", ")}${headingIds.size > 5 ? "..." : ""}`,
-            original,
-            icon: "🔗",
-          });
+        if (!anchorExists(anchor)) {
+          errors.push(
+            brokenAnchorError(
+              filePath,
+              rootDir,
+              line,
+              anchor,
+              original,
+              headingIds,
+              slugForSuggestion,
+            ),
+          );
         }
         continue; // Skip file existence check for self-link with anchor
       }
