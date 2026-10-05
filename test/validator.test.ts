@@ -202,4 +202,111 @@ title: External Links
     // Cleanup
     await fs.rm(testDir, { recursive: true, force: true });
   });
+
+  it("should detect broken anchors with diacritics in .md files", async () => {
+    await fs.mkdir(testDir, { recursive: true });
+    await fs.writeFile(
+      path.join(testDir, "anchors.md"),
+      `---
+title: Anchors
+---
+
+# Anchors
+
+## link sai rồi
+
+[wrong](#link-sai-rồi)
+[correct](#link-sai-roi)
+`,
+      "utf-8",
+    );
+
+    const result = await validateMarkdown({
+      rootDir: testDir,
+      autofix: false,
+      checkLinks: true,
+      checkStructure: false,
+    });
+
+    assert.strictEqual(result.valid, false);
+    const anchorErrors = result.errors.filter(
+      (e) => e.type === "broken-anchor",
+    );
+    assert.strictEqual(anchorErrors.length, 1);
+    assert.ok(anchorErrors[0].message.includes("link-sai-rồi"));
+
+    // Cleanup
+    await fs.rm(testDir, { recursive: true, force: true });
+  });
+
+  it("should detect percent-encoded broken anchors in .md files", async () => {
+    await fs.mkdir(testDir, { recursive: true });
+    await fs.writeFile(
+      path.join(testDir, "encoded.md"),
+      `---
+title: Encoded
+---
+
+# Encoded
+
+## link sai rồi
+
+[wrong](#link-sai-r%E1%BB%93i)
+`,
+      "utf-8",
+    );
+
+    const result = await validateMarkdown({
+      rootDir: testDir,
+      autofix: false,
+      checkLinks: true,
+      checkStructure: false,
+    });
+
+    assert.strictEqual(result.valid, false);
+    const anchorErrors = result.errors.filter(
+      (e) => e.type === "broken-anchor",
+    );
+    assert.strictEqual(anchorErrors.length, 1);
+
+    // Cleanup
+    await fs.rm(testDir, { recursive: true, force: true });
+  });
+
+  it("should use github-slugger ids for .mdx files", async () => {
+    await fs.mkdir(testDir, { recursive: true });
+    await fs.writeFile(
+      path.join(testDir, "anchors.mdx"),
+      `---
+title: Anchors MDX
+---
+
+# Anchors MDX
+
+## link sai rồi
+
+[correct](#link-sai-rồi)
+[wrong](#link-sai-roi)
+`,
+      "utf-8",
+    );
+
+    const result = await validateMarkdown({
+      rootDir: testDir,
+      autofix: false,
+      checkLinks: true,
+      checkStructure: false,
+    });
+
+    // MDX headings keep diacritics (rehype-slug) — the raw anchor must
+    // match the rendered id, so only #link-sai-roi is broken here.
+    const anchorErrors = result.errors.filter(
+      (e) => e.type === "broken-anchor",
+    );
+    assert.strictEqual(anchorErrors.length, 1);
+    assert.ok(anchorErrors[0].message.includes("link-sai-roi"));
+
+    // Cleanup
+    await fs.rm(testDir, { recursive: true, force: true });
+  });
 });
