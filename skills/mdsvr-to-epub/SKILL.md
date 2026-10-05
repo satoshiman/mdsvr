@@ -1,6 +1,6 @@
 ---
 name: mdsvr-to-epub
-description: Convert an mdsvr documentation folder (a doc site served or exported by mdsvr) into a single valid EPUB 3 ebook. Understands mdsvr conventions — README.md directory indexes, numeric-prefix ordering, _mdsvr/settings.json metadata, mdsvr-style internal links (./page, ./dir/, no extension), .mdx files and components (Callout, Mermaid, Steps, Tabs, Card, Badge). Renders ```mermaid blocks to PNG via mermaid.ink and draws wide tables to PNG with Pillow.
+description: Convert an mdsvr documentation folder (a doc site served or exported by mdsvr) into a single valid EPUB 3 ebook. Understands mdsvr conventions — README.md directory indexes, numeric-prefix ordering, _mdsvr/settings.json metadata, mdsvr-style internal links (./page, ./dir/, no extension), .mdx files and components (Callout, Mermaid, Steps, Tabs, Card, Badge). Renders ```mermaid blocks to PNG via mermaid.ink, LaTeX math ($..$, $$..$$, ```math) to PNG via latex.codecogs.com, converts ```quiz blocks to static Q&A, and draws wide tables to PNG with Pillow.
 argument-hint: "[--input <docs_dir|file> ...] [--output <path>] [--title <t>] [--author <a>] [--language <code>]"
 allowed-tools:
   - read
@@ -49,17 +49,17 @@ them (or reuse the vuong-knowledge venv at
 
 Options:
 
-| Argument | Description | Default |
-|----------|-------------|---------|
-| `--input`, `-i` | Docs directory and/or `.md`/`.mdx` files (required, repeatable). Directories are walked recursively in mdsvr sidebar order. | — |
-| `--output`, `-o` | Output `.epub` path (required). | — |
-| `--title` | Book title. | `site.title` from `_mdsvr/settings.json`, else input dir name |
-| `--author` | Book author. | `Unknown` |
-| `--language` | ISO language code (`en`, `vi`, ...). | `site.language` from settings.json, else `en` |
-| `--description` | Book description. | `site.description` from settings.json |
-| `--cover` | Cover image path. | first embedded image |
-| `--mermaid-aspect` | Canvas aspect `w:h` for rendered mermaid PNGs and table images (e.g. `3:4`, `16:9`); `none` keeps natural size. | `3:4` |
-| `--table-image-cols` | Markdown tables with more than N columns are drawn to PNG with Pillow (wide tables get clipped on e-readers); `none` disables. | `4` |
+| Argument             | Description                                                                                                                    | Default                                                       |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------- |
+| `--input`, `-i`      | Docs directory and/or `.md`/`.mdx` files (required, repeatable). Directories are walked recursively in mdsvr sidebar order.    | —                                                             |
+| `--output`, `-o`     | Output `.epub` path (required).                                                                                                | —                                                             |
+| `--title`            | Book title.                                                                                                                    | `site.title` from `_mdsvr/settings.json`, else input dir name |
+| `--author`           | Book author.                                                                                                                   | `Unknown`                                                     |
+| `--language`         | ISO language code (`en`, `vi`, ...).                                                                                           | `site.language` from settings.json, else `en`                 |
+| `--description`      | Book description.                                                                                                              | `site.description` from settings.json                         |
+| `--cover`            | Cover image path.                                                                                                              | first embedded image                                          |
+| `--mermaid-aspect`   | Canvas aspect `w:h` for rendered mermaid PNGs and table images (e.g. `3:4`, `16:9`); `none` keeps natural size.                | `3:4`                                                         |
+| `--table-image-cols` | Markdown tables with more than N columns are drawn to PNG with Pillow (wide tables get clipped on e-readers); `none` disables. | `4`                                                           |
 
 ## What it does
 
@@ -84,21 +84,29 @@ Options:
    under `<doc-dir>/images/mermaid/` (raw renders in `raw/`) next to the
    source file so re-runs are fast — note this writes cache files inside
    the docs tree; delete the processed PNGs to re-apply rotation/padding.
-5. **Wide tables → PNG.** Tables wider than `--table-image-cols` columns
+5. **Math → PNG.** `$...$` inline math, `$$...$$` display math, and
+   ` ```math ` fenced blocks render to PNG via the latex.codecogs.com API
+   (e-readers can't run KaTeX). PNGs cache under `<doc-dir>/images/math/`;
+   on render failure the LaTeX source is kept with a warning.
+6. **Quiz → static Q&A.** ` ```quiz ` blocks become a numbered question
+   list with an answer key (True/False rendered as A/B options,
+   `self-check` shows the model answer in the key). EPUB is not
+   interactive, so grading/scoring is dropped.
+7. **Wide tables → PNG.** Tables wider than `--table-image-cols` columns
    are drawn locally with Pillow into `<doc-dir>/images/tables/`.
-6. **Internal links.** mdsvr-style links are resolved to EPUB chapter
+8. **Internal links.** mdsvr-style links are resolved to EPUB chapter
    links: `./page`, `./page.md`, `./dir/` (→ dir README), `../page`,
    `/absolute/path`, and `#anchor` fragments — including cross-chapter
    anchors (each `##`-split chapter keeps its heading `id`s). Links that
    don't resolve to a doc in the set are left as-is.
-7. **Alerts.** GitHub `> [!NOTE|TIP|WARNING|CAUTION|IMPORTANT]` alerts
+9. **Alerts.** GitHub `> [!NOTE|TIP|WARNING|CAUTION|IMPORTANT]` alerts
    become styled blockquotes (colored border + background).
-8. **Chapters & TOC.** Each doc file splits into chapters at `## `
-   headings; the file becomes a part in the nested `nav.xhtml` TOC, in
-   sidebar order.
-9. **Images & cover.** All referenced local images are embedded
-   (`/assets/…` resolves against the docs root); the first image becomes
-   the cover unless `--cover` is given.
+10. **Chapters & TOC.** Each doc file splits into chapters at `## `
+    headings; the file becomes a part in the nested `nav.xhtml` TOC, in
+    sidebar order.
+11. **Images & cover.** All referenced local images are embedded
+    (`/assets/…` resolves against the docs root); the first image becomes
+    the cover unless `--cover` is given.
 
 ## Workflow
 
@@ -116,12 +124,17 @@ Confirm the build plan with the user before running (same convention as
 
 - Mermaid rendering needs network access to mermaid.ink; on failure the
   block degrades to a plain code block with a warning.
+- Math rendering needs network access to latex.codecogs.com; on failure
+  the LaTeX source is kept with a warning. Inline-math PNGs sit on the
+  text baseline — alignment is approximate.
+- Quiz interactivity (grading, `localStorage` stats) does not transfer —
+  quizzes export as static Q&A with the answer key inline.
 - Only locally-referenced images are embedded; remote `https://` images
   stay as-is (visible only on networked readers).
 - MDX interactive components render as static content.
-- Cache PNGs are written under `<doc-dir>/images/{mermaid,tables}/`; these
-  directories contain no `.md` files so mdsvr ignores them, but they show
-  up in `git status` if the docs tree is a repo.
+- Cache PNGs are written under `<doc-dir>/images/{mermaid,math,tables}/`;
+  these directories contain no `.md` files so mdsvr ignores them, but they
+  show up in `git status` if the docs tree is a repo.
 
 ## Files
 
