@@ -20,6 +20,10 @@ Understands mdsvr doc-set conventions:
   * Resolves mdsvr-style internal links (`./page`, `./page.md`, `./dir/`,
     `../page`, `/absolute/path`, with or without `#anchor`) into internal
     `chapter-NNN.xhtml[#anchor]` links.
+  * ```quiz blocks become a static numbered Q&A with an answer key
+    (EPUB is not interactive).
+  * LaTeX math (`$..$`, `$$..$$`, ```math fences) renders to PNG via
+    latex.codecogs.com — e-readers can't run KaTeX.
 
 Pure Python: stdlib + the `markdown` and `Pillow` packages. Mermaid diagrams
 are rendered to PNG via the mermaid.ink API (no Node/pandoc/calibre needed),
@@ -43,6 +47,7 @@ import datetime as _dt
 import json
 import re
 import sys
+import urllib.parse
 import urllib.request
 import uuid
 import zipfile
@@ -540,6 +545,104 @@ def transform_quiz_blocks(
         return seg
 
     return _apply_outside_fences(md_text, lambda seg: seg, _fence_fn)
+
+
+# ---------------------------------------------------------------------------
+# LaTeX math -> PNG via latex.codecogs.com (e-readers can't run KaTeX)
+# ---------------------------------------------------------------------------
+
+# `$$...$$` must start and end a line (GitHub-style display math).
+_MATH_BLOCK_RE = re.compile(r"^\s{0,3}\$\$(.+?)\$\$\s*$", re.DOTALL | re.MULTILINE)
+# Inline `$...$`: opener preceded by neither `\` nor `$`, followed by a
+# non-space non-`$`; closer preceded by a non-space non-`\`, and not followed
+# by a digit or `$` (so "costs $5 to $10" stays text).
+_MATH_INLINE_RE = re.compile(
+    r"(?<![\\$])\$(?![\s$])((?:\\.|[^$\\\n])+?)(?<![\s\\])\$(?![\d$])"
+)
+
+
+def _codecogs_fetch_img(latex: str, inline: bool) -> bytes | None:
+    """Render LaTeX to PNG via latex.codecogs.com — the mermaid.ink
+    equivalent for math. Higher DPI for block formulas."""
+    dpi = 110 if inline else 200
+    url = "https://latex.codecogs.com/png.image?" + urllib.parse.quote(
+        rf"\dpi{{{dpi}}}\bg{{white}}{latex}", safe=""
+    )
+    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+    try:
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            return resp.read()
+    except Exception as e:  # noqa: BLE001
+        sys.stderr.write(f"WARNING: math render failed: {e}\n")
+        return None
+
+
+def render_math_blocks(
+    md_text: str,
+    file_stem: str,
+    cache_dir: Path,
+) -> tuple[str, list[Path]]:
+    """Replace LaTeX math ($..$, $$..$$, ```math) with ![](images/math/*.png)
+    refs. Renders cache under <doc-dir>/images/math/ like the mermaid cache.
+
+    Returns (new_markdown, list_of_png_paths)."""
+    produced: list[Path] = []
+    counter = 0
+
+    def _emit(latex: str, inline: bool) -> str | None:
+        nonlocal counter
+        latex = latex.strip()
+        if not latex:
+            return None
+        counter += 1
+        cache_dir.mkdir(parents=True, exist_ok=True)
+        out = cache_dir / f"{file_stem}-math-{counter}.png"
+        rel = f"{cache_dir.parent.name}/{cache_dir.name}/{out.name}"
+        if out.exists():  # cached render
+            produced.append(out)
+            return f"![math]({rel})"
+        raw = _codecogs_fetch_img(latex, inline)
+        if raw is None:
+            return None
+        out.write_bytes(_to_png(raw) if _HAS_PIL else raw)
+        produced.append(out)
+        return f"![math]({rel})"
+
+    def _block(m: re.Match) -> str:
+        img = _emit(m.group(1), inline=False)
+        if img is None:
+            sys.stderr.write(
+                f"WARNING: keeping math source in {file_stem}#{counter}\n"
+            )
+            return m.group(0)
+        return f"\n\n{img}\n\n"
+
+    def _inline_seg(seg: str) -> str:
+        def _sub(m: re.Match) -> str:
+            if _inside_code_span(seg, m.start()):
+                return m.group(0)
+            img = _emit(m.group(1), inline=True)
+            return img if img is not None else m.group(0)
+
+        return _MATH_INLINE_RE.sub(_sub, seg)
+
+    def _text_fn(seg: str) -> str:
+        return _inline_seg(_MATH_BLOCK_RE.sub(_block, seg))
+
+    def _fence_fn(seg: str) -> str:
+        lines = seg.split("\n")
+        if re.match(r"^\s*```math\s*$", lines[0]):
+            body = lines[1:-1] if re.match(r"^\s*```+\s*$", lines[-1]) else lines[1:]
+            img = _emit("\n".join(body), inline=False)
+            if img is None:
+                sys.stderr.write(
+                    f"WARNING: keeping math source block in {file_stem}\n"
+                )
+                return seg
+            return f"\n\n{img}\n\n"
+        return seg
+
+    return _apply_outside_fences(md_text, _text_fn, _fence_fn), produced
 
 
 # ---------------------------------------------------------------------------
@@ -1125,6 +1228,10 @@ def build_epub(
             )
         if "```quiz" in text:
             text = transform_quiz_blocks(text, src.stem, language)
+        if "$" in text or "```math" in text:
+            text, _ = render_math_blocks(
+                text, src.stem, base_dir / "images" / "math"
+            )
         text, _ = render_wide_tables(
             text, src.stem, base_dir / "images" / "tables",
             table_cols, mermaid_aspect,

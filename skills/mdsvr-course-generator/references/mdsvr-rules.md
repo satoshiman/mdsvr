@@ -12,9 +12,10 @@ is more detailed (especially `rules/mermaid.md` for the full Mermaid reference).
 4. Frontmatter
 5. Callouts
 6. Mermaid
-7. Quiz blocks
-8. Course folder layout
-9. Final checklist
+7. Math (LaTeX)
+8. Quiz blocks
+9. Course folder layout
+10. Final checklist
 
 ## 1. File naming
 
@@ -52,6 +53,8 @@ title: "Page Title"
 description: "One sentence describing this page."
 ---
 ```
+
+`title` and `description` are required — mdsvr uses them for `<title>`, meta description, Open Graph/Twitter tags, and JSON-LD. Optional SEO fields mdsvr also reads: `seoTitle` (overrides `title` in SEO output), `image` + `imageAlt` (og:image, 1200x630), `author` (string or `{ name, url }`), `date`/`datePublished`, `dateModified`/`updated`/`lastmod`, and `noindex: true` (drops the page from search, sitemap, and llms.txt). Do not hand-write meta tags or JSON-LD — mdsvr generates canonical, `og:*`, `twitter:*`, sitemap.xml, and robots.txt automatically.
 
 ## 5. Callouts
 
@@ -105,7 +108,21 @@ Use diagrams only when they teach something better than text.
 13. Convey meaning with emoji instead of color: ✅ ❌ ⚠️ 🔒 🔑 🚀 📦 🗄️ 🌐 👤 🤖 💾.
 14. One diagram per code block, valid syntax, split only if the user asks.
 
-## 7. Quiz blocks
+## 7. Math (LaTeX)
+
+Math renders via KaTeX from LaTeX source. Use it when formulas teach better
+than text.
+
+- Inline: `$E = mc^2$` (no spaces right inside the delimiters).
+- Block: `$$...$$` on its own lines, or a ` ```math ` fenced block
+  (formula only, no `$$` inside).
+- Literal `$` next to math: escape as `\$` inside the formula, or wrap the
+  bare `$` in `<span>$</span>` outside it — two unescaped `$` on one line
+  become delimiters (`costs $5 to $10` breaks).
+- Keep to the KaTeX subset: `\frac`, `\sqrt`, `\sum`, `\int`, `\begin{pmatrix}`,
+  `\begin{aligned}`, Greek letters. Avoid text-mode accents.
+
+## 8. Quiz blocks
 
 Quizzes are ` ```quiz ` fenced blocks containing JSON — interactive and
 client-graded, in `.md` and `.mdx` alike. Follow the template in
@@ -118,7 +135,7 @@ client-graded, in `.md` and `.mdx` alike. Follow the template in
 - `explanation` is optional but strongly recommended — it teaches.
 - Strict JSON only: double quotes, no comments, no trailing commas.
 
-## 8. Course folder layout
+## 9. Course folder layout
 
 ```
 <course-slug>/
@@ -137,7 +154,7 @@ client-graded, in `.md` and `.mdx` alike. Follow the template in
 
 Adapt freely. Rules from sections 1 to 5 always apply.
 
-## 9. Final checklist
+## 10. Final checklist
 
 - [ ] Root `README.md` exists; every folder has a `README.md` listing its pages
 - [ ] No dots in file names; kebab-case; numeric prefixes
@@ -145,5 +162,6 @@ Adapt freely. Rules from sections 1 to 5 always apply.
 - [ ] Every file has frontmatter and one H1; no skipped heading levels
 - [ ] Callouts use `> [!TYPE]` with `>` on every line; only supported types
 - [ ] Mermaid: IDs safe, labels quoted, directions declared, no styling
+- [ ] Math uses `$...$` / `$$...$$` / ` ```math ` correctly; stray `$` escaped
 - [ ] Quizzes use ` ```quiz ` JSON blocks; answer indices in range, valid types
 - [ ] Code blocks have a language tag; lab steps are numbered

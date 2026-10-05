@@ -32,6 +32,8 @@ Before generating files, extract from the user's request:
 5. **Diagrams needed?** — if yes, read `rules/mermaid.md` for syntax rules.
 6. **Quizzes needed?** — if the doc set includes self-check questions or chapter
    quizzes, read `rules/quiz.md` for the ` ```quiz ` JSON format.
+7. **Math needed?** — if the doc set includes formulas or equations, read
+   `rules/math.md` for the `$...$` / `$$...$$` / ` ```math ` LaTeX syntax.
 
 If any of these are unclear, ask ONE focused question before proceeding.
 
@@ -93,14 +95,30 @@ Adapt the structure to the user's topic and scale it up or down as needed.
 
 ## Step 4 — Apply Frontmatter to Every File
 
-Each `.md` file must include YAML frontmatter for SEO and mdsvr metadata:
+Each `.md` file must start with YAML frontmatter. mdsvr turns it into the page `<title>`, meta description, Open Graph/Twitter Card tags, and JSON-LD structured data:
 
 ```yaml
 ---
-title: "Page Title"
-description: "One-sentence description of this page's content."
+title: "Page Title" # required — <title>, og:title, twitter:title, JSON-LD headline
+description: "One-sentence description." # required — meta description (falls back to first paragraph)
 ---
 ```
+
+Optional frontmatter fields that mdsvr understands — use them when relevant:
+
+```yaml
+---
+seoTitle: "Title | Keyword Suffix" # wins over `title` for <title>/OG output
+image: "./assets/og-image.png" # og:image / twitter:image (1200x630 recommended)
+imageAlt: "Diagram of the pipeline" # og:image:alt / twitter:image:alt
+author: "Jane Doe" # or { name: "Jane", url: "https://..." } — a Person
+date: 2026-10-05 # datePublished (`datePublished` wins if both set); adds page to RSS feed
+dateModified: 2026-10-05 # or `updated` / `lastmod` — article:modified_time, sitemap lastmod
+noindex: true # robots noindex; also excluded from sitemap.xml and llms.txt
+---
+```
+
+Do NOT hand-write `<meta>`/`<link>` tags or JSON-LD inside Markdown — mdsvr already generates canonical URLs, all `og:*`/`twitter:*` tags, `Article`/`WebSite`/`BreadcrumbList` JSON-LD, `sitemap.xml`, `robots.txt`, and `llms.txt` automatically from frontmatter plus `_mdsvr/settings.json`.
 
 ---
 
@@ -242,3 +260,6 @@ After `present_files`, write a short message in chat containing:
 - `rules/quiz.md` — Interactive ` ```quiz ` block JSON contract: question types,
   answer format, and authoring rules. Read this whenever a quiz or self-check
   section is needed.
+- `rules/math.md` — LaTeX math syntax (`$...$`, `$$...$$`, ` ```math ` blocks),
+  delimiter and escaping rules. Read this whenever formulas or equations are
+  needed.
