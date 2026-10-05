@@ -29,7 +29,7 @@ Before generating files, extract from the user's request:
 2. **Target audience** — developers, end-users, ops teams, etc.
 3. **Scope** — how many pages / sections are needed?
 4. **Language** — Vietnamese, English, or bilingual?
-5. **Diagrams needed?** — if yes, read `references/rules/mermaid.md` for syntax rules.
+5. **Diagrams needed?** — if yes, read `rules/mermaid.md` for syntax rules.
 
 If any of these are unclear, ask ONE focused question before proceeding.
 
@@ -149,7 +149,7 @@ Only required when the documentation is large enough to justify a subdirectory.
 If the documentation benefits from diagrams (architecture, flows, sequences, ERDs,
 state machines, etc.), embed Mermaid diagrams inline in the relevant `.md` files.
 
-> **Before generating any diagram**, read `references/rules/mermaid.md` for the full
+> **Before generating any diagram**, read `rules/mermaid.md` for the full
 > syntax reference and generation rules. All rules in that file are mandatory.
 
 **Quick checklist (from mermaid.md):**
@@ -235,5 +235,5 @@ After `present_files`, write a short message in chat containing:
 
 ## Reference Files
 
-- `references/rules/mermaid.md` — Full Mermaid v11 syntax reference for all 19 diagram
+- `rules/mermaid.md` — Full Mermaid v11 syntax reference for all 19 diagram
   types. Read this whenever any diagram is needed in the documentation.
