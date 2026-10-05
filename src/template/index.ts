@@ -1568,6 +1568,22 @@ body {
   padding: 0;
   border-radius: 0;
 }
+.markdown-body .callout :not(pre) > code,
+.markdown-body .quiz-explanation :not(pre) > code,
+.markdown-body .quiz-model-answer :not(pre) > code,
+.markdown-body .quiz-option.correct :not(pre) > code,
+.markdown-body .quiz-option.incorrect :not(pre) > code,
+.markdown-body .quiz-error :not(pre) > code {
+  background: rgba(175, 184, 193, 0.4);
+}
+[data-theme="dark"] .markdown-body .callout :not(pre) > code,
+[data-theme="dark"] .markdown-body .quiz-explanation :not(pre) > code,
+[data-theme="dark"] .markdown-body .quiz-model-answer :not(pre) > code,
+[data-theme="dark"] .markdown-body .quiz-option.correct :not(pre) > code,
+[data-theme="dark"] .markdown-body .quiz-option.incorrect :not(pre) > code,
+[data-theme="dark"] .markdown-body .quiz-error :not(pre) > code {
+  background: rgba(110, 118, 129, 0.4);
+}
 
 /* Code block wrapper */
 .code-block-wrapper {
