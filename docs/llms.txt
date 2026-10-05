@@ -21,6 +21,7 @@
 - [MDX Components](https://mdsvr.js.org/docs/03-features/mdx/): Interactive components for your documentation
 - [Mermaid Diagrams in mdsvr](https://mdsvr.js.org/docs/03-features/mermaid/): mdsvr supports Mermaid.js for creating beautiful diagrams directly in your Markdown files. Simply wrap your Mermaid code in triple backticks with the mermaid...
 - [Navigation](https://mdsvr.js.org/docs/03-features/navigation/): Sidebar, breadcrumbs, and table of contents
+- [Interactive Quizzes](https://mdsvr.js.org/docs/03-features/quiz/): mdsvr renders quiz block against the schema and reports invalid-quiz errors with the fence's line number — malformed JSON, missing fields, and out-of-range...
 - [Features](https://mdsvr.js.org/docs/03-features/): Overview of all mdsvr features
 - [Search](https://mdsvr.js.org/docs/03-features/search/): Full-text search for your documentation
 - [SEO](https://mdsvr.js.org/docs/03-features/seo/): Search engine optimization features

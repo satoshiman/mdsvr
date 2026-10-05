@@ -12,12 +12,12 @@
   </url>
   <url>
     <loc>https://mdsvr.js.org/docs/02-settings/</loc>
-    <lastmod>2026-10-04</lastmod>
+    <lastmod>2026-10-05</lastmod>
     <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://mdsvr.js.org/docs/03-features/</loc>
-    <lastmod>2026-10-04</lastmod>
+    <lastmod>2026-10-05</lastmod>
     <changefreq>weekly</changefreq>
   </url>
   <url>
@@ -32,7 +32,7 @@
   </url>
   <url>
     <loc>https://mdsvr.js.org/docs/03-features/mdx/</loc>
-    <lastmod>2026-06-23</lastmod>
+    <lastmod>2026-10-05</lastmod>
     <changefreq>weekly</changefreq>
   </url>
   <url>
@@ -43,6 +43,11 @@
   <url>
     <loc>https://mdsvr.js.org/docs/03-features/navigation/</loc>
     <lastmod>2026-06-22</lastmod>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>https://mdsvr.js.org/docs/03-features/quiz/</loc>
+    <lastmod>2026-10-05</lastmod>
     <changefreq>weekly</changefreq>
   </url>
   <url>

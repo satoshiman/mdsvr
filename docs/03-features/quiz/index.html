@@ -15,26 +15,28 @@
   document.documentElement.setAttribute('data-content-view', contentView);
 })();
 </script>
-  <title>Adr | MDSVR | Markdown Documentation Server</title>
-    <meta name="description" content="Directory listing for Adr">
-    <link rel="canonical" href="https://mdsvr.js.org/docs/09-architecture/adr/">
-    <meta property="og:title" content="Adr | MDSVR | Markdown Documentation Server">
-    <meta property="og:description" content="Directory listing for Adr">
-    <meta property="og:type" content="website">
+  <title>Interactive Quizzes | MDSVR | Markdown Documentation Server</title>
+    <meta name="description" content="mdsvr renders quiz block against the schema and reports invalid-quiz errors with the fence&#x27;s line number — malformed JSON, missing fields, and out-of-range...">
+    <link rel="canonical" href="https://mdsvr.js.org/docs/03-features/quiz/">
+    <meta property="og:title" content="Interactive Quizzes | MDSVR | Markdown Documentation Server">
+    <meta property="og:description" content="mdsvr renders quiz block against the schema and reports invalid-quiz errors with the fence&#x27;s line number — malformed JSON, missing fields, and out-of-range...">
+    <meta property="og:type" content="article">
     <meta property="og:site_name" content="MDSVR | Markdown Documentation Server">
     <meta property="og:locale" content="en_US">
-    <meta property="og:url" content="https://mdsvr.js.org/docs/09-architecture/adr/">
-    <meta property="og:image" content="https://mdsvr.js.org/docs/public/assets/og/09-architecture/adr/index.jpg">
-    <meta property="og:image:alt" content="Adr">
+    <meta property="og:url" content="https://mdsvr.js.org/docs/03-features/quiz/">
+    <meta property="og:image" content="https://mdsvr.js.org/docs/public/assets/og/03-features/quiz/index.jpg">
+    <meta property="og:image:alt" content="Interactive Quizzes">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Adr | MDSVR | Markdown Documentation Server">
-    <meta name="twitter:description" content="Directory listing for Adr">
-    <meta name="twitter:image" content="https://mdsvr.js.org/docs/public/assets/og/09-architecture/adr/index.jpg">
-    <meta name="twitter:image:alt" content="Adr">
+    <meta name="twitter:title" content="Interactive Quizzes | MDSVR | Markdown Documentation Server">
+    <meta name="twitter:description" content="mdsvr renders quiz block against the schema and reports invalid-quiz errors with the fence&#x27;s line number — malformed JSON, missing fields, and out-of-range...">
+    <meta name="twitter:image" content="https://mdsvr.js.org/docs/public/assets/og/03-features/quiz/index.jpg">
+    <meta name="twitter:image:alt" content="Interactive Quizzes">
+    <meta property="article:published_time" content="2026-10-05">
+    <meta property="article:modified_time" content="2026-10-05">
     <link rel="sitemap" type="application/xml" href="/docs/sitemap.xml">
-  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://mdsvr.js.org/docs/"},{"@type":"ListItem","position":2,"name":"Architecture","item":"https://mdsvr.js.org/docs/09-architecture/"},{"@type":"ListItem","position":3,"name":"Adr","item":"https://mdsvr.js.org/docs/09-architecture/adr/"}]}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"Interactive Quizzes","description":"mdsvr renders quiz block against the schema and reports invalid-quiz errors with the fence's line number — malformed JSON, missing fields, and out-of-range...","url":"https://mdsvr.js.org/docs/03-features/quiz/","image":"https://mdsvr.js.org/docs/public/assets/og/03-features/quiz/index.jpg","datePublished":"2026-10-05","dateModified":"2026-10-05"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://mdsvr.js.org/docs/"},{"@type":"ListItem","position":2,"name":"Features","item":"https://mdsvr.js.org/docs/03-features/"},{"@type":"ListItem","position":3,"name":"Interactive Quizzes","item":"https://mdsvr.js.org/docs/03-features/quiz/"}]}]}</script>
   
   
   
@@ -1700,7 +1702,7 @@ code.hljs {
     </div>
   </header>
 
-  <div class="site-container">
+  <div class="site-container has-toc">
     <aside class="sidebar" id="sidebar"><ul class="sidebar-nav" data-level="0">
   <li class="nav-item" data-type="file">
     <a href="/docs/" class="nav-link">Welcome</a>
@@ -1711,12 +1713,12 @@ code.hljs {
   <li class="nav-item folder" data-type="dir">
     <a href="/docs/02-settings/" class="nav-link">📁 Guides</a>
   </li>
-  <li class="nav-item folder" data-type="dir">
-    <div class="nav-item-header" data-expanded="false">
-      <a href="/docs/03-features/" class="nav-link" data-folder-icon="closed"><span class="folder-icon">📁</span> Features</a>
+  <li class="nav-item active folder" data-type="dir">
+    <div class="nav-item-header" data-expanded="true">
+      <a href="/docs/03-features/" class="nav-link active" data-folder-icon="open"><span class="folder-icon">📂</span> Features</a>
       <button type="button" class="nav-toggle" aria-label="Toggle folder"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></button>
     </div>
-    <div class="nav-children" data-expanded="false">
+    <div class="nav-children" data-expanded="true">
     <ul class="sidebar-nav" data-level="1">
       <li class="nav-item" data-type="file">
         <a href="/docs/03-features/markdown/" class="nav-link">Markdown Formats</a>
@@ -1751,19 +1753,19 @@ code.hljs {
   <li class="nav-item folder" data-type="dir">
     <a href="/docs/04-reference/" class="nav-link">📁 Reference</a>
   </li>
-  <li class="nav-item active folder" data-type="dir">
-    <div class="nav-item-header" data-expanded="true">
-      <a href="/docs/09-architecture/" class="nav-link active" data-folder-icon="open"><span class="folder-icon">📂</span> Architecture</a>
+  <li class="nav-item folder" data-type="dir">
+    <div class="nav-item-header" data-expanded="false">
+      <a href="/docs/09-architecture/" class="nav-link" data-folder-icon="closed"><span class="folder-icon">📁</span> Architecture</a>
       <button type="button" class="nav-toggle" aria-label="Toggle folder"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></button>
     </div>
-    <div class="nav-children" data-expanded="true">
+    <div class="nav-children" data-expanded="false">
     <ul class="sidebar-nav" data-level="1">
-      <li class="nav-item active folder" data-type="dir">
-        <div class="nav-item-header" data-expanded="true">
-          <a href="/docs/09-architecture/adr/" class="nav-link active" data-folder-icon="open"><span class="folder-icon">📂</span> Adr</a>
+      <li class="nav-item folder" data-type="dir">
+        <div class="nav-item-header" data-expanded="false">
+          <a href="/docs/09-architecture/adr/" class="nav-link" data-folder-icon="closed"><span class="folder-icon">📁</span> Adr</a>
           <button type="button" class="nav-toggle" aria-label="Toggle folder"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></button>
         </div>
-        <div class="nav-children" data-expanded="true">
+        <div class="nav-children" data-expanded="false">
         <ul class="sidebar-nav" data-level="2">
           <li class="nav-item" data-type="file">
             <a href="/docs/09-architecture/adr/001-file-based-content-storage/" class="nav-link">ADR-001: File-based content storage instead of database</a>
@@ -1793,51 +1795,305 @@ code.hljs {
     <main class="content">
       <nav class="breadcrumbs">
     <a href="/docs/">Home</a>
-    <span class="breadcrumb-sep">/</span><a href="/docs/09-architecture/">09 architecture</a><span class="breadcrumb-sep">/</span><span class="breadcrumb-current">Adr</span>
+    <span class="breadcrumb-sep">/</span><a href="/docs/03-features/">03 features</a><span class="breadcrumb-sep">/</span><span class="breadcrumb-current">Quiz</span>
   </nav>
       <article class="markdown-body">
-        <h1>Adr</h1>
-<nav class="dir-listing" aria-label="Directory listing">
-    <table>
-      <thead>
-        <tr><th>Name</th><th class="size">Size</th></tr>
-      </thead>
-      <tbody>
-      <tr>
-        <td>📁 <a href="../">../</a></td>
-        <td class="size">-</td>
-      </tr>
-      <tr>
-        <td>📁 <a href="/09-architecture/adr/001-file-based-content-storage/">001-file-based-content-storage/</a></td>
-        <td class="size">-</td>
-      </tr>
-      <tr>
-        <td>📁 <a href="/09-architecture/adr/002-server-side-mdx-rendering/">002-server-side-mdx-rendering/</a></td>
-        <td class="size">-</td>
-      </tr>
-      <tr>
-        <td>📁 <a href="/09-architecture/adr/003-zero-configuration-with-defaults/">003-zero-configuration-with-defaults/</a></td>
-        <td class="size">-</td>
-      </tr>
-      <tr>
-        <td>📁 <a href="/09-architecture/adr/004-client-side-search-with-pre-built-index/">004-client-side-search-with-pre-built-index/</a></td>
-        <td class="size">-</td>
-      </tr>
-      <tr>
-        <td>📁 <a href="/09-architecture/adr/005-incremental-static-export/">005-incremental-static-export/</a></td>
-        <td class="size">-</td>
-      </tr>
-      <tr>
-        <td>📁 <a href="/09-architecture/adr/006-markdown-validation-and-autofix/">006-markdown-validation-and-autofix/</a></td>
-        <td class="size">-</td>
-      </tr>
-      </tbody>
-    </table>
-</nav>
+        <h1 id="interactive-quizzes" tabindex="-1">Interactive Quizzes</h1>
+<p>mdsvr renders <code>```quiz</code> fenced blocks as interactive, self-grading quizzes. Questions, options, and answers are written as JSON; the reader sees a form, clicks <strong>Check answers</strong>, and gets instant feedback with a score. Results are stored per-user in <code>localStorage</code> — no backend required, works in static exports too.</p>
+<h2 id="live-demo" tabindex="-1">Live Demo</h2>
+<p>Everything below is a real, working quiz — select answers and grade them right here.</p>
+<p><strong>Exam mode</strong> — answer everything, then check it all at once. Covers all four question types:</p>
+<div class="quiz" data-quiz-id="mdsvr-quiz-demo-exam" data-quiz-mode="exam">
+  <div class="quiz-header">
+    <span class="quiz-title">mdsvr knowledge check</span>
+    <span class="quiz-progress">0/4</span>
+  </div>
+  <div class="quiz-question" data-qtype="single" data-answer="1">
+    <div class="quiz-question-text">Which command serves a docs folder locally?</div>
+    <div class="quiz-options">
+      <label class="quiz-option"><input type="radio" name="quiz-mdsvr-quiz-demo-exam-q0" value="0"> <span><code>mdsvr build ./docs</code></span></label>
+      <label class="quiz-option"><input type="radio" name="quiz-mdsvr-quiz-demo-exam-q0" value="1"> <span><code>mdsvr ./docs</code></span></label>
+      <label class="quiz-option"><input type="radio" name="quiz-mdsvr-quiz-demo-exam-q0" value="2"> <span><code>mdsvr serve --docs</code></span></label>
+    </div>
+    <div class="quiz-explanation" hidden>Point <code>mdsvr</code> (or <code>npx mdsvr</code>) at the folder — serving is the default action.</div>
+  </div>
+  <div class="quiz-question" data-qtype="multiple" data-answer="0,1,3">
+    <div class="quiz-question-text">Which of these ship with mdsvr out of the box?</div>
+    <div class="quiz-options">
+      <label class="quiz-option"><input type="checkbox" name="quiz-mdsvr-quiz-demo-exam-q1" value="0"> <span>Full-text search</span></label>
+      <label class="quiz-option"><input type="checkbox" name="quiz-mdsvr-quiz-demo-exam-q1" value="1"> <span>Mermaid diagrams</span></label>
+      <label class="quiz-option"><input type="checkbox" name="quiz-mdsvr-quiz-demo-exam-q1" value="2"> <span>A hosted comments service</span></label>
+      <label class="quiz-option"><input type="checkbox" name="quiz-mdsvr-quiz-demo-exam-q1" value="3"> <span>Dark mode</span></label>
+    </div>
+    <div class="quiz-explanation" hidden>Search, Mermaid, and theming are built-in. Comments would need a third-party embed.</div>
+  </div>
+  <div class="quiz-question" data-qtype="true-false" data-answer="false">
+    <div class="quiz-question-text"><code>```quiz</code> blocks only work in <code>.md</code> files, not <code>.mdx</code>.</div>
+    <div class="quiz-options">
+      <label class="quiz-option"><input type="radio" name="quiz-mdsvr-quiz-demo-exam-q2" value="true"> <span>True</span></label>
+      <label class="quiz-option"><input type="radio" name="quiz-mdsvr-quiz-demo-exam-q2" value="false"> <span>False</span></label>
+    </div>
+    <div class="quiz-explanation" hidden>The same fence works in both — in <code>.mdx</code> it compiles to the <code>&lt;Quiz&gt;</code> component.</div>
+  </div>
+  <div class="quiz-question" data-qtype="self-check">
+    <div class="quiz-question-text">In your own words: why do quiz stats survive a page reload?</div>
+    <button type="button" class="quiz-reveal">Show answer</button>
+    <div class="quiz-model-answer" hidden>Grading results are written to <code>localStorage</code> under <code>mdsvr-quiz:&lt;id&gt;</code> — per-browser, no server needed.</div>
+    <div class="quiz-self-mark" hidden>
+      <button type="button" data-mark="correct">I got it right</button>
+      <button type="button" data-mark="incorrect">Not yet</button>
+    </div>
+  </div>
+  <div class="quiz-actions">
+    <button type="button" class="quiz-check">Check answers</button>
+    <button type="button" class="quiz-reset" hidden>Try again</button>
+  </div>
+  <div class="quiz-result" hidden></div>
+</div>
+
+<p><strong>Practice mode</strong> — each question has its own <strong>Check</strong> button and locks after grading:</p>
+<div class="quiz" data-quiz-id="mdsvr-quiz-demo-practice" data-quiz-mode="practice">
+  <div class="quiz-header">
+    <span class="quiz-title">Try it one question at a time</span>
+    <span class="quiz-progress">0/2</span>
+  </div>
+  <div class="quiz-question" data-qtype="single" data-answer="1">
+    <div class="quiz-question-text">Where are per-user quiz stats stored?</div>
+    <div class="quiz-options">
+      <label class="quiz-option"><input type="radio" name="quiz-mdsvr-quiz-demo-practice-q0" value="0"> <span>In a server database</span></label>
+      <label class="quiz-option"><input type="radio" name="quiz-mdsvr-quiz-demo-practice-q0" value="1"> <span>In <code>localStorage</code></span></label>
+      <label class="quiz-option"><input type="radio" name="quiz-mdsvr-quiz-demo-practice-q0" value="2"> <span>In the page's URL</span></label>
+    </div>
+    <div class="quiz-explanation" hidden>Stats live under <code>mdsvr-quiz:&lt;id&gt;</code> in the browser — works in static exports too.</div>
+    <button type="button" class="quiz-practice-check">Check</button>
+  </div>
+  <div class="quiz-question" data-qtype="true-false" data-answer="true">
+    <div class="quiz-question-text">Changing a quiz's JSON resets its stored stats (when it has no explicit <code>id</code>).</div>
+    <div class="quiz-options">
+      <label class="quiz-option"><input type="radio" name="quiz-mdsvr-quiz-demo-practice-q1" value="true"> <span>True</span></label>
+      <label class="quiz-option"><input type="radio" name="quiz-mdsvr-quiz-demo-practice-q1" value="false"> <span>False</span></label>
+    </div>
+    <div class="quiz-explanation" hidden>Without an <code>id</code>, mdsvr hashes the payload — edit the quiz, get a new hash, new stats.</div>
+    <button type="button" class="quiz-practice-check">Check</button>
+  </div>
+  <div class="quiz-actions">
+    <button type="button" class="quiz-check">Check answers</button>
+    <button type="button" class="quiz-reset" hidden>Try again</button>
+  </div>
+  <div class="quiz-result" hidden></div>
+</div>
+
+<h2 id="quick-example" tabindex="-1">Quick Example</h2>
+<div class="code-block-wrapper"><div class="code-block-container" data-code="```quiz
+{
+  &quot;id&quot;: &quot;asyncio-basics&quot;,
+  &quot;title&quot;: &quot;Quick check&quot;,
+  &quot;mode&quot;: &quot;exam&quot;,
+  &quot;questions&quot;: [
+    {
+      &quot;type&quot;: &quot;single&quot;,
+      &quot;question&quot;: &quot;Which function is the standard entrypoint for a coroutine?&quot;,
+      &quot;options&quot;: [&quot;`asyncio.run()`&quot;, &quot;`asyncio.exec()`&quot;, &quot;`asyncio.start()`&quot;],
+      &quot;answer&quot;: 0,
+      &quot;explanation&quot;: &quot;`asyncio.run()` has been the recommended API since Python 3.7.&quot;
+    },
+    {
+      &quot;type&quot;: &quot;true-false&quot;,
+      &quot;question&quot;: &quot;`async`/`await` is syntax owned by the asyncio library.&quot;,
+      &quot;answer&quot;: false,
+      &quot;explanation&quot;: &quot;It is language syntax; asyncio is just one consumer.&quot;
+    }
+  ]
+}
+```
+">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-markdown"><span class="hljs-code">```quiz
+{
+  &quot;id&quot;: &quot;asyncio-basics&quot;,
+  &quot;title&quot;: &quot;Quick check&quot;,
+  &quot;mode&quot;: &quot;exam&quot;,
+  &quot;questions&quot;: [
+    {
+      &quot;type&quot;: &quot;single&quot;,
+      &quot;question&quot;: &quot;Which function is the standard entrypoint for a coroutine?&quot;,
+      &quot;options&quot;: [&quot;`asyncio.run()`&quot;, &quot;`asyncio.exec()`&quot;, &quot;`asyncio.start()`&quot;],
+      &quot;answer&quot;: 0,
+      &quot;explanation&quot;: &quot;`asyncio.run()` has been the recommended API since Python 3.7.&quot;
+    },
+    {
+      &quot;type&quot;: &quot;true-false&quot;,
+      &quot;question&quot;: &quot;`async`/`await` is syntax owned by the asyncio library.&quot;,
+      &quot;answer&quot;: false,
+      &quot;explanation&quot;: &quot;It is language syntax; asyncio is just one consumer.&quot;
+    }
+  ]
+}
+```</span>
+</code></pre>
+</div></div>
+
+<h2 id="quiz-fields" tabindex="-1">Quiz Fields</h2>
+<div class="table-wrapper"><div class="table-toolbar"><button class="table-btn-fullscreen" type="button" title="Fullscreen table" aria-label="Fullscreen table"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m15 15 6 6"/><path d="m15 9 6-6"/><path d="M21 16v5h-5"/><path d="M21 8V3h-5"/><path d="M3 16v5h5"/><path d="m3 21 6-6"/><path d="M3 8V3h5"/><path d="M9 9 3 3"/></svg></button></div><table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>auto-hash</td>
+<td>Stable identifier for score history. When omitted, mdsvr hashes the payload — editing the quiz resets stored stats.</td>
+</tr>
+<tr>
+<td><code>title</code></td>
+<td><code>string</code></td>
+<td><code>&quot;Quiz&quot;</code></td>
+<td>Title shown in the quiz header.</td>
+</tr>
+<tr>
+<td><code>mode</code></td>
+<td><code>&quot;exam&quot; | &quot;practice&quot;</code></td>
+<td><code>&quot;exam&quot;</code></td>
+<td><code>exam</code>: one <strong>Check answers</strong> button grades everything. <code>practice</code>: each question has its own check button for instant feedback.</td>
+</tr>
+<tr>
+<td><code>questions</code></td>
+<td><code>array</code></td>
+<td>required</td>
+<td>At least one question (see types below).</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="question-types" tabindex="-1">Question Types</h2>
+<div class="table-wrapper"><div class="table-toolbar"><button class="table-btn-fullscreen" type="button" title="Fullscreen table" aria-label="Fullscreen table"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m15 15 6 6"/><path d="m15 9 6-6"/><path d="M21 16v5h-5"/><path d="M21 8V3h-5"/><path d="M3 16v5h5"/><path d="m3 21 6-6"/><path d="M3 8V3h5"/><path d="M9 9 3 3"/></svg></button></div><table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Required fields</th>
+<th><code>answer</code></th>
+<th>UI</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>single</code></td>
+<td><code>question</code>, <code>options</code> (≥2), <code>answer</code></td>
+<td><code>number</code> — 0-based index of correct option</td>
+<td>radio</td>
+</tr>
+<tr>
+<td><code>multiple</code></td>
+<td><code>question</code>, <code>options</code> (≥2), <code>answer</code></td>
+<td><code>number[]</code> — all correct indices</td>
+<td>checkbox</td>
+</tr>
+<tr>
+<td><code>true-false</code></td>
+<td><code>question</code>, <code>answer</code></td>
+<td><code>boolean</code></td>
+<td>True/False</td>
+</tr>
+<tr>
+<td><code>self-check</code></td>
+<td><code>question</code>, <code>answer</code></td>
+<td><code>string</code> — model answer</td>
+<td>reveal + self-grade</td>
+</tr>
+</tbody>
+</table></div>
+<p>Every question may also have an optional <code>explanation</code> (inline markdown), shown after grading.</p>
+<p>Question text, options, explanations, and self-check model answers support <strong>inline markdown</strong> — <code>`code`</code>, <code>**bold**</code>, <code>*italic*</code>, links. Raw HTML is not allowed.</p>
+<h2 id="scoring" tabindex="-1">Scoring</h2>
+<ul>
+<li>All-or-nothing per question — a <code>multiple</code> question only counts if the exact correct set is selected.</li>
+<li><code>self-check</code> questions count toward the total; the learner reports correct/incorrect themselves.</li>
+<li>The result panel shows <code>correct/total</code>, a percentage, a per-type breakdown, and history (<code>Best: x/y · n attempts</code>).</li>
+<li>Stats are stored under <code>mdsvr-quiz:&lt;id&gt;</code> in <code>localStorage</code>. Give the quiz a stable <code>id</code> if you want history to survive content edits.</li>
+</ul>
+<div class="callout callout-warning"><strong style="display: block; margin-bottom: 8px;">⚠️ Warning</strong><div>Answers are embedded in the page source (view-source reveals them). Quizzes are self-study tools on the honor system — not a secure assessment.</div></div>
+<h2 id="validation" tabindex="-1">Validation</h2>
+<p><code>--validate-md</code> checks every <code>```quiz</code> block against the schema and reports <code>invalid-quiz</code> errors with the fence’s line number — malformed JSON, missing fields, and out-of-range answer indices are all caught before publish. Invalid blocks render as an inline error callout instead of breaking the page.</p>
+<h2 id="in-mdx" tabindex="-1">In MDX</h2>
+<p>The same <code>```quiz</code> fence works in <code>.mdx</code> files. You can also embed a quiz directly with the <code>&lt;Quiz&gt;</code> component:</p>
+<div class="code-block-wrapper"><div class="code-block-container" data-code="&lt;Quiz source='{&quot;questions&quot;: [{&quot;type&quot;: &quot;true-false&quot;, &quot;question&quot;: &quot;Sky is blue.&quot;, &quot;answer&quot;: true}]}' /&gt;
+">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs">&lt;Quiz source='{&quot;questions&quot;: [{&quot;type&quot;: &quot;true-false&quot;, &quot;question&quot;: &quot;Sky is blue.&quot;, &quot;answer&quot;: true}]}' /&gt;
+</code></pre>
+</div></div>
+
+<p>Disable it per-site with <code>&quot;mdx.components&quot;: { &quot;Quiz&quot;: false }</code> — quiz fences then render as plain code blocks.</p>
+<h2 id="notes-limitations" tabindex="-1">Notes &amp; Limitations</h2>
+<ul>
+<li><strong>No JavaScript</strong>: questions and options still render as a readable form; grading just does nothing.</li>
+<li><strong>Search</strong>: quiz JSON is fenced code, so questions and answers do not appear in the search index.</li>
+<li><strong>EPUB export</strong>: <code>mdsvr-to-epub</code> converts quiz blocks into a static numbered Q&amp;A with an answer key.</li>
+</ul>
+
       </article>
       <nav class="prev-next-nav">
-        <a href="/docs/09-architecture/" class="prev-next-card prev-card"><span class="prev-next-label">← Prev</span><span class="prev-next-title">Architecture</span></a>
-        <a href="/docs/09-architecture/adr/001-file-based-content-storage/" class="prev-next-card next-card"><span class="prev-next-label">Next →</span><span class="prev-next-title">ADR-001: File-based content storage instead of database</span></a>
+        <a href="/docs/03-features/navigation/" class="prev-next-card prev-card"><span class="prev-next-label">← Prev</span><span class="prev-next-title">Navigation</span></a>
+        <a href="/docs/03-features/search/" class="prev-next-card next-card"><span class="prev-next-label">Next →</span><span class="prev-next-title">Search</span></a>
       </nav>
       <footer class="footer">
     <div class="footer-content">
@@ -1846,7 +2102,22 @@ code.hljs {
     </div>
   </footer>
     </main>
-    
+    <aside class="toc-sidebar"><nav class="toc">
+  <h3>On this page</h3>
+<ul class="toc-list toc-level-1">
+<li class="toc-item"><a href="#interactive-quizzes">Interactive Quizzes</a></li>
+<ul class="toc-list toc-level-2">
+<li class="toc-item"><a href="#live-demo">Live Demo</a></li>
+<li class="toc-item"><a href="#quick-example">Quick Example</a></li>
+<li class="toc-item"><a href="#quiz-fields">Quiz Fields</a></li>
+<li class="toc-item"><a href="#question-types">Question Types</a></li>
+<li class="toc-item"><a href="#scoring">Scoring</a></li>
+<li class="toc-item"><a href="#validation">Validation</a></li>
+<li class="toc-item"><a href="#in-mdx">In MDX</a></li>
+<li class="toc-item"><a href="#notes-limitations">Notes &amp;amp; Limitations</a></li>
+</ul>
+</ul>
+</nav></aside>
   </div>
 
   

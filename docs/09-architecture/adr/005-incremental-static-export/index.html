@@ -439,7 +439,7 @@ body {
 .markdown-body code {
   font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
   padding: 0.2em 0.4em;
-  background: var(--code-bg);
+  background: var(--code-inline-bg, var(--code-bg));
   border-radius: 6px;
 }
 .markdown-body pre {
@@ -454,6 +454,22 @@ body {
   background: transparent;
   padding: 0;
   border-radius: 0;
+}
+.callout,
+.quiz-explanation,
+.quiz-model-answer,
+.quiz-option.correct,
+.quiz-option.incorrect,
+.quiz-error {
+  --code-inline-bg: rgba(175, 184, 193, 0.4);
+}
+[data-theme="dark"] .callout,
+[data-theme="dark"] .quiz-explanation,
+[data-theme="dark"] .quiz-model-answer,
+[data-theme="dark"] .quiz-option.correct,
+[data-theme="dark"] .quiz-option.incorrect,
+[data-theme="dark"] .quiz-error {
+  --code-inline-bg: rgba(110, 118, 129, 0.4);
 }
 
 /* Code block wrapper */
@@ -1066,6 +1082,180 @@ body {
   padding: 16px;
 }
 
+/* Quiz */
+.quiz {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg-secondary);
+  padding: 16px;
+  margin-bottom: 16px;
+}
+.quiz-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.quiz-title {
+  font-weight: 600;
+}
+.quiz-progress {
+  font-size: 13px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+.quiz-question {
+  padding: 12px 0;
+  border-top: 1px solid var(--border);
+}
+.quiz-question-text {
+  margin-bottom: 8px;
+}
+.quiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.quiz-option {
+  display: block;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  cursor: pointer;
+}
+.quiz-option:hover {
+  border-color: var(--accent);
+}
+.quiz-option input {
+  accent-color: var(--accent);
+}
+.quiz-option.correct {
+  border-color: #1a7f37;
+  background: #dafbe1;
+}
+.quiz-option.incorrect {
+  border-color: #cf222e;
+  background: #ffebe9;
+}
+[data-theme="dark"] .quiz-option.correct {
+  border-color: #3fb950;
+  background: #0f2616;
+}
+[data-theme="dark"] .quiz-option.incorrect {
+  border-color: #f85149;
+  background: #3c0e0e;
+}
+.quiz-question.graded .quiz-option {
+  cursor: default;
+}
+.quiz-question.graded .quiz-option:hover {
+  border-color: var(--border);
+}
+.quiz-question.graded .quiz-option.correct:hover {
+  border-color: #1a7f37;
+}
+.quiz-question.graded .quiz-option.incorrect:hover {
+  border-color: #cf222e;
+}
+[data-theme="dark"] .quiz-question.graded .quiz-option.correct:hover {
+  border-color: #3fb950;
+}
+[data-theme="dark"] .quiz-question.graded .quiz-option.incorrect:hover {
+  border-color: #f85149;
+}
+.quiz-explanation,
+.quiz-model-answer {
+  border-left: 4px solid #0969da;
+  background: #ddf4ff;
+  border-radius: 4px;
+  padding: 10px 14px;
+  margin-top: 8px;
+  font-size: 14px;
+}
+[data-theme="dark"] .quiz-explanation,
+[data-theme="dark"] .quiz-model-answer {
+  border-color: #58a6ff;
+  background: #0c1c38;
+}
+.quiz-practice-check,
+.quiz-reveal {
+  margin-top: 8px;
+}
+.quiz-self-mark {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+.quiz-self-mark button.selected {
+  border-color: var(--accent);
+  color: var(--accent);
+  font-weight: 600;
+}
+.quiz-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+.quiz button {
+  padding: 6px 14px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14px;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+.quiz button:hover:not(:disabled) {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.quiz button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+.quiz button.quiz-check {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+.quiz button.quiz-check:hover:not(:disabled) {
+  color: #fff;
+  opacity: 0.9;
+}
+.quiz-result {
+  margin-top: 12px;
+  padding: 12px 16px;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  border-radius: 6px;
+  background: var(--bg);
+}
+.quiz-score {
+  font-weight: 600;
+  font-size: 16px;
+}
+.quiz-breakdown,
+.quiz-history {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+.quiz-error {
+  border-left: 4px solid #cf222e;
+  background: #ffebe9;
+}
+[data-theme="dark"] .quiz-error {
+  border-color: #f85149;
+  background: #3c0e0e;
+}
+.quiz-error strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
 /* Mermaid wrapper */
 .mermaid-wrapper {
   display: block;
@@ -1544,6 +1734,9 @@ code.hljs {
       </li>
       <li class="nav-item" data-type="file">
         <a href="/docs/03-features/navigation/" class="nav-link">Navigation</a>
+      </li>
+      <li class="nav-item" data-type="file">
+        <a href="/docs/03-features/quiz/" class="nav-link">Interactive Quizzes</a>
       </li>
       <li class="nav-item" data-type="file">
         <a href="/docs/03-features/search/" class="nav-link">Search</a>
@@ -2461,6 +2654,276 @@ function initTableToolbars() {
   });
 }
 
+// Quiz interactivity: grade answers client-side, persist stats per-user in
+// localStorage. Answers live in data-answer attributes (honor system — this
+// is self-study, not a secure assessment).
+function initQuizzes() {
+  function readStats(quizId) {
+    try {
+      var raw = localStorage.getItem('mdsvr-quiz:' + quizId);
+      return raw ? JSON.parse(raw) : null;
+    } catch (e) { return null; }
+  }
+  function saveStats(quizId, score, total) {
+    var stats = readStats(quizId) || { attempts: 0, best: 0 };
+    stats.attempts += 1;
+    stats.last = score;
+    stats.total = total;
+    stats.best = Math.max(stats.best || 0, score);
+    stats.lastAt = Math.floor(Date.now() / 1000);
+    try {
+      localStorage.setItem('mdsvr-quiz:' + quizId, JSON.stringify(stats));
+    } catch (e) { /* storage unavailable */ }
+    return stats;
+  }
+  function attemptsLabel(stats) {
+    return 'Best: ' + stats.best + '/' + stats.total + ' · ' + stats.attempts + (stats.attempts === 1 ? ' attempt' : ' attempts');
+  }
+
+  document.querySelectorAll('.quiz').forEach(function(quiz) {
+    if (quiz.classList.contains('quiz-error')) return;
+    var quizId = quiz.getAttribute('data-quiz-id') || '';
+    var mode = quiz.getAttribute('data-quiz-mode') || 'exam';
+    var questions = Array.prototype.slice.call(quiz.querySelectorAll('.quiz-question'));
+    var progressEl = quiz.querySelector('.quiz-progress');
+    var checkBtn = quiz.querySelector('.quiz-check');
+    var resetBtn = quiz.querySelector('.quiz-reset');
+    var resultEl = quiz.querySelector('.quiz-result');
+    if (mode === 'practice' && checkBtn) checkBtn.hidden = true;
+
+    function isAnswered(q) {
+      if (q.getAttribute('data-qtype') === 'self-check') {
+        return !!q.getAttribute('data-marked');
+      }
+      var inputs = q.querySelectorAll('.quiz-option input');
+      for (var i = 0; i < inputs.length; i++) {
+        if (inputs[i].checked) return true;
+      }
+      return false;
+    }
+
+    function updateProgress() {
+      if (!progressEl) return;
+      var answered = 0;
+      questions.forEach(function(q) { if (isAnswered(q)) answered++; });
+      var stats = readStats(quizId);
+      var text = answered + '/' + questions.length;
+      if (stats && stats.attempts) text += ' · ' + attemptsLabel(stats);
+      progressEl.textContent = text;
+    }
+    updateProgress();
+
+    function gradeQuestion(q) {
+      var qtype = q.getAttribute('data-qtype');
+      var explanation = q.querySelector('.quiz-explanation');
+      if (explanation) explanation.hidden = false;
+
+      if (qtype === 'self-check') {
+        var model = q.querySelector('.quiz-model-answer');
+        var selfMark = q.querySelector('.quiz-self-mark');
+        if (model) model.hidden = false;
+        if (selfMark) selfMark.hidden = false;
+        var marked = q.getAttribute('data-marked');
+        if (!marked) return 'unanswered';
+        q.classList.add(marked === 'correct' ? 'answered-correct' : 'answered-incorrect');
+        return marked === 'correct' ? 'correct' : 'incorrect';
+      }
+
+      var answer = q.getAttribute('data-answer') || '';
+      var labels = q.querySelectorAll('.quiz-option');
+      var answered = false;
+      var correct = false;
+
+      if (qtype === 'multiple') {
+        var expected = {};
+        answer.split(',').forEach(function(a) { expected[a.trim()] = true; });
+        var seen = {};
+        correct = true;
+        labels.forEach(function(label, idx) {
+          var input = label.querySelector('input');
+          var isExpected = expected[String(idx)] === true;
+          if (input.checked) {
+            answered = true;
+            if (isExpected) {
+              seen[String(idx)] = true;
+              label.classList.add('correct');
+            } else {
+              correct = false;
+              label.classList.add('incorrect');
+            }
+          } else if (isExpected) {
+            label.classList.add('correct');
+          }
+        });
+        if (answered) {
+          for (var k in expected) { if (!seen[k]) correct = false; }
+        }
+      } else {
+        var correctIdx = qtype === 'single'
+          ? parseInt(answer, 10)
+          : (answer === 'true' ? 0 : 1);
+        var checkedIdx = -1;
+        labels.forEach(function(label, idx) {
+          var input = label.querySelector('input');
+          if (input.checked) { checkedIdx = idx; answered = true; }
+          if (idx === correctIdx) label.classList.add('correct');
+        });
+        if (answered && checkedIdx !== correctIdx) {
+          labels[checkedIdx].classList.add('incorrect');
+        }
+        correct = checkedIdx === correctIdx;
+      }
+
+      if (!answered) return 'unanswered';
+      q.classList.add(correct ? 'answered-correct' : 'answered-incorrect');
+      return correct ? 'correct' : 'incorrect';
+    }
+
+    function lockQuestion(q) {
+      q.classList.add('graded');
+      q.querySelectorAll('input').forEach(function(input) { input.disabled = true; });
+      q.querySelectorAll('button').forEach(function(btn) {
+        if (!btn.classList.contains('quiz-reveal')) btn.disabled = true;
+      });
+      var reveal = q.querySelector('.quiz-reveal');
+      if (reveal) reveal.hidden = true;
+    }
+
+    function showResult() {
+      if (!resultEl) return;
+      var correct = 0;
+      var unanswered = 0;
+      var byType = {};
+      questions.forEach(function(q) {
+        var r = q.getAttribute('data-result');
+        var t = q.getAttribute('data-qtype') || '?';
+        if (!byType[t]) byType[t] = { c: 0, n: 0 };
+        byType[t].n++;
+        if (r === 'correct') { correct++; byType[t].c++; }
+        else if (r === 'unanswered') unanswered++;
+      });
+      var total = questions.length;
+      var pct = total ? Math.round((correct / total) * 100) : 0;
+      var stats = saveStats(quizId, correct, total);
+      var parts = [];
+      for (var t in byType) parts.push(t + ' ' + byType[t].c + '/' + byType[t].n);
+      resultEl.innerHTML =
+        '<div class="quiz-score">Correct ' + correct + '/' + total + ' — ' + pct + '%' + (unanswered ? ' · ' + unanswered + ' unanswered' : '') + '</div>' +
+        '<div class="quiz-breakdown">' + parts.join(' · ') + '</div>' +
+        '<div class="quiz-history">' + attemptsLabel(stats) + '</div>';
+      resultEl.hidden = false;
+    }
+
+    function finishAttempt() {
+      questions.forEach(function(q) {
+        q.setAttribute('data-result', gradeQuestion(q));
+        lockQuestion(q);
+      });
+      if (checkBtn) checkBtn.hidden = true;
+      if (resetBtn) resetBtn.hidden = false;
+      showResult();
+      updateProgress();
+    }
+
+    if (checkBtn) {
+      checkBtn.addEventListener('click', function() {
+        if (mode !== 'exam') return;
+        finishAttempt();
+      });
+    }
+
+    // Practice mode: per-question check buttons grade one question at a time.
+    questions.forEach(function(q) {
+      var practiceBtn = q.querySelector('.quiz-practice-check');
+      if (practiceBtn) {
+        practiceBtn.addEventListener('click', function() {
+          if (q.classList.contains('graded')) return;
+          q.setAttribute('data-result', gradeQuestion(q));
+          lockQuestion(q);
+          var allGraded = questions.every(function(qq) { return qq.classList.contains('graded'); });
+          if (allGraded) {
+            if (resetBtn) resetBtn.hidden = false;
+            showResult();
+          }
+          updateProgress();
+        });
+      }
+    });
+
+    // Self-check: reveal model answer, then let the user self-report.
+    questions.forEach(function(q) {
+      if (q.getAttribute('data-qtype') !== 'self-check') return;
+      var reveal = q.querySelector('.quiz-reveal');
+      var model = q.querySelector('.quiz-model-answer');
+      var selfMark = q.querySelector('.quiz-self-mark');
+      if (reveal) {
+        reveal.addEventListener('click', function() {
+          if (model) model.hidden = false;
+          if (selfMark) selfMark.hidden = false;
+          reveal.hidden = true;
+        });
+      }
+      if (selfMark) {
+        selfMark.querySelectorAll('button[data-mark]').forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            q.setAttribute('data-marked', btn.getAttribute('data-mark'));
+            selfMark.querySelectorAll('button').forEach(function(b) { b.classList.remove('selected'); });
+            btn.classList.add('selected');
+            updateProgress();
+            // In practice mode a self-mark resolves the question immediately.
+            if (mode === 'practice' && !q.classList.contains('graded')) {
+              q.setAttribute('data-result', gradeQuestion(q));
+              lockQuestion(q);
+              var allGraded = questions.every(function(qq) { return qq.classList.contains('graded'); });
+              if (allGraded) {
+                if (resetBtn) resetBtn.hidden = false;
+                showResult();
+              }
+              updateProgress();
+            }
+          });
+        });
+      }
+    });
+
+    quiz.addEventListener('change', function(e) {
+      if (e.target && e.target.matches && e.target.matches('.quiz-option input')) {
+        updateProgress();
+      }
+    });
+
+    if (resetBtn) {
+      resetBtn.addEventListener('click', function() {
+        questions.forEach(function(q) {
+          q.classList.remove('graded', 'answered-correct', 'answered-incorrect');
+          q.removeAttribute('data-result');
+          q.removeAttribute('data-marked');
+          q.querySelectorAll('input').forEach(function(input) {
+            input.checked = false;
+            input.disabled = false;
+          });
+          q.querySelectorAll('button').forEach(function(btn) { btn.disabled = false; });
+          q.querySelectorAll('.quiz-option').forEach(function(label) {
+            label.classList.remove('correct', 'incorrect');
+          });
+          q.querySelectorAll('.quiz-explanation, .quiz-model-answer, .quiz-self-mark').forEach(function(el) {
+            el.hidden = true;
+          });
+          var reveal = q.querySelector('.quiz-reveal');
+          if (reveal) reveal.hidden = false;
+          q.querySelectorAll('.quiz-self-mark button').forEach(function(btn) {
+            btn.classList.remove('selected');
+          });
+        });
+        if (resultEl) { resultEl.hidden = true; resultEl.innerHTML = ''; }
+        resetBtn.hidden = true;
+        if (checkBtn && mode === 'exam') checkBtn.hidden = false;
+        updateProgress();
+      });
+    }
+  });
+}
+
 // Initialize sidebar toggle on DOM ready
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', function() {
@@ -2470,6 +2933,7 @@ if (document.readyState === 'loading') {
     initMermaidToolbars();
     initCodeBlockToolbars();
     initTableToolbars();
+    initQuizzes();
   });
 } else {
   initSidebarState();
@@ -2478,6 +2942,7 @@ if (document.readyState === 'loading') {
   initMermaidToolbars();
   initCodeBlockToolbars();
   initTableToolbars();
+  initQuizzes();
 }
   </script>
 

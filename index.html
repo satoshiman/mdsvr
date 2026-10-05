@@ -3,15 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>mdsvr — Zero Config Markdown Server</title>
+    <title>mdsvr — Markdown Server &amp; AI Study Companion</title>
     <meta
       name="description"
-      content="Transform any folder of Markdown files into a beautiful documentation website in 10 seconds. Zero config, MDX support, dark mode, full-text search."
+      content="Transform any folder of Markdown files into a beautiful documentation website in 10 seconds. Zero config, MDX, quizzes, LaTeX math, and AI agent skills that turn folders into courses and ebooks."
     />
-    <meta property="og:title" content="mdsvr — Zero Config Markdown Server" />
+    <meta
+      property="og:title"
+      content="mdsvr — Markdown Server &amp; AI Study Companion"
+    />
     <meta
       property="og:description"
-      content="npx mdsvr ./docs — That's it. That's the whole setup."
+      content="npx mdsvr ./docs — docs, courses, quizzes and ebooks from one command."
     />
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary_large_image" />
@@ -28,6 +31,12 @@
       href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+      integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV"
+      crossorigin="anonymous"
+    />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
@@ -41,6 +50,9 @@
         </a>
         <div class="nav-links">
           <a href="#features">Features</a>
+          <a href="#learn">Learn</a>
+          <a href="#skills">Skills</a>
+          <a href="#seo">SEO</a>
           <a href="#compare">Compare</a>
           <a href="#quickstart">Quick Start</a>
           <a href="https://mdsvr.js.org/docs" target="_blank" rel="noopener"
@@ -57,7 +69,7 @@
                 d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12Z"
               />
             </svg>
-            GitHub
+            <span class="nav-github-label">GitHub</span>
           </a>
           <button
             class="theme-toggle"
@@ -95,21 +107,70 @@
               <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
             </svg>
           </button>
+          <button
+            class="nav-menu-btn"
+            id="navMenuBtn"
+            aria-label="Open menu"
+            aria-expanded="false"
+            aria-controls="navMobileMenu"
+          >
+            <svg
+              class="icon-menu"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            >
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <line x1="3" y1="12" x2="21" y2="12" />
+              <line x1="3" y1="18" x2="21" y2="18" />
+            </svg>
+            <svg
+              class="icon-close"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            >
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
         </div>
+      </div>
+      <div class="nav-mobile-menu" id="navMobileMenu">
+        <a href="#features">Features</a>
+        <a href="#learn">Learn</a>
+        <a href="#skills">Skills</a>
+        <a href="#seo">SEO</a>
+        <a href="#compare">Compare</a>
+        <a href="#quickstart">Quick Start</a>
+        <a href="https://mdsvr.js.org/docs" target="_blank" rel="noopener"
+          >Docs ↗</a
+        >
       </div>
     </nav>
 
     <!-- HERO -->
     <section class="hero">
       <div class="hero-inner">
-        <div class="hero-badge">v2.2 · MIT License · Node 18+</div>
+        <div class="hero-badge">
+          <span class="badge-version npm-version">v2.6.0</span>
+          · MIT License · Node 18+
+        </div>
         <h1 class="hero-title">
-          The fastest way from<br />
-          <span class="hero-accent">Markdown to beautiful docs</span>
+          A Markdown server that became<br />
+          <span class="hero-accent">your AI study companion</span>
         </h1>
         <p class="hero-sub">
-          Zero config. One command. MDX, dark mode, full-text search, SEO —
-          everything included.
+          Zero config docs in one command — now with interactive quizzes, LaTeX
+          math, and agent skills that turn folders into courses and ebooks.
         </p>
 
         <div class="terminal" id="terminal">
@@ -215,6 +276,25 @@
             </p>
           </div>
 
+          <div class="feature-card feature-card--new">
+            <div class="feature-icon">🧠</div>
+            <h3>Interactive Quizzes <span class="feature-tag">new</span></h3>
+            <p>
+              Drop a <code>```quiz</code> block into any page — exam or practice
+              mode, instant grading, score history. Self-checks built into your
+              docs.
+            </p>
+          </div>
+
+          <div class="feature-card feature-card--new">
+            <div class="feature-icon">∑</div>
+            <h3>LaTeX Math <span class="feature-tag">new</span></h3>
+            <p>
+              Write <code>$E = mc^2$</code> inline or <code>```math</code>
+              blocks. GitHub-compatible LaTeX rendering — zero plugins.
+            </p>
+          </div>
+
           <div class="feature-card">
             <div class="feature-icon">🌓</div>
             <h3>Dark / Light Mode</h3>
@@ -246,8 +326,8 @@
             <div class="feature-icon">🔎</div>
             <h3>SEO Ready</h3>
             <p>
-              Open Graph, Twitter Cards, canonical URLs,
-              <code>sitemap.xml</code>, RSS feed — all generated automatically.
+              Open Graph, Twitter Cards, JSON-LD, canonical URLs, OG image
+              generation, <code>sitemap.xml</code>, RSS, <code>llms.txt</code>.
             </p>
           </div>
 
@@ -293,6 +373,148 @@
       </div>
     </section>
 
+    <!-- LEARN / STUDY COMPANION -->
+    <section class="learn" id="learn">
+      <div class="section-inner">
+        <div class="section-label">Learning Mode</div>
+        <h2 class="section-title">Not just a reader — a study companion</h2>
+        <p class="section-sub">
+          mdsvr grew beyond serving files. Quizzes test what you learned, math
+          renders beautifully, and everything lives in plain Markdown you own.
+        </p>
+
+        <div class="journey">
+          <div class="journey-step">
+            <span class="j-icon">📄</span><span>Markdown folder</span>
+          </div>
+          <div class="journey-arrow" aria-hidden="true"></div>
+          <div class="journey-step">
+            <span class="j-icon">🌐</span><span>Docs site</span>
+          </div>
+          <div class="journey-arrow" aria-hidden="true"></div>
+          <div class="journey-step">
+            <span class="j-icon">🎓</span><span>Course + quizzes</span>
+          </div>
+          <div class="journey-arrow" aria-hidden="true"></div>
+          <div class="journey-step">
+            <span class="j-icon">📖</span><span>EPUB ebook</span>
+          </div>
+        </div>
+
+        <div class="learn-grid">
+          <div class="learn-source code-block">
+            <div class="learn-source-tag">quiz.md</div>
+            <pre><code><span class="c-comment">```quiz</span>
+{
+  <span class="c-str">"mode"</span>: <span class="c-str">"practice"</span>,
+  <span class="c-str">"questions"</span>: [{
+    <span class="c-str">"type"</span>: <span class="c-str">"single"</span>,
+    <span class="c-str">"question"</span>: <span class="c-str">"Which command serves a docs folder?"</span>,
+    <span class="c-str">"options"</span>: [
+      <span class="c-str">"npm run docs"</span>,
+      <span class="c-str">"npx mdsvr ./docs"</span>,
+      <span class="c-str">"mkdocs serve"</span>
+    ],
+    <span class="c-str">"answer"</span>: 1
+  }]
+}
+<span class="c-comment">```</span></code></pre>
+          </div>
+          <div class="learn-arrow" aria-hidden="true">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <line x1="4" y1="12" x2="20" y2="12" />
+              <polyline points="13 5 20 12 13 19" />
+            </svg>
+          </div>
+          <div class="learn-demo">
+            <div class="quiz-widget" id="quizDemo">
+              <div class="quiz-head">
+                <span class="quiz-title">Quick check</span>
+                <span class="quiz-mode-badge">practice</span>
+                <span class="quiz-score" id="quizScore">0/2</span>
+              </div>
+              <div class="quiz-q" data-answer="1">
+                <p class="quiz-q-text">Which command serves a docs folder?</p>
+                <div class="quiz-opts">
+                  <button class="quiz-opt"><code>npm run docs</code></button>
+                  <button class="quiz-opt">
+                    <code>npx mdsvr ./docs</code>
+                  </button>
+                  <button class="quiz-opt"><code>mkdocs serve</code></button>
+                </div>
+                <div class="quiz-feedback"></div>
+              </div>
+              <div class="quiz-q" data-answer="1">
+                <p class="quiz-q-text">
+                  True or false: quizzes need a backend to grade.
+                </p>
+                <div class="quiz-opts">
+                  <button class="quiz-opt"><code>True</code></button>
+                  <button class="quiz-opt"><code>False</code></button>
+                </div>
+                <div class="quiz-feedback"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="learn-grid">
+          <div class="learn-source code-block">
+            <div class="learn-source-tag">math.md</div>
+            <pre><code>The identity <span class="c-str">$e^{i\pi} + 1 = 0$</span>
+links five constants.
+
+<span class="c-comment">```math</span>
+x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
+<span class="c-comment">```</span></code></pre>
+            <div class="math-caption">
+              Inline <code>$...$</code>, block <code>$$...$$</code>, or
+              <code>```math</code> fences — all LaTeX.
+            </div>
+          </div>
+          <div class="learn-arrow" aria-hidden="true">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <line x1="4" y1="12" x2="20" y2="12" />
+              <polyline points="13 5 20 12 13 19" />
+            </svg>
+          </div>
+          <div class="learn-demo math-demo">
+            <p class="math-inline-demo">
+              The identity
+              <span
+                class="math-render"
+                data-tex="e^{i\pi} + 1 = 0"
+                data-inline
+              ></span>
+              links five constants.
+            </p>
+            <div
+              class="math-render"
+              data-tex="x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}"
+            ></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- MDX COMPONENTS SHOWCASE -->
     <section class="mdx-section">
       <div class="section-inner">
@@ -305,11 +527,10 @@
 
         <div class="mdx-grid">
           <div class="mdx-card">
-            <div class="mdx-preview mdx-callout mdx-callout--warning">
-              <strong>Make sure you have Node.js 18+ installed.</strong>
-            </div>
-            <div class="mdx-label">
-              <code>&lt;Callout type="warning"&gt;</code>
+            <div class="mdx-preview">
+              <div class="callout callout-warning">
+                <strong>Note:</strong> Make sure you have Node.js 18+ installed.
+              </div>
             </div>
           </div>
 
@@ -328,21 +549,43 @@
                 </div>
               </div>
             </div>
-            <div class="mdx-label"><code>&lt;Steps&gt;</code></div>
           </div>
 
           <div class="mdx-card">
-            <div class="mdx-preview">
-              <div class="mdx-tabs">
-                <div class="mdx-tab mdx-tab--active">npm</div>
-                <div class="mdx-tab">yarn</div>
-                <div class="mdx-tab">pnpm</div>
+            <div class="mdx-preview mdx-preview--col">
+              <div class="mdx-tabs" role="tablist">
+                <button
+                  type="button"
+                  class="mdx-tab mdx-tab--active"
+                  role="tab"
+                  aria-selected="true"
+                  data-cmd="npm install -g mdsvr"
+                >
+                  npm
+                </button>
+                <button
+                  type="button"
+                  class="mdx-tab"
+                  role="tab"
+                  aria-selected="false"
+                  data-cmd="yarn global add mdsvr"
+                >
+                  yarn
+                </button>
+                <button
+                  type="button"
+                  class="mdx-tab"
+                  role="tab"
+                  aria-selected="false"
+                  data-cmd="pnpm add -g mdsvr"
+                >
+                  pnpm
+                </button>
               </div>
               <div class="mdx-tab-content">
                 <code>npm install -g mdsvr</code>
               </div>
             </div>
-            <div class="mdx-label"><code>&lt;Tabs&gt;</code></div>
           </div>
 
           <div class="mdx-card">
@@ -356,7 +599,6 @@
                 </div>
               </div>
             </div>
-            <div class="mdx-label"><code>&lt;CardGroup&gt;</code></div>
           </div>
 
           <div class="mdx-card">
@@ -364,22 +606,196 @@
               <div class="mdx-badges">
                 <span class="badge badge--green">stable</span>
                 <span class="badge badge--blue">TypeScript</span>
-                <span class="badge badge--orange">v2.2</span>
+                <span class="badge badge--orange npm-version">v2.6.0</span>
               </div>
             </div>
-            <div class="mdx-label"><code>&lt;Badge&gt;</code></div>
           </div>
 
           <div class="mdx-card">
             <div class="mdx-preview">
               <div class="mdx-accordion">
-                <div class="accordion-header">
+                <button
+                  type="button"
+                  class="accordion-header"
+                  aria-expanded="false"
+                >
                   <span>How does zero config work?</span>
-                  <span>+</span>
+                  <span class="accordion-icon">+</span>
+                </button>
+                <div class="accordion-body" hidden>
+                  mdsvr scans your folder, builds the sidebar from file names,
+                  and picks sensible defaults — no settings file required.
                 </div>
               </div>
             </div>
-            <div class="mdx-label"><code>&lt;Accordion&gt;</code></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AGENT SKILLS -->
+    <section class="skills" id="skills">
+      <div class="section-inner">
+        <div class="section-label">Agent Skills</div>
+        <h2 class="section-title">Skills that write, teach, and publish</h2>
+        <p class="section-sub">
+          Install the bundled agent skills and your AI assistant (Devin,
+          Windsurf, Claude Code&hellip;) becomes a learning companion —
+          generating doc sites, personalized courses, and ebooks on demand.
+        </p>
+
+        <div class="skills-grid">
+          <div class="skill-card">
+            <div class="skill-icon">✍️</div>
+            <h3 class="skill-name"><code>markdown-for-mdsvr</code></h3>
+            <p class="skill-desc">
+              Turns any topic into a complete, multi-page doc site — correct
+              mdsvr conventions, internal links, callouts, Mermaid, quizzes, and
+              math baked in.
+            </p>
+            <ul class="skill-list">
+              <li>Multi-file doc sites, zero guesswork</li>
+              <li>
+                Valid <code>```quiz</code> &amp; <code>```math</code> blocks
+              </li>
+              <li>Ready for serve &amp; static export</li>
+            </ul>
+            <a
+              href="https://github.com/satoshiman/mdsvr/tree/main/skills/markdown-for-mdsvr"
+              target="_blank"
+              rel="noopener"
+              class="skill-link"
+              >View skill →</a
+            >
+          </div>
+
+          <div class="skill-card skill-card--accent">
+            <div class="skill-icon">🎓</div>
+            <h3 class="skill-name"><code>mdsvr-course-generator</code></h3>
+            <p class="skill-desc">
+              Surveys the learner first — pace, depth, theory vs. practice —
+              then generates a full course: lessons, labs, exercises, quizzes,
+              and expert corners.
+            </p>
+            <ul class="skill-list">
+              <li>Personalized syllabus, not templates</li>
+              <li>Theory/practice ratio tuned to you</li>
+              <li>Cheatsheets &amp; expert tips per lesson</li>
+            </ul>
+            <a
+              href="https://github.com/satoshiman/mdsvr/tree/main/skills/mdsvr-course-generator"
+              target="_blank"
+              rel="noopener"
+              class="skill-link"
+              >View skill →</a
+            >
+          </div>
+
+          <div class="skill-card">
+            <div class="skill-icon">📚</div>
+            <h3 class="skill-name"><code>mdsvr-to-epub</code></h3>
+            <p class="skill-desc">
+              Packages any mdsvr doc set into a valid EPUB 3 ebook — cover, TOC,
+              rendered Mermaid diagrams, math images, and quizzes as Q&amp;A.
+            </p>
+            <ul class="skill-list">
+              <li>Pure Python — no pandoc or calibre</li>
+              <li>Mermaid &amp; LaTeX rendered to images</li>
+              <li>Take your docs offline, anywhere</li>
+            </ul>
+            <a
+              href="https://github.com/satoshiman/mdsvr/tree/main/skills/mdsvr-to-epub"
+              target="_blank"
+              rel="noopener"
+              class="skill-link"
+              >View skill →</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEO -->
+    <section class="seo" id="seo">
+      <div class="section-inner seo-grid">
+        <div class="seo-main">
+          <div class="section-label">SEO</div>
+          <h2 class="section-title">
+            On-page SEO, optimized like an expert did it
+          </h2>
+          <p class="section-sub">
+            Every page ships the metadata a specialist would write by hand —
+            generated automatically from your content, never invented.
+          </p>
+          <div class="seo-checks">
+            <div class="seo-check">
+              <span class="usp-check">✓</span>
+              <div>
+                <strong>Smart titles &amp; descriptions</strong> — title
+                templates, per-page overrides, auto-extracted descriptions
+              </div>
+            </div>
+            <div class="seo-check">
+              <span class="usp-check">✓</span>
+              <div>
+                <strong>OG images, auto-generated</strong> — branded 1200×630
+                card per page, cached and incremental
+              </div>
+            </div>
+            <div class="seo-check">
+              <span class="usp-check">✓</span>
+              <div>
+                <strong>Open Graph + Twitter Cards</strong> — type, locale,
+                image alt, <code>summary_large_image</code>
+              </div>
+            </div>
+            <div class="seo-check">
+              <span class="usp-check">✓</span>
+              <div>
+                <strong>JSON-LD structured data</strong> — Article, WebSite,
+                BreadcrumbList on every page
+              </div>
+            </div>
+            <div class="seo-check">
+              <span class="usp-check">✓</span>
+              <div>
+                <strong>Canonical, sitemap, robots</strong> — deduplicated URLs,
+                <code>lastmod</code>, <code>noindex</code> controls
+              </div>
+            </div>
+            <div class="seo-check">
+              <span class="usp-check">✓</span>
+              <div>
+                <strong>RSS + llms.txt</strong> — feed for readers,
+                <code>llms-full.txt</code> for AI crawlers
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="head-card">
+          <div class="terminal-bar">
+            <span class="dot dot-red"></span>
+            <span class="dot dot-yellow"></span>
+            <span class="dot dot-green"></span>
+            <span class="terminal-label"
+              >&lt;head&gt; — generated per page</span
+            >
+          </div>
+          <div class="head-body">
+            <pre><code><span class="h-tag">&lt;title&gt;</span>Installation | My Docs<span class="h-tag">&lt;/title&gt;</span>
+<span class="h-tag">&lt;meta</span> <span class="h-attr">name="description"</span>
+      <span class="h-attr">content="Install mdsvr in one command…"</span><span class="h-tag">&gt;</span>
+<span class="h-tag">&lt;link</span> <span class="h-attr">rel="canonical"</span>
+      <span class="h-attr">href="https://docs.example.com/install/"</span><span class="h-tag">&gt;</span>
+<span class="h-tag">&lt;meta</span> <span class="h-attr">property="og:title"</span> <span class="h-attr">content="Installation"</span><span class="h-tag">&gt;</span>
+<span class="h-tag">&lt;meta</span> <span class="h-attr">property="og:image"</span>
+      <span class="h-attr">content="…/assets/og/install/index.jpg"</span><span class="h-tag">&gt;</span>
+<span class="h-tag">&lt;meta</span> <span class="h-attr">name="twitter:card"</span>
+      <span class="h-attr">content="summary_large_image"</span><span class="h-tag">&gt;</span>
+<span class="h-tag">&lt;script</span> <span class="h-attr">type="application/ld+json"</span><span class="h-tag">&gt;</span>
+  {"@type":"Article","headline":"Installation",…}
+<span class="h-tag">&lt;/script&gt;</span></code></pre>
           </div>
         </div>
       </div>
@@ -496,6 +912,66 @@
                 <td>6.2s build</td>
                 <td>~3s build</td>
                 <td>~1s build</td>
+              </tr>
+              <tr>
+                <td>Interactive Quizzes</td>
+                <td class="col-mdsvr">
+                  <span class="badge-yes">✓ Built-in</span>
+                </td>
+                <td><span class="badge-no">✗ No</span></td>
+                <td><span class="badge-no">✗ No</span></td>
+                <td><span class="badge-no">✗ No</span></td>
+                <td><span class="badge-no">✗ No</span></td>
+              </tr>
+              <tr>
+                <td>LaTeX Math</td>
+                <td class="col-mdsvr">
+                  <span class="badge-yes">✓ Built-in</span>
+                </td>
+                <td>Plugin (remark-math)</td>
+                <td><span class="badge-yes">✓ Built-in</span></td>
+                <td>Plugin (Material)</td>
+                <td><span class="badge-no">Shortcode DIY</span></td>
+              </tr>
+              <tr>
+                <td>OG Images</td>
+                <td class="col-mdsvr">
+                  <span class="badge-yes">✓ Auto-generated</span>
+                </td>
+                <td><span class="badge-no">Manual</span></td>
+                <td><span class="badge-no">Manual</span></td>
+                <td><span class="badge-no">Manual</span></td>
+                <td><span class="badge-no">Manual</span></td>
+              </tr>
+              <tr>
+                <td>RSS + llms.txt</td>
+                <td class="col-mdsvr">
+                  <span class="badge-yes">✓ Built-in</span>
+                </td>
+                <td>Blog plugin only</td>
+                <td><span class="badge-no">✗ No</span></td>
+                <td>Plugin</td>
+                <td><span class="badge-yes">RSS only</span></td>
+              </tr>
+              <tr>
+                <td>EPUB Export</td>
+                <td class="col-mdsvr">
+                  <span class="badge-yes">✓ Via skill</span>
+                </td>
+                <td><span class="badge-no">✗ No</span></td>
+                <td><span class="badge-no">✗ No</span></td>
+                <td><span class="badge-no">✗ No</span></td>
+                <td><span class="badge-no">✗ No</span></td>
+              </tr>
+              <tr>
+                <td>AI Agent Skills</td>
+                <td class="col-mdsvr">
+                  <span class="badge-yes">✓ Bundled</span>
+                </td>
+                <td><span class="badge-no">✗ No</span></td>
+                <td><span class="badge-no">✗ No</span></td>
+                <td><span class="badge-no">✗ No</span></td>
+                <td><span class="badge-no">✗ No</span></td>
               </tr>
             </tbody>
           </table>
@@ -825,7 +1301,8 @@ That's it. That's the whole setup.</pre>
           >
         </div>
         <p class="footer-desc">
-          Zero config Markdown server with MDX, dark mode, search, and SEO.
+          Zero config Markdown server — docs, quizzes, math, and AI agent skills
+          for self-learners.
         </p>
         <div class="footer-links">
           <a href="https://mdsvr.js.org/docs" target="_blank" rel="noopener"
@@ -860,6 +1337,12 @@ That's it. That's the whole setup.</pre>
       </div>
     </footer>
 
-    <script src="main.js"></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"
+      integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8"
+      crossorigin="anonymous"
+    ></script>
+    <script defer src="main.js"></script>
   </body>
 </html>
