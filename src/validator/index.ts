@@ -3,6 +3,7 @@ import { promises as fs } from "node:fs";
 import { readdir } from "node:fs/promises";
 import GithubSlugger, { slug as githubSlug } from "github-slugger";
 import { slugify } from "../renderer/slugify.js";
+import { parseQuiz } from "../renderer/quiz.js";
 
 export interface ValidationError {
   file: string;
@@ -19,7 +20,8 @@ export interface ValidationError {
     | "index-files"
     | "link-with-extension"
     | "filename-with-dots"
-    | "outside-root";
+    | "outside-root"
+    | "invalid-quiz";
   message: string;
   suggestion?: string;
   autofix?: string;
@@ -858,6 +860,93 @@ function validateFilename(
 }
 
 /**
+ * Extract ```quiz fenced blocks with their opening line numbers.
+ * Tracks the opening fence marker (``` or ~~~, any length) so quiz examples
+ * nested inside longer fences are not mistaken for real blocks.
+ */
+function extractQuizBlocks(
+  content: string,
+): Array<{ json: string; line: number }> {
+  const blocks: Array<{ json: string; line: number }> = [];
+  const lines = content.split("\n");
+
+  let inQuiz = false;
+  let inOtherFence = false;
+  let fenceChar = "";
+  let fenceLen = 0;
+  let buffer: string[] = [];
+  let startLine = 0;
+
+  lines.forEach((line, index) => {
+    const m = line.match(/^\s*(`{3,}|~{3,})(.*)$/);
+
+    if (!inQuiz && !inOtherFence) {
+      if (m) {
+        const marker = m[1];
+        const info = m[2].trim().split(/\s+/)[0] ?? "";
+        fenceChar = marker[0];
+        fenceLen = marker.length;
+        if (info === "quiz") {
+          inQuiz = true;
+          buffer = [];
+          startLine = index + 1;
+        } else {
+          inOtherFence = true;
+        }
+      }
+      return;
+    }
+
+    // A fence closes on the same marker char with at least the same length
+    if (m && m[1][0] === fenceChar && m[1].length >= fenceLen) {
+      if (inQuiz) {
+        blocks.push({ json: buffer.join("\n"), line: startLine });
+      }
+      inQuiz = false;
+      inOtherFence = false;
+      return;
+    }
+
+    if (inQuiz) {
+      buffer.push(line);
+    }
+  });
+
+  // markdown-it treats EOF as a fence close, so an unclosed quiz block is
+  // still rendered — validate it too.
+  if (inQuiz) {
+    blocks.push({ json: buffer.join("\n"), line: startLine });
+  }
+
+  return blocks;
+}
+
+/**
+ * Validate ```quiz blocks against the quiz JSON schema. No autofix — the
+ * author must correct the JSON by hand.
+ */
+function validateQuizBlocks(
+  content: string,
+  filePath: string,
+  rootDir: string,
+): ValidationError[] {
+  const errors: ValidationError[] = [];
+  for (const { json, line } of extractQuizBlocks(content)) {
+    const { error } = parseQuiz(json);
+    if (error) {
+      errors.push({
+        file: path.relative(rootDir, filePath),
+        line,
+        type: "invalid-quiz",
+        message: error,
+        icon: "❓",
+      });
+    }
+  }
+  return errors;
+}
+
+/**
  * Validate markdown structure
  */
 function validateStructure(
@@ -1053,8 +1142,15 @@ export async function validateMarkdown(
     const structureErrors = checkStructure
       ? validateStructure(content, filePath, rootDir)
       : [];
+    // Quiz schema errors are content errors, not structural — always checked.
+    const quizErrors = validateQuizBlocks(content, filePath, rootDir);
 
-    errors.push(...linkErrors, ...assetErrors, ...structureErrors);
+    errors.push(
+      ...linkErrors,
+      ...assetErrors,
+      ...structureErrors,
+      ...quizErrors,
+    );
 
     // Apply autofix if enabled
     if (autofix) {

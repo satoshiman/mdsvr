@@ -206,6 +206,20 @@ Create diagrams with Mermaid syntax:
   server-side dependencies.
 </Callout>
 
+## Quiz
+
+` ```quiz ` fenced blocks work in `.mdx` the same as `.md` — they render as
+interactive self-grading quizzes. You can also embed a quiz directly with the
+`<Quiz>` component, passing the quiz JSON via `source`:
+
+```mdx
+<Quiz source='{"questions": [{"type": "true-false", "question": "MDX mixes Markdown and JSX.", "answer": true}]}' />
+```
+
+See [Interactive Quizzes](./quiz) for the full JSON format. Disable the
+component with `"mdx.components": { "Quiz": false }` — quiz fences then render
+as plain code blocks.
+
 ## Frontmatter
 
 All MDX files support YAML frontmatter for metadata:

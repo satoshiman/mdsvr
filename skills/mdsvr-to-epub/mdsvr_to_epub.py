@@ -456,6 +456,93 @@ def render_mermaid_blocks(
 
 
 # ---------------------------------------------------------------------------
+# Quiz blocks -> static Q&A (EPUB is not interactive)
+# ---------------------------------------------------------------------------
+
+_QUIZ_RE = re.compile(r"```quiz\s*\n(.*?)```", re.DOTALL)
+
+_LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
+
+def _quiz_to_static_md(payload: str, file_stem: str, language: str) -> str:
+    """Convert one quiz JSON payload to numbered questions + answer key."""
+    vi = language.lower().startswith("vi")
+    try:
+        data = json.loads(payload)
+        questions = data["questions"]
+        assert isinstance(questions, list) and questions
+    except (json.JSONDecodeError, KeyError, AssertionError, TypeError):
+        sys.stderr.write(
+            f"WARNING: keeping quiz source block in {file_stem}\n"
+        )
+        return f"```\n{payload.strip()}\n```"
+
+    true_label, false_label = ("Đúng", "Sai") if vi else ("True", "False")
+    out: list[str] = []
+    answers: list[str] = []
+
+    title = data.get("title")
+    if isinstance(title, str) and title.strip():
+        out += [f"**{title.strip()}**", ""]
+
+    for i, q in enumerate(questions):
+        if not isinstance(q, dict):
+            continue
+        n = len(answers) + 1
+        out.append(f"**{n}.** {q.get('question', '')}")
+        qtype = q.get("type")
+        explanation = q.get("explanation")
+        suffix = f" — {explanation}" if explanation else ""
+
+        if qtype in ("single", "multiple"):
+            options = q.get("options") or []
+            out.append("")
+            for idx, opt in enumerate(options):
+                out.append(f"- {_LETTERS[idx]}. {opt}")
+            idxs = q.get("answer")
+            idxs = idxs if isinstance(idxs, list) else [idxs]
+            letters = ", ".join(
+                _LETTERS[j] for j in idxs
+                if isinstance(j, int) and 0 <= j < len(options)
+            )
+            answers.append(f"{n}. **{letters}**{suffix}")
+        elif qtype == "true-false":
+            out += ["", f"- A. {true_label}", f"- B. {false_label}"]
+            letter = "A" if q.get("answer") is True else "B"
+            answers.append(f"{n}. **{letter}** ({true_label if letter == 'A' else false_label}){suffix}")
+        elif qtype == "self-check":
+            answers.append(f"{n}. {q.get('answer', '')}{suffix}")
+        else:
+            answers.append(f"{n}.{suffix}")
+        out.append("")
+
+    answers_label = "Đáp án" if vi else "Answers"
+    out += [f"**{answers_label}:**", ""] + answers
+    return "\n".join(out)
+
+
+def transform_quiz_blocks(
+    md_text: str, file_stem: str, language: str = "en"
+) -> str:
+    """Replace ```quiz blocks with static Q&A markdown."""
+
+    def _fence_fn(seg: str) -> str:
+        # _apply_outside_fences already isolates the whole fence (closing
+        # marker must start the line), so split it directly — this survives
+        # ``` sequences inside JSON string values, which a regex would cut
+        # on early. Examples nested inside ```` fences stay as code.
+        lines = seg.split("\n")
+        if re.match(r"^\s*```quiz\s*$", lines[0]):
+            # Drop the closing fence line only when present (unclosed fence
+            # at EOF keeps its last content line).
+            body = lines[1:-1] if re.match(r"^\s*```+\s*$", lines[-1]) else lines[1:]
+            return _quiz_to_static_md("\n".join(body), file_stem, language)
+        return seg
+
+    return _apply_outside_fences(md_text, lambda seg: seg, _fence_fn)
+
+
+# ---------------------------------------------------------------------------
 # Wide markdown tables -> PNG (drawn locally with Pillow)
 # ---------------------------------------------------------------------------
 
@@ -1036,6 +1123,8 @@ def build_epub(
             text, _ = render_mermaid_blocks(
                 text, src.stem, base_dir / "images" / "mermaid", mermaid_aspect
             )
+        if "```quiz" in text:
+            text = transform_quiz_blocks(text, src.stem, language)
         text, _ = render_wide_tables(
             text, src.stem, base_dir / "images" / "tables",
             table_cols, mermaid_aspect,

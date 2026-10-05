@@ -1,5 +1,6 @@
 // Built-in MDX components - React components that render to HTML
 import React from "react";
+import { renderQuizBlock } from "./quiz.js";
 
 interface CalloutProps {
   type?: "info" | "warning" | "danger" | "success" | "tip";
@@ -247,6 +248,16 @@ export function Mermaid({ children }: MermaidProps) {
   );
 }
 
+interface QuizProps {
+  source: string;
+}
+
+export function Quiz({ source }: QuizProps) {
+  // renderQuizBlock only emits markup built from escaped/inline-markdown
+  // content — raw HTML inside quiz JSON is neutralized by the renderer.
+  return <div dangerouslySetInnerHTML={{ __html: renderQuizBlock(source) }} />;
+}
+
 // Export all built-in components
 export const builtinComponents = {
   Callout,
@@ -258,4 +269,5 @@ export const builtinComponents = {
   Accordion,
   Badge,
   Mermaid,
+  Quiz,
 };

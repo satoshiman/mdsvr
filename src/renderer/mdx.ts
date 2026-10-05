@@ -1,4 +1,4 @@
-import { compile, run } from "@mdx-js/mdx";
+import { compile, run, type CompileOptions } from "@mdx-js/mdx";
 import * as runtime from "react/jsx-runtime";
 import { renderToStaticMarkup } from "react-dom/server";
 import remarkGfm from "remark-gfm";
@@ -10,6 +10,43 @@ import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import type { Settings } from "../settings/index.js";
 import { builtinComponents } from "./components.js";
+
+interface MdastNode {
+  type: string;
+  lang?: string;
+  meta?: string;
+  value?: string;
+  name?: string;
+  attributes?: Array<{
+    type: string;
+    name: string;
+    value: unknown;
+  }>;
+  children?: MdastNode[];
+}
+
+// Transform ```quiz code fences into <Quiz source="..."> JSX elements so the
+// shared quiz renderer handles MDX the same way markdown-it handles .md.
+function remarkQuiz() {
+  return (tree: MdastNode) => {
+    const walk = (node: MdastNode) => {
+      if (node.type === "code" && node.lang === "quiz") {
+        node.type = "mdxJsxFlowElement";
+        node.name = "Quiz";
+        node.attributes = [
+          { type: "mdxJsxAttribute", name: "source", value: node.value ?? "" },
+        ];
+        node.children = [];
+        delete node.lang;
+        delete node.meta;
+        delete node.value;
+        return;
+      }
+      node.children?.forEach(walk);
+    };
+    walk(tree);
+  };
+}
 
 // Convert triple-colon callouts in HTML to callout divs
 function convertTripleColonCallouts(html: string): string {
@@ -65,14 +102,21 @@ export async function renderMdx(
     throw new Error("MDX is disabled in settings");
   }
 
+  const remarkPlugins: CompileOptions["remarkPlugins"] = [
+    remarkGfm,
+    remarkFrontmatter,
+    remarkMdxFrontmatter,
+    remarkMath,
+  ];
+  // Skip the quiz transform when the Quiz component is disabled — otherwise
+  // the emitted <Quiz> element would reference an unregistered component.
+  if (settings.mdx.components["Quiz"] !== false) {
+    remarkPlugins.push(remarkQuiz);
+  }
+
   const compiled = await compile(content, {
     outputFormat: "function-body",
-    remarkPlugins: [
-      remarkGfm,
-      remarkFrontmatter,
-      remarkMdxFrontmatter,
-      remarkMath,
-    ],
+    remarkPlugins,
     rehypePlugins: [rehypeSlug, rehypeAutolinkHeadings, rehypeKatex],
     development: false,
   });

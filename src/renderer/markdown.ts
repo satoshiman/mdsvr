@@ -5,6 +5,7 @@ import matter from "gray-matter";
 import type { Settings } from "../settings/index.js";
 import { slugify } from "./slugify.js";
 import { mathPlugin } from "./math.js";
+import { renderQuizBlock } from "./quiz.js";
 
 // Convert GitHub-style callouts and triple-colon callouts in HTML to callout divs
 function convertGithubCallouts(html: string): string {
@@ -115,6 +116,11 @@ function createMarkdownIt(): MarkdownIt {
     linkify: true,
     typographer: true,
     highlight: (str: string, lang: string): string => {
+      // Quiz blocks render to a <div> that the fence rule passes through
+      if (lang === "quiz") {
+        return renderQuizBlock(str);
+      }
+
       // ADD: intercept mermaid blocks
       if (lang === "mermaid") {
         const escaped = str.trim().replace(/</g, "&lt;").replace(/>/g, "&gt;");

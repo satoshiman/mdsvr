@@ -8,11 +8,11 @@
     },
     "/02-settings/": {
       "outputPath": "public/assets/og/02-settings/index.jpg",
-      "hash": "bc183ddf84e3f71a31f610a833dae4fc9f91c2ea223aaa3a1d68d8c2dfecf53e"
+      "hash": "2848725f42a66ca72922ca1349b38347341aca5e4fbbf2a79df275ad1c104d17"
     },
     "/03-features/": {
       "outputPath": "public/assets/og/03-features/index.jpg",
-      "hash": "87e840e5b5f70be143f255b648393fa5558f3af16aad204f94965ebcff12e785"
+      "hash": "195f75f2c6d619834b5b1d066f1448215f78f6ed92ad7b32f7a8af3f84c68b8e"
     },
     "/03-features/markdown": {
       "outputPath": "public/assets/og/03-features/markdown/index.jpg",
@@ -24,7 +24,7 @@
     },
     "/03-features/mdx": {
       "outputPath": "public/assets/og/03-features/mdx/index.jpg",
-      "hash": "c15d08bacb53333d517e215d6e197dac448af1fbdd6650167e38dd9ed07b3119"
+      "hash": "fffaa4832f70a88c8fc6632eb8be649569c93969c3e7fc4615f5a6dff4428545"
     },
     "/03-features/mermaid": {
       "outputPath": "public/assets/og/03-features/mermaid/index.jpg",
@@ -33,6 +33,10 @@
     "/03-features/navigation": {
       "outputPath": "public/assets/og/03-features/navigation/index.jpg",
       "hash": "973b1962e6ac72626fc54cee568dce33fa89926238d2dba60d49e95628573e5c"
+    },
+    "/03-features/quiz": {
+      "outputPath": "public/assets/og/03-features/quiz/index.jpg",
+      "hash": "542d58f9ef27d603c2f453a3ed5b62d4a7fa74a5a67071b2a612f95d5613fab8"
     },
     "/03-features/search": {
       "outputPath": "public/assets/og/03-features/search/index.jpg",
