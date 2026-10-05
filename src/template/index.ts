@@ -2264,8 +2264,8 @@ body {
 }
 .quiz-explanation,
 .quiz-model-answer {
-  border-left: 4px solid #1a7f37;
-  background: #dafbe1;
+  border-left: 4px solid #0969da;
+  background: #ddf4ff;
   border-radius: 4px;
   padding: 10px 14px;
   margin-top: 8px;
@@ -2273,8 +2273,8 @@ body {
 }
 [data-theme="dark"] .quiz-explanation,
 [data-theme="dark"] .quiz-model-answer {
-  border-color: #3fb950;
-  background: #0f2616;
+  border-color: #58a6ff;
+  background: #0c1c38;
 }
 .quiz-practice-check,
 .quiz-reveal {
