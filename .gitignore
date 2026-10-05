@@ -39,6 +39,8 @@ coverage/
 *.tmp
 *.temp
 .cache/
+__pycache__/
+*.pyc
 
 # Test artifacts
 test/fixtures/temp/
