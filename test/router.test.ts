@@ -55,6 +55,29 @@ describe("router", () => {
       "# Nested\n\nNested content.",
     );
 
+    // Hidden directories and files that must not be served
+    await fs.mkdir(path.join(tempDir, ".github", "workflows"), {
+      recursive: true,
+    });
+    await fs.writeFile(
+      path.join(tempDir, ".github", "workflows", "img.png"),
+      "hidden-image",
+    );
+    await fs.mkdir(path.join(tempDir, ".hidden"));
+    await fs.writeFile(
+      path.join(tempDir, ".hidden", "page.md"),
+      "# Hidden page",
+    );
+    await fs.mkdir(path.join(tempDir, "_private"));
+    await fs.writeFile(
+      path.join(tempDir, "_private", "page.md"),
+      "# Private page",
+    );
+    await fs.writeFile(
+      path.join(tempDir, "package.json"),
+      '{"name":"docs"}',
+    );
+
     server = await createServer(tempDir, { port: 0, host: "localhost" });
     baseUrl = server.url;
   });
@@ -305,6 +328,35 @@ describe("router", () => {
       await fs.rm(readmeDir, { recursive: true, force: true });
       await fs.rm(htmlDir, { recursive: true, force: true });
       await fs.rm(outsideDir, { recursive: true, force: true });
+    }
+  });
+
+  it("returns 404 for files inside hidden directories", async () => {
+    for (const requestPath of [
+      "/.github/",
+      "/.github/workflows/",
+      "/.github/workflows/img.png",
+      "/.hidden/page.md",
+      "/.hidden/page",
+      "/_private/page.md",
+    ]) {
+      const res = await requestRaw(baseUrl, requestPath);
+      assert.strictEqual(
+        res.statusCode,
+        404,
+        `expected ${requestPath} to be hidden, got ${res.statusCode}`,
+      );
+    }
+  });
+
+  it("returns 404 for package.json and package-lock.json", async () => {
+    for (const requestPath of ["/package.json", "/package-lock.json"]) {
+      const res = await requestRaw(baseUrl, requestPath);
+      assert.strictEqual(
+        res.statusCode,
+        404,
+        `expected ${requestPath} to be hidden, got ${res.statusCode}`,
+      );
     }
   });
 

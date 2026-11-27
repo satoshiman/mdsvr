@@ -193,12 +193,22 @@ export async function renderDirectoryPage(
 
 export function isHidden(filename: string, settings: Settings): boolean {
   for (const pattern of settings.files.extensions.hidden) {
-    if (filename === pattern) return true;
-    if (pattern.startsWith("*") && filename.endsWith(pattern.slice(1)))
-      return true;
+    if (matchHiddenPattern(filename, pattern)) return true;
   }
   if (filename.startsWith("_") || filename.startsWith(".")) return true;
   return false;
+}
+
+/** `*` in a hidden pattern matches any run of characters (glob-style). */
+function matchHiddenPattern(filename: string, pattern: string): boolean {
+  if (!pattern.includes("*")) return filename === pattern;
+  const regex = new RegExp(
+    `^${pattern
+      .split("*")
+      .map((part) => part.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"))
+      .join(".*")}$`,
+  );
+  return regex.test(filename);
 }
 
 export function isBlocked(ext: string, settings: Settings): boolean {

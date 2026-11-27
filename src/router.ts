@@ -138,8 +138,15 @@ export async function route(
     return;
   }
 
-  // Check for hidden files
-  if (isHidden(path.basename(resolvedPath), settings)) {
+  // Check for hidden files: every path segment must be checked, not just
+  // the basename, so a file inside a hidden directory (e.g. `.github`,
+  // `_mdsvr`, or a settings `hidden` pattern like `package*.json`) cannot
+  // be served either.
+  const pathSegments = path
+    .relative(resolvedRootPath, resolvedPath)
+    .split(path.sep)
+    .filter(Boolean);
+  if (pathSegments.some((segment) => isHidden(segment, settings))) {
     sendError(res, 404, "Not Found", settings);
     return;
   }

@@ -2,6 +2,7 @@ import path from "node:path";
 import { promises as fs } from "node:fs";
 import matter from "gray-matter";
 import { fencedCodeLines } from "../markdown-fences.js";
+import { isHidden as isHiddenName } from "../render-page.js";
 import type { Settings } from "../settings/index.js";
 
 export interface SearchEntry {
@@ -13,17 +14,7 @@ export interface SearchEntry {
 }
 
 function isHidden(filePath: string, settings: Settings): boolean {
-  const basename = path.basename(filePath);
-
-  for (const pattern of settings.files.extensions.hidden) {
-    if (basename === pattern) return true;
-    if (pattern.startsWith("*") && basename.endsWith(pattern.slice(1)))
-      return true;
-  }
-
-  if (basename.startsWith("_") || basename.startsWith(".")) return true;
-
-  return false;
+  return isHiddenName(path.basename(filePath), settings);
 }
 
 function stripMarkdown(content: string): string {
