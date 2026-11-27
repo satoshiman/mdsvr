@@ -16,10 +16,10 @@
 })();
 </script>
   <title>Mermaid Diagrams in mdsvr | MDSVR | Markdown Documentation Server</title>
-    <meta name="description" content="mdsvr supports Mermaid.js for creating beautiful diagrams directly in your Markdown files. Simply wrap your Mermaid code in triple backticks with the mermaid...">
+    <meta name="description" content="mdsvr supports Mermaid syntax for creating beautiful diagrams directly in your Markdown files. Simply wrap your Mermaid code in triple backticks with the...">
     <link rel="canonical" href="https://mdsvr.js.org/docs/03-features/mermaid/">
     <meta property="og:title" content="Mermaid Diagrams in mdsvr | MDSVR | Markdown Documentation Server">
-    <meta property="og:description" content="mdsvr supports Mermaid.js for creating beautiful diagrams directly in your Markdown files. Simply wrap your Mermaid code in triple backticks with the mermaid...">
+    <meta property="og:description" content="mdsvr supports Mermaid syntax for creating beautiful diagrams directly in your Markdown files. Simply wrap your Mermaid code in triple backticks with the...">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="MDSVR | Markdown Documentation Server">
     <meta property="og:locale" content="en_US">
@@ -30,13 +30,13 @@
     <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Mermaid Diagrams in mdsvr | MDSVR | Markdown Documentation Server">
-    <meta name="twitter:description" content="mdsvr supports Mermaid.js for creating beautiful diagrams directly in your Markdown files. Simply wrap your Mermaid code in triple backticks with the mermaid...">
+    <meta name="twitter:description" content="mdsvr supports Mermaid syntax for creating beautiful diagrams directly in your Markdown files. Simply wrap your Mermaid code in triple backticks with the...">
     <meta name="twitter:image" content="https://mdsvr.js.org/docs/public/assets/og/03-features/mermaid/index.jpg">
     <meta name="twitter:image:alt" content="Mermaid Diagrams in mdsvr">
-    <meta property="article:published_time" content="2026-10-05">
-    <meta property="article:modified_time" content="2026-10-05">
+    <meta property="article:published_time" content="2026-11-27">
+    <meta property="article:modified_time" content="2026-11-27">
     <link rel="sitemap" type="application/xml" href="/docs/sitemap.xml">
-  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"Mermaid Diagrams in mdsvr","description":"mdsvr supports Mermaid.js for creating beautiful diagrams directly in your Markdown files. Simply wrap your Mermaid code in triple backticks with the mermaid...","url":"https://mdsvr.js.org/docs/03-features/mermaid/","image":"https://mdsvr.js.org/docs/public/assets/og/03-features/mermaid/index.jpg","datePublished":"2026-10-05","dateModified":"2026-10-05"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://mdsvr.js.org/docs/"},{"@type":"ListItem","position":2,"name":"Features","item":"https://mdsvr.js.org/docs/03-features/"},{"@type":"ListItem","position":3,"name":"Mermaid Diagrams in mdsvr","item":"https://mdsvr.js.org/docs/03-features/mermaid/"}]}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"Mermaid Diagrams in mdsvr","description":"mdsvr supports Mermaid syntax for creating beautiful diagrams directly in your Markdown files. Simply wrap your Mermaid code in triple backticks with the...","url":"https://mdsvr.js.org/docs/03-features/mermaid/","image":"https://mdsvr.js.org/docs/public/assets/og/03-features/mermaid/index.jpg","datePublished":"2026-11-27","dateModified":"2026-11-27"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://mdsvr.js.org/docs/"},{"@type":"ListItem","position":2,"name":"Features","item":"https://mdsvr.js.org/docs/03-features/"},{"@type":"ListItem","position":3,"name":"Mermaid Diagrams in mdsvr","item":"https://mdsvr.js.org/docs/03-features/mermaid/"}]}]}</script>
   
   
   
@@ -44,6 +44,7 @@
 
 :root {
   --accent-color: #0969da;
+  --header-height: 56px;
 }
 
 :root[data-theme="light"] {
@@ -86,55 +87,171 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  height: 60px;
-  background: var(--bg-secondary);
+  height: var(--header-height);
+  background: var(--bg);
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  backdrop-filter: blur(14px) saturate(1.5);
+  -webkit-backdrop-filter: blur(14px) saturate(1.5);
   border-bottom: 1px solid var(--border);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 24px;
+  padding: 0 16px 0 12px;
   z-index: 100;
 }
 
 .header-left, .header-right {
   display: flex;
   align-items: center;
-  gap: 16px;
+}
+
+.header-left {
+  gap: 4px;
+}
+
+.header-right {
+  gap: 6px;
 }
 
 .site-logo {
   color: var(--text);
-  font-weight: 600;
-  font-size: 18px;
   text-decoration: none;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 9px;
+  margin-left: 6px;
+  min-width: 0;
 }
 
 .site-logo img {
-  height: 28px;
+  height: 26px;
   width: auto;
 }
 
-.search-trigger, .theme-toggle, .view-toggle, .sidebar-toggle {
-  background: transparent;
-  border: 1px solid var(--border);
-  color: var(--text-muted);
-  height: 36px;
-  padding: 0 12px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 14px;
+.site-logo-mark {
+  width: 26px;
+  height: 26px;
+  border-radius: 7px;
   display: flex;
   align-items: center;
-  gap: 6px;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 13%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 25%, transparent);
 }
 
-.search-trigger:hover, .theme-toggle:hover, .view-toggle:hover, .sidebar-toggle:hover,
-.search-trigger:focus-visible, .theme-toggle:focus-visible, .view-toggle:focus-visible, .sidebar-toggle:focus-visible {
-  border-color: var(--accent);
+.site-logo-text {
+  display: flex;
+  align-items: baseline;
+  min-width: 0;
+}
+
+.site-logo-name {
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  transition: color 0.12s ease;
+}
+
+.site-logo:hover .site-logo-name {
+  color: var(--accent);
+}
+
+.site-logo-sep {
+  color: var(--border);
+  font-weight: 300;
+  margin: 0 9px;
+}
+
+.site-logo-tag {
+  color: var(--text-muted);
+  font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.search-trigger {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 34px;
+  width: 240px;
+  padding: 0 8px 0 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg-secondary);
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 13px;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.search-trigger:hover {
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--border));
   color: var(--text);
+}
+
+.search-trigger svg {
+  flex-shrink: 0;
+}
+
+.search-trigger-label {
+  flex: 1;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.search-shortcut {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  line-height: 1;
+  padding: 3px 5px;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  background: var(--bg);
+  color: var(--text-muted);
+}
+
+.theme-toggle, .view-toggle, .sidebar-toggle {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.12s ease, color 0.12s ease;
+}
+
+.theme-toggle:hover, .view-toggle:hover, .sidebar-toggle:hover {
+  background: color-mix(in srgb, var(--text) 7%, transparent);
+  color: var(--text);
+}
+
+.theme-icon-light, .theme-icon-dark,
+.view-icon-contained, .view-icon-wide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-trigger:focus-visible, .theme-toggle:focus-visible,
+.view-toggle:focus-visible, .sidebar-toggle:focus-visible,
+.site-logo:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 .view-icon-wide {
@@ -149,11 +266,6 @@ body {
   display: flex;
 }
 
-.sidebar-toggle {
-  font-size: 18px;
-  padding: 6px 10px;
-}
-
 .sidebar-toggle-mobile {
   display: none;
 }
@@ -162,12 +274,32 @@ body {
   display: flex;
 }
 
+@media (max-width: 860px) {
+  .site-logo-sep, .site-logo-tag {
+    display: none;
+  }
+}
+
 @media (max-width: 768px) {
   .sidebar-toggle-mobile {
     display: flex;
   }
   .sidebar-toggle-desktop,
   .view-toggle {
+    display: none;
+  }
+  .search-trigger {
+    width: 32px;
+    padding: 0;
+    justify-content: center;
+    border-color: transparent;
+    background: transparent;
+  }
+  .search-trigger:hover {
+    background: color-mix(in srgb, var(--text) 7%, transparent);
+    border-color: transparent;
+  }
+  .search-trigger-label, .search-shortcut {
     display: none;
   }
 }
@@ -189,15 +321,10 @@ body {
   }
 }
 
-.search-shortcut {
-  font-size: 12px;
-  opacity: 0.6;
-}
-
 .site-container {
   display: flex;
-  margin-top: 60px;
-  min-height: calc(100vh - 60px);
+  margin-top: var(--header-height);
+  min-height: calc(100vh - var(--header-height));
 }
 
 .sidebar {
@@ -205,13 +332,36 @@ body {
   flex-shrink: 0;
   background: var(--bg-secondary);
   border-right: 1px solid var(--border);
-  padding: 24px 16px;
+  padding: 16px 12px 32px;
   overflow-y: auto;
   position: fixed;
-  top: 60px;
+  top: var(--header-height);
   bottom: 0;
   left: 0;
   transition: transform 0.25s ease;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 4px;
+}
+
+.sidebar:hover::-webkit-scrollbar-thumb {
+  background: var(--border);
+}
+
+.sidebar-overlay {
+  display: none;
 }
 
 .sidebar-nav {
@@ -221,67 +371,136 @@ body {
 }
 
 .nav-item {
-  margin: 4px 0;
+  margin: 1px 0;
+}
+
+.sidebar-nav[data-level="0"] > .nav-item.folder:not(:first-child) {
+  margin-top: 14px;
 }
 
 .nav-link {
   display: block;
-  padding: 6px 12px;
+  padding: 6px 8px 6px 28px;
   color: var(--text-muted);
   text-decoration: none;
   border-radius: 6px;
   font-size: 14px;
+  line-height: 1.45;
+  transition: background 0.12s ease, color 0.12s ease;
 }
 
 .nav-link:hover {
-  background: var(--bg);
+  background: color-mix(in srgb, var(--text) 6%, transparent);
   color: var(--text);
 }
 
-.nav-link.active {
-  background: var(--accent);
-  color: white;
-}
-
-.nav-children {
-  margin-left: 14px;
-  border-left: 1px solid var(--border);
-  padding-left: 0;
-}
-
-.nav-children[data-expanded="false"] {
-  display: none;
+.nav-link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
 }
 
 .nav-item-header {
   display: flex;
   align-items: center;
-  gap: 4px;
+  padding: 0 4px 0 2px;
+  border-radius: 6px;
   cursor: pointer;
+  transition: background 0.12s ease;
+}
+
+.nav-item-header:hover {
+  background: color-mix(in srgb, var(--text) 6%, transparent);
+}
+
+.nav-item-header .nav-link {
+  flex: 1;
+  min-width: 0;
+  padding: 6px 4px 6px 6px;
+  color: var(--text);
+  font-weight: 500;
+}
+
+.nav-item-header .nav-link:hover {
+  background: none;
 }
 
 .nav-toggle {
-  margin-left: auto;
+  width: 20px;
+  height: 20px;
+  padding: 0;
   background: none;
   border: none;
   cursor: pointer;
-  padding: 4px;
   color: var(--text-muted);
   display: flex;
   align-items: center;
+  justify-content: center;
   flex-shrink: 0;
-}
-
-.nav-toggle svg {
-  transition: transform 0.2s;
+  border-radius: 4px;
 }
 
 .nav-toggle:hover {
   color: var(--text);
 }
 
+.nav-toggle svg {
+  transition: transform 0.2s ease;
+}
+
 .nav-item-header[data-expanded="true"] .nav-toggle svg {
   transform: rotate(90deg);
+}
+
+.nav-item.active > .nav-link {
+  color: var(--accent);
+  background: var(--bg);
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+}
+
+.nav-item.active > .nav-item-header {
+  background: var(--bg);
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+}
+
+.nav-item.active > .nav-item-header .nav-link {
+  color: var(--accent);
+}
+
+.nav-item.active > .nav-item-header .nav-toggle {
+  color: var(--accent);
+}
+
+/* A section that merely contains the active page marks itself with
+   accent text only; the pill belongs to the actual page. */
+.nav-item.has-active-child > .nav-item-header {
+  background: transparent;
+}
+
+.nav-item.has-active-child > .nav-item-header:hover {
+  background: color-mix(in srgb, var(--text) 6%, transparent);
+}
+
+.nav-item.has-active-child > .nav-item-header .nav-link {
+  font-weight: 500;
+}
+
+.nav-children {
+  margin-left: 12px;
+  padding-left: 10px;
+  border-left: 1px solid var(--border);
+  display: grid;
+  grid-template-rows: 1fr;
+  transition: grid-template-rows 0.2s ease, visibility 0.2s;
+}
+
+.nav-children > .sidebar-nav {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.nav-children[data-expanded="false"] {
+  grid-template-rows: 0fr;
+  visibility: hidden;
 }
 
 
@@ -317,7 +536,7 @@ body {
   padding: 32px 24px;
   position: fixed;
   right: 0;
-  top: 60px;
+  top: var(--header-height);
   bottom: 0;
   overflow-y: auto;
 }
@@ -1342,6 +1561,36 @@ body {
 .mermaid-container[data-mode="code"] .mermaid-source {
   display: block;
 }
+/* Pele-rendered diagrams resolve colors and fonts from these variables:
+   a single server render adapts to the active theme automatically. */
+.pele {
+  --pele-bg: var(--bg);
+  --pele-fg: var(--text);
+  --pele-fg-on-light: var(--text);
+  --pele-muted: var(--text-muted);
+  --pele-line: var(--text);
+  --pele-surface: color-mix(in srgb, var(--accent) 10%, var(--bg));
+  --pele-surface-alt: color-mix(in srgb, var(--accent) 16%, var(--bg));
+  --pele-border: color-mix(in srgb, var(--accent) 45%, var(--border));
+  --pele-accent: var(--accent);
+  --pele-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+  --pele-font-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+}
+[data-theme="dark"] .pele {
+  --pele-fg-on-dark: #ffffff;
+}
+.mermaid-error {
+  border-left: 4px solid #cf222e;
+  background: #ffebe9;
+  padding: 12px 16px;
+  border-radius: 4px;
+  text-align: left;
+  font-size: 14px;
+}
+[data-theme="dark"] .mermaid-error {
+  border-color: #f85149;
+  background: #3c0e0e;
+}
 /* Mermaid fullscreen */
 .mermaid-container.fullscreen {
   position: fixed;
@@ -1408,10 +1657,27 @@ body {
     transform: translateX(-100%);
     transition: transform 0.2s;
     z-index: 90;
-    box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+    box-shadow: 2px 0 12px rgba(0,0,0,0.12);
   }
   .sidebar.open {
     transform: translateX(0);
+  }
+  .sidebar-overlay {
+    display: block;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: var(--header-height);
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.35);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    z-index: 85;
+  }
+  .sidebar.open + .sidebar-overlay {
+    opacity: 1;
+    pointer-events: auto;
   }
   .content,
   .has-toc .content {
@@ -1421,6 +1687,14 @@ body {
   }
   .site-container {
     flex-direction: column;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-children, .nav-toggle svg, .nav-link, .nav-item-header,
+  .site-logo-name, .sidebar, .sidebar-overlay, .content,
+  .search-trigger, .theme-toggle, .view-toggle, .sidebar-toggle {
+    transition: none;
   }
 }
 
@@ -1678,26 +1952,33 @@ code.hljs {
   
   <header class="site-header">
     <div class="header-left">
-      <button class="sidebar-toggle sidebar-toggle-mobile" onclick="document.getElementById('sidebar').classList.toggle('open')" aria-label="Toggle menu">☰</button><button class="sidebar-toggle sidebar-toggle-desktop" onclick="toggleDesktopSidebar()" aria-label="Toggle sidebar">☰</button>
-      <a href="/docs/" class="site-logo">MDSVR | Markdown Documentation Server</a>
+      <button class="sidebar-toggle sidebar-toggle-mobile" onclick="document.getElementById('sidebar').classList.toggle('open')" aria-label="Toggle menu"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="4" x2="20" y1="7" y2="7"/><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="17" y2="17"/></svg></button><button class="sidebar-toggle sidebar-toggle-desktop" onclick="toggleDesktopSidebar()" aria-label="Toggle sidebar" title="Toggle sidebar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/></svg></button>
+      <a href="/docs/" class="site-logo">
+        <span class="site-logo-mark" aria-hidden="true">M</span>
+        <span class="site-logo-text">
+          <span class="site-logo-name">MDSVR</span>
+          <span class="site-logo-sep" aria-hidden="true">/</span><span class="site-logo-tag">Markdown Documentation Server</span>
+        </span>
+       </a>
     </div>
     <div class="header-right">
       
-<button class="search-trigger" onclick="openSearch()" title="Search (Cmd+K)">
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M7.33333 12.6667C10.2789 12.6667 12.6667 10.2789 12.6667 7.33333C12.6667 4.38781 10.2789 2 7.33333 2C4.38781 2 2 4.38781 2 7.33333C2 10.2789 4.38781 12.6667 7.33333 12.6667Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M14 14L11.3333 11.3333" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<button class="search-trigger" onclick="openSearch()" title="Search (⌘K)" aria-label="Search">
+  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <circle cx="11" cy="11" r="7"/>
+    <path d="m21 21-4.35-4.35"/>
   </svg>
-  <span class="search-shortcut">⌘K</span>
+  <span class="search-trigger-label">Search documentation...</span>
+  <kbd class="search-shortcut">⌘K</kbd>
 </button>
 
       <button class="view-toggle" onclick="toggleContentView()" title="Use wide content view" aria-label="Use wide content view" aria-pressed="false">
-    <span class="view-icon-contained" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="4" width="14" height="16" rx="1"/><path d="M9 8h6M9 12h6M9 16h4"/></svg></span>
-    <span class="view-icon-wide" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M7 8h10M7 12h10M7 16h7"/></svg></span>
+    <span class="view-icon-contained" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="M20.288 16.703A1 1 0 0 0 22 16V8a1 1 0 0 0-1.712-.703l-3.99 3.991a1 1 0 0 0-.001 1.424z"/><path d="M3.712 16.703A1 1 0 0 1 2 16V8a1 1 0 0 1 1.712-.703l3.99 3.991a1 1 0 0 1 .001 1.424z"/></svg></span>
+    <span class="view-icon-wide" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="M17.712 16.703A1 1 0 0 1 15.999 16V8a1 1 0 0 1 1.713-.703l3.99 3.991a1 1 0 0 1 .001 1.424z"/><path d="M6.288 16.703A1 1 0 0 0 8.001 16V8a1 1 0 0 0-1.713-.703l-3.99 3.991a1 1 0 0 0-.001 1.424z"/></svg></span>
   </button>
-      <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
-        <span class="theme-icon-light">☀️</span>
-        <span class="theme-icon-dark">🌙</span>
+      <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme" aria-label="Toggle theme">
+        <span class="theme-icon-light"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></span>
+        <span class="theme-icon-dark"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg></span>
        </button>
     </div>
   </header>
@@ -1708,15 +1989,15 @@ code.hljs {
     <a href="/docs/" class="nav-link">Welcome</a>
   </li>
   <li class="nav-item folder" data-type="dir">
-    <a href="/docs/01-getting-started/" class="nav-link">📁 Getting Started</a>
+    <a href="/docs/01-getting-started/" class="nav-link">Getting Started</a>
   </li>
   <li class="nav-item folder" data-type="dir">
-    <a href="/docs/02-settings/" class="nav-link">📁 Guides</a>
+    <a href="/docs/02-settings/" class="nav-link">Guides</a>
   </li>
   <li class="nav-item active folder" data-type="dir">
     <div class="nav-item-header" data-expanded="true">
-      <a href="/docs/03-features/" class="nav-link active" data-folder-icon="open"><span class="folder-icon">📂</span> Features</a>
-      <button type="button" class="nav-toggle" aria-label="Toggle folder"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></button>
+      <button type="button" class="nav-toggle" aria-expanded="true" aria-label="Toggle folder"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></button>
+      <a href="/docs/03-features/" class="nav-link active">Features</a>
     </div>
     <div class="nav-children" data-expanded="true">
     <ul class="sidebar-nav" data-level="1">
@@ -1751,47 +2032,12 @@ code.hljs {
     </div>
   </li>
   <li class="nav-item folder" data-type="dir">
-    <a href="/docs/04-reference/" class="nav-link">📁 Reference</a>
+    <a href="/docs/04-reference/" class="nav-link">Reference</a>
   </li>
   <li class="nav-item folder" data-type="dir">
-    <div class="nav-item-header" data-expanded="false">
-      <a href="/docs/09-architecture/" class="nav-link" data-folder-icon="closed"><span class="folder-icon">📁</span> Architecture</a>
-      <button type="button" class="nav-toggle" aria-label="Toggle folder"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></button>
-    </div>
-    <div class="nav-children" data-expanded="false">
-    <ul class="sidebar-nav" data-level="1">
-      <li class="nav-item folder" data-type="dir">
-        <div class="nav-item-header" data-expanded="false">
-          <a href="/docs/09-architecture/adr/" class="nav-link" data-folder-icon="closed"><span class="folder-icon">📁</span> Adr</a>
-          <button type="button" class="nav-toggle" aria-label="Toggle folder"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></button>
-        </div>
-        <div class="nav-children" data-expanded="false">
-        <ul class="sidebar-nav" data-level="2">
-          <li class="nav-item" data-type="file">
-            <a href="/docs/09-architecture/adr/001-file-based-content-storage/" class="nav-link">ADR-001: File-based content storage instead of database</a>
-          </li>
-          <li class="nav-item" data-type="file">
-            <a href="/docs/09-architecture/adr/002-server-side-mdx-rendering/" class="nav-link">ADR-002: Server-side MDX rendering instead of client-side</a>
-          </li>
-          <li class="nav-item" data-type="file">
-            <a href="/docs/09-architecture/adr/003-zero-configuration-with-defaults/" class="nav-link">ADR-003: Zero configuration with sensible defaults</a>
-          </li>
-          <li class="nav-item" data-type="file">
-            <a href="/docs/09-architecture/adr/004-client-side-search-with-pre-built-index/" class="nav-link">ADR-004: Client-side search with pre-built index instead of external service</a>
-          </li>
-          <li class="nav-item" data-type="file">
-            <a href="/docs/09-architecture/adr/005-incremental-static-export/" class="nav-link">ADR-005: Incremental static export with hash-based caching</a>
-          </li>
-          <li class="nav-item" data-type="file">
-            <a href="/docs/09-architecture/adr/006-markdown-validation-and-autofix/" class="nav-link">ADR-006: Markdown validation and auto-fixing</a>
-          </li>
-        </ul>
-        </div>
-      </li>
-    </ul>
-    </div>
+    <a href="/docs/10-changelog/" class="nav-link">Changelog</a>
   </li>
-</ul></aside>
+</ul></aside><div class="sidebar-overlay" onclick="document.getElementById('sidebar').classList.remove('open')"></div>
     <main class="content">
       <nav class="breadcrumbs">
     <a href="/docs/">Home</a>
@@ -1799,7 +2045,7 @@ code.hljs {
   </nav>
       <article class="markdown-body">
         <h1 id="mermaid-diagrams-in-mdsvr" tabindex="-1">Mermaid Diagrams in mdsvr</h1>
-<p>mdsvr supports <strong>Mermaid.js</strong> for creating beautiful diagrams directly in your Markdown files. Simply wrap your Mermaid code in triple backticks with the <code>mermaid</code> language identifier, and mdsvr will render it as an interactive diagram.</p>
+<p>mdsvr supports <strong>Mermaid</strong> syntax for creating beautiful diagrams directly in your Markdown files. Simply wrap your Mermaid code in triple backticks with the <code>mermaid</code> language identifier, and mdsvr will render it as an interactive diagram. Diagrams are rendered to SVG at serve/export time by <a href="https://pele.run">Pele</a>, with no client-side JavaScript needed, and they follow your site theme automatically.</p>
 <h2 id="quick-start" tabindex="-1">Quick Start</h2>
 <div class="mermaid-wrapper"><div class="mermaid-container">
   <div class="mermaid-toolbar">
@@ -1812,10 +2058,7 @@ code.hljs {
     <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
   </div>
   <div class="mermaid-chart">
-    <div class="mermaid">flowchart LR
-    A[Write Markdown] --> B[Add Mermaid Code]
-    B --> C[mdsvr Renders]
-    C --> D[Beautiful Diagram]</div>
+    <div class="mermaid"><svg xmlns="http://www.w3.org/2000/svg" class="pele pele-flowchart" viewBox="0 0 794 64" width="794" height="64" style="max-width:100%;height:auto;--_bg:var(--pele-bg,#fff);--_fg:var(--pele-fg,#1f1f1f);--_m:var(--pele-muted,#6e6e6e);--_l:var(--pele-line,#1f1f1f);--_s:var(--pele-surface,#f3f3f3);--_a:var(--pele-surface-alt,#e6e6e6);--_b:var(--pele-border,#8a8a8a);--_c:var(--pele-accent,#5b7bd5);color:var(--_fg);--_r:var(--pele-radius,4px);--_fm:var(--pele-font-mono,monospace);font:16px sans-serif;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;font-family:var(--pele-font,sans-serif)" fill="var(--_fg)" role="graphics-document document" aria-roledescription="flowchart"><g class="pele-edges" fill="none" stroke="var(--_l)" stroke-linecap="round"><g class="pele-edge" data-id="L_A_B_0"><path d="M159.57,32L200.57,32"/><path class="pele-marker" d="M207.57,32L199.57,35.36L199.57,28.64Z" fill="var(--_l)" stroke="none"/></g><g class="pele-edge" data-id="L_B_C_0"><path d="M381.39,32L422.39,32"/><path class="pele-marker" d="M429.39,32L421.39,35.36L421.39,28.64Z" fill="var(--_l)" stroke="none"/></g><g class="pele-edge" data-id="L_C_D_0"><path d="M573.86,32L614.86,32"/><path class="pele-marker" d="M621.86,32L613.86,35.36L613.86,28.64Z" fill="var(--_l)" stroke="none"/></g></g><g class="pele-nodes"><g class="pele-node pele-shape-rect" data-id="A" transform="translate(83.78,32)"><rect x="-75.78" y="-24" width="151.57" height="48" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><text class="pele-label" x="0" y="5.6" text-anchor="middle">Write Markdown</text></g><g class="pele-node pele-shape-rect" data-id="B" transform="translate(294.48,32)"><rect x="-86.91" y="-24" width="173.82" height="48" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><text class="pele-label" x="0" y="5.6" text-anchor="middle">Add Mermaid Code</text></g><g class="pele-node pele-shape-rect" data-id="C" transform="translate(501.62,32)"><rect x="-72.23" y="-24" width="144.46" height="48" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><text class="pele-label" x="0" y="5.6" text-anchor="middle">mdsvr Renders</text></g><g class="pele-node pele-shape-rect" data-id="D" transform="translate(703.43,32)"><rect x="-81.58" y="-24" width="163.15" height="48" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><text class="pele-label" x="0" y="5.6" text-anchor="middle">Beautiful Diagram</text></g></g></svg></div>
   </div>
   <pre class="mermaid-source"><code>flowchart LR
     A[Write Markdown] --&gt; B[Add Mermaid Code]
@@ -1835,9 +2078,7 @@ code.hljs {
     <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
   </div>
   <div class="mermaid-chart">
-    <div class="mermaid">flowchart TD
-    A[Diagram Type] --> B[Content]
-    B --> C[End]</div>
+    <div class="mermaid"><svg xmlns="http://www.w3.org/2000/svg" class="pele pele-flowchart" viewBox="0 0 153 256" width="153" height="256" style="max-width:100%;height:auto;--_bg:var(--pele-bg,#fff);--_fg:var(--pele-fg,#1f1f1f);--_m:var(--pele-muted,#6e6e6e);--_l:var(--pele-line,#1f1f1f);--_s:var(--pele-surface,#f3f3f3);--_a:var(--pele-surface-alt,#e6e6e6);--_b:var(--pele-border,#8a8a8a);--_c:var(--pele-accent,#5b7bd5);color:var(--_fg);--_r:var(--pele-radius,4px);--_fm:var(--pele-font-mono,monospace);font:16px sans-serif;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;font-family:var(--pele-font,sans-serif)" fill="var(--_fg)" role="graphics-document document" aria-roledescription="flowchart"><g class="pele-edges" fill="none" stroke="var(--_l)" stroke-linecap="round"><g class="pele-edge" data-id="L_A_B_0"><path d="M76.23,56L76.23,97"/><path class="pele-marker" d="M76.23,104L72.87,96L79.59,96Z" fill="var(--_l)" stroke="none"/></g><g class="pele-edge" data-id="L_B_C_0"><path d="M76.23,152L76.23,193"/><path class="pele-marker" d="M76.23,200L72.87,192L79.59,192Z" fill="var(--_l)" stroke="none"/></g></g><g class="pele-nodes"><g class="pele-node pele-shape-rect" data-id="A" transform="translate(76.23,32)"><rect x="-68.23" y="-24" width="136.46" height="48" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><text class="pele-label" x="0" y="5.6" text-anchor="middle">Diagram Type</text></g><g class="pele-node pele-shape-rect" data-id="B" transform="translate(76.23,128)"><rect x="-46.02" y="-24" width="92.03" height="48" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><text class="pele-label" x="0" y="5.6" text-anchor="middle">Content</text></g><g class="pele-node pele-shape-rect" data-id="C" transform="translate(76.23,224)"><rect x="-32.23" y="-24" width="64.46" height="48" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><text class="pele-label" x="0" y="5.6" text-anchor="middle">End</text></g></g></svg></div>
   </div>
   <pre class="mermaid-source"><code>flowchart TD
     A[Diagram Type] --&gt; B[Content]
@@ -1863,22 +2104,7 @@ code.hljs {
     <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
   </div>
   <div class="mermaid-chart">
-    <div class="mermaid">flowchart TD
-    A["User visits site"] --> B{"Logged in?"}
-    B -->|"Yes"| C["Show dashboard"]
-    B -->|"No"| D["Show login form"]
-    D --> E{"Valid credentials?"}
-    E -->|"Yes"| F["Create session"]
-    E -->|"No"| G["Show error"]
-    F --> C
-    G --> D
-
-    subgraph Auth["Authentication System"]
-        D
-        E
-        F
-        G
-    end</div>
+    <div class="mermaid"><svg xmlns="http://www.w3.org/2000/svg" class="pele pele-flowchart" viewBox="0 0 418 811" width="418" height="811" style="max-width:100%;height:auto;--_bg:var(--pele-bg,#fff);--_fg:var(--pele-fg,#1f1f1f);--_m:var(--pele-muted,#6e6e6e);--_l:var(--pele-line,#1f1f1f);--_s:var(--pele-surface,#f3f3f3);--_a:var(--pele-surface-alt,#e6e6e6);--_b:var(--pele-border,#8a8a8a);--_c:var(--pele-accent,#5b7bd5);color:var(--_fg);--_r:var(--pele-radius,4px);--_fm:var(--pele-font-mono,monospace);font:16px sans-serif;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;font-family:var(--pele-font,sans-serif)" fill="var(--_fg)" role="graphics-document document" aria-roledescription="flowchart"><g class="pele-clusters"><g class="pele-cluster" data-id="Auth"><rect x="72.12" y="268.48" width="337.82" height="437.92" fill="var(--_a)" fill-opacity="0.5" stroke="var(--_b)" style="rx:var(--_r)"/><text class="pele-cluster-label" fill="var(--_m)" x="165.71" y="294.08" text-anchor="middle">Authentication System</text></g></g><g class="pele-edges" fill="none" stroke="var(--_l)" stroke-linecap="round"><g class="pele-edge" data-id="L_A_B_0"><path d="M141.33,56L141.33,97"/><path class="pele-marker" d="M141.33,104L137.97,96L144.69,96Z" fill="var(--_l)" stroke="none"/></g><g class="pele-edge" data-id="L_B_C_0"><path d="M133.33,190.48C133.33,229.48 26.06,229.48 26.06,268.48L26.06,706.4C26.06,723.9 69.18,723.9 69.18,741.4L69.18,747.4"/><path class="pele-marker" d="M69.18,754.4L65.82,746.4L72.54,746.4Z" fill="var(--_l)" stroke="none"/></g><g class="pele-edge" data-id="L_B_D_0"><path d="M149.33,190.48C149.33,203.23 256.59,203.23 256.59,215.98L256.59,321.48"/><path class="pele-marker" d="M256.59,328.48L253.23,320.48L259.95,320.48Z" fill="var(--_l)" stroke="none"/></g><g class="pele-edge" data-id="L_D_E_0"><path d="M233.24,376.48L233.24,389.48C233.24,400.48 188.86,400.48 188.86,411.48L188.86,417.48"/><path class="pele-marker" d="M188.86,424.48L185.5,416.48L192.22,416.48Z" fill="var(--_l)" stroke="none"/></g><g class="pele-edge" data-id="L_E_F_0"><path d="M164.35,530.09L164.35,611.4"/><path class="pele-marker" d="M164.35,618.4L160.99,610.4L167.71,610.4Z" fill="var(--_l)" stroke="none"/></g><g class="pele-edge" data-id="L_E_G_0"><path d="M206.9,534.12C206.9,550.01 317.88,550.01 317.88,565.9L317.88,611.4"/><path class="pele-marker" d="M317.88,618.4L314.52,610.4L321.24,610.4Z" fill="var(--_l)" stroke="none"/></g><g class="pele-edge" data-id="L_F_C_0"><path d="M164.35,666.4L164.35,706.4C164.35,723.9 121.24,723.9 121.24,741.4L121.24,747.4"/><path class="pele-marker" d="M121.24,754.4L117.88,746.4L124.6,746.4Z" fill="var(--_l)" stroke="none"/></g><g class="pele-edge" data-id="L_G_D_0"><path d="M340.83,618.4L340.83,424.48C340.83,406.98 279.94,406.98 279.94,389.48L279.94,383.48"/><path class="pele-marker" d="M279.94,376.48L283.3,384.48L276.58,384.48Z" fill="var(--_l)" stroke="none"/></g></g><g class="pele-edge-labels" font-size="14"><g class="pele-edge-label" data-id="L_B_C_0"><rect x="10" y="476.94" width="32.12" height="21" rx="3" fill="var(--_bg)"/><text x="26.06" y="492.34" text-anchor="middle">Yes</text></g><g class="pele-edge-label" data-id="L_B_D_0"><rect x="243.64" y="217.98" width="25.89" height="21" rx="3" fill="var(--_bg)"/><text x="256.59" y="233.38" text-anchor="middle">No</text></g><g class="pele-edge-label" data-id="L_E_F_0"><rect x="148.29" y="567.9" width="32.12" height="21" rx="3" fill="var(--_bg)"/><text x="164.35" y="583.3" text-anchor="middle">Yes</text></g><g class="pele-edge-label" data-id="L_E_G_0"><rect x="304.93" y="567.9" width="25.89" height="21" rx="3" fill="var(--_bg)"/><text x="317.88" y="583.3" text-anchor="middle">No</text></g></g><g class="pele-nodes"><g class="pele-node pele-shape-rect" data-id="A" transform="translate(141.33,32)"><rect x="-69.56" y="-24" width="139.12" height="48" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><text class="pele-label" x="0" y="5.6" text-anchor="middle">User visits site</text></g><g class="pele-node pele-shape-diam" data-id="B" transform="translate(141.33,149.74)"><polygon points="0,-45.74 73.18,0 0,45.74 -73.18,0" fill="var(--_s)" stroke="var(--_b)"/><text class="pele-label" x="0" y="5.6" text-anchor="middle">Logged in?</text></g><g class="pele-node pele-shape-rect" data-id="C" transform="translate(95.21,778.4)"><rect x="-78.03" y="-24" width="156.06" height="48" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><text class="pele-label" x="0" y="5.6" text-anchor="middle">Show dashboard</text></g><g class="pele-node pele-shape-rect" data-id="D" transform="translate(256.59,352.48)"><rect x="-75.35" y="-24" width="150.7" height="48" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><text class="pele-label" x="0" y="5.6" text-anchor="middle">Show login form</text></g><g class="pele-node pele-shape-diam" data-id="E" transform="translate(188.86,484.94)"><polygon points="0,-60.46 96.74,0 0,60.46 -96.74,0" fill="var(--_s)" stroke="var(--_b)"/><text class="pele-label" x="0" y="5.6" text-anchor="middle">Valid credentials?</text></g><g class="pele-node pele-shape-rect" data-id="F" transform="translate(164.35,642.4)"><rect x="-71.35" y="-24" width="142.7" height="48" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><text class="pele-label" x="0" y="5.6" text-anchor="middle">Create session</text></g><g class="pele-node pele-shape-rect" data-id="G" transform="translate(332.83,642.4)"><rect x="-57.12" y="-24" width="114.24" height="48" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><text class="pele-label" x="0" y="5.6" text-anchor="middle">Show error</text></g></g></svg></div>
   </div>
   <pre class="mermaid-source"><code>flowchart TD
     A["User visits site"] --&gt; B{"Logged in?"}
@@ -1925,23 +2151,7 @@ code.hljs {
     <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
   </div>
   <div class="mermaid-chart">
-    <div class="mermaid">sequenceDiagram
-    participant User
-    participant Browser
-    participant API as "API Server"
-    participant DB as "Database"
-
-    User->>Browser: Enter credentials
-    Browser->>+API: POST /auth/login
-    API->>+DB: Query user
-    DB-->>-API: User data
-    alt Valid credentials
-        API-->>-Browser: JWT token
-        Browser-->>User: Redirect to dashboard
-    else Invalid
-        API-->>Browser: 401 error
-        Browser-->>User: Show error message
-    end</div>
+    <div class="mermaid"><svg xmlns="http://www.w3.org/2000/svg" class="pele pele-sequence" viewBox="0 0 579 506" width="579" height="506" style="max-width:100%;height:auto;--_bg:var(--pele-bg,#fff);--_fg:var(--pele-fg,#1f1f1f);--_m:var(--pele-muted,#6e6e6e);--_l:var(--pele-line,#1f1f1f);--_s:var(--pele-surface,#f3f3f3);--_a:var(--pele-surface-alt,#e6e6e6);--_b:var(--pele-border,#8a8a8a);--_c:var(--pele-accent,#5b7bd5);color:var(--_fg);--_r:var(--pele-radius,4px);--_hw:var(--pele-heading-weight,bold);--_fm:var(--pele-font-mono,monospace);font:16px sans-serif;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;font-family:var(--pele-font,sans-serif)" fill="var(--_fg)" role="graphics-document document" aria-roledescription="sequence"><g transform="translate(40.89,8)"><g class="pele-lifelines" fill="none" stroke="var(--_b)"><path class="pele-lifeline" data-id="User" d="M0,44V446"/><path class="pele-lifeline" data-id="Browser" d="M171.73,44V446"/><path class="pele-lifeline" data-id="API" d="M317.43,44V446"/><path class="pele-lifeline" data-id="DB" d="M473.71,44V446"/></g><g class="pele-activations" fill="var(--_s)" stroke="var(--_b)"><rect class="pele-activation" data-id="API" x="312.43" y="124" width="10" height="146" rx="2"/><rect class="pele-activation" data-id="DB" x="468.71" y="161" width="10" height="37" rx="2"/></g><g class="pele-frames" font-size="14" stroke="var(--_b)"><g class="pele-frame pele-frame-alt"><rect x="-20" y="210" width="357.43" height="216" fill="none" style="rx:var(--_r)"/><path d="M-20,319H337.43" stroke-dasharray="4 4"/><rect x="-15" y="323" width="54.24" height="17" rx="3" fill="var(--_bg)" stroke="none"/><text class="pele-frame-label" fill="var(--_m)" stroke="none" x="12.12" y="336.4" text-anchor="middle">[Invalid]</text><rect x="-20" y="210" width="28" height="20" fill="var(--_s)" style="rx:var(--_r)"/><text class="pele-frame-kind" x="-6" y="224.2" text-anchor="middle" font-size="12" font-weight="var(--_hw)" fill="var(--_m)" stroke="none">alt</text><text class="pele-frame-label" fill="var(--_m)" stroke="none" x="71.25" y="225.4" text-anchor="middle">[Valid credentials]</text></g></g><g class="pele-edges" fill="none" stroke="var(--_l)" stroke-linecap="round"><g class="pele-edge pele-message" data-id="i0"><path d="M0,87H164.73"/><path class="pele-marker" d="M171.73,87L163.73,90.36L163.73,83.64Z" fill="var(--_l)" stroke="none"/></g><g class="pele-edge pele-message" data-id="i1"><path d="M171.73,124H305.43"/><path class="pele-marker" d="M312.43,124L304.43,127.36L304.43,120.64Z" fill="var(--_l)" stroke="none"/></g><g class="pele-edge pele-message" data-id="i3"><path d="M322.43,161H461.71"/><path class="pele-marker" d="M468.71,161L460.71,164.36L460.71,157.64Z" fill="var(--_l)" stroke="none"/></g><g class="pele-edge pele-message" data-id="i5"><path d="M468.71,198H329.43" stroke-dasharray="4 4"/><path class="pele-marker" d="M322.43,198L330.43,194.64L330.43,201.36Z" fill="var(--_l)" stroke="none"/></g><g class="pele-edge pele-message" data-id="i8"><path d="M312.43,270H178.73" stroke-dasharray="4 4"/><path class="pele-marker" d="M171.73,270L179.73,266.64L179.73,273.36Z" fill="var(--_l)" stroke="none"/></g><g class="pele-edge pele-message" data-id="i10"><path d="M171.73,307H7" stroke-dasharray="4 4"/><path class="pele-marker" d="M0,307L8,303.64L8,310.36Z" fill="var(--_l)" stroke="none"/></g><g class="pele-edge pele-message" data-id="i12"><path d="M317.43,377H178.73" stroke-dasharray="4 4"/><path class="pele-marker" d="M171.73,377L179.73,373.64L179.73,380.36Z" fill="var(--_l)" stroke="none"/></g><g class="pele-edge pele-message" data-id="i13"><path d="M171.73,414H7" stroke-dasharray="4 4"/><path class="pele-marker" d="M0,414L8,410.64L8,417.36Z" fill="var(--_l)" stroke="none"/></g></g><g class="pele-edge-labels" font-size="14"><g class="pele-edge-label" data-id="i0"><text x="85.87" y="77.4" text-anchor="middle">Enter credentials</text></g><g class="pele-edge-label" data-id="i1"><text x="242.08" y="114.4" text-anchor="middle">POST /auth/login</text></g><g class="pele-edge-label" data-id="i3"><text x="395.57" y="151.4" text-anchor="middle">Query user</text></g><g class="pele-edge-label" data-id="i5"><text x="395.57" y="188.4" text-anchor="middle">User data</text></g><g class="pele-edge-label" data-id="i8"><text x="242.08" y="260.4" text-anchor="middle">JWT token</text></g><g class="pele-edge-label" data-id="i10"><text x="85.87" y="297.4" text-anchor="middle">Redirect to dashboard</text></g><g class="pele-edge-label" data-id="i12"><text x="244.58" y="367.4" text-anchor="middle">401 error</text></g><g class="pele-edge-label" data-id="i13"><text x="85.87" y="404.4" text-anchor="middle">Show error message</text></g></g><g class="pele-nodes"><g class="pele-node pele-actor pele-actor-participant pele-actor-footer" data-id="User"><rect x="-32.89" y="446" width="65.78" height="44" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><text class="pele-label" x="0" y="473.6" text-anchor="middle">User</text></g><g class="pele-node pele-actor pele-actor-participant pele-actor-footer" data-id="Browser"><rect x="126.4" y="446" width="90.67" height="44" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><text class="pele-label" x="171.73" y="473.6" text-anchor="middle">Browser</text></g><g class="pele-node pele-actor pele-actor-participant pele-actor-footer" data-id="API"><rect x="257.07" y="446" width="120.72" height="44" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><text class="pele-label" x="317.43" y="473.6" text-anchor="middle">&quot;API Server&quot;</text></g><g class="pele-node pele-actor pele-actor-participant pele-actor-footer" data-id="DB"><rect x="417.79" y="446" width="111.84" height="44" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><text class="pele-label" x="473.71" y="473.6" text-anchor="middle">&quot;Database&quot;</text></g><g class="pele-node pele-actor pele-actor-participant" data-id="User"><rect x="-32.89" y="0" width="65.78" height="44" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><text class="pele-label" x="0" y="27.6" text-anchor="middle">User</text></g><g class="pele-node pele-actor pele-actor-participant" data-id="Browser"><rect x="126.4" y="0" width="90.67" height="44" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><text class="pele-label" x="171.73" y="27.6" text-anchor="middle">Browser</text></g><g class="pele-node pele-actor pele-actor-participant" data-id="API"><rect x="257.07" y="0" width="120.72" height="44" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><text class="pele-label" x="317.43" y="27.6" text-anchor="middle">&quot;API Server&quot;</text></g><g class="pele-node pele-actor pele-actor-participant" data-id="DB"><rect x="417.79" y="0" width="111.84" height="44" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><text class="pele-label" x="473.71" y="27.6" text-anchor="middle">&quot;Database&quot;</text></g></g></g></svg></div>
   </div>
   <pre class="mermaid-source"><code>sequenceDiagram
     participant User
@@ -1987,32 +2197,7 @@ code.hljs {
     <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
   </div>
   <div class="mermaid-chart">
-    <div class="mermaid">classDiagram
-    class User {
-        +int id
-        +string email
-        +string name
-        +login() bool
-        +logout() void
-    }
-
-    class Order {
-        +int id
-        +float total
-        +string status
-        +addItem() void
-        +checkout() void
-    }
-
-    class Product {
-        +int id
-        +string name
-        +float price
-        +int stock
-    }
-
-    User "1" --> "*" Order : places
-    Order "*" --> "*" Product : contains</div>
+    <div class="mermaid"><svg xmlns="http://www.w3.org/2000/svg" class="pele pele-class" viewBox="0 0 151 694" width="151" height="694" style="max-width:100%;height:auto;--_bg:var(--pele-bg,#fff);--_fg:var(--pele-fg,#1f1f1f);--_m:var(--pele-muted,#6e6e6e);--_l:var(--pele-line,#1f1f1f);--_s:var(--pele-surface,#f3f3f3);--_a:var(--pele-surface-alt,#e6e6e6);--_b:var(--pele-border,#8a8a8a);--_c:var(--pele-accent,#5b7bd5);color:var(--_fg);--_r:var(--pele-radius,4px);--_hw:var(--pele-heading-weight,bold);--_fm:var(--pele-font-mono,monospace);font:16px sans-serif;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;font-family:var(--pele-font,sans-serif)" fill="var(--_fg)" role="graphics-document document" aria-roledescription="class"><g class="pele-edges" fill="none" stroke="var(--_l)" stroke-linecap="round"><g class="pele-edge pele-relation" data-id="id_User_Order_1"><path d="M75.44,177L75.44,267"/><path class="pele-marker" d="M75.44,274L72.08,266L78.8,266Z" fill="var(--_l)" stroke="none"/></g><g class="pele-edge pele-relation" data-id="id_Order_Product_2"><path d="M75.44,443L75.44,533"/><path class="pele-marker" d="M75.44,540L72.08,532L78.8,532Z" fill="var(--_l)" stroke="none"/></g></g><g class="pele-edge-labels" font-size="14"><g class="pele-edge-label" data-id="id_User_Order_1"><rect x="51.21" y="215" width="48.46" height="21" rx="3" fill="var(--_bg)"/><text x="75.44" y="230.4" text-anchor="middle">places</text></g><g class="pele-edge-label" data-id="id_Order_Product_2"><rect x="45.37" y="481" width="60.14" height="21" rx="3" fill="var(--_bg)"/><text x="75.44" y="496.4" text-anchor="middle">contains</text></g></g><g class="pele-cardinalities" font-size="13" fill="var(--_m)"><text class="pele-cardinality" x="88.05" y="193.55" text-anchor="middle">1</text><text class="pele-cardinality" x="86.97" y="266.55" text-anchor="middle">*</text><text class="pele-cardinality" x="86.97" y="459.55" text-anchor="middle">*</text><text class="pele-cardinality" x="86.97" y="532.55" text-anchor="middle">*</text></g><g class="pele-nodes"><g class="pele-node pele-class" data-id="User" transform="translate(75.44,92.5)"><rect x="-58.49" y="-84.5" width="116.99" height="169" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><path class="pele-divider" d="M-58.49,-44.5H58.49M-58.49,30.5H58.49" fill="none" stroke="var(--_b)"/><text class="pele-label" font-weight="var(--_hw)" text-anchor="middle" xml:space="preserve"><tspan x="0" y="-58.9">User</tspan></text><g class="pele-members" font-size="14"><text class="pele-member pele-attribute" x="-46.49" y="-23.1">+int id</text><text class="pele-member pele-attribute" x="-46.49" y="-2.1">+string email</text><text class="pele-member pele-attribute" x="-46.49" y="18.9">+string name</text><text class="pele-member pele-method" x="-46.49" y="51.9">+login() : bool</text><text class="pele-member pele-method" x="-46.49" y="72.9">+logout() : void</text></g></g><g class="pele-node pele-class" data-id="Order" transform="translate(75.44,358.5)"><rect x="-67.44" y="-84.5" width="134.88" height="169" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><path class="pele-divider" d="M-67.44,-44.5H67.44M-67.44,30.5H67.44" fill="none" stroke="var(--_b)"/><text class="pele-label" font-weight="var(--_hw)" text-anchor="middle" xml:space="preserve"><tspan x="0" y="-58.9">Order</tspan></text><g class="pele-members" font-size="14"><text class="pele-member pele-attribute" x="-55.44" y="-23.1">+int id</text><text class="pele-member pele-attribute" x="-55.44" y="-2.1">+float total</text><text class="pele-member pele-attribute" x="-55.44" y="18.9">+string status</text><text class="pele-member pele-method" x="-55.44" y="51.9">+addItem() : void</text><text class="pele-member pele-method" x="-55.44" y="72.9">+checkout() : void</text></g></g><g class="pele-node pele-class" data-id="Product" transform="translate(75.44,613)"><rect x="-52.66" y="-73" width="105.31" height="146" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><path class="pele-divider" d="M-52.66,-33H52.66M-52.66,63H52.66" fill="none" stroke="var(--_b)"/><text class="pele-label" font-weight="var(--_hw)" text-anchor="middle" xml:space="preserve"><tspan x="0" y="-47.4">Product</tspan></text><g class="pele-members" font-size="14"><text class="pele-member pele-attribute" x="-40.66" y="-11.6">+int id</text><text class="pele-member pele-attribute" x="-40.66" y="9.4">+string name</text><text class="pele-member pele-attribute" x="-40.66" y="30.4">+float price</text><text class="pele-member pele-attribute" x="-40.66" y="51.4">+int stock</text></g></g></g></svg></div>
   </div>
   <pre class="mermaid-source"><code>classDiagram
     class User {
@@ -2067,19 +2252,7 @@ code.hljs {
     <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
   </div>
   <div class="mermaid-chart">
-    <div class="mermaid">stateDiagram-v2
-    [*] --> Draft
-    Draft --> Review : Submit
-    Review --> Published : Approve
-    Review --> Draft : Reject
-    Published --> Archived : Archive
-    Archived --> [*]
-
-    state Review {
-        [*] --> Pending
-        Pending --> Approved
-        Pending --> Rejected
-    }</div>
+    <div class="mermaid"><svg xmlns="http://www.w3.org/2000/svg" class="pele pele-state" viewBox="0 0 284 733" width="284" height="733" style="max-width:100%;height:auto;--_bg:var(--pele-bg,#fff);--_fg:var(--pele-fg,#1f1f1f);--_m:var(--pele-muted,#6e6e6e);--_l:var(--pele-line,#1f1f1f);--_s:var(--pele-surface,#f3f3f3);--_a:var(--pele-surface-alt,#e6e6e6);--_b:var(--pele-border,#8a8a8a);--_c:var(--pele-accent,#5b7bd5);color:var(--_fg);--_fm:var(--pele-font-mono,monospace);font:16px sans-serif;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;font-family:var(--pele-font,sans-serif)" fill="var(--_fg)" role="graphics-document document" aria-roledescription="state"><g class="pele-clusters"><g class="pele-cluster pele-state-composite" data-id="Review"><rect x="8" y="179" width="267.62" height="258" rx="10" fill="var(--_a)" fill-opacity="0.5" stroke="var(--_b)"/><path d="M8,215H275.62" fill="none" stroke="var(--_b)"/><text class="pele-cluster-label" x="141.81" y="202.6" text-anchor="middle">Review</text></g></g><g class="pele-edges" fill="none" stroke="var(--_l)" stroke-linecap="round"><g class="pele-edge pele-transition" data-id="edge0"><path d="M141.81,22L141.81,59"/><path class="pele-marker" d="M141.81,66L138.45,58L145.17,58Z" fill="var(--_l)" stroke="none"/></g><g class="pele-edge pele-transition" data-id="edge1"><path d="M133.81,110L133.81,119.63C133.81,125.81 107,125.81 107,132L107,157C107,162.63 141.81,162.63 141.81,168.25L141.81,172"/><path class="pele-marker" d="M141.81,179L138.45,171L145.17,171Z" fill="var(--_l)" stroke="none"/></g><g class="pele-edge pele-transition" data-id="edge2"><path d="M141.81,437L141.81,499"/><path class="pele-marker" d="M141.81,506L138.45,498L145.17,498Z" fill="var(--_l)" stroke="none"/></g><g class="pele-edge pele-transition" data-id="edge3"><path d="M141.81,179L141.81,169.38C141.81,163.19 176.62,163.19 176.62,157L176.62,132C176.62,126.38 149.81,126.38 149.81,120.75L149.81,117"/><path class="pele-marker" d="M149.81,110L153.17,118L146.45,118Z" fill="var(--_l)" stroke="none"/></g><g class="pele-edge pele-transition" data-id="edge4"><path d="M141.81,550L141.81,612"/><path class="pele-marker" d="M141.81,619L138.45,611L145.17,611Z" fill="var(--_l)" stroke="none"/></g><g class="pele-edge pele-transition" data-id="edge5"><path d="M141.81,663L141.81,700"/><path class="pele-marker" d="M141.81,707L138.45,699L145.17,699Z" fill="var(--_l)" stroke="none"/></g><g class="pele-edge pele-transition" data-id="edge6"><path d="M143.14,245L143.14,282"/><path class="pele-marker" d="M143.14,289L139.78,281L146.5,281Z" fill="var(--_l)" stroke="none"/></g><g class="pele-edge pele-transition" data-id="edge7"><path d="M135.14,333C135.14,348.5 74.24,348.5 74.24,364L74.24,370"/><path class="pele-marker" d="M74.24,377L70.88,369L77.6,369Z" fill="var(--_l)" stroke="none"/></g><g class="pele-edge pele-transition" data-id="edge8"><path d="M151.14,333C151.14,348.5 212.05,348.5 212.05,364L212.05,370"/><path class="pele-marker" d="M212.05,377L208.69,369L215.41,369Z" fill="var(--_l)" stroke="none"/></g></g><g class="pele-edge-labels" font-size="14"><g class="pele-edge-label" data-id="edge1"><rect x="81.21" y="134" width="51.57" height="21" rx="3" fill="var(--_bg)"/><text x="107" y="149.4" text-anchor="middle">Submit</text></g><g class="pele-edge-label" data-id="edge2"><rect x="111.74" y="457.5" width="60.14" height="21" rx="3" fill="var(--_bg)"/><text x="141.81" y="472.9" text-anchor="middle">Approve</text></g><g class="pele-edge-label" data-id="edge3"><rect x="152.78" y="134" width="47.68" height="21" rx="3" fill="var(--_bg)"/><text x="176.62" y="149.4" text-anchor="middle">Reject</text></g><g class="pele-edge-label" data-id="edge4"><rect x="114.47" y="570.5" width="54.68" height="21" rx="3" fill="var(--_bg)"/><text x="141.81" y="585.9" text-anchor="middle">Archive</text></g></g><g class="pele-nodes"><g class="pele-node pele-state-start" data-id="root_start" transform="translate(141.81,15)"><circle r="7" fill="var(--_l)"/></g><g class="pele-node pele-state" data-id="Draft" transform="translate(141.81,88)"><rect x="-33.34" y="-22" width="66.67" height="44" rx="10" fill="var(--_s)" stroke="var(--_b)"/><text class="pele-label" x="0" y="5.6" text-anchor="middle">Draft</text></g><g class="pele-node pele-state" data-id="Published" transform="translate(141.81,528)"><rect x="-51.13" y="-22" width="102.26" height="44" rx="10" fill="var(--_s)" stroke="var(--_b)"/><text class="pele-label" x="0" y="5.6" text-anchor="middle">Published</text></g><g class="pele-node pele-state" data-id="Archived" transform="translate(141.81,641)"><rect x="-47.12" y="-22" width="94.24" height="44" rx="10" fill="var(--_s)" stroke="var(--_b)"/><text class="pele-label" x="0" y="5.6" text-anchor="middle">Archived</text></g><g class="pele-node pele-state-end" data-id="root_end" transform="translate(141.81,716)"><circle r="8.5" fill="var(--_bg)" stroke="var(--_l)"/><circle r="5" fill="var(--_l)"/></g><g class="pele-node pele-state-start" data-id="Review_start" transform="translate(143.14,238)"><circle r="7" fill="var(--_l)"/></g><g class="pele-node pele-state" data-id="Pending" transform="translate(143.14,311)"><rect x="-45.35" y="-22" width="90.7" height="44" rx="10" fill="var(--_s)" stroke="var(--_b)"/><text class="pele-label" x="0" y="5.6" text-anchor="middle">Pending</text></g><g class="pele-node pele-state" data-id="Approved" transform="translate(74.24,399)"><rect x="-50.24" y="-22" width="100.48" height="44" rx="10" fill="var(--_s)" stroke="var(--_b)"/><text class="pele-label" x="0" y="5.6" text-anchor="middle">Approved</text></g><g class="pele-node pele-state" data-id="Rejected" transform="translate(212.05,399)"><rect x="-47.57" y="-22" width="95.14" height="44" rx="10" fill="var(--_s)" stroke="var(--_b)"/><text class="pele-label" x="0" y="5.6" text-anchor="middle">Rejected</text></g></g></svg></div>
   </div>
   <pre class="mermaid-source"><code>stateDiagram-v2
     [*] --&gt; Draft
@@ -2111,32 +2284,7 @@ code.hljs {
     <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
   </div>
   <div class="mermaid-chart">
-    <div class="mermaid">erDiagram
-    USER {
-        int id PK
-        string email UK
-        string name
-        datetime created_at
-    }
-
-    POST {
-        int id PK
-        int user_id FK
-        string title
-        text content
-        string status
-    }
-
-    COMMENT {
-        int id PK
-        int post_id FK
-        int user_id FK
-        text body
-    }
-
-    USER ||--o{ POST : writes
-    POST ||--o{ COMMENT : has
-    USER ||--o{ COMMENT : writes</div>
+    <div class="mermaid"><svg xmlns="http://www.w3.org/2000/svg" class="pele pele-er" viewBox="0 0 256 710" width="256" height="710" style="max-width:100%;height:auto;--_bg:var(--pele-bg,#fff);--_fg:var(--pele-fg,#1f1f1f);--_m:var(--pele-muted,#6e6e6e);--_l:var(--pele-line,#1f1f1f);--_s:var(--pele-surface,#f3f3f3);--_a:var(--pele-surface-alt,#e6e6e6);--_b:var(--pele-border,#8a8a8a);--_c:var(--pele-accent,#5b7bd5);color:var(--_fg);--_r:var(--pele-radius,4px);--_fm:var(--pele-font-mono,monospace);font:16px sans-serif;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;font-family:var(--pele-font,sans-serif)" fill="var(--_fg)" role="graphics-document document" aria-roledescription="er"><g class="pele-edges" fill="none" stroke="var(--_l)" stroke-linecap="round"><g class="pele-edge pele-er-identifying" data-id="id_entity-USER-0_entity-POST-1_0"><path d="M142.26,170L142.26,188L142.26,191.5C142.26,196.75 84.08,196.75 84.08,202L84.08,241L84.08,259"/><path class="pele-marker" d="M137.26,176L147.26,176M137.26,180L147.26,180"/><path class="pele-marker" d="M90.08,259L84.08,249L78.08,259"/><circle class="pele-marker" cx="84.08" cy="245" r="3.5" fill="var(--_bg)"/></g><g class="pele-edge pele-er-identifying" data-id="id_entity-POST-1_entity-COMMENT-2_1"><path d="M84.08,451L84.08,469L84.08,508C84.08,513.25 142.26,513.25 142.26,518.5L142.26,522L142.26,540"/><path class="pele-marker" d="M79.08,457L89.08,457M79.08,461L89.08,461"/><path class="pele-marker" d="M148.26,540L142.26,530L136.26,540"/><circle class="pele-marker" cx="142.26" cy="526" r="3.5" fill="var(--_bg)"/></g><g class="pele-edge pele-er-identifying" data-id="id_entity-USER-0_entity-COMMENT-2_2"><path d="M160.26,170L160.26,188L160.26,194C160.26,226.5 218.44,226.5 218.44,259L218.44,451C218.44,483.5 160.26,483.5 160.26,516L160.26,522L160.26,540"/><path class="pele-marker" d="M155.26,176L165.26,176M155.26,180L165.26,180"/><path class="pele-marker" d="M166.26,540L160.26,530L154.26,540"/><circle class="pele-marker" cx="160.26" cy="526" r="3.5" fill="var(--_bg)"/></g></g><g class="pele-edge-labels" font-size="14"><g class="pele-edge-label" data-id="id_entity-USER-0_entity-POST-1_0"><rect x="61.8" y="204" width="44.55" height="21" rx="3" fill="var(--_bg)"/><text x="84.08" y="219.4" text-anchor="middle">writes</text></g><g class="pele-edge-label" data-id="id_entity-POST-1_entity-COMMENT-2_1"><rect x="68.8" y="485" width="30.57" height="21" rx="3" fill="var(--_bg)"/><text x="84.08" y="500.4" text-anchor="middle">has</text></g><g class="pele-edge-label" data-id="id_entity-USER-0_entity-COMMENT-2_2"><rect x="196.16" y="344.5" width="44.55" height="21" rx="3" fill="var(--_bg)"/><text x="218.44" y="359.9" text-anchor="middle">writes</text></g></g><g class="pele-nodes"><g class="pele-node pele-entity" data-id="USER" transform="translate(151.26,89)"><rect x="-96.25" y="-81" width="192.51" height="162" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><g class="pele-er-stripes" fill="var(--_bg)"><rect x="-96.25" width="192.51" y="-39" height="30"/><rect x="-96.25" width="192.51" y="21" height="30"/></g><path class="pele-er-divider" d="M-96.25,-39H96.25" stroke="var(--_b)"/><rect x="-96.25" y="-81" width="192.51" height="162" fill="none" stroke="var(--_b)" style="rx:var(--_r)"/><text class="pele-label" x="0" y="-54.4" text-anchor="middle">USER</text><g class="pele-er-attributes" font-size="14"><text class="pele-er-type" fill="var(--_m)" x="-84.25" y="-19.1">int</text><text class="pele-er-name" x="-14.56" y="-19.1">id</text><text class="pele-er-keys" font-size="12" fill="var(--_m)" x="67.59" y="-19.1">PK</text><text class="pele-er-type" fill="var(--_m)" x="-84.25" y="10.9">string</text><text class="pele-er-name" x="-14.56" y="10.9">email</text><text class="pele-er-keys" font-size="12" fill="var(--_m)" x="67.59" y="10.9">UK</text><text class="pele-er-type" fill="var(--_m)" x="-84.25" y="40.9">string</text><text class="pele-er-name" x="-14.56" y="40.9">name</text><text class="pele-er-type" fill="var(--_m)" x="-84.25" y="70.9">datetime</text><text class="pele-er-name" x="-14.56" y="70.9">created_at</text></g></g><g class="pele-node pele-entity" data-id="POST" transform="translate(84.08,355)"><rect x="-76.08" y="-96" width="152.16" height="192" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><g class="pele-er-stripes" fill="var(--_bg)"><rect x="-76.08" width="152.16" y="-54" height="30"/><rect x="-76.08" width="152.16" y="6" height="30"/><rect x="-76.08" width="152.16" y="66" height="30" style="rx:var(--_r)"/><rect x="-76.08" width="152.16" y="66" height="15"/></g><path class="pele-er-divider" d="M-76.08,-54H76.08" stroke="var(--_b)"/><rect x="-76.08" y="-96" width="152.16" height="192" fill="none" stroke="var(--_b)" style="rx:var(--_r)"/><text class="pele-label" x="0" y="-69.4" text-anchor="middle">POST</text><g class="pele-er-attributes" font-size="14"><text class="pele-er-type" fill="var(--_m)" x="-64.08" y="-34.1">int</text><text class="pele-er-name" x="-13.85" y="-34.1">id</text><text class="pele-er-keys" font-size="12" fill="var(--_m)" x="48.07" y="-34.1">PK</text><text class="pele-er-type" fill="var(--_m)" x="-64.08" y="-4.1">int</text><text class="pele-er-name" x="-13.85" y="-4.1">user_id</text><text class="pele-er-keys" font-size="12" fill="var(--_m)" x="48.07" y="-4.1">FK</text><text class="pele-er-type" fill="var(--_m)" x="-64.08" y="25.9">string</text><text class="pele-er-name" x="-13.85" y="25.9">title</text><text class="pele-er-type" fill="var(--_m)" x="-64.08" y="55.9">text</text><text class="pele-er-name" x="-13.85" y="55.9">content</text><text class="pele-er-type" fill="var(--_m)" x="-64.08" y="85.9">string</text><text class="pele-er-name" x="-13.85" y="85.9">status</text></g></g><g class="pele-node pele-entity" data-id="COMMENT" transform="translate(151.26,621)"><rect x="-70.24" y="-81" width="140.48" height="162" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><g class="pele-er-stripes" fill="var(--_bg)"><rect x="-70.24" width="140.48" y="-39" height="30"/><rect x="-70.24" width="140.48" y="21" height="30"/></g><path class="pele-er-divider" d="M-70.24,-39H70.24" stroke="var(--_b)"/><rect x="-70.24" y="-81" width="140.48" height="162" fill="none" stroke="var(--_b)" style="rx:var(--_r)"/><text class="pele-label" x="0" y="-54.4" text-anchor="middle">COMMENT</text><g class="pele-er-attributes" font-size="14"><text class="pele-er-type" fill="var(--_m)" x="-58.24" y="-19.1">int</text><text class="pele-er-name" x="-19.67" y="-19.1">id</text><text class="pele-er-keys" font-size="12" fill="var(--_m)" x="42.23" y="-19.1">PK</text><text class="pele-er-type" fill="var(--_m)" x="-58.24" y="10.9">int</text><text class="pele-er-name" x="-19.67" y="10.9">post_id</text><text class="pele-er-keys" font-size="12" fill="var(--_m)" x="42.23" y="10.9">FK</text><text class="pele-er-type" fill="var(--_m)" x="-58.24" y="40.9">int</text><text class="pele-er-name" x="-19.67" y="40.9">user_id</text><text class="pele-er-keys" font-size="12" fill="var(--_m)" x="42.23" y="40.9">FK</text><text class="pele-er-type" fill="var(--_m)" x="-58.24" y="70.9">text</text><text class="pele-er-name" x="-19.67" y="70.9">body</text></g></g></g></svg></div>
   </div>
   <pre class="mermaid-source"><code>erDiagram
     USER {
@@ -2190,22 +2338,7 @@ code.hljs {
     <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
   </div>
   <div class="mermaid-chart">
-    <div class="mermaid">gantt
-    title Website Development
-    dateFormat YYYY-MM-DD
-    excludes weekends
-
-    section Planning
-        Requirements :done, p1, 2024-01-01, 5d
-        Design :done, p2, after p1, 7d
-
-    section Development
-        Backend :active, dev1, after p2, 14d
-        Frontend :crit, dev2, after p2, 14d
-
-    section Launch
-        Testing :test, after dev1, 7d
-        Deploy :milestone, deploy, after test, 1d</div>
+    <div class="mermaid"><svg xmlns="http://www.w3.org/2000/svg" class="pele pele-gantt" viewBox="0 0 800 257" width="800" height="257" style="max-width:100%;height:auto;--_bg:var(--pele-bg,#fff);--_fg:var(--pele-fg,#1f1f1f);--_m:var(--pele-muted,#6e6e6e);--_l:var(--pele-line,#1f1f1f);--_s:var(--pele-surface,#f3f3f3);--_a:var(--pele-surface-alt,#e6e6e6);--_b:var(--pele-border,#8a8a8a);--_c:var(--pele-accent,#5b7bd5);color:var(--_fg);--_r:var(--pele-radius,4px);--_tw:var(--pele-title-weight,bold);--_fm:var(--pele-font-mono,monospace);font:16px sans-serif;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;font-family:var(--pele-font,sans-serif)" fill="var(--_fg)" role="graphics-document document" aria-roledescription="gantt"><text class="pele-title" font-weight="var(--_tw)" text-anchor="middle" xml:space="preserve"><tspan x="400" y="25.6">Website Development</tspan></text><g class="pele-sections"><rect class="pele-section pele-section-0" x="0" y="48" width="800" height="60" fill="var(--_s)"/><rect class="pele-section pele-section-1" x="0" y="108" width="800" height="60" fill="none"/><rect class="pele-section pele-section-2" x="0" y="168" width="800" height="60" fill="var(--_s)"/></g><g class="pele-excluded" fill="var(--_a)"><rect x="179.53" y="48" width="28.38" height="180"/><rect x="278.86" y="48" width="28.38" height="180"/><rect x="378.19" y="48" width="28.38" height="180"/><rect x="477.52" y="48" width="28.38" height="180"/><rect x="576.85" y="48" width="28.38" height="180"/><rect x="676.18" y="48" width="28.38" height="180"/></g><g class="pele-grid" fill="none"><path d="M193.72,48V228M293.05,48V228M392.38,48V228M491.71,48V228M591.04,48V228M690.37,48V228" stroke="var(--_b)" stroke-dasharray="1 3"/><path d="M108.58,228H761.32" stroke="var(--_b)"/></g><g class="pele-tasks" font-size="13"><g class="pele-task pele-done" data-id="p1"><rect x="108.58" y="51" width="70.95" height="24" fill="var(--_a)" stroke="var(--_b)" style="rx:var(--_r)"/><text class="pele-label" fill="var(--_m)" x="227.99" y="67.55" text-anchor="middle">Requirements</text></g><g class="pele-task pele-done" data-id="p2"><rect x="207.91" y="81" width="127.71" height="24" fill="var(--_a)" stroke="var(--_b)" style="rx:var(--_r)"/><text class="pele-label" x="271.77" y="97.55" text-anchor="middle">Design</text></g><g class="pele-task pele-active" data-id="dev1"><rect x="335.62" y="111" width="283.8" height="24" fill="var(--_c)" fill-opacity="0.25" stroke="var(--_c)" style="rx:var(--_r)"/><text class="pele-label" x="477.52" y="127.55" text-anchor="middle">Backend</text></g><g class="pele-task pele-crit" data-id="dev2"><rect x="335.62" y="141" width="283.8" height="24" fill="var(--pele-critical,#e45756)" stroke="var(--pele-critical,#e45756)" style="rx:var(--_r)"/><text class="pele-label" fill="var(--_bg)" x="477.52" y="157.55" text-anchor="middle">Frontend</text></g><g class="pele-task" data-id="test"><rect x="619.42" y="171" width="127.71" height="24" fill="var(--_c)" stroke="var(--_c)" style="rx:var(--_r)"/><text class="pele-label" fill="var(--_bg)" x="683.27" y="187.55" text-anchor="middle">Testing</text></g><g class="pele-task pele-milestone" data-id="deploy"><path d="M754.22,201L766.22,213L754.22,225L742.22,213Z" fill="var(--_c)" stroke="var(--_c)" stroke-linejoin="round"/><text class="pele-label" x="713.99" y="217.55" text-anchor="middle">Deploy</text></g></g><g class="pele-section-labels" font-size="13"><text class="pele-section-label" data-id="Planning" x="41.29" y="82.55" text-anchor="middle">Planning</text><text class="pele-section-label" data-id="Development" x="54.29" y="142.55" text-anchor="middle">Development</text><text class="pele-section-label" data-id="Launch" x="37.32" y="202.55" text-anchor="middle">Launch</text></g><g class="pele-axis" font-size="12" fill="var(--_m)"><text x="193.72" y="244.7" text-anchor="middle">2024-01-07</text><text x="293.05" y="244.7" text-anchor="middle">2024-01-14</text><text x="392.38" y="244.7" text-anchor="middle">2024-01-21</text><text x="491.71" y="244.7" text-anchor="middle">2024-01-28</text><text x="591.04" y="244.7" text-anchor="middle">2024-02-04</text><text x="690.37" y="244.7" text-anchor="middle">2024-02-11</text></g></svg></div>
   </div>
   <pre class="mermaid-source"><code>gantt
     title Website Development
@@ -2243,18 +2376,7 @@ code.hljs {
     <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
   </div>
   <div class="mermaid-chart">
-    <div class="mermaid">journey
-    title Shopping Experience
-    section Discovery
-        Search products: 5: Customer
-        View product details: 4: Customer
-    section Purchase
-        Add to cart: 5: Customer
-        Checkout process: 3: Customer
-        Payment: 4: Customer
-    section Post-purchase
-        Order confirmation: 5: Customer
-        Delivery tracking: 4: Customer</div>
+    <div class="mermaid"><svg xmlns="http://www.w3.org/2000/svg" class="pele pele-journey" viewBox="0 0 1120 342" width="1120" height="342" style="max-width:100%;height:auto;--_bg:var(--pele-bg,#fff);--_fg:var(--pele-fg,#1f1f1f);--_m:var(--pele-muted,#6e6e6e);--_l:var(--pele-line,#1f1f1f);--_s:var(--pele-surface,#f3f3f3);--_a:var(--pele-surface-alt,#e6e6e6);--_b:var(--pele-border,#8a8a8a);--_c:var(--pele-accent,#5b7bd5);color:var(--_fg);--_r:var(--pele-radius,4px);--_tw:var(--pele-title-weight,bold);--_hw:var(--pele-heading-weight,bold);--_fm:var(--pele-font-mono,monospace);font:16px sans-serif;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;font-family:var(--pele-font,sans-serif)" fill="var(--_fg)" role="graphics-document document" aria-roledescription="journey"><text class="pele-title" font-weight="var(--_tw)" text-anchor="middle" xml:space="preserve"><tspan x="560" y="25.6">Shopping Experience</tspan></text><path class="pele-grid" d="M26,182H1112M26,208H1112M26,234H1112M26,260H1112M26,286H1112" fill="none" stroke="var(--_a)"/><g class="pele-scale" font-size="12" text-anchor="end" fill="var(--_m)"><text x="20" y="186.2">5</text><text x="20" y="212.2">4</text><text x="20" y="238.2">3</text><text x="20" y="264.2">2</text><text x="20" y="290.2">1</text></g><path class="pele-stems" d="M104,155V171M260,155V197M416,155V171M572,155V223M728,155V197M884,155V171M1040,155V197" fill="none" stroke="var(--_b)" stroke-dasharray="2 3"/><path class="pele-edge" d="M104,182L260,208L416,182L572,234L728,208L884,182L1040,208" fill="none" stroke="var(--_l)" stroke-linejoin="round"/><g class="pele-face pele-face-happy" transform="translate(104,182)"><circle r="11" fill="var(--_bg)" stroke="var(--_l)"/><g fill="var(--_l)"><circle cx="-3.6" cy="-2.8" r="1.3"/><circle cx="3.6" cy="-2.8" r="1.3"/></g><path d="M-5,2A6,6 0 0 0 5,2" fill="none" stroke="var(--_l)" stroke-linecap="round"/></g><g class="pele-face pele-face-happy" transform="translate(260,208)"><circle r="11" fill="var(--_bg)" stroke="var(--_l)"/><g fill="var(--_l)"><circle cx="-3.6" cy="-2.8" r="1.3"/><circle cx="3.6" cy="-2.8" r="1.3"/></g><path d="M-5,2A6,6 0 0 0 5,2" fill="none" stroke="var(--_l)" stroke-linecap="round"/></g><g class="pele-face pele-face-happy" transform="translate(416,182)"><circle r="11" fill="var(--_bg)" stroke="var(--_l)"/><g fill="var(--_l)"><circle cx="-3.6" cy="-2.8" r="1.3"/><circle cx="3.6" cy="-2.8" r="1.3"/></g><path d="M-5,2A6,6 0 0 0 5,2" fill="none" stroke="var(--_l)" stroke-linecap="round"/></g><g class="pele-face pele-face-neutral" transform="translate(572,234)"><circle r="11" fill="var(--_bg)" stroke="var(--_l)"/><g fill="var(--_l)"><circle cx="-3.6" cy="-2.8" r="1.3"/><circle cx="3.6" cy="-2.8" r="1.3"/></g><path d="M-4.5,4.5H4.5" fill="none" stroke="var(--_l)" stroke-linecap="round"/></g><g class="pele-face pele-face-happy" transform="translate(728,208)"><circle r="11" fill="var(--_bg)" stroke="var(--_l)"/><g fill="var(--_l)"><circle cx="-3.6" cy="-2.8" r="1.3"/><circle cx="3.6" cy="-2.8" r="1.3"/></g><path d="M-5,2A6,6 0 0 0 5,2" fill="none" stroke="var(--_l)" stroke-linecap="round"/></g><g class="pele-face pele-face-happy" transform="translate(884,182)"><circle r="11" fill="var(--_bg)" stroke="var(--_l)"/><g fill="var(--_l)"><circle cx="-3.6" cy="-2.8" r="1.3"/><circle cx="3.6" cy="-2.8" r="1.3"/></g><path d="M-5,2A6,6 0 0 0 5,2" fill="none" stroke="var(--_l)" stroke-linecap="round"/></g><g class="pele-face pele-face-happy" transform="translate(1040,208)"><circle r="11" fill="var(--_bg)" stroke="var(--_l)"/><g fill="var(--_l)"><circle cx="-3.6" cy="-2.8" r="1.3"/><circle cx="3.6" cy="-2.8" r="1.3"/></g><path d="M-5,2A6,6 0 0 0 5,2" fill="none" stroke="var(--_l)" stroke-linecap="round"/></g><g class="pele-cluster pele-section" data-id="Discovery"><rect x="32" y="48" width="300" height="33" fill="var(--_a)" style="rx:var(--_r)"/><text font-size="14" font-weight="var(--_hw)" text-anchor="middle" xml:space="preserve"><tspan x="182" y="69.4">Discovery</tspan></text><g class="pele-node pele-task" data-id="Search products"><rect x="32" y="87" width="144" height="68" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><text font-size="14" x="104" y="117.9" text-anchor="middle">Search products</text><circle class="pele-actor" cx="104" cy="142" r="5" fill="var(--pele-series-1,#4c78a8)" stroke="var(--_s)"><title>Customer</title></circle></g><g class="pele-node pele-task" data-id="View product details"><rect x="188" y="87" width="144" height="68" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><text font-size="14" text-anchor="middle" xml:space="preserve"><tspan x="260" y="108.9">View product</tspan><tspan x="260" y="126.9">details</tspan></text><circle class="pele-actor" cx="260" cy="142" r="5" fill="var(--pele-series-1,#4c78a8)" stroke="var(--_s)"><title>Customer</title></circle></g></g><g class="pele-cluster pele-section" data-id="Purchase"><rect x="344" y="48" width="456" height="33" fill="var(--_a)" style="rx:var(--_r)"/><text font-size="14" font-weight="var(--_hw)" text-anchor="middle" xml:space="preserve"><tspan x="572" y="69.4">Purchase</tspan></text><g class="pele-node pele-task" data-id="Add to cart"><rect x="344" y="87" width="144" height="68" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><text font-size="14" x="416" y="117.9" text-anchor="middle">Add to cart</text><circle class="pele-actor" cx="416" cy="142" r="5" fill="var(--pele-series-1,#4c78a8)" stroke="var(--_s)"><title>Customer</title></circle></g><g class="pele-node pele-task" data-id="Checkout process"><rect x="500" y="87" width="144" height="68" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><text font-size="14" x="572" y="117.9" text-anchor="middle">Checkout process</text><circle class="pele-actor" cx="572" cy="142" r="5" fill="var(--pele-series-1,#4c78a8)" stroke="var(--_s)"><title>Customer</title></circle></g><g class="pele-node pele-task" data-id="Payment"><rect x="656" y="87" width="144" height="68" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><text font-size="14" x="728" y="117.9" text-anchor="middle">Payment</text><circle class="pele-actor" cx="728" cy="142" r="5" fill="var(--pele-series-1,#4c78a8)" stroke="var(--_s)"><title>Customer</title></circle></g></g><g class="pele-cluster pele-section" data-id="Post-purchase"><rect x="812" y="48" width="300" height="33" fill="var(--_a)" style="rx:var(--_r)"/><text font-size="14" font-weight="var(--_hw)" text-anchor="middle" xml:space="preserve"><tspan x="962" y="69.4">Post-purchase</tspan></text><g class="pele-node pele-task" data-id="Order confirmation"><rect x="812" y="87" width="144" height="68" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><text font-size="14" x="884" y="117.9" text-anchor="middle">Order confirmation</text><circle class="pele-actor" cx="884" cy="142" r="5" fill="var(--pele-series-1,#4c78a8)" stroke="var(--_s)"><title>Customer</title></circle></g><g class="pele-node pele-task" data-id="Delivery tracking"><rect x="968" y="87" width="144" height="68" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><text font-size="14" x="1040" y="117.9" text-anchor="middle">Delivery tracking</text><circle class="pele-actor" cx="1040" cy="142" r="5" fill="var(--pele-series-1,#4c78a8)" stroke="var(--_s)"><title>Customer</title></circle></g></g><g class="pele-legend" font-size="14"><g class="pele-legend-item" data-id="Customer"><circle cx="538.66" cy="323.5" r="5" fill="var(--pele-series-1,#4c78a8)"/><text x="580" y="328.4" text-anchor="middle">Customer</text></g></g></svg></div>
   </div>
   <pre class="mermaid-source"><code>journey
     title Shopping Experience
@@ -2288,21 +2410,7 @@ code.hljs {
     <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
   </div>
   <div class="mermaid-chart">
-    <div class="mermaid">gitGraph
-    commit id: "init"
-    branch develop
-    checkout develop
-    commit id: "feat-a"
-    commit id: "feat-b"
-    branch feature/auth
-    checkout feature/auth
-    commit id: "login"
-    commit id: "register"
-    checkout develop
-    merge feature/auth
-    checkout main
-    merge develop tag: "v1.0"
-    commit id: "hotfix"</div>
+    <div class="mermaid"><svg xmlns="http://www.w3.org/2000/svg" class="pele pele-gitGraph" viewBox="0 0 455 227" width="455" height="227" style="max-width:100%;height:auto;--_bg:var(--pele-bg,#fff);--_fg:var(--pele-fg,#1f1f1f);--_m:var(--pele-muted,#6e6e6e);--_l:var(--pele-line,#1f1f1f);--_s:var(--pele-surface,#f3f3f3);--_a:var(--pele-surface-alt,#e6e6e6);--_b:var(--pele-border,#8a8a8a);--_c:var(--pele-accent,#5b7bd5);color:var(--_fg);--_r:var(--pele-radius,4px);--_fm:var(--pele-font-mono,monospace);font:16px sans-serif;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;font-family:var(--pele-font,sans-serif)" fill="var(--_fg)" role="graphics-document document" aria-roledescription="gitGraph"><g transform="translate(118.72,39)"><g class="pele-branches" fill="none" font-size="14"><g class="pele-branch" data-id="main"><path class="pele-lane" d="M-20,0L328,0" stroke="var(--pele-series-1,#4c78a8)" stroke-dasharray="2 4"/><rect x="-66.34" y="-12.5" width="46.34" height="25" fill="var(--pele-series-1,#4c78a8)" style="rx:var(--_r)"/><text class="pele-label" fill="var(--_bg)" x="-43.17" y="4.9" text-anchor="middle">main</text></g><g class="pele-branch" data-id="develop"><path class="pele-lane" d="M-20,63.51L328,63.51" stroke="var(--pele-series-2,#f58518)" stroke-dasharray="2 4"/><rect x="-85.03" y="51.01" width="65.03" height="25" fill="var(--pele-series-2,#f58518)" style="rx:var(--_r)"/><text class="pele-label" fill="var(--_bg)" x="-52.51" y="68.41" text-anchor="middle">develop</text></g><g class="pele-branch" data-id="feature/auth"><path class="pele-lane" d="M-20,128.43L328,128.43" stroke="var(--pele-series-3,#54a24b)" stroke-dasharray="2 4"/><rect x="-110.72" y="115.93" width="90.72" height="25" fill="var(--pele-series-3,#54a24b)" style="rx:var(--_r)"/><text class="pele-label" fill="var(--_bg)" x="-65.36" y="133.33" text-anchor="middle">feature/auth</text></g></g><g class="pele-edges" fill="none" stroke-width="2" stroke-linecap="round"><path class="pele-edge" d="M0,0C18,0 18,63.51 36,63.51L44,63.51" stroke="var(--pele-series-2,#f58518)"/><path class="pele-edge" d="M88,63.51C106,63.51 106,128.43 124,128.43L132,128.43" stroke="var(--pele-series-3,#54a24b)"/><path class="pele-edge pele-edge-merge" d="M176,128.43L184,128.43C202,128.43 202,63.51 220,63.51" stroke="var(--pele-series-3,#54a24b)"/><path class="pele-edge pele-edge-merge" d="M220,63.51L228,63.51C246,63.51 246,0 264,0" stroke="var(--pele-series-2,#f58518)"/><path class="pele-edge" d="M44,63.51L88,63.51" stroke="var(--pele-series-2,#f58518)"/><path class="pele-edge" d="M132,128.43L176,128.43" stroke="var(--pele-series-3,#54a24b)"/><path class="pele-edge" d="M88,63.51L220,63.51" stroke="var(--pele-series-2,#f58518)"/><path class="pele-edge" d="M0,0L264,0" stroke="var(--pele-series-1,#4c78a8)"/><path class="pele-edge" d="M264,0L308,0" stroke="var(--pele-series-1,#4c78a8)"/></g><g class="pele-commits" font-size="12" fill="var(--_m)"><g class="pele-commit pele-commit-normal" data-id="init"><circle cx="0" cy="0" r="7" fill="var(--pele-series-1,#4c78a8)"/><g class="pele-commit-label" transform="rotate(-45 3 16.36)"><rect x="-14.34" y="9.36" width="19.34" height="14" rx="3" fill="var(--_bg)"/><text x="-4.67" y="20.56" text-anchor="middle">init</text></g></g><g class="pele-commit pele-commit-normal" data-id="feat-a"><circle cx="44" cy="63.51" r="7" fill="var(--pele-series-2,#f58518)"/><g class="pele-commit-label" transform="rotate(-45 47 79.87)"><rect x="14.32" y="72.87" width="34.68" height="14" rx="3" fill="var(--_bg)"/><text x="31.66" y="84.07" text-anchor="middle">feat-a</text></g></g><g class="pele-commit pele-commit-normal" data-id="feat-b"><circle cx="88" cy="63.51" r="7" fill="var(--pele-series-2,#f58518)"/><g class="pele-commit-label" transform="rotate(-45 91 79.87)"><rect x="58.32" y="72.87" width="34.68" height="14" rx="3" fill="var(--_bg)"/><text x="75.66" y="84.07" text-anchor="middle">feat-b</text></g></g><g class="pele-commit pele-commit-normal" data-id="login"><circle cx="132" cy="128.43" r="7" fill="var(--pele-series-3,#54a24b)"/><g class="pele-commit-label" transform="rotate(-45 135 144.8)"><rect x="107.66" y="137.8" width="29.34" height="14" rx="3" fill="var(--_bg)"/><text x="122.33" y="149" text-anchor="middle">login</text></g></g><g class="pele-commit pele-commit-normal" data-id="register"><circle cx="176" cy="128.43" r="7" fill="var(--pele-series-3,#54a24b)"/><g class="pele-commit-label" transform="rotate(-45 179 144.8)"><rect x="136.99" y="137.8" width="44.01" height="14" rx="3" fill="var(--_bg)"/><text x="159" y="149" text-anchor="middle">register</text></g></g><g class="pele-commit pele-commit-merge" data-id="5-b54cda2"><circle cx="220" cy="63.51" r="6" fill="var(--_bg)" stroke="var(--pele-series-2,#f58518)" stroke-width="2"/><circle cx="220" cy="63.51" r="2.5" fill="var(--pele-series-2,#f58518)"/></g><g class="pele-commit pele-commit-merge" data-id="6-538453d"><circle cx="264" cy="0" r="6" fill="var(--_bg)" stroke="var(--pele-series-1,#4c78a8)" stroke-width="2"/><circle cx="264" cy="0" r="2.5" fill="var(--pele-series-1,#4c78a8)"/><g class="pele-tag"><path d="M244.16,-22L251.16,-31H283.84V-13H251.16Z" fill="var(--_s)" stroke="var(--_b)" stroke-linejoin="round"/><circle cx="251.16" cy="-22" r="1.5" fill="var(--_b)"/><text fill="var(--_fg)" x="266.5" y="-17.8" text-anchor="middle">v1.0</text></g></g><g class="pele-commit pele-commit-normal" data-id="hotfix"><circle cx="308" cy="0" r="7" fill="var(--pele-series-1,#4c78a8)"/><g class="pele-commit-label" transform="rotate(-45 311 16.36)"><rect x="280.32" y="9.36" width="32.68" height="14" rx="3" fill="var(--_bg)"/><text x="296.66" y="20.56" text-anchor="middle">hotfix</text></g></g></g></g></svg></div>
   </div>
   <pre class="mermaid-source"><code>gitGraph
     commit id: "init"
@@ -2339,28 +2447,7 @@ code.hljs {
     <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
   </div>
   <div class="mermaid-chart">
-    <div class="mermaid">mindmap
-  root((Web Dev))
-    Frontend
-      React
-      Vue
-      Angular
-      Styling
-        CSS
-        Tailwind
-    Backend
-      Node.js
-      Python
-      Go
-      APIs
-        REST
-        GraphQL
-    DevOps
-      Docker
-      CI/CD
-      Cloud
-        AWS
-        GCP</div>
+    <div class="mermaid"><svg xmlns="http://www.w3.org/2000/svg" class="pele pele-mindmap" viewBox="0 0 803 336" width="803" height="336" style="max-width:100%;height:auto;--_bg:var(--pele-bg,#fff);--_fg:var(--pele-fg,#1f1f1f);--_m:var(--pele-muted,#6e6e6e);--_l:var(--pele-line,#1f1f1f);--_s:var(--pele-surface,#f3f3f3);--_a:var(--pele-surface-alt,#e6e6e6);--_b:var(--pele-border,#8a8a8a);--_c:var(--pele-accent,#5b7bd5);color:var(--_fg);--_fm:var(--pele-font-mono,monospace);font:16px sans-serif;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;font-family:var(--pele-font,sans-serif)" fill="var(--_fg)" role="graphics-document document" aria-roledescription="mindmap"><g transform="translate(396.87,168)"><g class="pele-branch pele-section-0"><g class="pele-edges" fill="none" stroke="var(--pele-series-1,#4c78a8)" stroke-width="1.5"><path class="pele-edge" d="M43.02,0C69.02,0 69.02,0 95.02,0"/><path class="pele-edge" d="M183.05,0C201.05,0 201.05,-61 219.05,-61"/><path class="pele-edge" d="M183.05,0C201.05,0 201.05,-29 219.05,-29"/><path class="pele-edge" d="M183.05,0C201.05,0 201.05,3 219.05,3"/><path class="pele-edge" d="M183.05,0C201.05,0 201.05,61 219.05,61"/><path class="pele-edge" d="M291.06,61C309.06,61 309.06,45 327.06,45"/><path class="pele-edge" d="M291.06,61C309.06,61 309.06,77 327.06,77"/></g><g class="pele-node pele-shape-branch" data-id="Frontend" transform="translate(139.03,0)"><rect x="-44.02" y="-15" width="88.03" height="30" rx="15" fill="var(--pele-series-1,#4c78a8)" fill-opacity="0.22" stroke="var(--pele-series-1,#4c78a8)"/><text class="pele-label" x="0" y="5.6" text-anchor="middle">Frontend</text></g><g class="pele-node pele-shape-text" data-id="React" transform="translate(245.94,-61)"><text class="pele-label" x="0" y="5.6" text-anchor="middle">React</text></g><g class="pele-node pele-shape-text" data-id="Vue" transform="translate(239.28,-29)"><text class="pele-label" x="0" y="5.6" text-anchor="middle">Vue</text></g><g class="pele-node pele-shape-text" data-id="Angular" transform="translate(252.62,3)"><text class="pele-label" x="0" y="5.6" text-anchor="middle">Angular</text></g><g class="pele-node pele-shape-branch" data-id="Styling" transform="translate(255.06,61)"><rect x="-36.01" y="-15" width="72.02" height="30" rx="15" fill="var(--pele-series-1,#4c78a8)" fill-opacity="0.22" stroke="var(--pele-series-1,#4c78a8)"/><text class="pele-label" x="0" y="5.6" text-anchor="middle">Styling</text></g><g class="pele-node pele-shape-text" data-id="CSS" transform="translate(349.51,45)"><text class="pele-label" x="0" y="5.6" text-anchor="middle">CSS</text></g><g class="pele-node pele-shape-text" data-id="Tailwind" transform="translate(362.4,77)"><text class="pele-label" x="0" y="5.6" text-anchor="middle">Tailwind</text></g></g><g class="pele-branch pele-section-1"><g class="pele-edges" fill="none" stroke="var(--pele-series-2,#f58518)" stroke-width="1.5"><path class="pele-edge" d="M-43.02,0C-69.02,0 -69.02,-87 -95.02,-87"/><path class="pele-edge" d="M-181.27,-87C-199.27,-87 -199.27,-148 -217.27,-148"/><path class="pele-edge" d="M-181.27,-87C-199.27,-87 -199.27,-116 -217.27,-116"/><path class="pele-edge" d="M-181.27,-87C-199.27,-87 -199.27,-84 -217.27,-84"/><path class="pele-edge" d="M-181.27,-87C-199.27,-87 -199.27,-26 -217.27,-26"/><path class="pele-edge" d="M-275.06,-26C-293.06,-26 -293.06,-42 -311.06,-42"/><path class="pele-edge" d="M-275.06,-26C-293.06,-26 -293.06,-10 -311.06,-10"/></g><g class="pele-node pele-shape-branch" data-id="Backend" transform="translate(-138.14,-87)"><rect x="-43.13" y="-15" width="86.26" height="30" rx="15" fill="var(--pele-series-2,#f58518)" fill-opacity="0.22" stroke="var(--pele-series-2,#f58518)"/><text class="pele-label" x="0" y="5.6" text-anchor="middle">Backend</text></g><g class="pele-node pele-shape-text" data-id="Node.js" transform="translate(-250.39,-148)"><text class="pele-label" x="0" y="5.6" text-anchor="middle">Node.js</text></g><g class="pele-node pele-shape-text" data-id="Python" transform="translate(-248.18,-116)"><text class="pele-label" x="0" y="5.6" text-anchor="middle">Python</text></g><g class="pele-node pele-shape-text" data-id="Go" transform="translate(-233.94,-84)"><text class="pele-label" x="0" y="5.6" text-anchor="middle">Go</text></g><g class="pele-node pele-shape-branch" data-id="APIs" transform="translate(-246.17,-26)"><rect x="-28.9" y="-15" width="57.79" height="30" rx="15" fill="var(--pele-series-2,#f58518)" fill-opacity="0.22" stroke="var(--pele-series-2,#f58518)"/><text class="pele-label" x="0" y="5.6" text-anchor="middle">APIs</text></g><g class="pele-node pele-shape-text" data-id="REST" transform="translate(-338.4,-42)"><text class="pele-label" x="0" y="5.6" text-anchor="middle">REST</text></g><g class="pele-node pele-shape-text" data-id="GraphQL" transform="translate(-349.97,-10)"><text class="pele-label" x="0" y="5.6" text-anchor="middle">GraphQL</text></g></g><g class="pele-branch pele-section-2"><g class="pele-edges" fill="none" stroke="var(--pele-series-3,#54a24b)" stroke-width="1.5"><path class="pele-edge" d="M-43.02,0C-69.02,0 -69.02,87 -95.02,87"/><path class="pele-edge" d="M-176.81,87C-194.81,87 -194.81,42 -212.81,42"/><path class="pele-edge" d="M-176.81,87C-194.81,87 -194.81,74 -212.81,74"/><path class="pele-edge" d="M-176.81,87C-194.81,87 -194.81,132 -212.81,132"/><path class="pele-edge" d="M-278.6,132C-296.6,132 -296.6,116 -314.6,116"/><path class="pele-edge" d="M-278.6,132C-296.6,132 -296.6,148 -314.6,148"/></g><g class="pele-node pele-shape-branch" data-id="DevOps" transform="translate(-135.91,87)"><rect x="-40.9" y="-15" width="81.79" height="30" rx="15" fill="var(--pele-series-3,#54a24b)" fill-opacity="0.22" stroke="var(--pele-series-3,#54a24b)"/><text class="pele-label" x="0" y="5.6" text-anchor="middle">DevOps</text></g><g class="pele-node pele-shape-text" data-id="Docker" transform="translate(-244.14,42)"><text class="pele-label" x="0" y="5.6" text-anchor="middle">Docker</text></g><g class="pele-node pele-shape-text" data-id="CI/CD" transform="translate(-240.58,74)"><text class="pele-label" x="0" y="5.6" text-anchor="middle">CI/CD</text></g><g class="pele-node pele-shape-branch" data-id="Cloud" transform="translate(-245.7,132)"><rect x="-32.9" y="-15" width="65.79" height="30" rx="15" fill="var(--pele-series-3,#54a24b)" fill-opacity="0.22" stroke="var(--pele-series-3,#54a24b)"/><text class="pele-label" x="0" y="5.6" text-anchor="middle">Cloud</text></g><g class="pele-node pele-shape-text" data-id="AWS" transform="translate(-338.82,116)"><text class="pele-label" x="0" y="5.6" text-anchor="middle">AWS</text></g><g class="pele-node pele-shape-text" data-id="GCP" transform="translate(-337.94,148)"><text class="pele-label" x="0" y="5.6" text-anchor="middle">GCP</text></g></g><g class="pele-node pele-shape-circle pele-root" data-id="root" transform="translate(0,0)"><circle r="43.02" fill="var(--_s)" stroke="var(--_b)"/><text class="pele-label" x="0" y="5.6" text-anchor="middle">Web Dev</text></g></g></svg></div>
   </div>
   <pre class="mermaid-source"><code>mindmap
   root((Web Dev))
@@ -2401,11 +2488,7 @@ code.hljs {
     <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
   </div>
   <div class="mermaid-chart">
-    <div class="mermaid">pie showData title Budget Distribution
-    "Development" : 40
-    "Marketing" : 25
-    "Operations" : 20
-    "Design" : 15</div>
+    <div class="mermaid"><svg xmlns="http://www.w3.org/2000/svg" class="pele pele-pie" viewBox="0 0 418 296" width="418" height="296" style="max-width:100%;height:auto;--_bg:var(--pele-bg,#fff);--_fg:var(--pele-fg,#1f1f1f);--_m:var(--pele-muted,#6e6e6e);--_l:var(--pele-line,#1f1f1f);--_s:var(--pele-surface,#f3f3f3);--_a:var(--pele-surface-alt,#e6e6e6);--_b:var(--pele-border,#8a8a8a);--_c:var(--pele-accent,#5b7bd5);color:var(--_fg);--_tw:var(--pele-title-weight,bold);--_fm:var(--pele-font-mono,monospace);font:16px sans-serif;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;font-family:var(--pele-font,sans-serif)" fill="var(--_fg)" role="graphics-document document" aria-roledescription="pie"><text class="pele-title" font-weight="var(--_tw)" text-anchor="middle" xml:space="preserve"><tspan x="209" y="25.6">Budget Distribution</tspan></text><g class="pele-slices" transform="translate(128,168)" stroke="var(--_bg)" stroke-width="1" stroke-linejoin="round"><path class="pele-slice" data-id="Development" d="M0,0L0,-120A120,120 0 0 1 70.53,97.08Z" fill="var(--pele-series-1,#4c78a8)"/><path class="pele-slice" data-id="Marketing" d="M0,0L70.53,97.08A120,120 0 0 1 -97.08,70.53Z" fill="var(--pele-series-2,#f58518)"/><path class="pele-slice" data-id="Operations" d="M0,0L-97.08,70.53A120,120 0 0 1 -97.08,-70.53Z" fill="var(--pele-series-3,#54a24b)"/><path class="pele-slice" data-id="Design" d="M0,0L-97.08,-70.53A120,120 0 0 1 0,-120Z" fill="var(--pele-series-4,#e45756)"/></g><g class="pele-slice-labels" transform="translate(128,168)" font-size="14" text-anchor="middle" fill="var(--_bg)"><text x="85.6" y="-22.91">40%</text><text x="-14.08" y="93.79">25%</text><text x="-90" y="4.9">20%</text><text x="-40.86" y="-75.29">15%</text></g><g class="pele-legend" font-size="14"><g class="pele-legend-item" data-id="Development"><rect x="280" y="123" width="12" height="12" rx="2" fill="var(--pele-series-1,#4c78a8)"/><text x="354.86" y="133.9" text-anchor="middle">Development [40]</text></g><g class="pele-legend-item" data-id="Marketing"><rect x="280" y="149" width="12" height="12" rx="2" fill="var(--pele-series-2,#f58518)"/><text x="344.35" y="159.9" text-anchor="middle">Marketing [25]</text></g><g class="pele-legend-item" data-id="Operations"><rect x="280" y="175" width="12" height="12" rx="2" fill="var(--pele-series-3,#54a24b)"/><text x="347.86" y="185.9" text-anchor="middle">Operations [20]</text></g><g class="pele-legend-item" data-id="Design"><rect x="280" y="201" width="12" height="12" rx="2" fill="var(--pele-series-4,#e45756)"/><text x="335.41" y="211.9" text-anchor="middle">Design [15]</text></g></g></svg></div>
   </div>
   <pre class="mermaid-source"><code>pie showData title Budget Distribution
     "Development" : 40
@@ -2431,20 +2514,7 @@ code.hljs {
     <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
   </div>
   <div class="mermaid-chart">
-    <div class="mermaid">timeline
-    title Product Roadmap 2024
-    section Q1
-        January : MVP launch
-        February : User feedback
-        March : v1.1 release
-    section Q2
-        April : Mobile app
-        May : API v2
-        June : Enterprise features
-    section Q3
-        July : Internationalization
-        August : Performance optimization
-        September : v2.0 launch</div>
+    <div class="mermaid"><svg xmlns="http://www.w3.org/2000/svg" class="pele pele-timeline" viewBox="0 0 1780 236" width="1780" height="236" style="max-width:100%;height:auto;--_bg:var(--pele-bg,#fff);--_fg:var(--pele-fg,#1f1f1f);--_m:var(--pele-muted,#6e6e6e);--_l:var(--pele-line,#1f1f1f);--_s:var(--pele-surface,#f3f3f3);--_a:var(--pele-surface-alt,#e6e6e6);--_b:var(--pele-border,#8a8a8a);--_c:var(--pele-accent,#5b7bd5);color:var(--_fg);--_r:var(--pele-radius,4px);--_tw:var(--pele-title-weight,bold);--_hw:var(--pele-heading-weight,bold);--_fm:var(--pele-font-mono,monospace);font:16px sans-serif;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;font-family:var(--pele-font,sans-serif)" fill="var(--_fg)" role="graphics-document document" aria-roledescription="timeline"><text class="pele-title" font-weight="var(--_tw)" text-anchor="middle" xml:space="preserve"><tspan x="890" y="25.6">Product Roadmap 2024</tspan></text><path class="pele-axis" d="M8,156H1765" fill="none" stroke="var(--_l)"/><path class="pele-marker" d="M1772,156L1764,159.36L1764,152.64Z" fill="var(--_l)" stroke="none"/><g class="pele-cluster pele-section" data-id="Q1"><rect x="8" y="48" width="568" height="40" fill="var(--pele-series-1,#4c78a8)" style="rx:var(--_r)"/><text font-weight="var(--_hw)" fill="var(--_bg)" text-anchor="middle" xml:space="preserve"><tspan x="292" y="73.6">Q1</tspan></text><g class="pele-node pele-period" data-id="January"><rect x="8" y="96" width="176" height="40" fill="var(--pele-series-1,#4c78a8)" style="rx:var(--_r)"/><text fill="var(--_bg)" x="96" y="121.6" text-anchor="middle">January</text><path class="pele-edge" d="M96,136V176" fill="none" stroke="var(--_b)"/><circle class="pele-dot" cx="96" cy="156" r="4" fill="var(--pele-series-1,#4c78a8)" stroke="var(--_bg)" stroke-width="2"/><g class="pele-node pele-event"><rect x="8" y="176" width="176" height="37" fill="var(--pele-series-1,#4c78a8)" fill-opacity="0.16" style="rx:var(--_r)"/><text font-size="14" x="96" y="199.4" text-anchor="middle">MVP launch</text></g></g><g class="pele-node pele-period" data-id="February"><rect x="204" y="96" width="176" height="40" fill="var(--pele-series-1,#4c78a8)" style="rx:var(--_r)"/><text fill="var(--_bg)" x="292" y="121.6" text-anchor="middle">February</text><path class="pele-edge" d="M292,136V176" fill="none" stroke="var(--_b)"/><circle class="pele-dot" cx="292" cy="156" r="4" fill="var(--pele-series-1,#4c78a8)" stroke="var(--_bg)" stroke-width="2"/><g class="pele-node pele-event"><rect x="204" y="176" width="176" height="37" fill="var(--pele-series-1,#4c78a8)" fill-opacity="0.16" style="rx:var(--_r)"/><text font-size="14" x="292" y="199.4" text-anchor="middle">User feedback</text></g></g><g class="pele-node pele-period" data-id="March"><rect x="400" y="96" width="176" height="40" fill="var(--pele-series-1,#4c78a8)" style="rx:var(--_r)"/><text fill="var(--_bg)" x="488" y="121.6" text-anchor="middle">March</text><path class="pele-edge" d="M488,136V176" fill="none" stroke="var(--_b)"/><circle class="pele-dot" cx="488" cy="156" r="4" fill="var(--pele-series-1,#4c78a8)" stroke="var(--_bg)" stroke-width="2"/><g class="pele-node pele-event"><rect x="400" y="176" width="176" height="37" fill="var(--pele-series-1,#4c78a8)" fill-opacity="0.16" style="rx:var(--_r)"/><text font-size="14" x="488" y="199.4" text-anchor="middle">v1.1 release</text></g></g></g><g class="pele-cluster pele-section" data-id="Q2"><rect x="596" y="48" width="568" height="40" fill="var(--pele-series-2,#f58518)" style="rx:var(--_r)"/><text font-weight="var(--_hw)" fill="var(--_bg)" text-anchor="middle" xml:space="preserve"><tspan x="880" y="73.6">Q2</tspan></text><g class="pele-node pele-period" data-id="April"><rect x="596" y="96" width="176" height="40" fill="var(--pele-series-2,#f58518)" style="rx:var(--_r)"/><text fill="var(--_bg)" x="684" y="121.6" text-anchor="middle">April</text><path class="pele-edge" d="M684,136V176" fill="none" stroke="var(--_b)"/><circle class="pele-dot" cx="684" cy="156" r="4" fill="var(--pele-series-2,#f58518)" stroke="var(--_bg)" stroke-width="2"/><g class="pele-node pele-event"><rect x="596" y="176" width="176" height="37" fill="var(--pele-series-2,#f58518)" fill-opacity="0.16" style="rx:var(--_r)"/><text font-size="14" x="684" y="199.4" text-anchor="middle">Mobile app</text></g></g><g class="pele-node pele-period" data-id="May"><rect x="792" y="96" width="176" height="40" fill="var(--pele-series-2,#f58518)" style="rx:var(--_r)"/><text fill="var(--_bg)" x="880" y="121.6" text-anchor="middle">May</text><path class="pele-edge" d="M880,136V176" fill="none" stroke="var(--_b)"/><circle class="pele-dot" cx="880" cy="156" r="4" fill="var(--pele-series-2,#f58518)" stroke="var(--_bg)" stroke-width="2"/><g class="pele-node pele-event"><rect x="792" y="176" width="176" height="37" fill="var(--pele-series-2,#f58518)" fill-opacity="0.16" style="rx:var(--_r)"/><text font-size="14" x="880" y="199.4" text-anchor="middle">API v2</text></g></g><g class="pele-node pele-period" data-id="June"><rect x="988" y="96" width="176" height="40" fill="var(--pele-series-2,#f58518)" style="rx:var(--_r)"/><text fill="var(--_bg)" x="1076" y="121.6" text-anchor="middle">June</text><path class="pele-edge" d="M1076,136V176" fill="none" stroke="var(--_b)"/><circle class="pele-dot" cx="1076" cy="156" r="4" fill="var(--pele-series-2,#f58518)" stroke="var(--_bg)" stroke-width="2"/><g class="pele-node pele-event"><rect x="988" y="176" width="176" height="37" fill="var(--pele-series-2,#f58518)" fill-opacity="0.16" style="rx:var(--_r)"/><text font-size="14" x="1076" y="199.4" text-anchor="middle">Enterprise features</text></g></g></g><g class="pele-cluster pele-section" data-id="Q3"><rect x="1184" y="48" width="568" height="40" fill="var(--pele-series-3,#54a24b)" style="rx:var(--_r)"/><text font-weight="var(--_hw)" fill="var(--_bg)" text-anchor="middle" xml:space="preserve"><tspan x="1468" y="73.6">Q3</tspan></text><g class="pele-node pele-period" data-id="July"><rect x="1184" y="96" width="176" height="40" fill="var(--pele-series-3,#54a24b)" style="rx:var(--_r)"/><text fill="var(--_bg)" x="1272" y="121.6" text-anchor="middle">July</text><path class="pele-edge" d="M1272,136V176" fill="none" stroke="var(--_b)"/><circle class="pele-dot" cx="1272" cy="156" r="4" fill="var(--pele-series-3,#54a24b)" stroke="var(--_bg)" stroke-width="2"/><g class="pele-node pele-event"><rect x="1184" y="176" width="176" height="37" fill="var(--pele-series-3,#54a24b)" fill-opacity="0.16" style="rx:var(--_r)"/><text font-size="14" x="1272" y="199.4" text-anchor="middle">Internationalization</text></g></g><g class="pele-node pele-period" data-id="August"><rect x="1380" y="96" width="176" height="40" fill="var(--pele-series-3,#54a24b)" style="rx:var(--_r)"/><text fill="var(--_bg)" x="1468" y="121.6" text-anchor="middle">August</text><path class="pele-edge" d="M1468,136V176" fill="none" stroke="var(--_b)"/><circle class="pele-dot" cx="1468" cy="156" r="4" fill="var(--pele-series-3,#54a24b)" stroke="var(--_bg)" stroke-width="2"/><g class="pele-node pele-event"><rect x="1380" y="176" width="176" height="52" fill="var(--pele-series-3,#54a24b)" fill-opacity="0.16" style="rx:var(--_r)"/><text font-size="14" text-anchor="middle" xml:space="preserve"><tspan x="1468" y="197.9">Performance</tspan><tspan x="1468" y="215.9">optimization</tspan></text></g></g><g class="pele-node pele-period" data-id="September"><rect x="1576" y="96" width="176" height="40" fill="var(--pele-series-3,#54a24b)" style="rx:var(--_r)"/><text fill="var(--_bg)" x="1664" y="121.6" text-anchor="middle">September</text><path class="pele-edge" d="M1664,136V176" fill="none" stroke="var(--_b)"/><circle class="pele-dot" cx="1664" cy="156" r="4" fill="var(--pele-series-3,#54a24b)" stroke="var(--_bg)" stroke-width="2"/><g class="pele-node pele-event"><rect x="1576" y="176" width="176" height="37" fill="var(--pele-series-3,#54a24b)" fill-opacity="0.16" style="rx:var(--_r)"/><text font-size="14" x="1664" y="199.4" text-anchor="middle">v2.0 launch</text></g></g></g></svg></div>
   </div>
   <pre class="mermaid-source"><code>timeline
     title Product Roadmap 2024
@@ -2477,17 +2547,7 @@ code.hljs {
     <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
   </div>
   <div class="mermaid-chart">
-    <div class="mermaid">kanban
-  Backlog
-    [Dark mode]@{ assigned: 'Alice', priority: 'High' }
-    [API docs]@{ assigned: 'Bob', priority: 'Medium' }
-  In Progress
-    [User auth]@{ assigned: 'Carol', priority: 'High' }
-    [Dashboard]@{ assigned: 'Dave', priority: 'High' }
-  Review
-    [Settings page]@{ assigned: 'Eve', priority: 'Medium' }
-  Done
-    [Landing page]@{ assigned: 'Frank', priority: 'High' }</div>
+    <div class="mermaid"><svg xmlns="http://www.w3.org/2000/svg" class="pele pele-kanban" viewBox="0 0 852 204" width="852" height="204" style="max-width:100%;height:auto;--_bg:var(--pele-bg,#fff);--_fg:var(--pele-fg,#1f1f1f);--_m:var(--pele-muted,#6e6e6e);--_l:var(--pele-line,#1f1f1f);--_s:var(--pele-surface,#f3f3f3);--_a:var(--pele-surface-alt,#e6e6e6);--_b:var(--pele-border,#8a8a8a);--_c:var(--pele-accent,#5b7bd5);color:var(--_fg);--_r:var(--pele-radius,4px);--_hw:var(--pele-heading-weight,bold);--_fm:var(--pele-font-mono,monospace);font:16px sans-serif;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;font-family:var(--pele-font,sans-serif)" fill="var(--_fg)" role="graphics-document document" aria-roledescription="kanban"><g class="pele-cluster pele-column" data-id="Backlog" transform="translate(8,8)"><rect width="200" height="188" fill="var(--_s)" style="rx:var(--_r)"/><text class="pele-cluster-label" font-weight="var(--_hw)" x="12" y="25.6">Backlog</text><text class="pele-count" x="188" y="24.9" text-anchor="end" font-size="14" fill="var(--_m)">2</text><g class="pele-node pele-card pele-priority-high" data-id="Dark mode" transform="translate(8,40)" font-size="14"><rect width="184" height="66" fill="var(--_bg)" stroke="var(--_b)" style="rx:var(--_r)"/><path class="pele-priority" d="M2.5,5V61" fill="none" stroke="var(--pele-critical,#e45756)" opacity="0.5" stroke-width="3" stroke-linecap="round"/><text class="pele-label" x="10" y="25.4">Dark mode</text><text class="pele-assigned" fill="var(--_m)" x="174" y="50.4" text-anchor="end">Alice</text></g><g class="pele-node pele-card" data-id="API docs" transform="translate(8,114)" font-size="14"><rect width="184" height="66" fill="var(--_bg)" stroke="var(--_b)" style="rx:var(--_r)"/><text class="pele-label" x="10" y="25.4">API docs</text><text class="pele-assigned" fill="var(--_m)" x="174" y="50.4" text-anchor="end">Bob</text></g></g><g class="pele-cluster pele-column" data-id="In Progress" transform="translate(220,8)"><rect width="200" height="188" fill="var(--_s)" style="rx:var(--_r)"/><text class="pele-cluster-label" font-weight="var(--_hw)" x="12" y="25.6">In Progress</text><text class="pele-count" x="188" y="24.9" text-anchor="end" font-size="14" fill="var(--_m)">2</text><g class="pele-node pele-card pele-priority-high" data-id="User auth" transform="translate(8,40)" font-size="14"><rect width="184" height="66" fill="var(--_bg)" stroke="var(--_b)" style="rx:var(--_r)"/><path class="pele-priority" d="M2.5,5V61" fill="none" stroke="var(--pele-critical,#e45756)" opacity="0.5" stroke-width="3" stroke-linecap="round"/><text class="pele-label" x="10" y="25.4">User auth</text><text class="pele-assigned" fill="var(--_m)" x="174" y="50.4" text-anchor="end">Carol</text></g><g class="pele-node pele-card pele-priority-high" data-id="Dashboard" transform="translate(8,114)" font-size="14"><rect width="184" height="66" fill="var(--_bg)" stroke="var(--_b)" style="rx:var(--_r)"/><path class="pele-priority" d="M2.5,5V61" fill="none" stroke="var(--pele-critical,#e45756)" opacity="0.5" stroke-width="3" stroke-linecap="round"/><text class="pele-label" x="10" y="25.4">Dashboard</text><text class="pele-assigned" fill="var(--_m)" x="174" y="50.4" text-anchor="end">Dave</text></g></g><g class="pele-cluster pele-column" data-id="Review" transform="translate(432,8)"><rect width="200" height="188" fill="var(--_s)" style="rx:var(--_r)"/><text class="pele-cluster-label" font-weight="var(--_hw)" x="12" y="25.6">Review</text><text class="pele-count" x="188" y="24.9" text-anchor="end" font-size="14" fill="var(--_m)">1</text><g class="pele-node pele-card" data-id="Settings page" transform="translate(8,40)" font-size="14"><rect width="184" height="66" fill="var(--_bg)" stroke="var(--_b)" style="rx:var(--_r)"/><text class="pele-label" x="10" y="25.4">Settings page</text><text class="pele-assigned" fill="var(--_m)" x="174" y="50.4" text-anchor="end">Eve</text></g></g><g class="pele-cluster pele-column" data-id="Done" transform="translate(644,8)"><rect width="200" height="188" fill="var(--_s)" style="rx:var(--_r)"/><text class="pele-cluster-label" font-weight="var(--_hw)" x="12" y="25.6">Done</text><text class="pele-count" x="188" y="24.9" text-anchor="end" font-size="14" fill="var(--_m)">1</text><g class="pele-node pele-card pele-priority-high" data-id="Landing page" transform="translate(8,40)" font-size="14"><rect width="184" height="66" fill="var(--_bg)" stroke="var(--_b)" style="rx:var(--_r)"/><path class="pele-priority" d="M2.5,5V61" fill="none" stroke="var(--pele-critical,#e45756)" opacity="0.5" stroke-width="3" stroke-linecap="round"/><text class="pele-label" x="10" y="25.4">Landing page</text><text class="pele-assigned" fill="var(--_m)" x="174" y="50.4" text-anchor="end">Frank</text></g></g></svg></div>
   </div>
   <pre class="mermaid-source"><code>kanban
   Backlog
@@ -2519,18 +2579,7 @@ code.hljs {
     <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
   </div>
   <div class="mermaid-chart">
-    <div class="mermaid">quadrantChart
-    title Feature Priority
-    x-axis Low Effort --> High Effort
-    y-axis Low Impact --> High Impact
-    quadrant-1 Quick Wins
-    quadrant-2 Major Projects
-    quadrant-3 Fill Ins
-    quadrant-4 Thankless Tasks
-    Dark mode: [0.2, 0.8]
-    SSO login: [0.7, 0.9]
-    CSV export: [0.3, 0.4]
-    Animations: [0.8, 0.2]</div>
+    <div class="mermaid"><svg xmlns="http://www.w3.org/2000/svg" class="pele pele-quadrantChart" viewBox="0 0 500 500" width="500" height="500" style="max-width:100%;height:auto;--_bg:var(--pele-bg,#fff);--_fg:var(--pele-fg,#1f1f1f);--_m:var(--pele-muted,#6e6e6e);--_l:var(--pele-line,#1f1f1f);--_s:var(--pele-surface,#f3f3f3);--_a:var(--pele-surface-alt,#e6e6e6);--_b:var(--pele-border,#8a8a8a);--_c:var(--pele-accent,#5b7bd5);color:var(--_fg);--_r:var(--pele-radius,4px);--_tw:var(--pele-title-weight,bold);--_fm:var(--pele-font-mono,monospace);font:16px sans-serif;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;font-family:var(--pele-font,sans-serif)" fill="var(--_fg)" role="graphics-document document" aria-roledescription="quadrantChart"><text class="pele-title" font-weight="var(--_tw)" text-anchor="middle" xml:space="preserve"><tspan x="250" y="22.6">Feature Priority</tspan></text><g class="pele-quadrants" fill="var(--_s)" stroke="var(--_b)"><g class="pele-quadrant" data-id="1"><rect x="265" y="42" width="227" height="210" style="rx:var(--_r)"/><text class="pele-label" fill="var(--_fg)" stroke="none" x="378.5" y="64.6" text-anchor="middle">Quick Wins</text></g><g class="pele-quadrant" data-id="2"><rect x="34" y="42" width="227" height="210" style="rx:var(--_r)"/><text class="pele-label" fill="var(--_fg)" stroke="none" x="147.5" y="64.6" text-anchor="middle">Major Projects</text></g><g class="pele-quadrant" data-id="3"><rect x="34" y="256" width="227" height="210" style="rx:var(--_r)"/><text class="pele-label" fill="var(--_fg)" stroke="none" x="147.5" y="278.6" text-anchor="middle">Fill Ins</text></g><g class="pele-quadrant" data-id="4"><rect x="265" y="256" width="227" height="210" style="rx:var(--_r)"/><text class="pele-label" fill="var(--_fg)" stroke="none" x="378.5" y="278.6" text-anchor="middle">Thankless Tasks</text></g></g><g class="pele-axis-labels" font-size="14" fill="var(--_m)"><text x="148.5" y="486.4" text-anchor="middle">Low Effort</text><text x="377.5" y="486.4" text-anchor="middle">High Effort</text><g transform="translate(18.5,360) rotate(-90)"><text x="0" y="4.9" text-anchor="middle">Low Impact</text></g><g transform="translate(18.5,148) rotate(-90)"><text x="0" y="4.9" text-anchor="middle">High Impact</text></g></g><g class="pele-points" fill="var(--pele-series-1,#4c78a8)"><circle class="pele-point" data-id="Animations" cx="400.4" cy="381.2" r="5"/><circle class="pele-point" data-id="CSV export" cx="171.4" cy="296.4" r="5"/><circle class="pele-point" data-id="SSO login" cx="354.6" cy="84.4" r="5"/><circle class="pele-point" data-id="Dark mode" cx="125.6" cy="126.8" r="5"/></g><g class="pele-point-labels" font-size="12"><text class="pele-label" x="125.6" y="148.2" text-anchor="middle">Dark mode</text><text class="pele-label" x="354.6" y="105.8" text-anchor="middle">SSO login</text><text class="pele-label" x="171.4" y="317.8" text-anchor="middle">CSV export</text><text class="pele-label" x="400.4" y="402.6" text-anchor="middle">Animations</text></g></svg></div>
   </div>
   <pre class="mermaid-source"><code>quadrantChart
     title Feature Priority
@@ -2563,14 +2612,7 @@ code.hljs {
     <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
   </div>
   <div class="mermaid-chart">
-    <div class="mermaid">sankey-beta
-
-Visitors,Sign up,1000
-Visitors,Bounce,2000
-Sign up,Trial,600
-Sign up,Free,400
-Trial,Paid,200
-Trial,Churn,400</div>
+    <div class="mermaid"><svg xmlns="http://www.w3.org/2000/svg" class="pele pele-sankey" viewBox="0 0 616 416" width="616" height="416" style="max-width:100%;height:auto;--_bg:var(--pele-bg,#fff);--_fg:var(--pele-fg,#1f1f1f);--_m:var(--pele-muted,#6e6e6e);--_l:var(--pele-line,#1f1f1f);--_s:var(--pele-surface,#f3f3f3);--_a:var(--pele-surface-alt,#e6e6e6);--_b:var(--pele-border,#8a8a8a);--_c:var(--pele-accent,#5b7bd5);color:var(--_fg);--_fm:var(--pele-font-mono,monospace);font:16px sans-serif;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;font-family:var(--pele-font,sans-serif)" fill="var(--_fg)" role="graphics-document document" aria-roledescription="sankey"><g transform="translate(8,8)"><g class="pele-sankey-links" fill-opacity="0.4"><path class="pele-sankey-link" data-id="Visitors-&gt;Sign up" d="M10,229.62C103.33,229.62 103.33,231.28 196.67,231.28L196.67,337.61C103.33,337.61 103.33,335.95 10,335.95Z" fill="var(--pele-series-1,#4c78a8)"><title>Visitors → Sign up: 1000</title></path><path class="pele-sankey-link" data-id="Visitors-&gt;Bounce" d="M10,16.95C300,16.95 300,0 590,0L590,212.67C300,212.67 300,229.62 10,229.62Z" fill="var(--pele-series-1,#4c78a8)"><title>Visitors → Bounce: 2000</title></path><path class="pele-sankey-link" data-id="Sign up-&gt;Trial" d="M206.67,273.81C300,273.81 300,276.3 393.33,276.3L393.33,340.1C300,340.1 300,337.61 206.67,337.61Z" fill="var(--pele-series-2,#f58518)"><title>Sign up → Trial: 600</title></path><path class="pele-sankey-link" data-id="Sign up-&gt;Free" d="M206.67,231.28C398.33,231.28 398.33,239.67 590,239.67L590,282.2C398.33,282.2 398.33,273.81 206.67,273.81Z" fill="var(--pele-series-2,#f58518)"><title>Sign up → Free: 400</title></path><path class="pele-sankey-link" data-id="Trial-&gt;Paid" d="M403.33,276.3C496.67,276.3 496.67,309.2 590,309.2L590,330.47C496.67,330.47 496.67,297.57 403.33,297.57Z" fill="var(--pele-series-4,#e45756)"><title>Trial → Paid: 200</title></path><path class="pele-sankey-link" data-id="Trial-&gt;Churn" d="M403.33,297.57C496.67,297.57 496.67,357.47 590,357.47L590,400C496.67,400 496.67,340.1 403.33,340.1Z" fill="var(--pele-series-4,#e45756)"><title>Trial → Churn: 400</title></path></g><g class="pele-sankey-nodes"><rect class="pele-sankey-node" data-id="Visitors" x="0" y="16.95" width="10" height="319" rx="2" fill="var(--pele-series-1,#4c78a8)"/><rect class="pele-sankey-node" data-id="Sign up" x="196.67" y="231.28" width="10" height="106.33" rx="2" fill="var(--pele-series-2,#f58518)"/><rect class="pele-sankey-node" data-id="Bounce" x="590" y="0" width="10" height="212.67" rx="2" fill="var(--pele-series-3,#54a24b)"/><rect class="pele-sankey-node" data-id="Trial" x="393.33" y="276.3" width="10" height="63.8" rx="2" fill="var(--pele-series-4,#e45756)"/><rect class="pele-sankey-node" data-id="Free" x="590" y="239.67" width="10" height="42.53" rx="2" fill="var(--pele-series-5,#72b7b2)"/><rect class="pele-sankey-node" data-id="Paid" x="590" y="309.2" width="10" height="21.27" rx="2" fill="var(--pele-series-6,#eeca3b)"/><rect class="pele-sankey-node" data-id="Churn" x="590" y="357.47" width="10" height="42.53" rx="2" fill="var(--pele-series-7,#b279a2)"/></g><g class="pele-labels" font-size="14"><g class="pele-label" data-id="Visitors"><text x="16" y="181.35" text-anchor="start">Visitors <tspan class="pele-sankey-value" fill="var(--_m)">3000</tspan></text></g><g class="pele-label" data-id="Sign up"><text x="212.67" y="289.34" text-anchor="start">Sign up <tspan class="pele-sankey-value" fill="var(--_m)">1000</tspan></text></g><g class="pele-label" data-id="Bounce"><text x="584" y="111.23" text-anchor="end">Bounce <tspan class="pele-sankey-value" fill="var(--_m)">2000</tspan></text></g><g class="pele-label" data-id="Trial"><text x="387.33" y="313.1" text-anchor="end">Trial <tspan class="pele-sankey-value" fill="var(--_m)">600</tspan></text></g><g class="pele-label" data-id="Free"><text x="584" y="265.83" text-anchor="end">Free <tspan class="pele-sankey-value" fill="var(--_m)">400</tspan></text></g><g class="pele-label" data-id="Paid"><text x="584" y="324.73" text-anchor="end">Paid <tspan class="pele-sankey-value" fill="var(--_m)">200</tspan></text></g><g class="pele-label" data-id="Churn"><text x="584" y="383.63" text-anchor="end">Churn <tspan class="pele-sankey-value" fill="var(--_m)">400</tspan></text></g></g></g></svg></div>
   </div>
   <pre class="mermaid-source"><code>sankey-beta
 
@@ -2597,12 +2639,7 @@ Trial,Churn,400</code></pre>
     <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
   </div>
   <div class="mermaid-chart">
-    <div class="mermaid">xychart-beta
-    title "Monthly Revenue 2024"
-    x-axis ["Jan", "Feb", "Mar", "Apr", "May", "Jun"]
-    y-axis "Revenue ($)" 0 --> 100000
-    bar [45000, 52000, 48000, 61000, 55000, 72000]
-    line [45000, 52000, 48000, 61000, 55000, 72000]</div>
+    <div class="mermaid"><svg xmlns="http://www.w3.org/2000/svg" class="pele pele-xychart" viewBox="0 0 700 500" width="700" height="500" style="max-width:100%;height:auto;--_bg:var(--pele-bg,#fff);--_fg:var(--pele-fg,#1f1f1f);--_m:var(--pele-muted,#6e6e6e);--_l:var(--pele-line,#1f1f1f);--_s:var(--pele-surface,#f3f3f3);--_a:var(--pele-surface-alt,#e6e6e6);--_b:var(--pele-border,#8a8a8a);--_c:var(--pele-accent,#5b7bd5);color:var(--_fg);--_tw:var(--pele-title-weight,bold);--_fm:var(--pele-font-mono,monospace);font:16px sans-serif;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;font-family:var(--pele-font,sans-serif)" fill="var(--_fg)" role="graphics-document document" aria-roledescription="xychart"><text class="pele-title" font-weight="var(--_tw)" text-anchor="middle" xml:space="preserve"><tspan x="350" y="25.6">Monthly Revenue 2024</tspan></text><path class="pele-grid" d="M91.7,463H692M91.7,381.3H692M91.7,299.6H692M91.7,217.9H692M91.7,136.2H692M91.7,54.5H692" stroke="var(--_a)"/><g class="pele-plot"><g class="pele-series pele-bars" fill="var(--pele-series-1,#4c78a8)"><rect x="106.71" y="279.17" width="70.03" height="183.83"/><rect x="206.76" y="250.58" width="70.03" height="212.42"/><rect x="306.81" y="266.92" width="70.03" height="196.08"/><rect x="406.86" y="213.82" width="70.03" height="249.19"/><rect x="506.91" y="238.33" width="70.03" height="224.68"/><rect x="606.96" y="168.88" width="70.03" height="294.12"/></g><g class="pele-series pele-line" fill="var(--pele-series-2,#f58518)"><path d="M141.73,279.17L241.78,250.58L341.83,266.92L441.88,213.82L541.93,238.33L641.98,168.88" fill="none" stroke="var(--pele-series-2,#f58518)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="141.73" cy="279.17" r="3"/><circle cx="241.78" cy="250.58" r="3"/><circle cx="341.83" cy="266.92" r="3"/><circle cx="441.88" cy="213.82" r="3"/><circle cx="541.93" cy="238.33" r="3"/><circle cx="641.98" cy="168.88" r="3"/></g></g><path class="pele-axis" d="M91.7,54.5V463M91.7,463H692M91.7,463h-4M91.7,381.3h-4M91.7,299.6h-4M91.7,217.9h-4M91.7,136.2h-4M91.7,54.5h-4M141.73,463v4M241.78,463v4M341.83,463v4M441.88,463v4M541.93,463v4M641.98,463v4" fill="none" stroke="var(--_b)"/><g class="pele-axis-labels" font-size="14" fill="var(--_m)"><text x="81.7" y="467.9" text-anchor="end">0</text><text x="81.7" y="386.2" text-anchor="end">20000</text><text x="81.7" y="304.5" text-anchor="end">40000</text><text x="81.7" y="222.8" text-anchor="end">60000</text><text x="81.7" y="141.1" text-anchor="end">80000</text><text x="81.7" y="59.4" text-anchor="end">100000</text><text x="141.73" y="486.4" text-anchor="middle">Jan</text><text x="241.78" y="486.4" text-anchor="middle">Feb</text><text x="341.83" y="486.4" text-anchor="middle">Mar</text><text x="441.88" y="486.4" text-anchor="middle">Apr</text><text x="541.93" y="486.4" text-anchor="middle">May</text><text x="641.98" y="486.4" text-anchor="middle">Jun</text></g><g class="pele-axis-titles" font-size="14"><g transform="translate(18.5,258.75) rotate(-90)"><text x="0" y="4.9" text-anchor="middle">Revenue ($)</text></g></g></svg></div>
   </div>
   <pre class="mermaid-source"><code>xychart-beta
     title "Monthly Revenue 2024"
@@ -2629,16 +2666,7 @@ Trial,Churn,400</code></pre>
     <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
   </div>
   <div class="mermaid-chart">
-    <div class="mermaid">block-beta
-    columns 3
-    Frontend["Frontend\nReact"]
-    space
-    Backend["Backend\nNode.js"]
-    space:2
-    DB[("Database\nPostgreSQL")]
-
-    Frontend --> Backend
-    Backend --> DB</div>
+    <div class="mermaid"><svg xmlns="http://www.w3.org/2000/svg" class="pele pele-block" viewBox="0 0 410 196" width="410" height="196" style="max-width:100%;height:auto;--_bg:var(--pele-bg,#fff);--_fg:var(--pele-fg,#1f1f1f);--_m:var(--pele-muted,#6e6e6e);--_l:var(--pele-line,#1f1f1f);--_s:var(--pele-surface,#f3f3f3);--_a:var(--pele-surface-alt,#e6e6e6);--_b:var(--pele-border,#8a8a8a);--_c:var(--pele-accent,#5b7bd5);color:var(--_fg);--_r:var(--pele-radius,4px);--_fm:var(--pele-font-mono,monospace);font:16px sans-serif;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;font-family:var(--pele-font,sans-serif)" fill="var(--_fg)" role="graphics-document document" aria-roledescription="block"><g class="pele-edges" fill="none" stroke="var(--_l)" stroke-linecap="round"><g class="pele-edge" data-id="1-Frontend-Backend"><path d="M131.15,49.8L271.3,49.8"/><path class="pele-marker" d="M278.3,49.8L270.3,53.16L270.3,46.44Z" fill="var(--_l)" stroke="none"/></g><g class="pele-edge" data-id="1-Backend-DB"><path d="M339.88,91.59L339.88,96.59"/><path class="pele-marker" d="M339.88,103.59L336.52,95.59L343.24,95.59Z" fill="var(--_l)" stroke="none"/></g></g><g class="pele-nodes"><g class="pele-node pele-shape-rect" data-id="Frontend" transform="translate(69.58,49.8)"><rect x="-61.58" y="-41.8" width="123.15" height="83.59" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><text class="pele-label" text-anchor="middle" xml:space="preserve"><tspan x="0" y="-4.9">Frontend</tspan><tspan x="0" y="16.1">React</tspan></text></g><g class="pele-node pele-shape-rect" data-id="Backend" transform="translate(339.88,49.8)"><rect x="-61.58" y="-41.8" width="123.15" height="83.59" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><text class="pele-label" text-anchor="middle" xml:space="preserve"><tspan x="0" y="-4.9">Backend</tspan><tspan x="0" y="16.1">Node.js</tspan></text></g><g class="pele-node pele-shape-cyl" data-id="DB" transform="translate(339.88,145.39)"><path d="M-61.58,-33A61.58,8.8 0 0 1 61.58,-33V33A61.58,8.8 0 0 1 -61.58,33Z" fill="var(--_s)" stroke="var(--_b)"/><path d="M-61.58,-33A61.58,8.8 0 0 0 61.58,-33" fill="none" stroke="var(--_b)"/><text class="pele-label" text-anchor="middle" xml:space="preserve"><tspan x="0" y="-0.5">Database</tspan><tspan x="0" y="20.5">PostgreSQL</tspan></text></g></g></svg></div>
   </div>
   <pre class="mermaid-source"><code>block-beta
     columns 3
@@ -2670,19 +2698,7 @@ Trial,Churn,400</code></pre>
     <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
   </div>
   <div class="mermaid-chart">
-    <div class="mermaid">architecture-beta
-    group aws(cloud)[AWS Cloud]
-
-    service lb(server)[Load Balancer] in aws
-    service api(server)[API Gateway] in aws
-    service app(server)[App Server] in aws
-    service db(database)[Database] in aws
-    service cache(database)[Redis] in aws
-
-    lb:R --> L:api
-    api:R --> L:app
-    app:B --> T:db
-    app:B --> T:cache</div>
+    <div class="mermaid"><svg xmlns="http://www.w3.org/2000/svg" class="pele pele-architecture" viewBox="0 0 504 264" width="504" height="264" style="max-width:100%;height:auto;--_bg:var(--pele-bg,#fff);--_fg:var(--pele-fg,#1f1f1f);--_m:var(--pele-muted,#6e6e6e);--_l:var(--pele-line,#1f1f1f);--_s:var(--pele-surface,#f3f3f3);--_a:var(--pele-surface-alt,#e6e6e6);--_b:var(--pele-border,#8a8a8a);--_c:var(--pele-accent,#5b7bd5);color:var(--_fg);--_r:var(--pele-radius,4px);--_fm:var(--pele-font-mono,monospace);font:16px sans-serif;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;font-family:var(--pele-font,sans-serif)" fill="var(--_fg)" role="graphics-document document" aria-roledescription="architecture"><g transform="translate(8,8)"><g class="pele-clusters"><g class="pele-cluster" data-id="aws"><rect x="0" y="0" width="488" height="248" fill="var(--_a)" fill-opacity="0.5" stroke="var(--_b)" style="rx:var(--_r)"/><svg class="pele-icon" data-icon="cloud" x="10" y="8" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18a4 4 0 0 1-.5-7.97A6 6 0 0 1 18 9.5a4.25 4.25 0 0 1-.5 8.5z" stroke="var(--_fg)" stroke-width="1.5"/></svg><text class="pele-cluster-label" fill="var(--_m)" x="77.34" y="23.6" text-anchor="middle">AWS Cloud</text></g></g><g class="pele-edges" fill="none" stroke="var(--_l)" stroke-linecap="round" stroke-linejoin="round"><g class="pele-edge" data-id="lb-api"><path d="M96,60L180,60"/><path class="pele-marker" d="M187,60L179,63.36L179,56.64Z" fill="var(--_l)" stroke="none"/></g><g class="pele-edge" data-id="api-app"><path d="M235,60L308,60"/><path class="pele-marker" d="M315,60L307,63.36L307,56.64Z" fill="var(--_l)" stroke="none"/></g><g class="pele-edge" data-id="app-db"><path d="M339,114L339,145"/><path class="pele-marker" d="M339,152L335.64,144L342.36,144Z" fill="var(--_l)" stroke="none"/></g><g class="pele-edge" data-id="app-cache"><path d="M339,114L339,126Q339,132 345,132L438,132Q444,132 444,138L444,145"/><path class="pele-marker" d="M444,152L440.64,144L447.36,144Z" fill="var(--_l)" stroke="none"/></g></g><g class="pele-nodes"><g class="pele-node pele-service" data-id="lb" transform="translate(72,36)"><rect x="-24" width="48" height="48" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><svg class="pele-icon" data-icon="server" x="-12" y="12" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h18v7H3zM3 13h18v7H3zM7 7.5h.01M7 16.5h.01M11 7.5h6M11 16.5h6" stroke="var(--_fg)" stroke-width="1.5"/></svg><text class="pele-label" x="0" y="69.6" text-anchor="middle">Load Balancer</text></g><g class="pele-node pele-service" data-id="api" transform="translate(211,36)"><rect x="-24" width="48" height="48" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><svg class="pele-icon" data-icon="server" x="-12" y="12" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h18v7H3zM3 13h18v7H3zM7 7.5h.01M7 16.5h.01M11 7.5h6M11 16.5h6" stroke="var(--_fg)" stroke-width="1.5"/></svg><text class="pele-label" x="0" y="69.6" text-anchor="middle">API Gateway</text></g><g class="pele-node pele-service" data-id="app" transform="translate(339,36)"><rect x="-24" width="48" height="48" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><svg class="pele-icon" data-icon="server" x="-12" y="12" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h18v7H3zM3 13h18v7H3zM7 7.5h.01M7 16.5h.01M11 7.5h6M11 16.5h6" stroke="var(--_fg)" stroke-width="1.5"/></svg><text class="pele-label" x="0" y="69.6" text-anchor="middle">App Server</text></g><g class="pele-node pele-service" data-id="db" transform="translate(339,152)"><rect x="-24" width="48" height="48" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><svg class="pele-icon" data-icon="database" x="-12" y="12" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6a8 3 0 1 0 16 0a8 3 0 1 0-16 0M4 6v12a8 3 0 0 0 16 0V6M4 12a8 3 0 0 0 16 0" stroke="var(--_fg)" stroke-width="1.5"/></svg><text class="pele-label" x="0" y="69.6" text-anchor="middle">Database</text></g><g class="pele-node pele-service" data-id="cache" transform="translate(444,152)"><rect x="-24" width="48" height="48" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><svg class="pele-icon" data-icon="database" x="-12" y="12" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6a8 3 0 1 0 16 0a8 3 0 1 0-16 0M4 6v12a8 3 0 0 0 16 0V6M4 12a8 3 0 0 0 16 0" stroke="var(--_fg)" stroke-width="1.5"/></svg><text class="pele-label" x="0" y="69.6" text-anchor="middle">Redis</text></g></g></g></svg></div>
   </div>
   <pre class="mermaid-source"><code>architecture-beta
     group aws(cloud)[AWS Cloud]
@@ -2717,18 +2733,7 @@ Trial,Churn,400</code></pre>
     <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
   </div>
   <div class="mermaid-chart">
-    <div class="mermaid">packet-beta
-    0-3: "Version"
-    4-7: "IHL"
-    8-15: "DSCP/ECN"
-    16-31: "Total Length"
-    32-47: "Identification"
-    48-63: "Flags & Offset"
-    64-71: "TTL"
-    72-79: "Protocol"
-    80-95: "Checksum"
-    96-127: "Source IP"
-    128-159: "Dest IP"</div>
+    <div class="mermaid"><svg xmlns="http://www.w3.org/2000/svg" class="pele pele-packet" viewBox="0 0 1035 266" width="1035" height="266" style="max-width:100%;height:auto;--_bg:var(--pele-bg,#fff);--_fg:var(--pele-fg,#1f1f1f);--_m:var(--pele-muted,#6e6e6e);--_l:var(--pele-line,#1f1f1f);--_s:var(--pele-surface,#f3f3f3);--_a:var(--pele-surface-alt,#e6e6e6);--_b:var(--pele-border,#8a8a8a);--_c:var(--pele-accent,#5b7bd5);color:var(--_fg);--_r:var(--pele-radius,4px);--_fm:var(--pele-font-mono,monospace);font:16px sans-serif;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;font-family:var(--pele-font,sans-serif)" fill="var(--_fg)" role="graphics-document document" aria-roledescription="packet"><g class="pele-packet-fields" font-size="14" text-anchor="middle"><g class="pele-node" data-id="0-3"><rect x="8" y="22" width="123" height="32" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><text x="69.5" y="42.9">Version</text></g><g class="pele-node" data-id="4-7"><rect x="136" y="22" width="123" height="32" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><text x="197.5" y="42.9">IHL</text></g><g class="pele-node" data-id="8-15"><rect x="264" y="22" width="251" height="32" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><text x="389.5" y="42.9">DSCP/ECN</text></g><g class="pele-node" data-id="16-31"><rect x="520" y="22" width="507" height="32" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><text x="773.5" y="42.9">Total Length</text></g><g class="pele-node" data-id="32-47"><rect x="8" y="73" width="507" height="32" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><text x="261.5" y="93.9">Identification</text></g><g class="pele-node" data-id="48-63"><rect x="520" y="73" width="507" height="32" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><text x="773.5" y="93.9">Flags &amp; Offset</text></g><g class="pele-node" data-id="64-71"><rect x="8" y="124" width="251" height="32" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><text x="133.5" y="144.9">TTL</text></g><g class="pele-node" data-id="72-79"><rect x="264" y="124" width="251" height="32" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><text x="389.5" y="144.9">Protocol</text></g><g class="pele-node" data-id="80-95"><rect x="520" y="124" width="507" height="32" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><text x="773.5" y="144.9">Checksum</text></g><g class="pele-node" data-id="96-127"><rect x="8" y="175" width="1019" height="32" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><text x="517.5" y="195.9">Source IP</text></g><g class="pele-node" data-id="128-159"><rect x="8" y="226" width="1019" height="32" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><text x="517.5" y="246.9">Dest IP</text></g></g><g class="pele-packet-bits" font-size="10" fill="var(--_m)"><text x="8" y="18">0</text><text x="131" y="18" text-anchor="end">3</text><text x="136" y="18">4</text><text x="259" y="18" text-anchor="end">7</text><text x="264" y="18">8</text><text x="515" y="18" text-anchor="end">15</text><text x="520" y="18">16</text><text x="1027" y="18" text-anchor="end">31</text><text x="8" y="69">32</text><text x="515" y="69" text-anchor="end">47</text><text x="520" y="69">48</text><text x="1027" y="69" text-anchor="end">63</text><text x="8" y="120">64</text><text x="259" y="120" text-anchor="end">71</text><text x="264" y="120">72</text><text x="515" y="120" text-anchor="end">79</text><text x="520" y="120">80</text><text x="1027" y="120" text-anchor="end">95</text><text x="8" y="171">96</text><text x="1027" y="171" text-anchor="end">127</text><text x="8" y="222">128</text><text x="1027" y="222" text-anchor="end">159</text></g></svg></div>
   </div>
   <pre class="mermaid-source"><code>packet-beta
     0-3: "Version"
@@ -2761,42 +2766,7 @@ Trial,Churn,400</code></pre>
     <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
   </div>
   <div class="mermaid-chart">
-    <div class="mermaid">requirementDiagram
-
-requirement uptime_req {
-    id: 1
-    text: System uptime must be 99.9 percent
-    risk: high
-    verifymethod: analysis
-}
-
-FunctionalRequirement auth_req {
-    id: 2
-    text: Users must authenticate before accessing data
-    risk: high
-    verifymethod: test
-}
-
-PerformanceRequirement perf_req {
-    id: 3
-    text: Page load under 200ms
-    risk: medium
-    verifymethod: test
-}
-
-element auth_service {
-    type: service
-    docref: "auth-spec.pdf"
-}
-
-element perf_monitor {
-    type: "unit test"
-    docref: "LoadTest.cs"
-}
-
-auth_service - satisfies -> auth_req
-perf_monitor - verifies -> perf_req
-auth_req - traces -> uptime_req</div>
+    <div class="mermaid"><svg xmlns="http://www.w3.org/2000/svg" class="pele pele-requirement" viewBox="0 0 635 672" width="635" height="672" style="max-width:100%;height:auto;--_bg:var(--pele-bg,#fff);--_fg:var(--pele-fg,#1f1f1f);--_m:var(--pele-muted,#6e6e6e);--_l:var(--pele-line,#1f1f1f);--_s:var(--pele-surface,#f3f3f3);--_a:var(--pele-surface-alt,#e6e6e6);--_b:var(--pele-border,#8a8a8a);--_c:var(--pele-accent,#5b7bd5);color:var(--_fg);--_r:var(--pele-radius,4px);--_hw:var(--pele-heading-weight,bold);--_fm:var(--pele-font-mono,monospace);font:16px sans-serif;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;font-family:var(--pele-font,sans-serif)" fill="var(--_fg)" role="graphics-document document" aria-roledescription="requirement"><g class="pele-edges" fill="none" stroke="var(--_l)" stroke-linecap="round"><g class="pele-edge pele-relationship-arrow" data-id="auth_service-auth_req-0"><path d="M176.62,137L176.62,218" stroke-dasharray="5 4"/><path class="pele-marker" d="M172.12,209L176.62,218L181.12,209" stroke-linejoin="round"/></g><g class="pele-edge pele-relationship-arrow" data-id="perf_monitor-perf_req-1"><path d="M497.45,137L497.45,225.5" stroke-dasharray="5 4"/><path class="pele-marker" d="M492.95,216.5L497.45,225.5L501.95,216.5" stroke-linejoin="round"/></g><g class="pele-edge pele-relationship-arrow" data-id="auth_req-uptime_req-2"><path d="M176.62,408L176.62,489" stroke-dasharray="5 4"/><path class="pele-marker" d="M172.12,480L176.62,489L181.12,480" stroke-linejoin="round"/></g></g><g class="pele-edge-labels" font-size="14" fill="var(--_m)"><g class="pele-edge-label" data-id="auth_service-auth_req-0"><rect x="139.21" y="167" width="74.81" height="21" rx="3" fill="var(--_bg)"/><text x="176.62" y="182.4" text-anchor="middle">«satisfies»</text></g><g class="pele-edge-label" data-id="perf_monitor-perf_req-1"><rect x="463.16" y="167" width="68.58" height="21" rx="3" fill="var(--_bg)"/><text x="497.45" y="182.4" text-anchor="middle">«verifies»</text></g><g class="pele-edge-label" data-id="auth_req-uptime_req-2"><rect x="145.44" y="438" width="62.36" height="21" rx="3" fill="var(--_bg)"/><text x="176.62" y="453.4" text-anchor="middle">«traces»</text></g></g><g class="pele-nodes"><g class="pele-node pele-requirement" data-id="uptime_req" transform="translate(176.62,576.5)"><rect x="-168.62" y="-87.5" width="337.23" height="175" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><text class="pele-stereotype" font-size="14" fill="var(--_m)" x="0" y="-62.1" text-anchor="middle">«Requirement»</text><text class="pele-label" font-size="16" font-weight="var(--_hw)" text-anchor="middle" xml:space="preserve"><tspan x="0" y="-38.9">uptime_req</tspan></text><path class="pele-divider" d="M-168.62,-22.5H168.62" stroke="var(--_b)"/><g class="pele-fields" font-size="14"><text class="pele-field" fill="var(--_m)" text-anchor="start" xml:space="preserve"><tspan x="-154.62" y="2.9">ID</tspan></text><text class="pele-value" text-anchor="start" xml:space="preserve"><tspan x="-73.37" y="2.9">1</tspan></text><text class="pele-field" fill="var(--_m)" text-anchor="start" xml:space="preserve"><tspan x="-154.62" y="25.9">Text</tspan></text><text class="pele-value" text-anchor="start" xml:space="preserve"><tspan x="-73.37" y="25.9">System uptime must be 99.9 percent</tspan></text><text class="pele-field" fill="var(--_m)" text-anchor="start" xml:space="preserve"><tspan x="-154.62" y="48.9">Risk</tspan></text><text class="pele-value" text-anchor="start" xml:space="preserve"><tspan x="-73.37" y="48.9">High</tspan></text><text class="pele-field" fill="var(--_m)" text-anchor="start" xml:space="preserve"><tspan x="-154.62" y="71.9">Verification</tspan></text><text class="pele-value" text-anchor="start" xml:space="preserve"><tspan x="-73.37" y="71.9">Analysis</tspan></text></g></g><g class="pele-node pele-requirement" data-id="auth_req" transform="translate(176.62,313)"><rect x="-151.89" y="-95" width="303.77" height="190" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><text class="pele-stereotype" font-size="14" fill="var(--_m)" x="0" y="-69.6" text-anchor="middle">«Functional Requirement»</text><text class="pele-label" font-size="16" font-weight="var(--_hw)" text-anchor="middle" xml:space="preserve"><tspan x="0" y="-46.4">auth_req</tspan></text><path class="pele-divider" d="M-151.89,-30H151.89" stroke="var(--_b)"/><g class="pele-fields" font-size="14"><text class="pele-field" fill="var(--_m)" text-anchor="start" xml:space="preserve"><tspan x="-137.89" y="-4.6">ID</tspan></text><text class="pele-value" text-anchor="start" xml:space="preserve"><tspan x="-56.64" y="-4.6">2</tspan></text><text class="pele-field" fill="var(--_m)" text-anchor="start" xml:space="preserve"><tspan x="-137.89" y="18.4">Text</tspan></text><text class="pele-value" text-anchor="start" xml:space="preserve"><tspan x="-56.64" y="16.9">Users must authenticate before</tspan><tspan x="-56.64" y="34.9">accessing data</tspan></text><text class="pele-field" fill="var(--_m)" text-anchor="start" xml:space="preserve"><tspan x="-137.89" y="56.4">Risk</tspan></text><text class="pele-value" text-anchor="start" xml:space="preserve"><tspan x="-56.64" y="56.4">High</tspan></text><text class="pele-field" fill="var(--_m)" text-anchor="start" xml:space="preserve"><tspan x="-137.89" y="79.4">Verification</tspan></text><text class="pele-value" text-anchor="start" xml:space="preserve"><tspan x="-56.64" y="79.4">Test</tspan></text></g></g><g class="pele-node pele-requirement" data-id="perf_req" transform="translate(497.45,313)"><rect x="-128.94" y="-87.5" width="257.88" height="175" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><text class="pele-stereotype" font-size="14" fill="var(--_m)" x="0" y="-62.1" text-anchor="middle">«Performance Requirement»</text><text class="pele-label" font-size="16" font-weight="var(--_hw)" text-anchor="middle" xml:space="preserve"><tspan x="0" y="-38.9">perf_req</tspan></text><path class="pele-divider" d="M-128.94,-22.5H128.94" stroke="var(--_b)"/><g class="pele-fields" font-size="14"><text class="pele-field" fill="var(--_m)" text-anchor="start" xml:space="preserve"><tspan x="-114.94" y="2.9">ID</tspan></text><text class="pele-value" text-anchor="start" xml:space="preserve"><tspan x="-33.7" y="2.9">3</tspan></text><text class="pele-field" fill="var(--_m)" text-anchor="start" xml:space="preserve"><tspan x="-114.94" y="25.9">Text</tspan></text><text class="pele-value" text-anchor="start" xml:space="preserve"><tspan x="-33.7" y="25.9">Page load under 200ms</tspan></text><text class="pele-field" fill="var(--_m)" text-anchor="start" xml:space="preserve"><tspan x="-114.94" y="48.9">Risk</tspan></text><text class="pele-value" text-anchor="start" xml:space="preserve"><tspan x="-33.7" y="48.9">Medium</tspan></text><text class="pele-field" fill="var(--_m)" text-anchor="start" xml:space="preserve"><tspan x="-114.94" y="71.9">Verification</tspan></text><text class="pele-value" text-anchor="start" xml:space="preserve"><tspan x="-33.7" y="71.9">Test</tspan></text></g></g><g class="pele-node pele-element" data-id="auth_service" transform="translate(176.62,72.5)"><rect x="-87.7" y="-64.5" width="175.39" height="129" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><text class="pele-stereotype" font-size="14" fill="var(--_m)" x="0" y="-39.1" text-anchor="middle">«Element»</text><text class="pele-label" font-size="16" font-weight="var(--_hw)" text-anchor="middle" xml:space="preserve"><tspan x="0" y="-15.9">auth_service</tspan></text><path class="pele-divider" d="M-87.7,0.5H87.7" stroke="var(--_b)"/><g class="pele-fields" font-size="14"><text class="pele-field" fill="var(--_m)" text-anchor="start" xml:space="preserve"><tspan x="-73.7" y="25.9">Type</tspan></text><text class="pele-value" text-anchor="start" xml:space="preserve"><tspan x="-11.13" y="25.9">service</tspan></text><text class="pele-field" fill="var(--_m)" text-anchor="start" xml:space="preserve"><tspan x="-73.7" y="48.9">Doc Ref</tspan></text><text class="pele-value" text-anchor="start" xml:space="preserve"><tspan x="-11.13" y="48.9">auth-spec.pdf</tspan></text></g></g><g class="pele-node pele-element" data-id="perf_monitor" transform="translate(497.45,72.5)"><rect x="-83.41" y="-64.5" width="166.83" height="129" fill="var(--_s)" stroke="var(--_b)" style="rx:var(--_r)"/><text class="pele-stereotype" font-size="14" fill="var(--_m)" x="0" y="-39.1" text-anchor="middle">«Element»</text><text class="pele-label" font-size="16" font-weight="var(--_hw)" text-anchor="middle" xml:space="preserve"><tspan x="0" y="-15.9">perf_monitor</tspan></text><path class="pele-divider" d="M-83.41,0.5H83.41" stroke="var(--_b)"/><g class="pele-fields" font-size="14"><text class="pele-field" fill="var(--_m)" text-anchor="start" xml:space="preserve"><tspan x="-69.41" y="25.9">Type</tspan></text><text class="pele-value" text-anchor="start" xml:space="preserve"><tspan x="-6.84" y="25.9">unit test</tspan></text><text class="pele-field" fill="var(--_m)" text-anchor="start" xml:space="preserve"><tspan x="-69.41" y="48.9">Doc Ref</tspan></text><text class="pele-value" text-anchor="start" xml:space="preserve"><tspan x="-6.84" y="48.9">LoadTest.cs</tspan></text></g></g></g></svg></div>
   </div>
   <pre class="mermaid-source"><code>requirementDiagram
 
@@ -2940,37 +2910,8 @@ auth_req - traces -&gt; uptime_req</code></pre>
 </ol>
 <hr>
 <h2 id="configuration" tabindex="-1">Configuration</h2>
-<p>You can add YAML frontmatter to customize diagram appearance:</p>
-<div class="mermaid-wrapper"><div class="mermaid-container">
-  <div class="mermaid-toolbar">
-    <button class="mermaid-btn mermaid-btn-chart" title="Chart view"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z"/><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/></svg></button>
-    <button class="mermaid-btn mermaid-btn-code" title="Show code"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg></button>
-    <button class="mermaid-btn mermaid-btn-fullscreen" title="Fullscreen"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 15 6 6"/><path d="m15 9 6-6"/><path d="M21 16v5h-5"/><path d="M21 8V3h-5"/><path d="M3 16v5h5"/><path d="m3 21 6-6"/><path d="M3 8V3h5"/><path d="M9 9 3 3"/></svg></button>
-  </div>
-  <div class="mermaid-zoom-controls">
-    <button class="mermaid-btn mermaid-btn-zoom-in" title="Zoom in"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-    <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-  </div>
-  <div class="mermaid-chart">
-    <div class="mermaid">---
-config:
-  theme: dark
-  look: handDrawn
----
-flowchart LR
-    A --> B</div>
-  </div>
-  <pre class="mermaid-source"><code>---
-config:
-  theme: dark
-  look: handDrawn
----
-flowchart LR
-    A --&gt; B</code></pre>
-</div></div>
-
-<p><strong>Themes:</strong> <code>default</code>, <code>dark</code>, <code>forest</code>, <code>base</code>, <code>neutral</code></p>
-<p><strong>Looks:</strong> <code>default</code>, <code>handDrawn</code>, <code>classic</code></p>
+<p>Diagrams follow the site theme automatically: colors come from CSS variables, so switching between light and dark mode does not require a re-render.</p>
+<p>YAML frontmatter and <code>%%{init}%%</code> directives in the diagram source are still parsed, but Mermaid-specific <code>theme</code>, <code>look</code>, and <code>themeVariables</code> settings are not applied.</p>
 
       </article>
       <nav class="prev-next-nav">
@@ -3318,33 +3259,11 @@ flowchart LR
 
 
   <script>
-function rerenderMermaid(theme) {
-  if (!window.__mermaid) return;
-  var diagrams = document.querySelectorAll(".mermaid");
-  if (!diagrams.length) return;
-
-  diagrams.forEach(function (el) {
-    var src = el.getAttribute("data-mermaid-src");
-    if (src) el.textContent = src;
-    else {
-      el.setAttribute("data-mermaid-src", el.textContent);
-    }
-    el.removeAttribute("data-processed");
-  });
-
-  window.__mermaid.initialize({
-    startOnLoad: false,
-    theme: theme === "dark" ? "dark" : "default",
-  });
-  window.__mermaid.run({ nodes: diagrams });
-}
-
 function toggleTheme() {
   var current = document.documentElement.getAttribute('data-theme');
   var next = current === 'dark' ? 'light' : 'dark';
   document.documentElement.setAttribute('data-theme', next);
   localStorage.setItem('theme', next);
-  rerenderMermaid(next);
 }
 
 function updateContentViewToggle() {
@@ -3386,21 +3305,30 @@ function initSidebarToggle() {
       var isExpanded = header.getAttribute('data-expanded') === 'true';
       var next = !isExpanded;
       header.setAttribute('data-expanded', String(next));
+      var toggle = header.querySelector('.nav-toggle');
+      if (toggle) {
+        toggle.setAttribute('aria-expanded', String(next));
+      }
       var navItem = header.closest('.nav-item');
       var children = navItem.querySelector('.nav-children');
       if (children) {
         children.setAttribute('data-expanded', String(next));
       }
-      var iconSpan = header.querySelector('.folder-icon');
-      if (iconSpan) {
-        iconSpan.textContent = next ? '📂' : '📁';
-      }
-      var link = header.querySelector('.nav-link[data-folder-icon]');
-      if (link) {
-        link.setAttribute('data-folder-icon', next ? 'open' : 'closed');
-      }
     });
   });
+}
+
+// Keep the active page visible inside the sidebar without touching page scroll
+function scrollActiveNavIntoView() {
+  var sidebar = document.getElementById('sidebar');
+  if (!sidebar) return;
+  var active = sidebar.querySelector('li.nav-item.active .nav-link');
+  if (!active) return;
+  var linkRect = active.getBoundingClientRect();
+  var sideRect = sidebar.getBoundingClientRect();
+  if (linkRect.top < sideRect.top || linkRect.bottom > sideRect.bottom) {
+    sidebar.scrollTop += linkRect.top - sideRect.top - sideRect.height / 3;
+  }
 }
 
 // Listen for system theme changes
@@ -3410,7 +3338,6 @@ if (window.matchMedia) {
     if (localStorage.getItem('theme') === 'system' || !localStorage.getItem('theme')) {
       var next = e.matches ? 'dark' : 'light';
       document.documentElement.setAttribute('data-theme', next);
-      rerenderMermaid(next);
     }
   });
 }
@@ -4118,6 +4045,7 @@ if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', function() {
     initSidebarState();
     initSidebarToggle();
+    scrollActiveNavIntoView();
     updateContentViewToggle();
     initMermaidToolbars();
     initCodeBlockToolbars();
@@ -4127,27 +4055,13 @@ if (document.readyState === 'loading') {
 } else {
   initSidebarState();
   initSidebarToggle();
+  scrollActiveNavIntoView();
   updateContentViewToggle();
   initMermaidToolbars();
   initCodeBlockToolbars();
   initTableToolbars();
   initQuizzes();
 }
-  </script>
-
-  <script type="module">
-    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
-    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-    const diagrams = document.querySelectorAll('.mermaid');
-    diagrams.forEach(function(el) {
-      el.setAttribute('data-mermaid-src', el.textContent);
-    });
-    mermaid.initialize({
-      startOnLoad: false,
-      theme: isDark ? 'dark' : 'default',
-    });
-    mermaid.run({ nodes: diagrams });
-    window.__mermaid = mermaid;
   </script>
 </body>
 </html>
