@@ -1,6 +1,6 @@
 # Mermaid Diagrams in mdsvr
 
-mdsvr supports **Mermaid.js** for creating beautiful diagrams directly in your Markdown files. Simply wrap your Mermaid code in triple backticks with the `mermaid` language identifier, and mdsvr will render it as an interactive diagram.
+mdsvr supports **Mermaid** syntax for creating beautiful diagrams directly in your Markdown files. Simply wrap your Mermaid code in triple backticks with the `mermaid` language identifier, and mdsvr will render it as an interactive diagram. Diagrams are rendered to SVG at serve/export time by [Pele](https://pele.run), with no client-side JavaScript needed, and they follow your site theme automatically.
 
 ## Quick Start
 
@@ -678,18 +678,6 @@ auth_req - traces -> uptime_req
 
 ## Configuration
 
-You can add YAML frontmatter to customize diagram appearance:
+Diagrams follow the site theme automatically: colors come from CSS variables, so switching between light and dark mode does not require a re-render.
 
-```mermaid
----
-config:
-  theme: dark
-  look: handDrawn
----
-flowchart LR
-    A --> B
-```
-
-**Themes:** `default`, `dark`, `forest`, `base`, `neutral`
-
-**Looks:** `default`, `handDrawn`, `classic`
+YAML frontmatter and `%%{init}%%` directives in the diagram source are still parsed, but Mermaid-specific `theme`, `look`, and `themeVariables` settings are not applied.

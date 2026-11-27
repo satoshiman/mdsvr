@@ -44,11 +44,12 @@ describe("link-transform", () => {
     await fs.rm(rootDir, { recursive: true, force: true });
   });
 
-  function ctx(sourceDirUrlPath = "/") {
+  function ctx(sourceDirUrlPath = "/", basePath = "") {
     return {
       sourceDirUrlPath,
       rootDir,
       resolveFile: createLinkResolver(),
+      basePath,
     };
   }
 
@@ -176,6 +177,43 @@ describe("link-transform", () => {
       );
       assert.ok(html.includes("[x](/deep/page/)"));
       assert.ok(html.includes("[y](./page.md)"));
+    });
+  });
+
+  describe("basePath prefixing (static export)", () => {
+    it("prefixes resolved doc routes with basePath", () => {
+      const { html } = convertMarkdownLinks(
+        '<a href="./page.md">P</a>',
+        ctx("/deep", "/docs"),
+      );
+      assert.strictEqual(html, '<a href="/docs/deep/page/">P</a>');
+    });
+
+    it("prefixes directory, asset, and root-relative routes", () => {
+      const { html } = convertMarkdownLinks(
+        '<a href="../noindex">N</a><img src="../assets/pic.png"><a href="/guide.md">G</a>',
+        ctx("/deep", "/ai-2nd-degree"),
+      );
+      assert.ok(html.includes('href="/ai-2nd-degree/noindex/"'));
+      assert.ok(html.includes('src="/ai-2nd-degree/assets/pic.png"'));
+      assert.ok(html.includes('href="/ai-2nd-degree/guide/"'));
+    });
+
+    it("keeps anchors and query strings behind the basePath prefix", () => {
+      const { html } = convertMarkdownLinks(
+        '<a href="../guide.md#setup">G</a>',
+        ctx("/deep", "/docs"),
+      );
+      assert.strictEqual(html, '<a href="/docs/guide/#setup">G</a>');
+    });
+
+    it("does not prefix missing or external links", () => {
+      const { html } = convertMarkdownLinks(
+        '<a href="./missing.md">M</a><a href="https://x.com/a">E</a>',
+        ctx("/deep", "/docs"),
+      );
+      assert.ok(html.includes('href="./missing.md"'));
+      assert.ok(html.includes('href="https://x.com/a"'));
     });
   });
 

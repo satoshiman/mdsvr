@@ -76,7 +76,7 @@ Generates Open Graph and Twitter Card meta tags for every page. Canonical URLs, 
 
 ### Mermaid Diagrams
 
-Render ` ```mermaid ``` ` code blocks as interactive diagrams. Supports fullscreen mode with pan, zoom, and a source view toggle — all client-side with no extra setup.
+Render ` ```mermaid ``` ` code blocks as interactive diagrams via [Pele](https://pele.run). Supports fullscreen mode with pan, zoom, and a source view toggle, rendered to SVG at serve/export time with no client-side library needed.
 
 ### Syntax Highlighting
 

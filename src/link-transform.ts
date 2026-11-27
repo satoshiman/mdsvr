@@ -14,6 +14,11 @@ export interface LinkTransformContext {
   rootDir: string;
   /** Classify an absolute filesystem path inside the docs root. */
   resolveFile: (absSourcePath: string) => ResolvedLinkKind;
+  /**
+   * Site base path prefix for exported deployments under a subpath
+   * (e.g. "/docs"). Resolved routes are emitted as `${basePath}${route}`.
+   */
+  basePath?: string;
 }
 
 export interface LinkWarning {
@@ -125,8 +130,9 @@ function rebaseUrl(
   }
 
   const kind = ctx.resolveFile(absPath);
-  if (kind === "doc") return `${normalizeUrlPath(route)}${suffix}`;
-  if (kind === "asset") return `${encodeUrlPath(route)}${suffix}`;
+  const base = ctx.basePath ?? "";
+  if (kind === "doc") return `${base}${normalizeUrlPath(route)}${suffix}`;
+  if (kind === "asset") return `${base}${encodeUrlPath(route)}${suffix}`;
 
   warnings.push({ url, resolvedUrlPath: route, reason: "missing" });
   return url;

@@ -351,18 +351,11 @@ export function getOgImagePath(
   format: "jpg" | "png" = "jpg",
   basePath: string = "",
 ): string {
-  // Normalize URL path and strip basePath if present
-  let normalized = urlPath.replace(/\/$/, "");
-
-  // Remove basePath prefix from urlPath if it exists
-  // This ensures the file structure matches the URL structure
-  const normalizedBase = basePath.endsWith("/")
-    ? basePath.slice(0, -1)
-    : basePath;
-  if (normalizedBase && normalized.startsWith(normalizedBase)) {
-    normalized = normalized.slice(normalizedBase.length);
-  }
-
+  // urlPath is site-relative and never contains basePath. A leading
+  // segment that happens to equal basePath is a real docs directory and
+  // must not be stripped (otherwise OG images for that folder collide
+  // with the site root's index image).
+  const normalized = urlPath.replace(/\/$/, "");
   const segments = normalized.split("/").filter(Boolean);
 
   if (segments.length === 0) {
@@ -392,16 +385,9 @@ export function getOgImageUrl(
     ? basePath.slice(0, -1)
     : basePath;
 
-  // Normalize URL path and strip basePath if present
-  let normalized = urlPath.replace(/\/$/, "");
-
-  // Remove basePath prefix from urlPath if it exists
-  // urlPath already includes basePath (e.g., /docs/3.-features/mdx)
-  // We need to strip it to avoid double basePath
-  if (normalizedBase && normalized.startsWith(normalizedBase)) {
-    normalized = normalized.slice(normalizedBase.length);
-  }
-
+  // urlPath is site-relative and never contains basePath; only the
+  // emitted URL is prefixed with it.
+  const normalized = urlPath.replace(/\/$/, "");
   const segments = normalized.split("/").filter(Boolean);
 
   if (segments.length === 0) {

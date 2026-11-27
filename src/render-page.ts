@@ -15,6 +15,7 @@ import { renderPage } from "./template/index.js";
 import { buildSidebar, type NavItem } from "./template/sidebar.js";
 import { renderDirectory } from "./directory.js";
 import { convertMarkdownLinks, createLinkResolver } from "./link-transform.js";
+import { normalizeBasePath } from "./seo/url.js";
 import type { Settings } from "./settings/index.js";
 
 /**
@@ -73,7 +74,12 @@ export async function renderPageService(
     // Rebase relative links/assets against the source file's directory and
     // emit canonical site-relative routes (clean URLs). Dynamic serve
     // without cleanUrls keeps .md links untouched — they resolve directly.
-    body = transformLinks(body, sourcePath, rootDir);
+    body = transformLinks(
+      body,
+      sourcePath,
+      rootDir,
+      isStatic ? settings.generate.basePath : "",
+    );
   }
 
   const html = renderPage({
@@ -167,7 +173,12 @@ export async function renderDirectoryPage(
 
   const html = renderPage({
     title,
-    body: renderDirectory({ urlPath, entries: entriesWithSize, title }),
+    body: renderDirectory({
+      urlPath,
+      entries: entriesWithSize,
+      title,
+      basePath: isStatic ? settings.generate.basePath : undefined,
+    }),
     filePath: urlPath,
     settings,
     frontmatter: { description },
@@ -182,12 +193,22 @@ export async function renderDirectoryPage(
 
 export function isHidden(filename: string, settings: Settings): boolean {
   for (const pattern of settings.files.extensions.hidden) {
-    if (filename === pattern) return true;
-    if (pattern.startsWith("*") && filename.endsWith(pattern.slice(1)))
-      return true;
+    if (matchHiddenPattern(filename, pattern)) return true;
   }
   if (filename.startsWith("_") || filename.startsWith(".")) return true;
   return false;
+}
+
+/** `*` in a hidden pattern matches any run of characters (glob-style). */
+function matchHiddenPattern(filename: string, pattern: string): boolean {
+  if (!pattern.includes("*")) return filename === pattern;
+  const regex = new RegExp(
+    `^${pattern
+      .split("*")
+      .map((part) => part.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"))
+      .join(".*")}$`,
+  );
+  return regex.test(filename);
 }
 
 export function isBlocked(ext: string, settings: Settings): boolean {
@@ -209,6 +230,7 @@ function transformLinks(
   html: string,
   sourcePath: string,
   rootDir: string,
+  basePath: string,
 ): string {
   // Resolve symlinks on both sides so path.relative works even when the
   // caller passed a symlinked rootDir (e.g. /var → /private/var on macOS)
@@ -228,6 +250,7 @@ function transformLinks(
     sourceDirUrlPath: relDir ? `/${relDir}` : "/",
     rootDir,
     resolveFile: createLinkResolver(),
+    basePath: normalizeBasePath(basePath),
   });
   if (result.warnings.length > 0) {
     const relSource = path.relative(rootDir, sourcePath);

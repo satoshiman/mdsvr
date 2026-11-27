@@ -42,6 +42,7 @@ export const DEFAULT_HIDDEN_FILES = [
   ".git",
   "node_modules",
   ".DS_Store",
+  "package*.json",
 ];
 
 export const DEFAULT_INDEX_FILES = ["README.md", "index.md", "INDEX.md"];

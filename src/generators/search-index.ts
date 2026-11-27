@@ -1,6 +1,8 @@
 import path from "node:path";
 import { promises as fs } from "node:fs";
 import matter from "gray-matter";
+import { fencedCodeLines } from "../markdown-fences.js";
+import { isHidden as isHiddenName } from "../render-page.js";
 import type { Settings } from "../settings/index.js";
 
 export interface SearchEntry {
@@ -12,17 +14,7 @@ export interface SearchEntry {
 }
 
 function isHidden(filePath: string, settings: Settings): boolean {
-  const basename = path.basename(filePath);
-
-  for (const pattern of settings.files.extensions.hidden) {
-    if (basename === pattern) return true;
-    if (pattern.startsWith("*") && basename.endsWith(pattern.slice(1)))
-      return true;
-  }
-
-  if (basename.startsWith("_") || basename.startsWith(".")) return true;
-
-  return false;
+  return isHiddenName(path.basename(filePath), settings);
 }
 
 function stripMarkdown(content: string): string {
@@ -38,11 +30,13 @@ function stripMarkdown(content: string): string {
 
 function extractHeadings(content: string): string[] {
   const headings: string[] = [];
-  const regex = /^#{1,6}\s+(.+)$/gm;
-  let match;
-  while ((match = regex.exec(content)) !== null) {
-    headings.push(match[1].trim());
-  }
+  const fenced = fencedCodeLines(content);
+  const regex = /^#{1,6}\s+(.+)$/;
+  content.split("\n").forEach((line, index) => {
+    if (fenced.has(index)) return;
+    const match = line.match(regex);
+    if (match) headings.push(match[1].trim());
+  });
   return headings;
 }
 
