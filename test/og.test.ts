@@ -18,14 +18,17 @@ describe("og generator", () => {
       assert.strictEqual(result, "/out/public/og/index.jpg");
     });
 
-    it("returns index.jpg for root path with basePath", () => {
-      const result = getOgImagePath("/docs", "/out/public/og", "jpg", "/docs");
-      assert.strictEqual(result, "/out/public/og/index.jpg");
+    it("keeps a first segment that coincides with basePath", () => {
+      // urlPath is site-relative (no basePath): a docs directory named the
+      // same as basePath is a real page, not a prefix to strip, otherwise
+      // its OG image would collide with the site root's index.jpg.
+      const result = getOgImagePath("/docs/", "/out/public/og", "jpg", "/docs");
+      assert.strictEqual(result, "/out/public/og/docs/index.jpg");
     });
 
     it("returns nested index.jpg for subdirectory", () => {
       const result = getOgImagePath(
-        "/docs/3.-features",
+        "/3.-features/",
         "/out/public/og",
         "jpg",
         "/docs",
@@ -40,13 +43,23 @@ describe("og generator", () => {
       assert.strictEqual(result, "/public/assets/og/index.jpg");
     });
 
-    it("returns basePath public/assets/og/index.jpg for root with basePath", () => {
-      const result = getOgImageUrl("/docs/", "/docs", "jpg");
+    it("prefixes the URL with basePath for the site root", () => {
+      const result = getOgImageUrl("/", "/docs", "jpg");
       assert.strictEqual(result, "/docs/public/assets/og/index.jpg");
     });
 
+    it("keeps a first segment that coincides with basePath", () => {
+      // A docs directory named the same as basePath keeps its own OG URL:
+      // matching the file written by getOgImagePath for the same urlPath.
+      const result = getOgImageUrl("/docs/", "/docs", "jpg");
+      assert.strictEqual(
+        result,
+        "/docs/public/assets/og/docs/index.jpg",
+      );
+    });
+
     it("returns nested public/assets/og url for subdirectory", () => {
-      const result = getOgImageUrl("/docs/3.-features", "/docs", "jpg");
+      const result = getOgImageUrl("/3.-features/", "/docs", "jpg");
       assert.strictEqual(
         result,
         "/docs/public/assets/og/3.-features/index.jpg",

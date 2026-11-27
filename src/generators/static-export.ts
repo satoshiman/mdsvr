@@ -646,9 +646,9 @@ async function generateOgImages(
       }
     } else {
       // Auto-index page: calculate hash from source directory contents
-      // Derive source directory path from urlPath
+      // Derive source directory path from urlPath (site-relative, so
+      // basePath is never present — only slashes need stripping)
       const relativePath = pageInfo.urlPath
-        .replace(settings.generate.basePath || "", "")
         .replace(/^\//, "")
         .replace(/\/$/, ""); // Remove trailing slash
       const sourceDirPath = path.join(rootDir, relativePath);

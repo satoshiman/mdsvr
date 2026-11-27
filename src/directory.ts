@@ -14,6 +14,8 @@ export function renderDirectory(params: {
   entries: Dirent[];
   /** Heading text; defaults to a humanized form of the last URL segment. */
   title?: string;
+  /** Site base path prefix for static export links (e.g. "/docs"). */
+  basePath?: string;
 }): string {
   const { urlPath, entries } = params;
   const lastSegment = urlPath.replace(/\/+$/, "").split("/").pop() || "";
@@ -32,7 +34,8 @@ export function renderDirectory(params: {
       return a.name.localeCompare(b.name);
     });
 
-  const base = urlPath.replace(/\/+$/, "") + "/";
+  const basePath = (params.basePath ?? "").replace(/\/+$/, "");
+  const base = basePath + urlPath.replace(/\/+$/, "") + "/";
 
   const rows = sorted
     .map((entry) => {
