@@ -196,7 +196,7 @@ describe("renderer", () => {
     assert.strictEqual(result.toc[4].text, "H3-2");
   });
 
-  it("renders mermaid block with toolbar and source panel", () => {
+  it("renders mermaid block to SVG with toolbar and source panel", () => {
     const md = "```mermaid\nflowchart TD\n  A --> B\n```";
     const result = renderMarkdown(md, settings);
     assert.ok(result.html.includes('class="mermaid-container"'));
@@ -206,7 +206,18 @@ describe("renderer", () => {
     );
     assert.ok(result.html.includes('class="mermaid-btn mermaid-btn-code"'));
     assert.ok(result.html.includes('class="mermaid-source"'));
-    assert.ok(result.html.includes("A --> B"));
+    // Rendered at render time via Pele, no client-side mermaid.js needed
+    assert.ok(result.html.includes('class="pele'));
+    assert.ok(result.html.includes("<svg"));
+    assert.ok(result.html.includes("A --&gt; B"));
+    assert.ok(!result.html.includes("data-mermaid-src"));
+  });
+
+  it("renders a mermaid error block for invalid diagram source", () => {
+    const md = "```mermaid\nflowchart\n  A -->\n```";
+    const result = renderMarkdown(md, settings);
+    assert.ok(result.html.includes('class="mermaid-error"'));
+    assert.ok(result.html.includes('class="mermaid-container"'));
   });
 
   it("renders inline math with $...$", () => {

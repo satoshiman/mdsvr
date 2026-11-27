@@ -43,6 +43,7 @@
     "katex": "^0.17.0",
     "markdown-it": "^14.1.0",
     "markdown-it-anchor": "^9.2.0",
+    "pele": "^1.13.0",
     "react": "^18.3.0",
     "react-dom": "^18.3.0",
     "rehype-autolink-headings": "^7.1.0",

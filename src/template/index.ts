@@ -246,33 +246,11 @@ ${getHighlightJsStyles(settings)}
   ${settings.search.enabled ? getSearchInlineScript(settings.generate.basePath) : ""}
 
   <script>
-function rerenderMermaid(theme) {
-  if (!window.__mermaid) return;
-  var diagrams = document.querySelectorAll(".mermaid");
-  if (!diagrams.length) return;
-
-  diagrams.forEach(function (el) {
-    var src = el.getAttribute("data-mermaid-src");
-    if (src) el.textContent = src;
-    else {
-      el.setAttribute("data-mermaid-src", el.textContent);
-    }
-    el.removeAttribute("data-processed");
-  });
-
-  window.__mermaid.initialize({
-    startOnLoad: false,
-    theme: theme === "dark" ? "dark" : "default",
-  });
-  window.__mermaid.run({ nodes: diagrams });
-}
-
 function toggleTheme() {
   var current = document.documentElement.getAttribute('data-theme');
   var next = current === 'dark' ? 'light' : 'dark';
   document.documentElement.setAttribute('data-theme', next);
   localStorage.setItem('theme', next);
-  rerenderMermaid(next);
 }
 
 function updateContentViewToggle() {
@@ -338,7 +316,6 @@ if (window.matchMedia) {
     if (localStorage.getItem('theme') === 'system' || !localStorage.getItem('theme')) {
       var next = e.matches ? 'dark' : 'light';
       document.documentElement.setAttribute('data-theme', next);
-      rerenderMermaid(next);
     }
   });
 }
@@ -1061,21 +1038,6 @@ if (document.readyState === 'loading') {
   initTableToolbars();
   initQuizzes();
 }
-  </script>
-
-  <script type="module">
-    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
-    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-    const diagrams = document.querySelectorAll('.mermaid');
-    diagrams.forEach(function(el) {
-      el.setAttribute('data-mermaid-src', el.textContent);
-    });
-    mermaid.initialize({
-      startOnLoad: false,
-      theme: isDark ? 'dark' : 'default',
-    });
-    mermaid.run({ nodes: diagrams });
-    window.__mermaid = mermaid;
   </script>
 </body>
 </html>`;
@@ -2454,6 +2416,37 @@ body {
 }
 .mermaid-container[data-mode="code"] .mermaid-source {
   display: block;
+}
+/* Pele-rendered diagrams resolve colors and fonts from these variables:
+   a single server render adapts to the active theme automatically. */
+.pele {
+  --pele-bg: var(--bg);
+  --pele-fg: var(--text);
+  --pele-fg-on-light: var(--text);
+  --pele-muted: var(--text-muted);
+  --pele-line: var(--text);
+  --pele-surface: var(--bg-secondary);
+  --pele-surface-alt: #e6e6e6;
+  --pele-border: var(--border);
+  --pele-accent: var(--accent);
+  --pele-font: ${settings.appearance.fontFamily.body || "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif"};
+  --pele-font-mono: ${settings.appearance.fontFamily.code || "'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace"};
+}
+[data-theme="dark"] .pele {
+  --pele-surface-alt: #21262d;
+  --pele-fg-on-dark: #ffffff;
+}
+.mermaid-error {
+  border-left: 4px solid #cf222e;
+  background: #ffebe9;
+  padding: 12px 16px;
+  border-radius: 4px;
+  text-align: left;
+  font-size: 14px;
+}
+[data-theme="dark"] .mermaid-error {
+  border-color: #f85149;
+  background: #3c0e0e;
 }
 /* Mermaid fullscreen */
 .mermaid-container.fullscreen {

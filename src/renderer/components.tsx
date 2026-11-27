@@ -1,6 +1,7 @@
 // Built-in MDX components - React components that render to HTML
 import React from "react";
 import { renderQuizBlock } from "./quiz.js";
+import { renderMermaid } from "./mermaid.js";
 
 interface CalloutProps {
   type?: "info" | "warning" | "danger" | "success" | "tip";
@@ -153,6 +154,11 @@ interface MermaidProps {
 }
 
 export function Mermaid({ children }: MermaidProps) {
+  const source = typeof children === "string" ? children : "";
+  const diagram = renderMermaid(source);
+  const chartHtml =
+    diagram.svg ??
+    `<div class="mermaid-error"><strong>Mermaid:</strong> ${escapeHtml(diagram.error ?? "render error")}</div>`;
   return (
     <div className="mermaid-container">
       <div className="mermaid-toolbar">
@@ -237,9 +243,8 @@ export function Mermaid({ children }: MermaidProps) {
         <div
           className="mermaid"
           style={{ textAlign: "center", padding: "16px" }}
-        >
-          {children}
-        </div>
+          dangerouslySetInnerHTML={{ __html: chartHtml }}
+        />
       </div>
       <pre className="mermaid-source">
         <code>{children}</code>
@@ -256,6 +261,16 @@ export function Quiz({ source }: QuizProps) {
   // renderQuizBlock only emits markup built from escaped/inline-markdown
   // content — raw HTML inside quiz JSON is neutralized by the renderer.
   return <div dangerouslySetInnerHTML={{ __html: renderQuizBlock(source) }} />;
+}
+
+function escapeHtml(text: string): string {
+  const map: Record<string, string> = {
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+  };
+  return text.replace(/[&<>"]/g, (c) => map[c]);
 }
 
 // Export all built-in components

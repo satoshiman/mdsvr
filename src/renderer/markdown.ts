@@ -6,6 +6,7 @@ import type { Settings } from "../settings/index.js";
 import { slugify } from "./slugify.js";
 import { mathPlugin } from "./math.js";
 import { renderQuizBlock } from "./quiz.js";
+import { renderMermaid } from "./mermaid.js";
 
 // Convert GitHub-style callouts and triple-colon callouts in HTML to callout divs
 function convertGithubCallouts(html: string): string {
@@ -121,9 +122,15 @@ function createMarkdownIt(): MarkdownIt {
         return renderQuizBlock(str);
       }
 
-      // ADD: intercept mermaid blocks
+      // Mermaid diagrams render to SVG at render time via Pele: colors
+      // come from --pele-* CSS variables, so the same markup adapts to the
+      // active theme without a client-side re-render pass.
       if (lang === "mermaid") {
         const escaped = str.trim().replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        const diagram = renderMermaid(str);
+        const chart = diagram.svg
+          ? diagram.svg
+          : `<div class="mermaid-error"><strong>Mermaid:</strong> ${md.utils.escapeHtml(diagram.error ?? "render error")}</div>`;
         return `<div class="mermaid-wrapper"><div class="mermaid-container">
   <div class="mermaid-toolbar">
     <button class="mermaid-btn mermaid-btn-chart" title="Chart view"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z"/><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/></svg></button>
@@ -135,7 +142,7 @@ function createMarkdownIt(): MarkdownIt {
     <button class="mermaid-btn mermaid-btn-zoom-out" title="Zoom out"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
   </div>
   <div class="mermaid-chart">
-    <div class="mermaid">${str.trim()}</div>
+    <div class="mermaid">${chart}</div>
   </div>
   <pre class="mermaid-source"><code>${escaped}</code></pre>
 </div></div>\n`;
