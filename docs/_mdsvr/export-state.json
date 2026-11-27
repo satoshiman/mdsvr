@@ -54,41 +54,13 @@
       "outputPath": "public/assets/og/04-reference/index.jpg",
       "hash": "c4bbf5d24f4e56b9298a225a4d8c61394cb15f25a4ec786a40a1c56ac6c50491"
     },
-    "/09-architecture/": {
-      "outputPath": "public/assets/og/09-architecture/index.jpg",
-      "hash": "cb83560020924cc5b81de68c63facf2be95d8caf87688341f088400ee926eb8c"
-    },
-    "/09-architecture/adr/001-file-based-content-storage": {
-      "outputPath": "public/assets/og/09-architecture/adr/001-file-based-content-storage/index.jpg",
-      "hash": "d6b13cf37f2796a66f447661da41941d61cc4863bbfc19f3ee36e3a57c17b704"
-    },
-    "/09-architecture/adr/002-server-side-mdx-rendering": {
-      "outputPath": "public/assets/og/09-architecture/adr/002-server-side-mdx-rendering/index.jpg",
-      "hash": "7b785f26cc071cb6c828ebd88541f076f994a75cd622527b06f8e13bcbee6e57"
-    },
-    "/09-architecture/adr/003-zero-configuration-with-defaults": {
-      "outputPath": "public/assets/og/09-architecture/adr/003-zero-configuration-with-defaults/index.jpg",
-      "hash": "4b0b777c1c2473146a127ce6930b74221a64b3dbb8c0656193e3afb25d664657"
-    },
-    "/09-architecture/adr/004-client-side-search-with-pre-built-index": {
-      "outputPath": "public/assets/og/09-architecture/adr/004-client-side-search-with-pre-built-index/index.jpg",
-      "hash": "dcdf6a5aa0eb49997f9c04c4c717ab6f3c1a7c919333345962d3d9c23d153f97"
-    },
-    "/09-architecture/adr/005-incremental-static-export": {
-      "outputPath": "public/assets/og/09-architecture/adr/005-incremental-static-export/index.jpg",
-      "hash": "eeabc7c8397dfcc171cc981eb6898a478a653dc3cd335b97fc94220bf0dd5a8c"
-    },
-    "/09-architecture/adr/006-markdown-validation-and-autofix": {
-      "outputPath": "public/assets/og/09-architecture/adr/006-markdown-validation-and-autofix/index.jpg",
-      "hash": "3a49bd00dc4488a788513dac4addd47ff0e13bbd7b1cb04717c5eb268a21acef"
+    "/10-changelog/": {
+      "outputPath": "public/assets/og/10-changelog/index.jpg",
+      "hash": "76b7720194f2917f53f2953fb1e15570dec76fd678781c70fe9af2877a9f7d65"
     },
     "/": {
       "outputPath": "public/assets/og/index.jpg",
-      "hash": "a12c60b47f7752fdcb125bc2782cc0f4a75d0d7a7291d7d703ad07c9875a4493"
-    },
-    "/09-architecture/adr/": {
-      "outputPath": "public/assets/og/09-architecture/adr/index.jpg",
-      "hash": "c54a4320522517ebf3a4dc21356712d81cf972b5b8a82625e1baba4c0c4d8dca"
+      "hash": "40e090ff7545597a6709ad24c3081b3ffd272aed5a28e8371993268f544a5bd4"
     }
   }
 }

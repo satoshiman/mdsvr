@@ -73,8 +73,10 @@ docs/
 │   ├── navigation.md         # Navigation features
 │   ├── seo.md                # SEO features
 │   └── mermaid.md            # Mermaid diagrams
-└── 04-reference/                # API/Reference
-    └── README.md             # CLI reference
+├── 04-reference/                # API/Reference
+│   └── README.md             # CLI reference
+└── 10-changelog/                # Release notes
+    └── README.md             # Version history
 ```
 
 ## Next Steps
@@ -87,6 +89,7 @@ docs/
 - **[Deployment](./02-settings/)** — Go live
 - **[Features](./03-features/)** — See all features
 - **[CLI Reference](./04-reference/)** — Command reference
+- **[Changelog](./10-changelog/)** - Release notes
 
 ---
 
