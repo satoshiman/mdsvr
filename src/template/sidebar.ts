@@ -382,6 +382,7 @@ export function renderSidebar(
     const hasChildren = item.children && item.children.length > 0;
     const activeClass = item.active ? " active" : "";
     const folderClass = item.type === "dir" ? " folder" : "";
+    const activeChildClass = item.hasActiveChild ? " has-active-child" : "";
 
     // Auto-expand folders that contain active item or have active child
     const shouldExpand =
@@ -390,32 +391,23 @@ export function renderSidebar(
       settings.navigation.sidebar.defaultOpen;
 
     lines.push(
-      `${indent}  <li class="nav-item${activeClass}${folderClass}" data-type="${item.type}">`,
+      `${indent}  <li class="nav-item${activeClass}${folderClass}${activeChildClass}" data-type="${item.type}">`,
     );
-
-    const icon =
-      item.type === "dir"
-        ? hasChildren
-          ? shouldExpand
-            ? "📂"
-            : "📁"
-          : "📁"
-        : "";
 
     if (hasChildren) {
       lines.push(
         `${indent}    <div class="nav-item-header" data-expanded="${shouldExpand}">`,
       );
       lines.push(
-        `${indent}      <a href="${withBasePath(item.href, settings, isStaticExport)}" class="nav-link${activeClass}" data-folder-icon="${shouldExpand ? "open" : "closed"}"><span class="folder-icon">${icon}</span> ${escapeHtml(item.title)}</a>`,
+        `${indent}      <button type="button" class="nav-toggle" aria-expanded="${shouldExpand}" aria-label="Toggle folder"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></button>`,
       );
       lines.push(
-        `${indent}      <button type="button" class="nav-toggle" aria-label="Toggle folder"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></button>`,
+        `${indent}      <a href="${withBasePath(item.href, settings, isStaticExport)}" class="nav-link${activeClass}">${escapeHtml(item.title)}</a>`,
       );
       lines.push(`${indent}    </div>`);
     } else {
       lines.push(
-        `${indent}    <a href="${withBasePath(item.href, settings, isStaticExport)}" class="nav-link${activeClass}">${icon ? icon + " " : ""}${escapeHtml(item.title)}</a>`,
+        `${indent}    <a href="${withBasePath(item.href, settings, isStaticExport)}" class="nav-link${activeClass}">${escapeHtml(item.title)}</a>`,
       );
     }
 

@@ -11,6 +11,7 @@ All notable changes to mdsvr are documented here. The format follows [Keep a Cha
 
 ### Changed
 
+- **Header and sidebar redesigned.** The header is now translucent with a backdrop blur and uses SVG icon buttons instead of `☰` and emoji glyphs. The site title renders as a monogram mark plus a two-tone `Name / Tagline` pair split on `|`, and search opens from a `⌘K` pill that shows the configured placeholder. The sidebar drops emoji folder icons for chevron-left disclosure rows with `aria-expanded`, animates expand and collapse, aligns nested items under a tree guide, and marks the active page with a soft accent pill while ancestor sections show accent text only. On mobile the sidebar becomes an overlay drawer with tap-outside dismissal, and all new motion honors `prefers-reduced-motion`.
 - **Mermaid diagrams render server-side via Pele.** ` ```mermaid ` blocks and the MDX `<Mermaid>` component now compile to SVG at serve/export time using [Pele](https://pele.run), replacing the mermaid.js CDN bundle. Diagrams follow the site theme through CSS variables, so light/dark switching no longer requires a client re-render, and pages ship no client-side diagram library.
 - **Hidden file patterns support glob-style `*`.** `files.extensions.hidden` patterns now match `*` in any position (e.g. `package*.json`), not only as a leading wildcard.
 
