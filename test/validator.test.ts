@@ -91,6 +91,85 @@ title: Bad Headings
     await fs.rm(testDir, { recursive: true, force: true });
   });
 
+  it("should ignore # comments inside fenced code blocks", async () => {
+    await fs.mkdir(testDir, { recursive: true });
+    await fs.writeFile(
+      path.join(testDir, "maintenance.md"),
+      `# Maintenance
+
+## Overview
+
+### Steps
+
+\`\`\`bash
+cat docs/file.md
+# daily task comment
+\`\`\`
+
+\`\`\`python
+# loss sketch comment
+loss = mse(q, y)
+\`\`\`
+
+### Verify nodes
+
+~~~text
+# tildes too
+~~~
+`,
+      "utf-8",
+    );
+
+    const result = await validateMarkdown({
+      rootDir: testDir,
+      autofix: false,
+      checkLinks: false,
+      checkStructure: true,
+    });
+
+    assert.strictEqual(result.valid, true);
+    assert.strictEqual(
+      result.errors.filter((e) => e.type === "heading-hierarchy").length,
+      0,
+    );
+
+    // Cleanup
+    await fs.rm(testDir, { recursive: true, force: true });
+  });
+
+  it("should not count fenced # lines as heading anchors", async () => {
+    await fs.mkdir(testDir, { recursive: true });
+    await fs.writeFile(
+      path.join(testDir, "anchors-fence.md"),
+      `# Anchors
+
+\`\`\`bash
+# fake heading
+\`\`\`
+
+[link](#fake-heading)
+[real](#anchors)
+`,
+      "utf-8",
+    );
+
+    const result = await validateMarkdown({
+      rootDir: testDir,
+      autofix: false,
+      checkLinks: true,
+      checkStructure: false,
+    });
+
+    const anchorErrors = result.errors.filter(
+      (e) => e.type === "broken-anchor",
+    );
+    assert.strictEqual(anchorErrors.length, 1);
+    assert.ok(anchorErrors[0].message.includes("fake-heading"));
+
+    // Cleanup
+    await fs.rm(testDir, { recursive: true, force: true });
+  });
+
   it.skip("should autofix broken links", async () => {
     await fs.mkdir(testDir, { recursive: true });
     await fs.writeFile(

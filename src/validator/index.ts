@@ -4,6 +4,7 @@ import { readdir } from "node:fs/promises";
 import GithubSlugger, { slug as githubSlug } from "github-slugger";
 import { slugify } from "../renderer/slugify.js";
 import { parseQuiz } from "../renderer/quiz.js";
+import { fencedCodeLines } from "../markdown-fences.js";
 
 export interface ValidationError {
   file: string;
@@ -302,8 +303,10 @@ function extractHeadingIds(content: string, isMdx: boolean): Set<string> {
   const headingIds = new Set<string>();
   const slugger = isMdx ? new GithubSlugger() : null;
   const lines = content.split("\n");
+  const fenced = fencedCodeLines(content);
 
-  for (const line of lines) {
+  for (const [index, line] of lines.entries()) {
+    if (fenced.has(index)) continue;
     const headingMatch = line.match(/^(#{1,6})\s+(.+)$/);
     if (headingMatch) {
       const headingText = headingMatch[2];
@@ -973,7 +976,12 @@ function validateStructure(
     index: number;
   }> = [];
 
+  // Skip fenced code blocks: `# comment` inside ```bash/```python etc.
+  // must not be counted as a heading.
+  const fenced = fencedCodeLines(content);
+
   lines.forEach((line, index) => {
+    if (fenced.has(index)) return;
     const headingMatch = line.match(/^(#{1,6})\s+(.+)$/);
     if (headingMatch) {
       const level = headingMatch[1].length;
