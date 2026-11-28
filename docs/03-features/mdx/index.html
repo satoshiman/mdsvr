@@ -33,10 +33,10 @@
     <meta name="twitter:description" content="Interactive components for your documentation">
     <meta name="twitter:image" content="https://mdsvr.js.org/docs/public/assets/og/03-features/mdx/index.jpg">
     <meta name="twitter:image:alt" content="MDX Components">
-    <meta property="article:published_time" content="2026-11-27">
-    <meta property="article:modified_time" content="2026-11-27">
+    <meta property="article:published_time" content="2026-11-28">
+    <meta property="article:modified_time" content="2026-11-28">
     <link rel="sitemap" type="application/xml" href="/docs/sitemap.xml">
-  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"MDX Components","description":"Interactive components for your documentation","url":"https://mdsvr.js.org/docs/03-features/mdx/","image":"https://mdsvr.js.org/docs/public/assets/og/03-features/mdx/index.jpg","datePublished":"2026-11-27","dateModified":"2026-11-27"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://mdsvr.js.org/docs/"},{"@type":"ListItem","position":2,"name":"Features","item":"https://mdsvr.js.org/docs/03-features/"},{"@type":"ListItem","position":3,"name":"MDX Components","item":"https://mdsvr.js.org/docs/03-features/mdx/"}]}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"MDX Components","description":"Interactive components for your documentation","url":"https://mdsvr.js.org/docs/03-features/mdx/","image":"https://mdsvr.js.org/docs/public/assets/og/03-features/mdx/index.jpg","datePublished":"2026-11-28","dateModified":"2026-11-28"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://mdsvr.js.org/docs/"},{"@type":"ListItem","position":2,"name":"Features","item":"https://mdsvr.js.org/docs/03-features/"},{"@type":"ListItem","position":3,"name":"MDX Components","item":"https://mdsvr.js.org/docs/03-features/mdx/"}]}]}</script>
   
   
   
@@ -1206,8 +1206,18 @@ body {
   text-decoration: none;
   color: var(--text);
   display: block;
+  transition: border-color 0.15s ease;
 }
-.card:hover {
+/* Cards render as <a class="card"> when href is set — keep link cards
+   readable: inherit body text color and never underline the contents. */
+.markdown-body a.card,
+a.card {
+  color: var(--text);
+  text-decoration: none;
+}
+.markdown-body a.card:hover,
+a.card:hover {
+  text-decoration: none;
   border-color: var(--accent);
 }
 .card-title {
@@ -1216,6 +1226,11 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
+  color: var(--text);
+  transition: color 0.15s ease;
+}
+a.card:hover .card-title {
+  color: var(--accent);
 }
 .card-description {
   font-size: 14px;
@@ -1256,6 +1271,17 @@ body {
   font-weight: 600;
   background: var(--bg-secondary);
   border-radius: 6px;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+.accordion-summary::-webkit-details-marker {
+  display: none;
+}
+.accordion[open] .accordion-summary {
+  border-radius: 6px 6px 0 0;
 }
 .accordion-content {
   padding: 12px 16px;
@@ -1265,7 +1291,7 @@ body {
   display: inline-block;
   transition: transform 0.2s;
 }
-.accordion-icon.open {
+.accordion[open] .accordion-icon {
   transform: rotate(180deg);
 }
 
@@ -1983,7 +2009,7 @@ code.hljs {
     </div>
   </header>
 
-  <div class="site-container">
+  <div class="site-container has-toc">
     <aside class="sidebar" id="sidebar"><ul class="sidebar-nav" data-level="0">
   <li class="nav-item" data-type="file">
     <a href="/docs/" class="nav-link">Welcome</a>
@@ -1994,7 +2020,7 @@ code.hljs {
   <li class="nav-item folder" data-type="dir">
     <a href="/docs/02-settings/" class="nav-link">Guides</a>
   </li>
-  <li class="nav-item active folder" data-type="dir">
+  <li class="nav-item active folder has-active-child" data-type="dir">
     <div class="nav-item-header" data-expanded="true">
       <button type="button" class="nav-toggle" aria-expanded="true" aria-label="Toggle folder"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></button>
       <a href="/docs/03-features/" class="nav-link active">Features</a>
@@ -2007,8 +2033,8 @@ code.hljs {
       <li class="nav-item" data-type="file">
         <a href="/docs/03-features/math/" class="nav-link">Mathematical Expressions</a>
       </li>
-      <li class="nav-item" data-type="file">
-        <a href="/docs/03-features/mdx/" class="nav-link">MDX Components</a>
+      <li class="nav-item active" data-type="file">
+        <a href="/docs/03-features/mdx/" class="nav-link active">MDX Components</a>
       </li>
       <li class="nav-item" data-type="file">
         <a href="/docs/03-features/mermaid/" class="nav-link">Mermaid Diagrams in mdsvr</a>
@@ -2049,12 +2075,48 @@ code.hljs {
 <div class="callout callout-info"><strong style="display:block;margin-bottom:8px">ℹ️ Info</strong><div><p>MDX must be enabled in <code>_mdsvr/settings.json</code> with <code>&quot;mdx.enabled&quot;: true</code>.</p></div></div>
 <h2 id="callout"><a aria-hidden="true" tabindex="-1" href="#callout"><span class="icon icon-link"></span></a>Callout</h2>
 <p>Use callouts to highlight important information:</p>
-<pre><code class="language-mdx">&lt;Callout type=&quot;info&quot;&gt;This is an informational callout.&lt;/Callout&gt;
+<div class="code-block-wrapper"><div class="code-block-container" data-code="&lt;Callout type=&quot;info&quot;&gt;This is an informational callout.&lt;/Callout&gt;
+
+&lt;Callout type=&quot;warning&quot; title=&quot;Important&quot;&gt;
+  This will delete all your data.
+&lt;/Callout&gt;
+">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-mdx">&lt;Callout type=&quot;info&quot;&gt;This is an informational callout.&lt;/Callout&gt;
 
 &lt;Callout type=&quot;warning&quot; title=&quot;Important&quot;&gt;
   This will delete all your data.
 &lt;/Callout&gt;
 </code></pre>
+</div></div>
+
 <h3 id="types"><a aria-hidden="true" tabindex="-1" href="#types"><span class="icon icon-link"></span></a>Types</h3>
 <div class="callout callout-info"><strong style="display:block;margin-bottom:8px">ℹ️ Info</strong><div><strong>Info</strong> — General information and tips</div></div>
 <div class="callout callout-warning"><strong style="display:block;margin-bottom:8px">⚠️ Warning</strong><div><strong>Warning</strong> — Caution about potential issues</div></div>
@@ -2063,7 +2125,49 @@ code.hljs {
 <div class="callout callout-tip"><strong style="display:block;margin-bottom:8px">💡 Tip</strong><div><strong>Tip</strong> — Helpful suggestions and best practices</div></div>
 <h2 id="steps"><a aria-hidden="true" tabindex="-1" href="#steps"><span class="icon icon-link"></span></a>Steps</h2>
 <p>Create step-by-step guides:</p>
-<pre><code class="language-mdx">&lt;Steps&gt;
+<div class="code-block-wrapper"><div class="code-block-container" data-code="&lt;Steps&gt;
+  ### Step 1: Install
+  Run `npm install mdsvr`
+
+### Step 2: Configure
+
+Create your `_mdsvr/settings.json`
+
+### Step 3: Launch
+
+Run `npx mdsvr ./docs`
+
+&lt;/Steps&gt;
+">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-mdx">&lt;Steps&gt;
   ### Step 1: Install
   Run `npm install mdsvr`
 
@@ -2077,58 +2181,465 @@ Run `npx mdsvr ./docs`
 
 &lt;/Steps&gt;
 </code></pre>
+</div></div>
+
 <div class="steps"><div class="step-item"><h3 id="install-the-package"><a aria-hidden="true" tabindex="-1" href="#install-the-package"><span class="icon icon-link"></span></a>Install the package</h3></div><div class="step-item"><p>Run <code>npm install mdsvr</code></p></div><div class="step-item"><h3 id="create-your-docs-folder"><a aria-hidden="true" tabindex="-1" href="#create-your-docs-folder"><span class="icon icon-link"></span></a>Create your docs folder</h3></div><div class="step-item"><p>Create a <code>./docs</code> directory with some <code>.md</code> files</p></div><div class="step-item"><h3 id="start-the-server"><a aria-hidden="true" tabindex="-1" href="#start-the-server"><span class="icon icon-link"></span></a>Start the server</h3></div><div class="step-item"><p>Run <code>npx mdsvr ./docs --open</code></p></div></div>
 <h2 id="cards"><a aria-hidden="true" tabindex="-1" href="#cards"><span class="icon icon-link"></span></a>Cards</h2>
 <p>Display links as beautiful cards:</p>
-<pre><code class="language-mdx">&lt;Card title=&quot;Quick Start&quot; icon=&quot;⚡&quot; href=&quot;#&quot;&gt;
+<div class="code-block-wrapper"><div class="code-block-container" data-code="&lt;Card title=&quot;Quick Start&quot; icon=&quot;⚡&quot; href=&quot;#&quot;&gt;
+  Get up and running in 5 minutes
+&lt;/Card&gt;
+">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-mdx">&lt;Card title=&quot;Quick Start&quot; icon=&quot;⚡&quot; href=&quot;#&quot;&gt;
   Get up and running in 5 minutes
 &lt;/Card&gt;
 </code></pre>
+</div></div>
+
 <a href="#" class="card"><div class="card-title"><span>⚙️</span><span>Configuration</span></div><div class="card-description"><p>Full settings reference</p></div></a>
 <h3 id="card-groups"><a aria-hidden="true" tabindex="-1" href="#card-groups"><span class="icon icon-link"></span></a>Card Groups</h3>
 <div class="card-group" style="grid-template-columns:repeat(2, 1fr)"><a href="#" class="card"><div class="card-title"><span>📝</span><span>Markdown</span></div><div class="card-description"><p>Standard Markdown support</p></div></a><a href="#" class="card"><div class="card-title"><span>⚛️</span><span>MDX</span></div><div class="card-description"><p>React components in docs</p></div></a><a href="#" class="card"><div class="card-title"><span>🎨</span><span>Themes</span></div><div class="card-description"><p>Dark and light mode</p></div></a><a href="#" class="card"><div class="card-title"><span>🔍</span><span>Search</span></div><div class="card-description"><p>Full-text search</p></div></a></div>
 <h2 id="tabs"><a aria-hidden="true" tabindex="-1" href="#tabs"><span class="icon icon-link"></span></a>Tabs</h2>
 <p>Organize content in tabs:</p>
-<pre><code class="language-mdx">&lt;Tabs items={[&quot;npm&quot;, &quot;yarn&quot;, &quot;pnpm&quot;]}&gt;
-  &lt;Tab&gt;```bash npm install mdsvr ```&lt;/Tab&gt;
-  &lt;Tab&gt;```bash yarn add mdsvr ```&lt;/Tab&gt;
-  &lt;Tab&gt;```bash pnpm add mdsvr ```&lt;/Tab&gt;
+<div class="code-block-wrapper"><div class="code-block-container" data-code="&lt;Tabs items={[&quot;npm&quot;, &quot;yarn&quot;, &quot;pnpm&quot;]}&gt;
+&lt;Tab&gt;
+
+```bash
+npm install mdsvr
+```
+
+&lt;/Tab&gt;
+&lt;Tab&gt;
+
+```bash
+yarn add mdsvr
+```
+
+&lt;/Tab&gt;
+&lt;Tab&gt;
+
+```bash
+pnpm add mdsvr
+```
+
+&lt;/Tab&gt;
+&lt;/Tabs&gt;
+">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-mdx">&lt;Tabs items={[&quot;npm&quot;, &quot;yarn&quot;, &quot;pnpm&quot;]}&gt;
+&lt;Tab&gt;
+
+```bash
+npm install mdsvr
+```
+
+&lt;/Tab&gt;
+&lt;Tab&gt;
+
+```bash
+yarn add mdsvr
+```
+
+&lt;/Tab&gt;
+&lt;Tab&gt;
+
+```bash
+pnpm add mdsvr
+```
+
+&lt;/Tab&gt;
 &lt;/Tabs&gt;
 </code></pre>
+</div></div>
+
+<div class="tabs-container"><div class="tabs" role="tablist"><button type="button" role="tab" aria-selected="true" data-tab-index="0" class="tab active">npm</button><button type="button" role="tab" aria-selected="false" data-tab-index="1" class="tab ">yarn</button><button type="button" role="tab" aria-selected="false" data-tab-index="2" class="tab ">pnpm</button></div><div role="tabpanel" data-tab-panel="0" class="tab-content"><div class="code-block-wrapper"><div class="code-block-container" data-code="npm install mdsvr
+">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-bash">npm install mdsvr
+</code></pre>
+</div></div>
+</div><div role="tabpanel" data-tab-panel="1" class="tab-content" hidden=""><div class="code-block-wrapper"><div class="code-block-container" data-code="yarn add mdsvr
+">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-bash">yarn add mdsvr
+</code></pre>
+</div></div>
+</div><div role="tabpanel" data-tab-panel="2" class="tab-content" hidden=""><div class="code-block-wrapper"><div class="code-block-container" data-code="pnpm add mdsvr
+">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-bash">pnpm add mdsvr
+</code></pre>
+</div></div>
+</div></div>
 <h2 id="code-groups"><a aria-hidden="true" tabindex="-1" href="#code-groups"><span class="icon icon-link"></span></a>Code Groups</h2>
 <p>Group related code blocks:</p>
-<pre><code class="language-mdx">&lt;CodeGroup title=&quot;Installation&quot;&gt;
-  ```bash npm npm install mdsvr ``` ```bash yarn yarn add mdsvr ``` ```bash pnpm
-  pnpm add mdsvr ```
+<div class="code-block-wrapper"><div class="code-block-container" data-code="&lt;CodeGroup title=&quot;Installation&quot;&gt;
+
+```bash
+npm install mdsvr
+```
+
+```bash
+yarn add mdsvr
+```
+
+```bash
+pnpm add mdsvr
+```
+
+&lt;/CodeGroup&gt;
+">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-mdx">&lt;CodeGroup title=&quot;Installation&quot;&gt;
+
+```bash
+npm install mdsvr
+```
+
+```bash
+yarn add mdsvr
+```
+
+```bash
+pnpm add mdsvr
+```
+
 &lt;/CodeGroup&gt;
 </code></pre>
-<div class="code-group"><div class="code-group-title">Configuration</div><div style="margin:0"><pre><code class="language-json">{
+</div></div>
+
+<div class="code-group"><div class="code-group-title">Configuration</div><div style="margin:0"><div class="code-block-wrapper"><div class="code-block-container" data-code="{
   &quot;site&quot;: {
     &quot;title&quot;: &quot;My Docs&quot;
   }
 }
-</code></pre><pre><code class="language-js">module.exports = {
+">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;site&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;title&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;My Docs&quot;</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+</div></div>
+<div class="code-block-wrapper"><div class="code-block-container" data-code="module.exports = {
   site: {
     title: &quot;My Docs&quot;,
   },
 };
-</code></pre></div></div>
+">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-js"><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = {
+  <span class="hljs-attr">site</span>: {
+    <span class="hljs-attr">title</span>: <span class="hljs-string">&quot;My Docs&quot;</span>,
+  },
+};
+</code></pre>
+</div></div>
+</div></div>
 <h2 id="accordion"><a aria-hidden="true" tabindex="-1" href="#accordion"><span class="icon icon-link"></span></a>Accordion</h2>
 <p>Create collapsible sections:</p>
-<pre><code class="language-mdx">&lt;Accordion title=&quot;Is this free?&quot;&gt;
+<div class="code-block-wrapper"><div class="code-block-container" data-code="&lt;Accordion title=&quot;Is this free?&quot;&gt;
+  Yes, mdsvr is open source under MIT license.
+&lt;/Accordion&gt;
+">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-mdx">&lt;Accordion title=&quot;Is this free?&quot;&gt;
   Yes, mdsvr is open source under MIT license.
 &lt;/Accordion&gt;
 </code></pre>
-<div class="accordion"><button class="accordion-summary">What are the system requirements?<span class="accordion-icon ">▼</span></button></div>
-<div class="accordion"><button class="accordion-summary">Can I use custom components?<span class="accordion-icon ">▼</span></button></div>
+</div></div>
+
+<details class="accordion"><summary class="accordion-summary">What are the system requirements?<span class="accordion-icon">▼</span></summary><div class="accordion-content"><p>Node.js 18+ is required to run mdsvr.</p></div></details>
+<details class="accordion"><summary class="accordion-summary">Can I use custom components?<span class="accordion-icon">▼</span></summary><div class="accordion-content"><p>Built-in components are available. Custom components coming in v3!</p></div></details>
 <h2 id="badge"><a aria-hidden="true" tabindex="-1" href="#badge"><span class="icon icon-link"></span></a>Badge</h2>
 <p>Add status badges inline:</p>
-<pre><code class="language-mdx">New feature &lt;Badge color=&quot;green&quot;&gt;New&lt;/Badge&gt;
+<div class="code-block-wrapper"><div class="code-block-container" data-code="New feature &lt;Badge color=&quot;green&quot;&gt;New&lt;/Badge&gt;
+
+Beta feature &lt;Badge color=&quot;orange&quot;&gt;Beta&lt;/Badge&gt;
+
+Deprecated &lt;Badge color=&quot;red&quot;&gt;Deprecated&lt;/Badge&gt;
+">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-mdx">New feature &lt;Badge color=&quot;green&quot;&gt;New&lt;/Badge&gt;
 
 Beta feature &lt;Badge color=&quot;orange&quot;&gt;Beta&lt;/Badge&gt;
 
 Deprecated &lt;Badge color=&quot;red&quot;&gt;Deprecated&lt;/Badge&gt;
 </code></pre>
+</div></div>
+
 <p>Available colors: <code>green</code>, <code>orange</code>, <code>red</code>, <code>blue</code>, <code>purple</code>, <code>gray</code></p>
 <ul>
 <li><span class="badge badge-green">New</span> — New features</li>
@@ -2140,7 +2651,44 @@ Deprecated &lt;Badge color=&quot;red&quot;&gt;Deprecated&lt;/Badge&gt;
 </ul>
 <h2 id="mermaid"><a aria-hidden="true" tabindex="-1" href="#mermaid"><span class="icon icon-link"></span></a>Mermaid</h2>
 <p>Create diagrams with Mermaid syntax:</p>
-<pre><code class="language-mdx">&lt;Mermaid&gt;
+<div class="code-block-wrapper"><div class="code-block-container" data-code="&lt;Mermaid&gt;
+  graph TD
+    A[Start] --&gt; B{Is it working?}
+    B --&gt;|Yes| C[Great!]
+    B --&gt;|No| D[Debug]
+    D --&gt; E[Fix Issues]
+    E --&gt; B
+&lt;/Mermaid&gt;
+">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-mdx">&lt;Mermaid&gt;
   graph TD
     A[Start] --&gt; B{Is it working?}
     B --&gt;|Yes| C[Great!]
@@ -2149,20 +2697,94 @@ Deprecated &lt;Badge color=&quot;red&quot;&gt;Deprecated&lt;/Badge&gt;
     E --&gt; B
 &lt;/Mermaid&gt;
 </code></pre>
+</div></div>
+
 <div class="callout callout-tip"><strong style="display:block;margin-bottom:8px">💡 Tip</strong><div><p>Mermaid diagrams are rendered client-side, so they work without any
 server-side dependencies.</p></div></div>
 <h2 id="quiz"><a aria-hidden="true" tabindex="-1" href="#quiz"><span class="icon icon-link"></span></a>Quiz</h2>
 <p><code>```quiz</code> fenced blocks work in <code>.mdx</code> the same as <code>.md</code> — they render as
 interactive self-grading quizzes. You can also embed a quiz directly with the
 <code>&lt;Quiz&gt;</code> component, passing the quiz JSON via <code>source</code>:</p>
-<pre><code class="language-mdx">&lt;Quiz source=&#x27;{&quot;questions&quot;: [{&quot;type&quot;: &quot;true-false&quot;, &quot;question&quot;: &quot;MDX mixes Markdown and JSX.&quot;, &quot;answer&quot;: true}]}&#x27; /&gt;
+<div class="code-block-wrapper"><div class="code-block-container" data-code="&lt;Quiz source='{&quot;questions&quot;: [{&quot;type&quot;: &quot;true-false&quot;, &quot;question&quot;: &quot;MDX mixes Markdown and JSX.&quot;, &quot;answer&quot;: true}]}' /&gt;
+">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-mdx">&lt;Quiz source='{&quot;questions&quot;: [{&quot;type&quot;: &quot;true-false&quot;, &quot;question&quot;: &quot;MDX mixes Markdown and JSX.&quot;, &quot;answer&quot;: true}]}' /&gt;
 </code></pre>
+</div></div>
+
 <p>See <a href="/docs/03-features/quiz/">Interactive Quizzes</a> for the full JSON format. Disable the
 component with <code>&quot;mdx.components&quot;: { &quot;Quiz&quot;: false }</code> — quiz fences then render
 as plain code blocks.</p>
 <h2 id="frontmatter"><a aria-hidden="true" tabindex="-1" href="#frontmatter"><span class="icon icon-link"></span></a>Frontmatter</h2>
 <p>All MDX files support YAML frontmatter for metadata:</p>
-<pre><code class="language-mdx">---
+<div class="code-block-wrapper"><div class="code-block-container" data-code="---
+title: Page Title
+description: Page description for SEO
+image: ./assets/og-image.png
+date: 2025-01-15
+author: John Doe
+tags: [setup, quickstart]
+noIndex: false
+---
+
+# Your Content
+">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-mdx">---
 title: Page Title
 description: Page description for SEO
 image: ./assets/og-image.png
@@ -2174,6 +2796,8 @@ noIndex: false
 
 # Your Content
 </code></pre>
+</div></div>
+
 <p>This metadata is used for:</p>
 <ul>
 <li>SEO <code>&lt;title&gt;</code> and meta tags</li>
@@ -2183,14 +2807,52 @@ noIndex: false
 </ul>
 <h2 id="mdx-plugins"><a aria-hidden="true" tabindex="-1" href="#mdx-plugins"><span class="icon icon-link"></span></a>MDX Plugins</h2>
 <p>You can add custom remark and rehype plugins to extend MDX functionality:</p>
-<pre><code class="language-json">{
+<div class="code-block-wrapper"><div class="code-block-container" data-code="{
   &quot;mdx&quot;: {
     &quot;enabled&quot;: true,
     &quot;remarkPlugins&quot;: [&quot;remark-gfm&quot;],
     &quot;rehypePlugins&quot;: [&quot;rehype-slug&quot;]
   }
 }
+">
+  <div class="code-block-toolbar">
+    <button class="code-block-btn code-block-btn-copy" title="Copy code" aria-label="Copy code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-wrap" title="Wrap code" aria-label="Wrap code">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16-3 3 3 3"/>
+        <path d="M3 12h14.5a1 1 0 0 1 0 7H13"/>
+        <path d="M3 19h6"/>
+        <path d="M3 5h18"/>
+      </svg>
+    </button>
+    <button class="code-block-btn code-block-btn-fullscreen" title="Fullscreen" aria-label="Fullscreen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m15 15 6 6"/>
+        <path d="m15 9 6-6"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M21 8V3h-5"/>
+        <path d="M3 16v5h5"/>
+        <path d="m3 21 6-6"/>
+        <path d="M3 8V3h5"/>
+        <path d="M9 9 3 3"/>
+      </svg>
+    </button>
+  </div>
+  <pre><code class="hljs language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;mdx&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;enabled&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;remarkPlugins&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;remark-gfm&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;rehypePlugins&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;rehype-slug&quot;</span><span class="hljs-punctuation">]</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
 </code></pre>
+</div></div>
+
 <p><strong>Options:</strong></p>
 <ul>
 <li><code>remarkPlugins</code>: Array of remark plugin names for markdown transformations</li>
@@ -2217,7 +2879,36 @@ noIndex: false
     </div>
   </footer>
     </main>
-    
+    <aside class="toc-sidebar"><nav class="toc">
+  <h3>On this page</h3>
+<ul class="toc-list toc-level-1">
+<li class="toc-item"><a href="#mdx-components">MDX Components</a></li>
+<ul class="toc-list toc-level-2">
+<li class="toc-item"><a href="#callout">Callout</a></li>
+<ul class="toc-list toc-level-3">
+<li class="toc-item"><a href="#types">Types</a></li>
+</ul>
+<li class="toc-item"><a href="#steps">Steps</a></li>
+<ul class="toc-list toc-level-3">
+<li class="toc-item"><a href="#install-the-package">Install the package</a></li>
+<li class="toc-item"><a href="#create-your-docs-folder">Create your docs folder</a></li>
+<li class="toc-item"><a href="#start-the-server">Start the server</a></li>
+</ul>
+<li class="toc-item"><a href="#cards">Cards</a></li>
+<ul class="toc-list toc-level-3">
+<li class="toc-item"><a href="#card-groups">Card Groups</a></li>
+</ul>
+<li class="toc-item"><a href="#tabs">Tabs</a></li>
+<li class="toc-item"><a href="#code-groups">Code Groups</a></li>
+<li class="toc-item"><a href="#accordion">Accordion</a></li>
+<li class="toc-item"><a href="#badge">Badge</a></li>
+<li class="toc-item"><a href="#mermaid">Mermaid</a></li>
+<li class="toc-item"><a href="#quiz">Quiz</a></li>
+<li class="toc-item"><a href="#frontmatter">Frontmatter</a></li>
+<li class="toc-item"><a href="#mdx-plugins">MDX Plugins</a></li>
+</ul>
+</ul>
+</nav></aside>
   </div>
 
   
@@ -3229,6 +3920,26 @@ function initQuizzes() {
   });
 }
 
+// MDX <Tabs>: panels are pre-rendered with data-tab-panel; one delegated
+// handler switches tabs without React hydration.
+function initTabs() {
+  document.addEventListener('click', function(e) {
+    var tab = e.target && e.target.closest ? e.target.closest('.tabs .tab[data-tab-index]') : null;
+    if (!tab) return;
+    var container = tab.closest('.tabs-container');
+    if (!container) return;
+    var index = tab.getAttribute('data-tab-index');
+    container.querySelectorAll('.tab').forEach(function(t) {
+      var isActive = t === tab;
+      t.classList.toggle('active', isActive);
+      t.setAttribute('aria-selected', String(isActive));
+    });
+    container.querySelectorAll('[data-tab-panel]').forEach(function(panel) {
+      panel.hidden = panel.getAttribute('data-tab-panel') !== index;
+    });
+  });
+}
+
 // Initialize sidebar toggle on DOM ready
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', function() {
@@ -3240,6 +3951,7 @@ if (document.readyState === 'loading') {
     initCodeBlockToolbars();
     initTableToolbars();
     initQuizzes();
+    initTabs();
   });
 } else {
   initSidebarState();
@@ -3250,6 +3962,7 @@ if (document.readyState === 'loading') {
   initCodeBlockToolbars();
   initTableToolbars();
   initQuizzes();
+  initTabs();
 }
   </script>
 </body>

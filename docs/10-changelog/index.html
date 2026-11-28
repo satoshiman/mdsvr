@@ -33,10 +33,10 @@
     <meta name="twitter:description" content="Release notes and version history for mdsvr">
     <meta name="twitter:image" content="https://mdsvr.js.org/docs/public/assets/og/10-changelog/index.jpg">
     <meta name="twitter:image:alt" content="Changelog">
-    <meta property="article:published_time" content="2026-11-27">
-    <meta property="article:modified_time" content="2026-11-27">
+    <meta property="article:published_time" content="2026-11-28">
+    <meta property="article:modified_time" content="2026-11-28">
     <link rel="sitemap" type="application/xml" href="/docs/sitemap.xml">
-  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"Changelog","description":"Release notes and version history for mdsvr","url":"https://mdsvr.js.org/docs/10-changelog/","image":"https://mdsvr.js.org/docs/public/assets/og/10-changelog/index.jpg","datePublished":"2026-11-27","dateModified":"2026-11-27"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://mdsvr.js.org/docs/"},{"@type":"ListItem","position":2,"name":"Changelog","item":"https://mdsvr.js.org/docs/10-changelog/"}]}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"Changelog","description":"Release notes and version history for mdsvr","url":"https://mdsvr.js.org/docs/10-changelog/","image":"https://mdsvr.js.org/docs/public/assets/og/10-changelog/index.jpg","datePublished":"2026-11-28","dateModified":"2026-11-28"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://mdsvr.js.org/docs/"},{"@type":"ListItem","position":2,"name":"Changelog","item":"https://mdsvr.js.org/docs/10-changelog/"}]}]}</script>
   
   
   
@@ -1206,8 +1206,18 @@ body {
   text-decoration: none;
   color: var(--text);
   display: block;
+  transition: border-color 0.15s ease;
 }
-.card:hover {
+/* Cards render as <a class="card"> when href is set — keep link cards
+   readable: inherit body text color and never underline the contents. */
+.markdown-body a.card,
+a.card {
+  color: var(--text);
+  text-decoration: none;
+}
+.markdown-body a.card:hover,
+a.card:hover {
+  text-decoration: none;
   border-color: var(--accent);
 }
 .card-title {
@@ -1216,6 +1226,11 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
+  color: var(--text);
+  transition: color 0.15s ease;
+}
+a.card:hover .card-title {
+  color: var(--accent);
 }
 .card-description {
   font-size: 14px;
@@ -1256,6 +1271,17 @@ body {
   font-weight: 600;
   background: var(--bg-secondary);
   border-radius: 6px;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+.accordion-summary::-webkit-details-marker {
+  display: none;
+}
+.accordion[open] .accordion-summary {
+  border-radius: 6px 6px 0 0;
 }
 .accordion-content {
   padding: 12px 16px;
@@ -1265,7 +1291,7 @@ body {
   display: inline-block;
   transition: transform 0.2s;
 }
-.accordion-icon.open {
+.accordion[open] .accordion-icon {
   transform: rotate(180deg);
 }
 
@@ -2046,6 +2072,20 @@ code.hljs {
       <article class="markdown-body">
         <h1 id="changelog" tabindex="-1">Changelog</h1>
 <p>All notable changes to mdsvr are documented here. The format follows <a href="https://keepachangelog.com/en/1.1.0/">Keep a Changelog</a> and the project uses <a href="https://semver.org">semantic versioning</a>.</p>
+<h2 id="281-2026-11-28" tabindex="-1">[2.8.1] - 2026-11-28</h2>
+<h3 id="fixed" tabindex="-1">Fixed</h3>
+<ul>
+<li><strong>Quiz blocks: inline math not rendered.</strong> <code>$...$</code> expressions inside <code>```quiz</code> questions, options, explanations and self-check answers displayed as raw source. The quiz inline renderer now loads the KaTeX plugin, matching body content on both <code>.md</code> and <code>.mdx</code> pages.</li>
+<li><strong>Static export: sidebar did not highlight the current page.</strong> Exported pages passed the slash-less URL form to the sidebar, so only the parent folder was marked <code>active</code> while the current leaf item received no <code>active</code> or <code>has-active-child</code> classes.</li>
+<li><strong>Local images 404 on the dev server with relative paths.</strong> The dev server only rebased relative links when <code>generate.cleanUrls</code> was on, so <code>../assets/x.png</code> resolved one level too deep under canonical trailing-slash page URLs. Relative links and asset paths are now rebased to canonical site-relative routes in both serve and export modes.</li>
+<li><strong>Validator rejected root-absolute asset paths.</strong> <code>![img](/assets/x.png)</code> failed <code>--validate-md</code> with <code>absolute-path</code> even though the file exists and export already resolves it under the docs root. Root-absolute asset paths now validate against the docs root: existing targets pass, missing ones report <code>missing-asset</code>, and paths escaping the root report <code>outside-root</code>.</li>
+<li><strong>“On this page” TOC dropped headings containing inline markup.</strong> TOC extraction required heading content with no inner tags, so headings containing math, code or emphasis were skipped — and every <code>.mdx</code> heading was missing because the autolink anchor adds a tag. The TOC also rendered empty when the page’s shallowest heading was deeper than H1.</li>
+<li><strong>MDX: interactive components were dead markup.</strong> <code>&lt;Accordion&gt;</code> and <code>&lt;Tabs&gt;</code> relied on React state, which never runs after <code>renderToStaticMarkup</code> — accordion content was never emitted and only the first tab panel existed in the HTML. Accordions now render native <code>&lt;details&gt;/&lt;summary&gt;</code>, and tabs render every panel with switching handled by a delegated click handler.</li>
+<li><strong>MDX: an unknown or failing component 500’d the page.</strong> An unregistered JSX component threw during render, taking down the whole page (and aborting export). Pages now render an inline “MDX render error” callout instead, matching the broken-quiz contract.</li>
+<li><strong>MDX: code blocks, tables and callouts diverged from <code>.md</code>.</strong> <code>.mdx</code> fenced blocks rendered bare <code>&lt;pre&gt;&lt;code&gt;</code> without syntax highlighting or the copy/wrap/fullscreen toolbar, tables missed the scrollable wrapper, and <code>&gt; [!NOTE]</code> callouts stayed plain blockquotes.</li>
+<li><strong>Link cards looked like ordinary links.</strong> <code>&lt;Card href&gt;</code> anchors inherited the accent link color and underlined all card content on hover. Link cards now keep body text colors, never underline, and highlight the border and title on hover.</li>
+<li><strong><code>&lt;Tab&gt;</code> component is now registered.</strong> The documented <code>&lt;Tab&gt;</code> wrapper inside <code>&lt;Tabs&gt;</code> previously threw “Expected component <code>Tab</code> to be defined”; it now works as a panel marker.</li>
+</ul>
 <h2 id="280-2026-11-27" tabindex="-1">[2.8.0] - 2026-11-27</h2>
 <h3 id="changed" tabindex="-1">Changed</h3>
 <ul>
@@ -2053,7 +2093,7 @@ code.hljs {
 <li><strong>Mermaid diagrams render server-side via Pele.</strong> <code>```mermaid</code> blocks and the MDX <code>&lt;Mermaid&gt;</code> component now compile to SVG at serve/export time using <a href="https://pele.run">Pele</a>, replacing the mermaid.js CDN bundle. Diagrams follow the site theme through CSS variables, so light/dark switching no longer requires a client re-render, and pages ship no client-side diagram library.</li>
 <li><strong>Hidden file patterns support glob-style <code>*</code>.</strong> <code>files.extensions.hidden</code> patterns now match <code>*</code> in any position (e.g. <code>package*.json</code>), not only as a leading wildcard.</li>
 </ul>
-<h3 id="fixed" tabindex="-1">Fixed</h3>
+<h3 id="fixed-1" tabindex="-1">Fixed</h3>
 <ul>
 <li><strong>Static export missing <code>basePath</code> on content links.</strong> Relative links and assets inside markdown pages rendered to site-relative routes like <code>/route/</code> without <code>generate.basePath</code>, breaking deployments under a subpath. Directory auto-index listings had the same gap.</li>
 <li><strong>Hidden files served from dot-directories.</strong> The hidden-file check only inspected the basename, so files inside directories like <code>.github/</code> or <code>.hidden/</code> were still served. Every path segment is now checked, and <code>package*.json</code> is blocked by default.</li>
@@ -2080,10 +2120,14 @@ code.hljs {
 <ul class="toc-list toc-level-1">
 <li class="toc-item"><a href="#changelog">Changelog</a></li>
 <ul class="toc-list toc-level-2">
+<li class="toc-item"><a href="#281-2026-11-28">[2.8.1] - 2026-11-28</a></li>
+<ul class="toc-list toc-level-3">
+<li class="toc-item"><a href="#fixed">Fixed</a></li>
+</ul>
 <li class="toc-item"><a href="#280-2026-11-27">[2.8.0] - 2026-11-27</a></li>
 <ul class="toc-list toc-level-3">
 <li class="toc-item"><a href="#changed">Changed</a></li>
-<li class="toc-item"><a href="#fixed">Fixed</a></li>
+<li class="toc-item"><a href="#fixed-1">Fixed</a></li>
 </ul>
 <li class="toc-item"><a href="#earlier-versions">Earlier versions</a></li>
 </ul>
@@ -3100,6 +3144,26 @@ function initQuizzes() {
   });
 }
 
+// MDX <Tabs>: panels are pre-rendered with data-tab-panel; one delegated
+// handler switches tabs without React hydration.
+function initTabs() {
+  document.addEventListener('click', function(e) {
+    var tab = e.target && e.target.closest ? e.target.closest('.tabs .tab[data-tab-index]') : null;
+    if (!tab) return;
+    var container = tab.closest('.tabs-container');
+    if (!container) return;
+    var index = tab.getAttribute('data-tab-index');
+    container.querySelectorAll('.tab').forEach(function(t) {
+      var isActive = t === tab;
+      t.classList.toggle('active', isActive);
+      t.setAttribute('aria-selected', String(isActive));
+    });
+    container.querySelectorAll('[data-tab-panel]').forEach(function(panel) {
+      panel.hidden = panel.getAttribute('data-tab-panel') !== index;
+    });
+  });
+}
+
 // Initialize sidebar toggle on DOM ready
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', function() {
@@ -3111,6 +3175,7 @@ if (document.readyState === 'loading') {
     initCodeBlockToolbars();
     initTableToolbars();
     initQuizzes();
+    initTabs();
   });
 } else {
   initSidebarState();
@@ -3121,6 +3186,7 @@ if (document.readyState === 'loading') {
   initCodeBlockToolbars();
   initTableToolbars();
   initQuizzes();
+  initTabs();
 }
   </script>
 </body>

@@ -33,10 +33,10 @@
     <meta name="twitter:description" content="API and CLI reference documentation for mdsvr">
     <meta name="twitter:image" content="https://mdsvr.js.org/docs/public/assets/og/04-reference/index.jpg">
     <meta name="twitter:image:alt" content="Reference">
-    <meta property="article:published_time" content="2026-11-27">
-    <meta property="article:modified_time" content="2026-11-27">
+    <meta property="article:published_time" content="2026-11-28">
+    <meta property="article:modified_time" content="2026-11-28">
     <link rel="sitemap" type="application/xml" href="/docs/sitemap.xml">
-  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"Reference","description":"API and CLI reference documentation for mdsvr","url":"https://mdsvr.js.org/docs/04-reference/","image":"https://mdsvr.js.org/docs/public/assets/og/04-reference/index.jpg","datePublished":"2026-11-27","dateModified":"2026-11-27"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://mdsvr.js.org/docs/"},{"@type":"ListItem","position":2,"name":"Reference","item":"https://mdsvr.js.org/docs/04-reference/"}]}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"Reference","description":"API and CLI reference documentation for mdsvr","url":"https://mdsvr.js.org/docs/04-reference/","image":"https://mdsvr.js.org/docs/public/assets/og/04-reference/index.jpg","datePublished":"2026-11-28","dateModified":"2026-11-28"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://mdsvr.js.org/docs/"},{"@type":"ListItem","position":2,"name":"Reference","item":"https://mdsvr.js.org/docs/04-reference/"}]}]}</script>
   
   
   
@@ -1206,8 +1206,18 @@ body {
   text-decoration: none;
   color: var(--text);
   display: block;
+  transition: border-color 0.15s ease;
 }
-.card:hover {
+/* Cards render as <a class="card"> when href is set — keep link cards
+   readable: inherit body text color and never underline the contents. */
+.markdown-body a.card,
+a.card {
+  color: var(--text);
+  text-decoration: none;
+}
+.markdown-body a.card:hover,
+a.card:hover {
+  text-decoration: none;
   border-color: var(--accent);
 }
 .card-title {
@@ -1216,6 +1226,11 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
+  color: var(--text);
+  transition: color 0.15s ease;
+}
+a.card:hover .card-title {
+  color: var(--accent);
 }
 .card-description {
   font-size: 14px;
@@ -1256,6 +1271,17 @@ body {
   font-weight: 600;
   background: var(--bg-secondary);
   border-radius: 6px;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+.accordion-summary::-webkit-details-marker {
+  display: none;
+}
+.accordion[open] .accordion-summary {
+  border-radius: 6px 6px 0 0;
 }
 .accordion-content {
   padding: 12px 16px;
@@ -1265,7 +1291,7 @@ body {
   display: inline-block;
   transition: transform 0.2s;
 }
-.accordion-icon.open {
+.accordion[open] .accordion-icon {
   transform: rotate(180deg);
 }
 
@@ -2120,7 +2146,7 @@ code.hljs {
 </div></div>
 
 <h3 id="arguments" tabindex="-1">Arguments</h3>
-<div class="table-wrapper"><div class="table-toolbar"><button class="table-btn-fullscreen" type="button" title="Fullscreen table" aria-label="Fullscreen table"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m15 15 6 6"/><path d="m15 9 6-6"/><path d="M21 16v5h-5"/><path d="M21 8V3h-5"/><path d="M3 16v5h5"/><path d="m3 21 6-6"/><path d="M3 8V3h5"/><path d="M9 9 3 3"/></svg></button></div><table>
+<div class="table-wrapper"><div class="table-toolbar"><button class="table-btn-fullscreen" type="button" title="Fullscreen table" aria-label="Fullscreen table"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m15 15 6 6"/><path d="m15 9 6-6"/><path d="M21 16v5h-5"/><path d="M21 8V3h-5"/><path d="M3 16v5h5"/><path d="M9 9 3 3"/></svg></button></div><table>
 <thead>
 <tr>
 <th>Argument</th>
@@ -2138,7 +2164,7 @@ code.hljs {
 </table></div>
 <h3 id="options" tabindex="-1">Options</h3>
 <h4 id="server-options" tabindex="-1">Server Options</h4>
-<div class="table-wrapper"><div class="table-toolbar"><button class="table-btn-fullscreen" type="button" title="Fullscreen table" aria-label="Fullscreen table"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m15 15 6 6"/><path d="m15 9 6-6"/><path d="M21 16v5h-5"/><path d="M21 8V3h-5"/><path d="M3 16v5h5"/><path d="m3 21 6-6"/><path d="M3 8V3h5"/><path d="M9 9 3 3"/></svg></button></div><table>
+<div class="table-wrapper"><div class="table-toolbar"><button class="table-btn-fullscreen" type="button" title="Fullscreen table" aria-label="Fullscreen table"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m15 15 6 6"/><path d="m15 9 6-6"/><path d="M21 16v5h-5"/><path d="M21 8V3h-5"/><path d="M3 16v5h5"/><path d="M9 9 3 3"/></svg></button></div><table>
 <thead>
 <tr>
 <th>Option</th>
@@ -2170,7 +2196,7 @@ code.hljs {
 </tbody>
 </table></div>
 <h4 id="export-options" tabindex="-1">Export Options</h4>
-<div class="table-wrapper"><div class="table-toolbar"><button class="table-btn-fullscreen" type="button" title="Fullscreen table" aria-label="Fullscreen table"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m15 15 6 6"/><path d="m15 9 6-6"/><path d="M21 16v5h-5"/><path d="M21 8V3h-5"/><path d="M3 16v5h5"/><path d="m3 21 6-6"/><path d="M3 8V3h5"/><path d="M9 9 3 3"/></svg></button></div><table>
+<div class="table-wrapper"><div class="table-toolbar"><button class="table-btn-fullscreen" type="button" title="Fullscreen table" aria-label="Fullscreen table"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m15 15 6 6"/><path d="m15 9 6-6"/><path d="M21 16v5h-5"/><path d="M21 8V3h-5"/><path d="M3 16v5h5"/><path d="M9 9 3 3"/></svg></button></div><table>
 <thead>
 <tr>
 <th>Option</th>
@@ -2189,7 +2215,7 @@ code.hljs {
 </tbody>
 </table></div>
 <h4 id="utility-options" tabindex="-1">Utility Options</h4>
-<div class="table-wrapper"><div class="table-toolbar"><button class="table-btn-fullscreen" type="button" title="Fullscreen table" aria-label="Fullscreen table"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m15 15 6 6"/><path d="m15 9 6-6"/><path d="M21 16v5h-5"/><path d="M21 8V3h-5"/><path d="M3 16v5h5"/><path d="m3 21 6-6"/><path d="M3 8V3h5"/><path d="M9 9 3 3"/></svg></button></div><table>
+<div class="table-wrapper"><div class="table-toolbar"><button class="table-btn-fullscreen" type="button" title="Fullscreen table" aria-label="Fullscreen table"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m15 15 6 6"/><path d="m15 9 6-6"/><path d="M21 16v5h-5"/><path d="M21 8V3h-5"/><path d="M3 16v5h5"/><path d="M9 9 3 3"/></svg></button></div><table>
 <thead>
 <tr>
 <th>Option</th>
@@ -2491,7 +2517,7 @@ npx mdsvr ./docs --validate-md --autofix
 </ul>
 <p>The <code>--autofix</code> flag automatically fixes broken links using fuzzy matching (e.g., <code>traget.md</code> → <code>target.md</code>).</p>
 <h2 id="environment-variables" tabindex="-1">Environment Variables</h2>
-<div class="table-wrapper"><div class="table-toolbar"><button class="table-btn-fullscreen" type="button" title="Fullscreen table" aria-label="Fullscreen table"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m15 15 6 6"/><path d="m15 9 6-6"/><path d="M21 16v5h-5"/><path d="M21 8V3h-5"/><path d="M3 16v5h5"/><path d="m3 21 6-6"/><path d="M3 8V3h5"/><path d="M9 9 3 3"/></svg></button></div><table>
+<div class="table-wrapper"><div class="table-toolbar"><button class="table-btn-fullscreen" type="button" title="Fullscreen table" aria-label="Fullscreen table"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m15 15 6 6"/><path d="m15 9 6-6"/><path d="M21 16v5h-5"/><path d="M21 8V3h-5"/><path d="M3 16v5h5"/><path d="M9 9 3 3"/></svg></button></div><table>
 <thead>
 <tr>
 <th>Variable</th>
@@ -2510,7 +2536,7 @@ npx mdsvr ./docs --validate-md --autofix
 </tbody>
 </table></div>
 <h3 id="exit-codes" tabindex="-1">Exit Codes</h3>
-<div class="table-wrapper"><div class="table-toolbar"><button class="table-btn-fullscreen" type="button" title="Fullscreen table" aria-label="Fullscreen table"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m15 15 6 6"/><path d="m15 9 6-6"/><path d="M21 16v5h-5"/><path d="M21 8V3h-5"/><path d="M3 16v5h5"/><path d="m3 21 6-6"/><path d="M3 8V3h5"/><path d="M9 9 3 3"/></svg></button></div><table>
+<div class="table-wrapper"><div class="table-toolbar"><button class="table-btn-fullscreen" type="button" title="Fullscreen table" aria-label="Fullscreen table"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m15 15 6 6"/><path d="m15 9 6-6"/><path d="M21 16v5h-5"/><path d="M21 8V3h-5"/><path d="M3 16v5h5"/><path d="M9 9 3 3"/></svg></button></div><table>
 <thead>
 <tr>
 <th>Code</th>
@@ -3600,6 +3626,26 @@ function initQuizzes() {
   });
 }
 
+// MDX <Tabs>: panels are pre-rendered with data-tab-panel; one delegated
+// handler switches tabs without React hydration.
+function initTabs() {
+  document.addEventListener('click', function(e) {
+    var tab = e.target && e.target.closest ? e.target.closest('.tabs .tab[data-tab-index]') : null;
+    if (!tab) return;
+    var container = tab.closest('.tabs-container');
+    if (!container) return;
+    var index = tab.getAttribute('data-tab-index');
+    container.querySelectorAll('.tab').forEach(function(t) {
+      var isActive = t === tab;
+      t.classList.toggle('active', isActive);
+      t.setAttribute('aria-selected', String(isActive));
+    });
+    container.querySelectorAll('[data-tab-panel]').forEach(function(panel) {
+      panel.hidden = panel.getAttribute('data-tab-panel') !== index;
+    });
+  });
+}
+
 // Initialize sidebar toggle on DOM ready
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', function() {
@@ -3611,6 +3657,7 @@ if (document.readyState === 'loading') {
     initCodeBlockToolbars();
     initTableToolbars();
     initQuizzes();
+    initTabs();
   });
 } else {
   initSidebarState();
@@ -3621,6 +3668,7 @@ if (document.readyState === 'loading') {
   initCodeBlockToolbars();
   initTableToolbars();
   initQuizzes();
+  initTabs();
 }
   </script>
 </body>

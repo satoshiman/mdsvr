@@ -148,7 +148,7 @@ const perfObserver = new IntersectionObserver(
       if (entry.isIntersecting) {
         const bars = entry.target.querySelectorAll(".perf-bar");
         bars.forEach((bar) => {
-          const target = bar.style.width;
+          const target = bar.dataset.targetWidth || bar.style.width;
           bar.style.width = "0";
           requestAnimationFrame(() => {
             setTimeout(() => {

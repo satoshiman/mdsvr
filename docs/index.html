@@ -33,8 +33,8 @@
     <meta name="twitter:description" content="Full-featured documentation website server with MDX support, site settings, SEO, and navigation">
     <meta name="twitter:image" content="https://mdsvr.js.org/docs/public/assets/og/index.jpg">
     <meta name="twitter:image:alt" content="Welcome">
-    <meta property="article:published_time" content="2026-11-27">
-    <meta property="article:modified_time" content="2026-11-27">
+    <meta property="article:published_time" content="2026-11-28">
+    <meta property="article:modified_time" content="2026-11-28">
     <link rel="sitemap" type="application/xml" href="/docs/sitemap.xml">
   <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"MDSVR | Markdown Documentation Server","url":"https://mdsvr.js.org/docs/","description":"Full-featured documentation website server with MDX support, site settings, SEO, and navigation","potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://mdsvr.js.org/docs/?q={search_term_string}"},"query-input":"required name=search_term_string"}}]}</script>
   
@@ -1206,8 +1206,18 @@ body {
   text-decoration: none;
   color: var(--text);
   display: block;
+  transition: border-color 0.15s ease;
 }
-.card:hover {
+/* Cards render as <a class="card"> when href is set — keep link cards
+   readable: inherit body text color and never underline the contents. */
+.markdown-body a.card,
+a.card {
+  color: var(--text);
+  text-decoration: none;
+}
+.markdown-body a.card:hover,
+a.card:hover {
+  text-decoration: none;
   border-color: var(--accent);
 }
 .card-title {
@@ -1216,6 +1226,11 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
+  color: var(--text);
+  transition: color 0.15s ease;
+}
+a.card:hover .card-title {
+  color: var(--accent);
 }
 .card-description {
   font-size: 14px;
@@ -1256,6 +1271,17 @@ body {
   font-weight: 600;
   background: var(--bg-secondary);
   border-radius: 6px;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+.accordion-summary::-webkit-details-marker {
+  display: none;
+}
+.accordion[open] .accordion-summary {
+  border-radius: 6px 6px 0 0;
 }
 .accordion-content {
   padding: 12px 16px;
@@ -1265,7 +1291,7 @@ body {
   display: inline-block;
   transition: transform 0.2s;
 }
-.accordion-icon.open {
+.accordion[open] .accordion-icon {
   transform: rotate(180deg);
 }
 
@@ -2201,7 +2227,7 @@ echo &quot;# Hello World&quot; &gt; docs/readme.md
 </li>
 </ol>
 <h2 id="key-features" tabindex="-1">Key Features</h2>
-<div class="table-wrapper"><div class="table-toolbar"><button class="table-btn-fullscreen" type="button" title="Fullscreen table" aria-label="Fullscreen table"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m15 15 6 6"/><path d="m15 9 6-6"/><path d="M21 16v5h-5"/><path d="M21 8V3h-5"/><path d="M3 16v5h5"/><path d="m3 21 6-6"/><path d="M3 8V3h5"/><path d="M9 9 3 3"/></svg></button></div><table>
+<div class="table-wrapper"><div class="table-toolbar"><button class="table-btn-fullscreen" type="button" title="Fullscreen table" aria-label="Fullscreen table"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m15 15 6 6"/><path d="m15 9 6-6"/><path d="M21 16v5h-5"/><path d="M21 8V3h-5"/><path d="M3 16v5h5"/><path d="M9 9 3 3"/></svg></button></div><table>
 <thead>
 <tr>
 <th>Feature</th>
@@ -3363,6 +3389,26 @@ function initQuizzes() {
   });
 }
 
+// MDX <Tabs>: panels are pre-rendered with data-tab-panel; one delegated
+// handler switches tabs without React hydration.
+function initTabs() {
+  document.addEventListener('click', function(e) {
+    var tab = e.target && e.target.closest ? e.target.closest('.tabs .tab[data-tab-index]') : null;
+    if (!tab) return;
+    var container = tab.closest('.tabs-container');
+    if (!container) return;
+    var index = tab.getAttribute('data-tab-index');
+    container.querySelectorAll('.tab').forEach(function(t) {
+      var isActive = t === tab;
+      t.classList.toggle('active', isActive);
+      t.setAttribute('aria-selected', String(isActive));
+    });
+    container.querySelectorAll('[data-tab-panel]').forEach(function(panel) {
+      panel.hidden = panel.getAttribute('data-tab-panel') !== index;
+    });
+  });
+}
+
 // Initialize sidebar toggle on DOM ready
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', function() {
@@ -3374,6 +3420,7 @@ if (document.readyState === 'loading') {
     initCodeBlockToolbars();
     initTableToolbars();
     initQuizzes();
+    initTabs();
   });
 } else {
   initSidebarState();
@@ -3384,6 +3431,7 @@ if (document.readyState === 'loading') {
   initCodeBlockToolbars();
   initTableToolbars();
   initQuizzes();
+  initTabs();
 }
   </script>
 </body>
