@@ -421,4 +421,73 @@ title: Quiz Page
     // Cleanup
     await fs.rm(testDir, { recursive: true, force: true });
   });
+
+  it("should accept root-absolute asset paths that exist under the docs root", async () => {
+    await fs.mkdir(path.join(testDir, "assets"), { recursive: true });
+    await fs.mkdir(path.join(testDir, "sub"), { recursive: true });
+    await fs.writeFile(path.join(testDir, "assets", "cat.png"), "png");
+    await fs.writeFile(
+      path.join(testDir, "sub", "page.md"),
+      `---
+title: Page
+---
+
+# Page
+
+![Cat](/assets/cat.png)
+`,
+      "utf-8",
+    );
+
+    const result = await validateMarkdown({
+      rootDir: testDir,
+      autofix: false,
+      checkLinks: false,
+      checkAssets: true,
+      checkStructure: false,
+    });
+
+    const assetErrors = result.errors.filter(
+      (e) => e.type === "absolute-path" || e.type === "missing-asset",
+    );
+    assert.strictEqual(assetErrors.length, 0);
+
+    // Cleanup
+    await fs.rm(testDir, { recursive: true, force: true });
+  });
+
+  it("should report missing-asset for root-absolute paths that do not exist", async () => {
+    await fs.mkdir(path.join(testDir, "sub"), { recursive: true });
+    await fs.writeFile(
+      path.join(testDir, "sub", "page.md"),
+      `---
+title: Page
+---
+
+# Page
+
+![Cat](/assets/cat.png)
+`,
+      "utf-8",
+    );
+
+    const result = await validateMarkdown({
+      rootDir: testDir,
+      autofix: false,
+      checkLinks: false,
+      checkAssets: true,
+      checkStructure: false,
+    });
+
+    const missing = result.errors.find((e) => e.type === "missing-asset");
+    assert.ok(missing);
+    assert.ok(missing.message.includes("/assets/cat.png"));
+    assert.ok(
+      !result.errors.some((e) => e.type === "absolute-path"),
+      "missing root-absolute assets report missing-asset, not absolute-path",
+    );
+
+    // Cleanup
+    await fs.rm(testDir, { recursive: true, force: true });
+  });
 });

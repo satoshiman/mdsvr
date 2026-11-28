@@ -98,27 +98,49 @@ interface TabsProps {
 }
 
 export function Tabs({ items, children }: TabsProps) {
-  const [active, setActive] = React.useState(0);
-  const tabsId = React.useId();
+  // No client-side hydration: every panel is rendered and switching is done
+  // by the delegated click handler in the page template (initTabs).
+  const panels = React.Children.toArray(children);
 
   return (
-    <div className="tabs-container" data-tabs-id={tabsId}>
-      <div className="tabs">
+    <div className="tabs-container">
+      <div className="tabs" role="tablist">
         {items.map((item, index) => (
           <button
             key={index}
-            onClick={() => setActive(index)}
-            className={`tab ${active === index ? "active" : ""}`}
+            type="button"
+            role="tab"
+            aria-selected={index === 0}
+            data-tab-index={index}
+            className={`tab ${index === 0 ? "active" : ""}`}
           >
             {item}
           </button>
         ))}
       </div>
-      <div className="tab-content">
-        {React.Children.toArray(children)[active]}
-      </div>
+      {panels.map((panel, index) => (
+        <div
+          key={index}
+          role="tabpanel"
+          data-tab-panel={index}
+          className="tab-content"
+          hidden={index !== 0}
+        >
+          {panel}
+        </div>
+      ))}
     </div>
   );
+}
+
+interface TabProps {
+  children: React.ReactNode;
+}
+
+/** Transparent wrapper so `<Tab>` inside `<Tabs>` matches the documented
+ *  usage — panels are selected by position, not by this element. */
+export function Tab({ children }: TabProps) {
+  return <>{children}</>;
 }
 
 interface AccordionProps {
@@ -127,16 +149,16 @@ interface AccordionProps {
 }
 
 export function Accordion({ title, children }: AccordionProps) {
-  const [open, setOpen] = React.useState(false);
-
+  // Rendered via renderToStaticMarkup — React state/handlers never run on
+  // the client, so the collapsible uses native <details>/<summary>.
   return (
-    <div className="accordion">
-      <button onClick={() => setOpen(!open)} className="accordion-summary">
+    <details className="accordion">
+      <summary className="accordion-summary">
         {title}
-        <span className={`accordion-icon ${open ? "open" : ""}`}>▼</span>
-      </button>
-      {open && <div className="accordion-content">{children}</div>}
-    </div>
+        <span className="accordion-icon">▼</span>
+      </summary>
+      <div className="accordion-content">{children}</div>
+    </details>
   );
 }
 
@@ -281,6 +303,7 @@ export const builtinComponents = {
   Card,
   CardGroup,
   Tabs,
+  Tab,
   Accordion,
   Badge,
   Mermaid,

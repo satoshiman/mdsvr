@@ -54,7 +54,18 @@ export async function renderPageService(
 
   let result: MarkdownResult | MdxRenderResult;
   if (ext === ".mdx" && settings.mdx.enabled) {
-    result = await renderMdx(content, settings);
+    try {
+      result = await renderMdx(content, settings);
+    } catch (err) {
+      // A broken .mdx file renders an inline error instead of a 500 or an
+      // aborted export — same contract as a broken ```quiz block.
+      const message = err instanceof Error ? err.message : String(err);
+      result = {
+        html: `<div class="callout callout-danger"><strong style="display: block; margin-bottom: 8px;">MDX render error</strong><div><pre><code>${escapeHtmlText(message)}</code></pre></div></div>`,
+        frontmatter: {},
+        toc: [],
+      };
+    }
   } else {
     result = renderMarkdown(content, settings);
   }
@@ -69,18 +80,18 @@ export async function renderPageService(
     sidebar = await buildSidebar(rootDir, urlPath, settings, isStatic);
   }
 
-  let body = result.html;
-  if (isStatic || settings.generate.cleanUrls) {
-    // Rebase relative links/assets against the source file's directory and
-    // emit canonical site-relative routes (clean URLs). Dynamic serve
-    // without cleanUrls keeps .md links untouched — they resolve directly.
-    body = transformLinks(
-      body,
-      sourcePath,
-      rootDir,
-      isStatic ? settings.generate.basePath : "",
-    );
-  }
+  // Rebase relative links/assets against the source file's directory and
+  // emit canonical site-relative routes (clean URLs). This runs in both
+  // modes: canonical page URLs are trailing-slash directories, so raw
+  // relative paths like `../assets/x.png` resolve one level too deep in
+  // the browser. The dev router serves the emitted routes via the .md
+  // fallback, same as a static export.
+  const body = transformLinks(
+    result.html,
+    sourcePath,
+    rootDir,
+    isStatic ? settings.generate.basePath : "",
+  );
 
   const html = renderPage({
     title,
@@ -273,6 +284,16 @@ function realpathSyncSafe(p: string): string {
   } catch {
     return p;
   }
+}
+
+function escapeHtmlText(text: string): string {
+  const map: Record<string, string> = {
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+  };
+  return text.replace(/[&<>"]/g, (c) => map[c]);
 }
 
 export function humanizeFilename(filename: string): string {

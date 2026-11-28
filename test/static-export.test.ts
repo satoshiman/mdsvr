@@ -460,4 +460,24 @@ describe("static export", () => {
       "New state should have OG entries from migration",
     );
   });
+
+  it("marks the current leaf page and its parent folder active in the sidebar", async () => {
+    const rootDir = path.join(tempDir, "docs");
+    const settings = await loadSettings(rootDir);
+    await exportStaticSite({
+      rootDir,
+      outputDir,
+      settings,
+      silent: true,
+    });
+
+    const html = await fs.readFile(
+      path.join(outputDir, "no-readme-dir", "page", "index.html"),
+      "utf-8",
+    );
+    // Export passes a slash-less urlPath; the sidebar must still mark the
+    // leaf item active and flag the parent folder (issue #52).
+    assert.ok(html.includes('<li class="nav-item active" data-type="file">'));
+    assert.ok(html.includes("has-active-child"));
+  });
 });

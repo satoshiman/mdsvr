@@ -33,6 +33,12 @@ describe("render parity (dynamic vs static)", () => {
       path.join(rootDir, "section", "page.mdx"),
       "# MDX Page\n\nParagraph.\n",
     );
+    await fs.writeFile(
+      path.join(rootDir, "section", "lesson.md"),
+      "# Lesson\n\n![Cat](../assets/cat.png)\n",
+    );
+    await fs.mkdir(path.join(rootDir, "assets"));
+    await fs.writeFile(path.join(rootDir, "assets", "cat.png"), "png");
   });
 
   after(async () => {
@@ -64,7 +70,7 @@ describe("render parity (dynamic vs static)", () => {
     assert.strictEqual(extractBody(dynamic.html), extractBody(statik.html));
   });
 
-  it("converts .md links to clean URLs only in static mode", async () => {
+  it("converts .md links to canonical routes in both modes", async () => {
     const input = {
       sourcePath: path.join(rootDir, "index.md"),
       urlPath: "/",
@@ -75,10 +81,47 @@ describe("render parity (dynamic vs static)", () => {
     const statik = await renderPageService({ ...input, mode: "static" });
     const dynamicBody = extractBody(dynamic.html);
     const staticBody = extractBody(statik.html);
-    // Static mode strips .md extension and preserves the anchor
-    assert.ok(!staticBody.includes("guide.md"));
-    assert.ok(dynamicBody.includes("guide.md"));
-    assert.ok(staticBody.includes("#setup"));
+    // Both modes rebase relative links to canonical site-relative routes:
+    // canonical page URLs are trailing-slash directories, so raw relative
+    // links would resolve one level too deep in the browser (issue #53).
+    for (const body of [dynamicBody, staticBody]) {
+      assert.ok(!body.includes("guide.md"));
+      assert.ok(body.includes("/guide/"));
+      assert.ok(body.includes("#setup"));
+    }
+    assert.strictEqual(dynamicBody, staticBody);
+  });
+
+  it("rebases relative asset paths against the source file in both modes", async () => {
+    const input = {
+      sourcePath: path.join(rootDir, "section", "lesson.md"),
+      urlPath: "/section/lesson/",
+      rootDir,
+      settings,
+    };
+    const dynamic = await renderPageService({ ...input, mode: "dynamic" });
+    const statik = await renderPageService({ ...input, mode: "static" });
+    // `../assets/cat.png` resolves against the source file's directory, not
+    // the trailing-slash page URL (which would 404 as /section/assets/...).
+    for (const page of [dynamic, statik]) {
+      assert.ok(extractBody(page.html).includes('src="/assets/cat.png"'));
+    }
+  });
+
+  it("renders an inline error callout instead of throwing for broken MDX", async () => {
+    await fs.writeFile(
+      path.join(rootDir, "broken.mdx"),
+      "# Broken\n\n<Unregistered>x</Unregistered>\n",
+    );
+    const page = await renderPageService({
+      sourcePath: path.join(rootDir, "broken.mdx"),
+      urlPath: "/broken/",
+      rootDir,
+      settings,
+      mode: "dynamic",
+    });
+    assert.ok(page.html.includes("MDX render error"));
+    assert.strictEqual(page.title, "Broken");
   });
 
   it("lists the same entries for a directory index", async () => {

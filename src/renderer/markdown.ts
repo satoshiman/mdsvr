@@ -7,9 +7,10 @@ import { slugify } from "./slugify.js";
 import { mathPlugin } from "./math.js";
 import { renderQuizBlock } from "./quiz.js";
 import { renderMermaid } from "./mermaid.js";
+import { extractToc, type TocItem } from "./toc.js";
 
 // Convert GitHub-style callouts and triple-colon callouts in HTML to callout divs
-function convertGithubCallouts(html: string): string {
+export function convertGithubCallouts(html: string): string {
   const typeMap: Record<string, string> = {
     NOTE: "info",
     TIP: "tip",
@@ -56,12 +57,7 @@ function convertGithubCallouts(html: string): string {
   return html;
 }
 
-export interface TocItem {
-  level: number;
-  text: string;
-  slug: string;
-  children?: TocItem[];
-}
+export type { TocItem };
 
 export interface MarkdownResult {
   html: string;
@@ -69,7 +65,7 @@ export interface MarkdownResult {
   toc: TocItem[];
 }
 
-function renderCodeBlockWithToolbar(
+export function renderCodeBlockWithToolbar(
   codeHtml: string,
   lang: string | null,
   rawCode: string,
@@ -108,6 +104,21 @@ function renderCodeBlockWithToolbar(
   </div>
   <pre><code${langClass}>${codeHtml}</code></pre>
 </div></div>\n`;
+}
+
+/** Scrollable table wrapper + fullscreen button — shared with the MDX path. */
+export const TABLE_OPEN_HTML =
+  '<div class="table-wrapper"><div class="table-toolbar"><button class="table-btn-fullscreen" type="button" title="Fullscreen table" aria-label="Fullscreen table"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m15 15 6 6"/><path d="m15 9 6-6"/><path d="M21 16v5h-5"/><path d="M21 8V3h-5"/><path d="M3 16v5h5"/><path d="M9 9 3 3"/></svg></button></div><table>\n';
+export const TABLE_CLOSE_HTML = "</table></div>\n";
+
+/**
+ * Upgrade remark-rendered `<table>` elements to the toolbar-wrapped variant
+ * used by the markdown-it pipeline (MDX emits bare <table> tags).
+ */
+export function wrapTables(html: string): string {
+  return html
+    .replace(/<table>/g, TABLE_OPEN_HTML.trimEnd())
+    .replace(/<\/table>/g, "</table></div>");
 }
 
 // Create markdown-it instance with the shared highlight/table/callout rules.
@@ -207,9 +218,8 @@ function createMarkdownIt(): MarkdownIt {
   md.use(mathPlugin);
 
   // Wrap tables in a scrollable container for mobile responsiveness
-  md.renderer.rules.table_open = () =>
-    '<div class="table-wrapper"><div class="table-toolbar"><button class="table-btn-fullscreen" type="button" title="Fullscreen table" aria-label="Fullscreen table"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m15 15 6 6"/><path d="m15 9 6-6"/><path d="M21 16v5h-5"/><path d="M21 8V3h-5"/><path d="M3 16v5h5"/><path d="m3 21 6-6"/><path d="M3 8V3h5"/><path d="M9 9 3 3"/></svg></button></div><table>\n';
-  md.renderer.rules.table_close = () => "</table></div>\n";
+  md.renderer.rules.table_open = () => TABLE_OPEN_HTML;
+  md.renderer.rules.table_close = () => TABLE_CLOSE_HTML;
 
   return md;
 }
@@ -233,20 +243,6 @@ export function renderMarkdown(
   const toc = extractToc(html);
 
   return { html, frontmatter, toc };
-}
-
-function extractToc(html: string): TocItem[] {
-  const toc: TocItem[] = [];
-  // Match heading tags with id attributes
-  const regex = /<h([1-6])[^>]*id="([^"]+)"[^>]*>([^<]*)<\/h\1>/gi;
-  let match;
-  while ((match = regex.exec(html)) !== null) {
-    const level = parseInt(match[1], 10);
-    const slug = match[2];
-    const text = match[3].replace(/<[^>]*>/g, ""); // strip any inline tags
-    toc.push({ level, text, slug });
-  }
-  return toc;
 }
 
 // For V1 compatibility - simple render without frontmatter extraction

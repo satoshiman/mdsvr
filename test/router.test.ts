@@ -171,11 +171,11 @@ describe("router", () => {
     assert.strictEqual(res.status, 200);
     assert.strictEqual(res.url, `${baseUrl}/subdir/`);
     const body = await res.text();
-    assert.match(body, /href="\.\/file"/);
+    // Relative links are rebased to canonical site-relative routes, which
+    // resolve correctly regardless of the trailing-slash redirect.
+    assert.match(body, /href="\/subdir\/file\/"/);
 
-    const linkedUrl = new URL("./file", res.url);
-    assert.strictEqual(linkedUrl.pathname, "/subdir/file");
-    const linkedRes = await fetch(linkedUrl);
+    const linkedRes = await fetch(`${baseUrl}/subdir/file/`);
     assert.strictEqual(linkedRes.status, 200);
     assert.ok((await linkedRes.text()).includes("Linked content."));
   });

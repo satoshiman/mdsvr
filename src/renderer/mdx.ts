@@ -8,8 +8,15 @@ import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import hljs from "highlight.js";
 import type { Settings } from "../settings/index.js";
 import { builtinComponents } from "./components.js";
+import { extractToc, type TocItem } from "./toc.js";
+import {
+  convertGithubCallouts,
+  renderCodeBlockWithToolbar,
+  wrapTables,
+} from "./markdown.js";
 
 interface MdastNode {
   type: string;
@@ -48,45 +55,58 @@ function remarkQuiz() {
   };
 }
 
-// Convert triple-colon callouts in HTML to callout divs
-function convertTripleColonCallouts(html: string): string {
-  const typeMap: Record<string, string> = {
-    NOTE: "info",
-    TIP: "tip",
-    IMPORTANT: "info",
-    WARNING: "warning",
-    CAUTION: "danger",
-    INFO: "info",
-    DANGER: "danger",
+function escapeCode(text: string): string {
+  const map: Record<string, string> = {
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
   };
+  return text.replace(/[&<>"]/g, (c) => map[c]);
+}
 
-  const titles: Record<string, string> = {
-    NOTE: "ℹ️ Info",
-    TIP: "💡 Tip",
-    IMPORTANT: "ℹ️ Info",
-    WARNING: "⚠️ Warning",
-    CAUTION: "🚫 Danger",
-    INFO: "ℹ️ Info",
-    DANGER: "🚫 Danger",
-  };
+const CODE_ENTITIES: Record<string, string> = {
+  "&amp;": "&",
+  "&lt;": "<",
+  "&gt;": ">",
+  "&quot;": '"',
+  "&#39;": "'",
+  "&#x27;": "'",
+};
 
-  // Match triple-colon syntax: :::type content :::
+function decodeCodeEntities(text: string): string {
+  return text.replace(
+    /&(?:amp|lt|gt|quot|#39|#x27);/g,
+    (entity) => CODE_ENTITIES[entity] ?? entity,
+  );
+}
+
+/**
+ * Upgrade remark-rendered `<pre><code>` blocks to the same output the
+ * markdown-it pipeline emits: highlight.js markup inside the
+ * copy/wrap/fullscreen toolbar container.
+ */
+function highlightCodeBlocks(html: string): string {
   return html.replace(
-    /<p>\s*:::(note|tip|warning|danger|info|important|caution)\s*(.*?)\s*:::\s*<\/p>/gis,
-    (match, type, content) => {
-      const calloutType = typeMap[type.toUpperCase()] || "info";
-      const calloutTitle = titles[type.toUpperCase()] || "ℹ️ Info";
-      return `<div class="callout callout-${calloutType}"><strong style="display: block; margin-bottom: 8px;">${calloutTitle}</strong><div>${content}</div></div>`;
+    /<pre><code(?:\s+class="([^"]*)")?>([\s\S]*?)<\/code><\/pre>/g,
+    (match, classAttr: string | undefined, inner: string) => {
+      const lang = /language-([\w-]+)/.exec(classAttr ?? "")?.[1] ?? null;
+      const code = decodeCodeEntities(inner);
+      let highlighted: string;
+      try {
+        highlighted =
+          lang && hljs.getLanguage(lang)
+            ? hljs.highlight(code, { language: lang }).value
+            : escapeCode(code);
+      } catch {
+        highlighted = escapeCode(code);
+      }
+      return renderCodeBlockWithToolbar(highlighted, lang, code, escapeCode);
     },
   );
 }
 
-export interface TocItem {
-  level: number;
-  text: string;
-  slug: string;
-  children?: TocItem[];
-}
+export type { TocItem };
 
 export interface MdxRenderResult {
   html: string;
@@ -145,24 +165,14 @@ export async function renderMdx(
     (MDXContent as any)({ components: enabledComponents }),
   );
 
-  // Convert triple-colon callouts
-  html = convertTripleColonCallouts(html);
+  // Shared post-processing so .mdx output matches .md: GitHub + triple-colon
+  // callouts, syntax-highlighted code blocks with toolbar, wrapped tables.
+  html = convertGithubCallouts(html);
+  html = highlightCodeBlocks(html);
+  html = wrapTables(html);
 
   const toc = extractToc(html);
 
   return { html, frontmatter, toc };
 }
 
-function extractToc(html: string): TocItem[] {
-  const toc: TocItem[] = [];
-  // Match heading tags with id attributes
-  const regex = /<h([1-6])[^>]*id="([^"]+)"[^>]*>([^<]*)<\/h\1>/gi;
-  let match;
-  while ((match = regex.exec(html)) !== null) {
-    const level = parseInt(match[1], 10);
-    const slug = match[2];
-    const text = match[3].replace(/<[^>]*>/g, ""); // strip any inline tags
-    toc.push({ level, text, slug });
-  }
-  return toc;
-}

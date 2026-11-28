@@ -2,7 +2,7 @@
 
 [![npm version](https://badge.fury.io/js/mdsvr.svg)](https://www.npmjs.com/package/mdsvr)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Node.js 18+](https://img.shields.io/badge/Node.js-18+-green)](https://nodejs.org/)
+[![Node.js 22+](https://img.shields.io/badge/Node.js-22+-green)](https://nodejs.org/)
 ![TypeScript](https://img.shields.io/badge/TypeScript-100%25-blue)
 [![Docs](https://img.shields.io/badge/docs-mdsvr.js.org-blue)](https://mdsvr.js.org/docs)
 
@@ -72,11 +72,15 @@ Client-side full-text search powered by a pre-built `/search-index.json`. Trigge
 
 ### SEO & Meta Tags
 
-Generates Open Graph and Twitter Card meta tags for every page. Canonical URLs, `<title>` tags, and descriptions are derived from front matter or page content. Includes auto-generated `/sitemap.xml` and `/feed.xml` (RSS) when enabled.
+Generates Open Graph and Twitter Card meta tags for every page, including auto-rendered OG share images. Canonical URLs, `<title>` tags, and descriptions are derived from front matter or page content. Includes auto-generated `/sitemap.xml`, `/robots.txt`, `/feed.xml` (RSS), and `/llms.txt` when enabled.
 
 ### Mermaid Diagrams
 
 Render ` ```mermaid ``` ` code blocks as interactive diagrams via [Pele](https://pele.run). Supports fullscreen mode with pan, zoom, and a source view toggle, rendered to SVG at serve/export time with no client-side library needed.
+
+### Math & Interactive Quizzes
+
+GitHub-style math (`$...$`, `$$...$$`, ` ```math `) renders to KaTeX at serve/export time. ` ```quiz ` blocks turn JSON into self-check quizzes (single choice, multiple choice, true/false, self-check) graded client-side with per-user stats in localStorage.
 
 ### Syntax Highlighting
 
@@ -163,6 +167,7 @@ Options:
   -o, --open         Auto-open browser
   -s, --silent       Suppress console output
   -e, --export [PATH]  Export static HTML (default: _html/public)
+  --force-og         Force full OG image regeneration (skip incremental)
   --init             Create a starter _mdsvr/settings.json in [dir]
   --validate         Validate _mdsvr/settings.json and exit
   --validate-md      Validate all markdown files and exit
@@ -216,11 +221,13 @@ description: How to install and configure
 
 # Getting Started
 
-<Callout type="warning">Make sure you have Node.js 18+ installed.</Callout>
+<Callout type="warning">Make sure you have Node.js 22+ installed.</Callout>
 
 <Steps>
-  ### Install the package
-  Run `npm install mdsvr`
+
+### Install the package
+
+Run `npm install mdsvr`
 
 ### Create your docs folder
 
@@ -245,14 +252,15 @@ Run `npx mdsvr ./docs --open`
 ### Built-in MDX Components
 
 - `<Callout type="info|warning|danger|success|tip">` - Highlighted boxes
-- `<CodeGroup title="...">` - Tabbed code blocks
+- `<CodeGroup title="...">` - Grouped code blocks under a shared title
 - `<Steps>` - Numbered step-by-step guide
 - `<Card title="..." icon="..." href="...">` - Link cards
 - `<CardGroup cols={2}>` - Grid layout for cards
-- `<Tabs items={[...]}>` - Tabbed content
+- `<Tabs items={[...]}>` + `<Tab>` - Tabbed content panels
 - `<Accordion title="...">` - Collapsible sections
 - `<Badge color="green|orange|red|blue|purple|gray">` - Status badges
-- `<Mermaid>` - Diagrams (client-side rendered)
+- `<Mermaid>` - Diagrams (rendered to SVG server-side via Pele)
+- `<Quiz source="...">` - Interactive quizzes (also via ` ```quiz ` blocks)
 
 ## Programmatic API
 
@@ -317,12 +325,13 @@ npx mdsvr ./docs --validate-md --autofix
 
 **Validation checks:**
 
-- Broken internal and external links
-- Missing or invalid front matter
+- Broken internal links and missing assets
+- Links escaping the docs root, root-absolute links, and raw `.md` extensions in URLs
+- Broken heading anchors and duplicate slugs
+- Missing front matter, H1 and directory index files
 - Inconsistent heading hierarchy
-- Empty sections or orphaned headings
-- Duplicate anchors
-- Malformed markdown syntax
+- Invalid ` ```quiz ` blocks
+- Files with `.` in their base name (ambiguous links)
 
 ## CLI: Export Static Site
 
@@ -393,11 +402,14 @@ firebase deploy
 
 When enabled in `_mdsvr/settings.json`:
 
-| Endpoint             | Description                         |
-| -------------------- | ----------------------------------- |
-| `/sitemap.xml`       | XML sitemap for search engines      |
-| `/feed.xml`          | RSS feed for blog posts             |
-| `/search-index.json` | Search index for client-side search |
+| Endpoint             | Description                            |
+| -------------------- | -------------------------------------- |
+| `/sitemap.xml`       | XML sitemap for search engines         |
+| `/robots.txt`        | Robots rules (auto-generated or custom) |
+| `/feed.xml`          | RSS feed for blog posts                |
+| `/search-index.json` | Search index for client-side search    |
+| `/llms.txt`          | LLM-friendly site summary              |
+| `/llms-full.txt`     | Full documentation as plain text       |
 
 ## File Structure
 
@@ -426,7 +438,7 @@ docs/
 
 ## Requirements
 
-- Node.js 18+
+- Node.js 22+
 
 ## Performance
 

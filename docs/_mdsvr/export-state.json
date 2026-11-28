@@ -24,7 +24,7 @@
     },
     "/03-features/mdx": {
       "outputPath": "public/assets/og/03-features/mdx/index.jpg",
-      "hash": "fffaa4832f70a88c8fc6632eb8be649569c93969c3e7fc4615f5a6dff4428545"
+      "hash": "074aca6d49ccf07c9460a29344df35cd9bec9aae986d5187ebe6df909e979aa6"
     },
     "/03-features/mermaid": {
       "outputPath": "public/assets/og/03-features/mermaid/index.jpg",
@@ -56,7 +56,7 @@
     },
     "/10-changelog/": {
       "outputPath": "public/assets/og/10-changelog/index.jpg",
-      "hash": "76b7720194f2917f53f2953fb1e15570dec76fd678781c70fe9af2877a9f7d65"
+      "hash": "ae4109e360559302a57a53da481103b36479c49f9546611b49cb34151070b129"
     },
     "/": {
       "outputPath": "public/assets/og/index.jpg",
