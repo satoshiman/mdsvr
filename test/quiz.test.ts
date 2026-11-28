@@ -167,6 +167,25 @@ describe("renderQuizBlock", () => {
     assert.ok(html.includes("<code>asyncio.run()</code>"));
   });
 
+  it("renders inline math in question, options and explanation", () => {
+    const html = renderQuizBlock(
+      JSON.stringify({
+        questions: [
+          {
+            type: "single",
+            question: "Which layer adds $H_t$?",
+            options: ["$H_l$ - link", "$H_n$ - network"],
+            answer: 0,
+            explanation: "Encapsulation: $M$ then $H_t M$.",
+          },
+        ],
+      }),
+    );
+    assert.ok(html.includes('class="katex"'));
+    assert.ok(!html.includes("$H_t$"));
+    assert.ok(!html.includes("$H_l$"));
+  });
+
   it("neutralizes raw HTML in quiz content", () => {
     const html = renderQuizBlock(
       JSON.stringify({

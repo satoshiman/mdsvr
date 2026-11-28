@@ -307,7 +307,11 @@ export async function buildSidebar(
     let hasActive = false;
     for (const item of items) {
       const isRoot = item.href === "/";
-      const isExactMatch = item.href === currentPath;
+      // Item hrefs are canonical trailing-slash routes; callers may pass the
+      // slash-less form (static export emits urlPath without a trailing
+      // slash for leaf pages).
+      const isExactMatch =
+        item.href === currentPath || item.href === currentPath + "/";
 
       // Check if currentPath is an index file within this directory
       // e.g., currentPath="/features/README.md" should match folder href="/features/"
@@ -502,7 +506,11 @@ export function renderToc(toc: TocItem[], settings: Settings): string {
     return subLines.join("\n");
   }
 
-  const tree = buildTree(filtered, 1);
+  // Anchor the tree at the shallowest level actually present — pages
+  // without an h1 (or whose h1 was dropped) would otherwise orphan every
+  // deeper heading and render an empty TOC.
+  const minLevel = Math.min(...filtered.map((item) => item.level));
+  const tree = buildTree(filtered, minLevel);
   lines.push(renderTocTree(tree, 1));
   lines.push("</nav>");
 

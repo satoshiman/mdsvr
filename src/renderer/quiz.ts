@@ -5,6 +5,7 @@
 // tracks per-user stats in localStorage.
 import MarkdownIt from "markdown-it";
 import { z } from "zod";
+import { mathPlugin } from "./math.js";
 
 const BaseQuestion = z.object({
   question: z.string().min(1),
@@ -115,7 +116,7 @@ export function quizHash(payload: string): string {
 // html:false keeps raw HTML out of quiz content; linkify still autolinks URLs.
 let inlineMd: MarkdownIt | null = null;
 export function renderQuizInline(text: string): string {
-  inlineMd ??= new MarkdownIt({ html: false, linkify: true });
+  inlineMd ??= new MarkdownIt({ html: false, linkify: true }).use(mathPlugin);
   return inlineMd.renderInline(text);
 }
 

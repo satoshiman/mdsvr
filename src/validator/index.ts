@@ -693,16 +693,32 @@ async function validateAssetLinks(
   const assets = extractAssetLinks(content, filePath);
 
   for (const { link, line, original } of assets) {
-    // Check for absolute paths
+    // Root-absolute asset paths resolve against the docs root (the export
+    // step prepends basePath to them), so they are valid when the target
+    // exists there. Absolute paths escaping the root or missing stay errors.
     if (link.startsWith("/")) {
+      const linkPathPart = link.split("#")[0].split("?")[0];
+      const absResolved = path.resolve(rootDir, `.${decodeAnchor(linkPathPart)}`);
+      const relToRoot = path.relative(rootDir, absResolved);
+      const escapesRoot =
+        relToRoot === ".." ||
+        relToRoot.startsWith(`..${path.sep}`) ||
+        path.isAbsolute(relToRoot);
+      if (!escapesRoot && (await fileExists(absResolved))) {
+        continue;
+      }
       errors.push({
         file: path.relative(rootDir, filePath),
         line,
-        type: "absolute-path",
-        message: `Absolute path detected: ${link}`,
-        suggestion: "Use relative paths instead (e.g., ./path or ../path)",
+        type: escapesRoot ? "outside-root" : "missing-asset",
+        message: escapesRoot
+          ? `Absolute path resolves outside the docs root: ${link}`
+          : `Missing asset: ${link}`,
+        suggestion: escapesRoot
+          ? "Move the target into the docs root or remove the link"
+          : "Create the file under the docs root, or use a relative path",
         original,
-        icon: "⚠️",
+        icon: escapesRoot ? "🔗" : "🖼️",
       });
       continue;
     }

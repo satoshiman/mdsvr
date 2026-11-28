@@ -1045,6 +1045,26 @@ function initQuizzes() {
   });
 }
 
+// MDX <Tabs>: panels are pre-rendered with data-tab-panel; one delegated
+// handler switches tabs without React hydration.
+function initTabs() {
+  document.addEventListener('click', function(e) {
+    var tab = e.target && e.target.closest ? e.target.closest('.tabs .tab[data-tab-index]') : null;
+    if (!tab) return;
+    var container = tab.closest('.tabs-container');
+    if (!container) return;
+    var index = tab.getAttribute('data-tab-index');
+    container.querySelectorAll('.tab').forEach(function(t) {
+      var isActive = t === tab;
+      t.classList.toggle('active', isActive);
+      t.setAttribute('aria-selected', String(isActive));
+    });
+    container.querySelectorAll('[data-tab-panel]').forEach(function(panel) {
+      panel.hidden = panel.getAttribute('data-tab-panel') !== index;
+    });
+  });
+}
+
 // Initialize sidebar toggle on DOM ready
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', function() {
@@ -1056,6 +1076,7 @@ if (document.readyState === 'loading') {
     initCodeBlockToolbars();
     initTableToolbars();
     initQuizzes();
+    initTabs();
   });
 } else {
   initSidebarState();
@@ -1066,6 +1087,7 @@ if (document.readyState === 'loading') {
   initCodeBlockToolbars();
   initTableToolbars();
   initQuizzes();
+  initTabs();
 }
   </script>
 </body>
@@ -2310,8 +2332,18 @@ body {
   text-decoration: none;
   color: var(--text);
   display: block;
+  transition: border-color 0.15s ease;
 }
-.card:hover {
+/* Cards render as <a class="card"> when href is set — keep link cards
+   readable: inherit body text color and never underline the contents. */
+.markdown-body a.card,
+a.card {
+  color: var(--text);
+  text-decoration: none;
+}
+.markdown-body a.card:hover,
+a.card:hover {
+  text-decoration: none;
   border-color: var(--accent);
 }
 .card-title {
@@ -2320,6 +2352,11 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
+  color: var(--text);
+  transition: color 0.15s ease;
+}
+a.card:hover .card-title {
+  color: var(--accent);
 }
 .card-description {
   font-size: 14px;
@@ -2360,6 +2397,17 @@ body {
   font-weight: 600;
   background: var(--bg-secondary);
   border-radius: 6px;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+.accordion-summary::-webkit-details-marker {
+  display: none;
+}
+.accordion[open] .accordion-summary {
+  border-radius: 6px 6px 0 0;
 }
 .accordion-content {
   padding: 12px 16px;
@@ -2369,7 +2417,7 @@ body {
   display: inline-block;
   transition: transform 0.2s;
 }
-.accordion-icon.open {
+.accordion[open] .accordion-icon {
   transform: rotate(180deg);
 }
 

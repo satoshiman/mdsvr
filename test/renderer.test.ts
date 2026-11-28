@@ -1,7 +1,8 @@
 import { describe, it } from "node:test";
 import assert from "node:assert";
 import { renderMarkdown } from "../src/renderer/markdown.js";
-import type { Settings } from "../src/settings/index.js";
+import { renderMdx } from "../src/renderer/mdx.js";
+import { SettingsSchema, type Settings } from "../src/settings/index.js";
 
 describe("renderer", () => {
   const settings: Settings = {
@@ -194,6 +195,63 @@ describe("renderer", () => {
     assert.strictEqual(result.toc[3].text, "H2-2");
     assert.strictEqual(result.toc[4].level, 3);
     assert.strictEqual(result.toc[4].text, "H3-2");
+  });
+
+  it("extracts TOC entries for headings containing inline markup", () => {
+    const md = "# Title $x^2$\n\n## Heading with `code`\n\n## Plain";
+    const result = renderMarkdown(md, settings);
+    assert.deepStrictEqual(
+      result.toc.map((t) => t.text),
+      ["Title x^2", "Heading with code", "Plain"],
+    );
+  });
+
+  it("extracts TOC entries from MDX headings", async () => {
+    const mdxSettings = SettingsSchema.parse({});
+    const result = await renderMdx(
+      "# One\n\n## Two $a+b$\n\n## Three",
+      mdxSettings,
+    );
+    // MDX headings wrap text in an autolink anchor — the TOC must still
+    // capture them, with math reduced to its TeX source.
+    assert.deepStrictEqual(
+      result.toc.map((t) => t.text),
+      ["One", "Two a+b", "Three"],
+    );
+  });
+
+  it("renders MDX code blocks with highlighting and toolbar", async () => {
+    const mdxSettings = SettingsSchema.parse({});
+    const result = await renderMdx("```bash\nnpm install x\n```", mdxSettings);
+    assert.ok(result.html.includes("code-block-wrapper"));
+    assert.ok(result.html.includes("hljs"));
+  });
+
+  it("wraps MDX tables and converts GitHub callouts", async () => {
+    const mdxSettings = SettingsSchema.parse({});
+    const result = await renderMdx(
+      "> [!NOTE]\n> hi\n\n| a | b |\n|---|---|\n| 1 | 2 |",
+      mdxSettings,
+    );
+    assert.ok(result.html.includes("callout callout-info"));
+    assert.ok(result.html.includes("table-wrapper"));
+  });
+
+  it("renders all Tabs panels and a native details Accordion", async () => {
+    const mdxSettings = SettingsSchema.parse({});
+    const result = await renderMdx(
+      '<Tabs items={["a","b"]}>\n<Tab>\n\nfirst\n\n</Tab>\n<Tab>\n\nsecond\n\n</Tab>\n</Tabs>\n\n' +
+        '<Accordion title="Q">answer</Accordion>',
+      mdxSettings,
+    );
+    assert.strictEqual(
+      (result.html.match(/data-tab-panel/g) || []).length,
+      2,
+      "every tab panel must exist in the static markup",
+    );
+    assert.ok(result.html.includes(">second<") || result.html.includes("second"));
+    assert.ok(result.html.includes('<details class="accordion">'));
+    assert.ok(result.html.includes("accordion-content"));
   });
 
   it("renders mermaid block to SVG with toolbar and source panel", () => {
